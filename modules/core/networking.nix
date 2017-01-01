@@ -19,7 +19,7 @@
       userControlled.enable = true;
       networks = {
         CHE.pskRaw = "ext:CHE";
-        mieter.pskRaw = "ext:mieter";
+        smartphone.pskRaw = "ext:smartphone";
         eduroam.auth = ''
           key_mgmt=WPA-EAP
           eap=PEAP
