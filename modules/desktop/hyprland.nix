@@ -12,6 +12,8 @@
     os = {
       programs.hyprland.enable = true;
 
+      console.enable = false;
+
       systemd.services.autologin = {
         description = "Autologin";
         restartIfChanged = false;
