@@ -27,7 +27,6 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sddm-sugar-candy.url = "github:Noah765/sddm-sugar-candy";
   };
 
   outputs = inputs: inputs.modulix.modulixSystems (import ./config.nix) inputs;

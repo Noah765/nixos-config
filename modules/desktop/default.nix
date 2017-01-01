@@ -3,16 +3,13 @@
   config,
   ...
 }: {
-  imports = [./hyprland.nix ./hyprpaper.nix ./sddm.nix];
+  imports = [./hyprland.nix ./hyprpaper.nix];
 
   options.desktop.enable = lib.mkEnableOption "the desktop environment";
 
   config = lib.mkIf config.desktop.enable {
-    desktop = {
-      # TODO Remove the enable options of the individual parts of my DE, and expose options as DE options as necessary
-      hyprland.enable = lib.mkDefault true;
-      sddm.enable = lib.mkDefault true;
-    };
+    # TODO Remove the enable options of the individual parts of my DE, and expose options as DE options as necessary
+    desktop.hyprland.enable = lib.mkDefault true;
     os.fonts = let
       inherit (config.theme.fonts) serif sansSerif monospace emoji;
     in {

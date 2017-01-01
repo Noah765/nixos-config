@@ -3,17 +3,43 @@
   pkgs,
   config,
   ...
-}:
-# TODO https://wiki.hyprland.org/Useful-Utilities/Systemd-start/
-{
+}: {
   imports = [(lib.mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
   options.desktop.hyprland.enable = lib.mkEnableOption "Hyprland";
 
   config = lib.mkIf config.desktop.hyprland.enable {
-    os.programs.hyprland.enable = true;
+    os = {
+      programs.hyprland.enable = true;
 
-    hm.home.sessionVariables.NIXOS_OZONE_WL = 1;
+      systemd.services.autologin = {
+        description = "Autologin";
+        restartIfChanged = false;
+        after = ["systemd-user-sessions.service" "plymouth-quit-wait.service"];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${lib.getExe pkgs.autologin} noah ${lib.getExe pkgs.hyprland}";
+          IgnoreSIGPIPE = "no";
+          SendSIGHUP = "yes";
+          TimeoutStopSec = "30s";
+          KeyringMode = "shared";
+          Restart = "always";
+          RestartSec = "10";
+        };
+        startLimitBurst = 5;
+        startLimitIntervalSec = 30;
+        aliases = ["display-manager.service"];
+        wantedBy = ["multi-user.target"];
+      };
+      security.pam.services.autologin = {
+        name = "autologin";
+        startSession = true;
+        setLoginUid = true;
+        updateWtmp = true;
+      };
+    };
+
+    hm.home.sessionVariables.NIXOS_OZONE_WL = "1";
 
     hm.wayland.windowManager.hyprland = {
       enable = true;

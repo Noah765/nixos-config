@@ -198,23 +198,7 @@
         "modulix": "modulix",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
-        "nvf": "nvf",
-        "sddm-sugar-candy": "sddm-sugar-candy"
-      }
-    },
-    "sddm-sugar-candy": {
-      "locked": {
-        "lastModified": 1721572760,
-        "narHash": "sha256-1/gJOHRUDK84OKQ9Dppy+8W/QgvAg0jA2eCHimVth/A=",
-        "owner": "Noah765",
-        "repo": "sddm-sugar-candy",
-        "rev": "c0e07469347906e60ab4ae0fd9126c226d5dde76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Noah765",
-        "repo": "sddm-sugar-candy",
-        "type": "github"
+        "nvf": "nvf"
       }
     },
     "systems": {
