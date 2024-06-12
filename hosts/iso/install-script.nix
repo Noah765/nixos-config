@@ -18,7 +18,7 @@ pkgs.writeShellScriptBin "install" ''
 
   disk=$(lsblk -dno name | fzf --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
 
-  echo "Formatting a disk can cause the disk's contents to be ${red}lost forever$normal!"
+  echo "Formatting a disk can cause the disk's contents to be $\{red}lost forever$normal!"
   while true; do
     read -rn 1 -p $'\n'"Do you wish to format the disk $bold$disk$normal? " result
     case $result in
@@ -27,9 +27,11 @@ pkgs.writeShellScriptBin "install" ''
     esac
   done
 
+  echo $'\nFormatting...'
+
   sudo disko -m disko ~/dots/nixosModules/disko.nix --arg device "\"$disk\""
 
-  echo "\nSuccessfully formatted the disk $bold$disk$normal!"
+  echo $'\n'"Successfully formatted the disk $bold$disk$normal!"
 
   config=$(nix eval ~/dots#nixosConfigurations --no-warn-dirty --raw --apply 'a: builtins.concatStringsSep "\n" (builtins.attrNames a)' | fzf --border --border-label 'Configuration selection' --prompt 'Config> ')
 

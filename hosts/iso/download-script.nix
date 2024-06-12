@@ -4,5 +4,5 @@ pkgs.writeShellScriptBin "download" ''
 
   bold=$'\033[1m'
   normal=$'\033[0m'
-  echo "Downloaded the dots into $bold~/dots$normal!"
+  echo $'\n'"Successfully downloaded the dots into $bold~/dots$normal!"
 ''
