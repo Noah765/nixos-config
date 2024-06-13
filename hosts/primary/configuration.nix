@@ -93,7 +93,7 @@
   users.users.noah = {
     isNormalUser = true;
     initialPassword = "12345";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "networkmanager" "wheel" ];
   };
 
   programs.fuse.userAllowOther = true;

@@ -16,4 +16,6 @@
       LC_TIME = "de_DE.UTF-8";
     };
   };
+
+  console.keyMap = "de-latin1-nodeadkeys";
 }
