@@ -3,6 +3,7 @@ pkgs.writeShellScriptBin "write-installer" ''
   set -euo pipefail
 
   bold=$'\033[1m'
+  red=$'\033[1;31m'
   normal=$'\033[0m'
 
   echo "Your installer ISO image must be located in $bold/etc/nixos/result/iso$normal for this script to work"

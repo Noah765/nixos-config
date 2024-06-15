@@ -18,7 +18,7 @@ pkgs.writeShellScriptBin "build-installer" ''
 
   sudo nix build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
 
-  echo -e "\nThe installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
+  echo "The installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
 ''
 
 
