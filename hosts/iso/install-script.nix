@@ -1,18 +1,19 @@
 pkgs:
-pkgs.writeShellScriptBin "install" ''
+pkgs.writeShellScriptBin "install-os" ''
   set -euo pipefail
 
   bold=$'\033[1m'
   red=$'\033[1;31m'
   normal=$'\033[0m'
 
-  echo "Your NixOS configuration must be listed in $bold~/dots/flake.nix$normal for this script to work"
+  echo "Your NixOS configuration must be listed in $bold~/dots/flake.nix$normal for this script to work. Don't forget to import ''${bold}nixosModules/disko.nix$normal with the correct disk name!"
 
   while true; do
-    read -rn 1 -p $'\nDo you want to continue? ' result
+    read -rn 1 -p 'Do you want to continue? ' result
     case $result in
       [Yy] ) break;;
       [Nn] ) exit;;
+      * ) echo;;
     esac
   done
 
@@ -32,19 +33,19 @@ pkgs.writeShellScriptBin "install" ''
 
   sudo disko -m disko ~/dots/nixosModules/disko.nix --arg device "\"/dev/$disk\""
 
-  echo -e "Successfully formatted the disk $bold$disk$normal!"
+  echo -e "\nSuccessfully formatted the disk $bold$disk$normal!"
 
   config=$(nix eval ~/dots#nixosConfigurations --no-warn-dirty --raw --apply 'a: builtins.concatStringsSep "\n" (builtins.attrNames a)' | fzf --border --border-label 'Configuration selection' --prompt 'Config> ')
 
-  echo "Installing NixOS using the $bold$config$normal configuration..."
+  echo -e "\nInstalling NixOS using the $bold$config$normal configuration..."
 
-  sudo nixos-install --flake "~/dots#$config"
+  sudo nixos-install --flake ~/dots#"$config"
 
-  echo 'Copying the configuration...'
+  echo $'\nCopying the configuration...'
   sudo cp -r ~/dots /mnt/etc/nixos
 
   echo 'Copying WIFI connections...'
-  sudo cp -r /etc/NetworkManager/system-connections /mnt/NetworkManager/system-connections
+  sudo cp -r /etc/NetworkManager/system-connections /mnt/etc/NetworkManager/system-connections
 
-  echo "NixOS was successfully installed on $bold$disk$normal using the $boldconfig$normal configuration!"
+  echo "NixOS has been successfully installed on $bold$disk$normal using the $bold$config$normal configuration!"
 ''

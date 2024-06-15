@@ -25,7 +25,7 @@
           specialArgs.inputs = inputs;
           modules = [ ./hosts/iso/configuration.nix ];
         };
-        default = nixpkgs.lib.nixosSystem {
+        primary = nixpkgs.lib.nixosSystem {
           specialArgs.inputs = inputs;
           modules = [ ./hosts/primary/configuration.nix ];
         };

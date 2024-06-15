@@ -29,11 +29,12 @@
     git
     neovim
     fzf
+    (import ../../scripts/build-installer.nix pkgs)
+    (import ../../scripts/write-installer.nix pkgs)
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.systemd.enable = true;
 
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
