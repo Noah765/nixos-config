@@ -30,9 +30,10 @@ pkgs.writeShellScriptBin "write-installer" ''
     esac
   done
 
-  echo $'\nWriting...'
+  echo $'\nUnmounting the disk...'
+  sudo umount /dev/$disk* || true
 
-  sudo umount "/dev/$disk*"
+  echo 'Writing...'
   sudo dd bs=4M conv=fsync oflag=direct status=progress if="/etc/nixos/result/iso/$image" of="/dev/$disk"
 
   echo -e "\nThe installer ISO has been successfully written to $bold$disk$normal!"
