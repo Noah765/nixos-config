@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence.url = "github:tmarkov/impermanence"; # TODO: Change to nix-community when they fixed https://github.com/nix-community/impermanence/issues/154
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,14 +21,22 @@
     { nixpkgs, ... }@inputs:
     {
       nixosConfigurations = {
-        iso = nixpkgs.lib.nixosSystem {
-          specialArgs.inputs = inputs;
-          modules = [ ./hosts/iso/configuration.nix ];
-        };
         primary = nixpkgs.lib.nixosSystem {
           specialArgs.inputs = inputs;
-          modules = [ ./hosts/primary/configuration.nix ];
+          modules = [
+            ./hosts/primary/configuration.nix
+            ./nixosModules
+          ];
+        };
+        iso = nixpkgs.lib.nixosSystem {
+          specialArgs.inputs = inputs;
+          modules = [
+            ./hosts/iso/configuration.nix
+            ./nixosModules
+          ];
         };
       };
+
+      homeManagerModules.default = ./homeManagerModules;
     };
 }

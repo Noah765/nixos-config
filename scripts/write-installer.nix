@@ -38,4 +38,3 @@ pkgs.writeShellScriptBin "write-installer" ''
 
   echo -e "\nThe installer ISO has been successfully written to $bold$disk$normal!"
 ''
-

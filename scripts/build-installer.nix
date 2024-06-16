@@ -20,5 +20,3 @@ pkgs.writeShellScriptBin "build-installer" ''
 
   echo "The installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
 ''
-
-
