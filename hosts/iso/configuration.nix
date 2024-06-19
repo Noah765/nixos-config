@@ -5,7 +5,13 @@
   ...
 }:
 {
-  imports = [ /${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix ];
+  imports = [
+    /${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix
+    ./wifiScript.nix
+    ./downloadScript.nix
+    ./generateScript.nix
+    ./installScript.nix
+  ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -22,9 +28,5 @@
     neovim
     fzf
     nixfmt-rfc-style
-    (import ./wifi-script.nix pkgs)
-    (import ./download-script.nix pkgs)
-    (import ./generate-script.nix pkgs)
-    (import ./install-script.nix pkgs)
   ];
 }
