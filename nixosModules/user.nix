@@ -6,12 +6,14 @@ in
 {
   options.user = {
     enable = mkEnableOption "user";
-    groups = mkOption {
-      # TODO
-    };
+    groups = mkOption { type = with types; listOf str; };
   };
 
   config = mkIf cfg.enable {
-    # TODO
+    users.users.noah = {
+      isNormalUser = true;
+      initialPassword = "12345";
+      extraGroups = [ "wheel" ] ++ cfg.groups;
+    };
   };
 }

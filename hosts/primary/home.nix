@@ -1,6 +1,4 @@
-{ pkgs, inputs, ... }:
+{ ... }:
 {
-  home.stateVersion = "23.11"; # Read the docs before changing
-
-  impermanence.enable = true;
+  installer.enable = true; # Scripts for building the installer ISO and writing it to a USB stick
 }

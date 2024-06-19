@@ -3,12 +3,16 @@ with lib;
 {
   imports = [
     ./impermanence.nix
-    ./bootLoader.nix
+    ./bootloader.nix
+    ./nvidia.nix
+    ./user.nix
     ./networking.nix
     ./audio.nix
     ./homeManager.nix
     ./localization.nix
   ];
+
+  system.stateVersion = "23.11"; # Read the docs before changing
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
@@ -17,7 +21,8 @@ with lib;
   ];
 
   impermanence.enable = mkDefault true;
-  bootLoader.enable = mkDefault true;
+  bootloader.enable = mkDefault true;
+  user.enable = mkDefault true;
   networking.enable = mkDefault true;
   audio.enable = mkDefault true;
   homeManager.enable = mkDefault true;

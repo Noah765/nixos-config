@@ -1,10 +1,10 @@
 { lib, config, ... }:
 with lib;
 let
-  cfg = config.bootLoader;
+  cfg = config.bootloader;
 in
 {
-  options.bootLoader.enable = mkEnableOption "boot loader";
+  options.bootloader.enable = mkEnableOption "bootloader";
 
   config = mkIf cfg.enable {
     boot.loader.systemd-boot.enable = true;

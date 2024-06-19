@@ -9,15 +9,12 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  impermanence.disk = "";
+  impermanence.enable = false;
+  user.enable = false;
   homeManager.enable = false;
 
   isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ]; # Tp-link wifi driver
-  networking = {
-    wireless.enable = false;
-    networkmanager.enable = true;
-  };
+  # TODO boot.extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ]; # Tp-link wifi driver
 
   environment.systemPackages = with pkgs; [
     git

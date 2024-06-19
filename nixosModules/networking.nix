@@ -8,8 +8,10 @@ in
 
   config = mkIf cfg.enable {
     networking = {
+      wireless.enable = false; # The iso config has this enabled by default
       hostName = "noah";
       networkmanager.enable = true;
     };
+    user.groups = [ "networkmanager" ];
   };
 }
