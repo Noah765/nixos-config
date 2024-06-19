@@ -4,6 +4,7 @@ with lib;
   imports = [
     ./impermanence.nix
     ./bootLoader.nix
+    ./networking.nix
     ./audio.nix
     ./homeManager.nix
     ./localization.nix
@@ -17,6 +18,7 @@ with lib;
 
   impermanence.enable = mkDefault true;
   bootLoader.enable = mkDefault true;
+  networking.enable = mkDefault true;
   audio.enable = mkDefault true;
   homeManager.enable = mkDefault true;
   localization.enable = mkDefault true;

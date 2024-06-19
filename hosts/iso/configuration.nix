@@ -9,6 +9,7 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
+  impermanence.disk = "";
   homeManager.enable = false;
 
   isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available

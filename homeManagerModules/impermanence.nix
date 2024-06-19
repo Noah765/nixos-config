@@ -1,6 +1,8 @@
 {
   inputs,
+  osConfig,
   lib,
+  options,
   config,
   ...
 }:
@@ -11,13 +13,24 @@ in
 {
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
-  options = {
-    enable = mkEnableOption "impermanence";
-    directories = { };
-    files = { };
-  };
+  options.impermanence =
+    let
+      persistenceOptions = options.home.persistence.type.getSubOptions [ ];
+    in
+    {
+      enable = mkEnableOption "impermanence";
+      directories = persistenceOptions.directories;
+      files = persistenceOptions.files;
+    };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = osConfig.impermanence.enable;
+        message = "The NixOS impermanence module is required for the home manager impermanence module.";
+      }
+    ];
+
     home.persistence."/persist/home" = {
       allowOther = true;
       directories = [

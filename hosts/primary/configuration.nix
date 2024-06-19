@@ -12,6 +12,8 @@
 
   impermanence.disk = "nvme0n1";
 
+  homeManager.module = ./home.nix;
+
   environment.systemPackages = with pkgs; [
     git
     neovim
@@ -20,7 +22,7 @@
     (import ../../scripts/write-installer.nix pkgs)
   ];
 
-  systemd.tmpfiles.rules = [ "d /persist/home 0700 noah users -" ];
+  # TODO: Needed? systemd.tmpfiles.rules = [ "d /persist/home 0700 noah users -" ];
 
   users.users.noah = {
     isNormalUser = true;
@@ -31,13 +33,6 @@
     ];
   };
 
-  programs.fuse.userAllowOther = true;
-
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "noah" ];
-
-  networking = {
-    hostName = "noah";
-    networkmanager.enable = true;
-  };
 }

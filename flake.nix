@@ -18,24 +18,34 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { self, nixpkgs, ... }@inputs:
     {
-      nixosConfigurations = {
-        primary = nixpkgs.lib.nixosSystem {
-          specialArgs.inputs = inputs;
-          modules = [
-            ./hosts/primary/configuration.nix
-            ./nixosModules
-          ];
+      nixosConfigurations =
+        let
+          buildHmConfig = name: self.nixosConfigurations.${name}.config.home-manager.users.noah or { };
+        in
+        {
+          primary = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs;
+              hmConfig = buildHmConfig "primary";
+            };
+            modules = [
+              ./hosts/primary/configuration.nix
+              ./nixosModules
+            ];
+          };
+          iso = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs;
+              hmConfig = buildHmConfig "iso";
+            };
+            modules = [
+              ./hosts/iso/configuration.nix
+              ./nixosModules
+            ];
+          };
         };
-        iso = nixpkgs.lib.nixosSystem {
-          specialArgs.inputs = inputs;
-          modules = [
-            ./hosts/iso/configuration.nix
-            ./nixosModules
-          ];
-        };
-      };
 
       homeManagerModules.default = ./homeManagerModules;
     };

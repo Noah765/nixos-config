@@ -1,5 +1,6 @@
 {
   inputs,
+  hmConfig,
   lib,
   options,
   config,
@@ -35,6 +36,8 @@ in
     };
 
   config = mkIf cfg.enable {
+    assertions = [ { assertion = cfg.disk != null; } ]; # The disk option may not be set otherwise, this assertion never actually fails, but forces nix to evaluate cfg.disk
+
     disko.devices = {
       disk.main = {
         device = "/dev/${cfg.disk}";
@@ -151,5 +154,7 @@ in
         }
       ] ++ cfg.files;
     };
+
+    programs.fuse.userAllowOther = mkIf (hmConfig.impermanence.enable or false) true;
   };
 }
