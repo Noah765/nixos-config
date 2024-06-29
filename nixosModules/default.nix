@@ -4,12 +4,14 @@ with lib;
   imports = [
     ./impermanence.nix
     ./bootloader.nix
-    ./nvidia.nix
-    ./user.nix
     ./networking.nix
     ./audio.nix
-    ./homeManager.nix
+    ./nvidia.nix
+    ./user.nix
+    ./zsh.nix
     ./localization.nix
+    ./homeManager.nix
+    ./hyprland.nix
   ];
 
   system.stateVersion = "23.11"; # Read the docs before changing
@@ -22,9 +24,10 @@ with lib;
 
   impermanence.enable = mkDefault true;
   bootloader.enable = mkDefault true;
-  user.enable = mkDefault true;
   networking.enable = mkDefault true;
   audio.enable = mkDefault true;
-  homeManager.enable = mkDefault true;
+  user.enable = mkDefault true;
+  zsh.enable = mkDefault true;
   localization.enable = mkDefault true;
+  homeManager.enable = mkDefault true;
 }

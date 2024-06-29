@@ -20,6 +20,7 @@
       done
 
       sudo nixos-generate-config --no-filesystems --show-hardware-config > ~/dots/hosts/"$config"/hardware-configuration.nix
+      nixfmt ~/dots/hosts/"$config"/hardware-configuration.nix
 
       echo -e "\nSuccessfully generated ''${bold}hardware-configuration.nix$normal at $bold~/dots/hosts/$config/hardware-configuration.nix$normal!"
     '')
