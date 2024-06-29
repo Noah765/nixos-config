@@ -11,5 +11,6 @@
     neovim
     fzf
     kitty
+    nixfmt-rfc-style
   ];
 }
