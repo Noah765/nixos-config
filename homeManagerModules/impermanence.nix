@@ -39,18 +39,11 @@ in
         "Pictures"
         "Documents"
         "Videos"
-        # "VirtualBox VMs"
         ".gnupg"
-        # ".ssh"
-        # ".nixops"
-        ".local/share/keyrings"
-        ".local/share/direnv"
-        {
-          directory = ".local/share/Steam";
-          method = "symlink";
-        }
+        ".local/share/keyrings" # TODO: Remove if unused
+        ".local/share/direnv" # TODO: Remove if unused
       ] ++ cfg.directories;
-      files = [ ".screenrc" ] ++ cfg.files;
+      files = [ ".screenrc" ] ++ cfg.files; # TODO: Remove if unused
     };
   };
 }

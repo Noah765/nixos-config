@@ -37,17 +37,17 @@
 
       echo -e "\nSuccessfully formatted the disk $bold$disk$normal!"
 
-      echo -e "\nInstalling NixOS using the $bold$config$normal configuration..."
+      echo -e "\nInstalling NixOS using the $bold$config$normal configuration...\n"
 
       sudo nixos-install --flake ~/dots#"$config"
 
       echo $'\nCopying the configuration...'
       sudo cp -r ~/dots /mnt/etc/nixos
 
-      echo 'Copying WIFI connections...'
+      echo $'\nCopying WIFI connections...'
       sudo cp -r /etc/NetworkManager/system-connections /mnt/etc/NetworkManager/system-connections
 
-      echo "NixOS has been successfully installed on $bold$disk$normal using the $bold$config$normal configuration!"
+      echo -e "\nNixOS has been successfully installed on $bold$disk$normal using the $bold$config$normal configuration!"
     '')
   ];
 }

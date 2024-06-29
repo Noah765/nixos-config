@@ -13,5 +13,6 @@ in
       networkmanager.enable = true;
     };
     user.groups = [ "networkmanager" ];
+    impermanence.directories = [ "/etc/NetworkManager/system-connections" ];
   };
 }
