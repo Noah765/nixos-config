@@ -43,10 +43,10 @@
       sudo nixos-install --flake ~/dots#"$config"
 
       echo $'\nCopying the configuration...'
-      sudo cp -r ~/dots /mnt/persist/system/etc/nixos
+      sudo cp -r ~/dots/* /mnt/persist/system/etc/nixos
 
       echo $'\nCopying WIFI connections...'
-      sudo cp -r /etc/NetworkManager/system-connections /mnt/persist/system/etc/NetworkManager/system-connections
+      sudo cp -r /etc/NetworkManager/system-connections /mnt/persist/system/etc/NetworkManager
 
       echo -e "\nNixOS has been successfully installed on $bold$disk$normal using the $bold$config$normal configuration!"
     '')
