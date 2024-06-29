@@ -7,6 +7,7 @@ with lib;
     ./localization.nix
     ./hyprland.nix
     ./git.nix
+    ./firefox.nix
     ./installer.nix
   ];
 
@@ -20,4 +21,5 @@ with lib;
     enable = mkDefault true;
     gitHub = mkDefault true;
   };
+  firefox.enable = mkDefault true;
 }
