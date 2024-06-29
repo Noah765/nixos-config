@@ -20,7 +20,6 @@
   homeManager.enable = false;
 
   isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
-  # TODO boot.extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ]; # Tp-link wifi driver
 
   environment.systemPackages = with pkgs; [
     git
