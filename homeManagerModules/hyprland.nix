@@ -1,4 +1,5 @@
 {
+  pkgs,
   osConfig,
   lib,
   options,
@@ -13,10 +14,6 @@ in
   options.hyprland = {
     enable = mkEnableOption "hyprland";
     settings = options.wayland.windowManager.hyprland.settings;
-    monitors = mkOption {
-      type = with types; listOf; # TODO
-      example = "";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -31,11 +28,14 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
+
+      plugins = [ pkgs.hyprlandPlugins.hy3 ];
+
       settings = {
         general = {
           gaps_in = 4;
           gaps_out = 5;
-          # TODO layout
+          layout = "hy3";
           no_focus_fallback = true;
           resize_on_border = true;
           # TODO allow_tearing
@@ -81,7 +81,35 @@ in
           # TODO warp_on_change_workspace
         };
 
-        bind = [ "Super, T, exec, kitty" ];
+        monitor = [
+          ", highres, auto, 1"
+          "Unknown-1, disable"
+        ];
+
+        plugin.hy3 = {
+          # TODO
+        };
+
+        bindm = [
+          "Super, mouse:272, movewindow"
+          "Super, mouse:273, resizewindow"
+        ];
+
+        bind = [
+          "Super, Up, hy3:movefocus, u"
+          "Super, Right, hy3:movefocus, r"
+          "Super, Down, hy3:movefocus, d"
+          "Super, Left, hy3:movefocus, l"
+
+          "Super+Shift, Up, hy3:movewindow, u"
+          "Super+Shift, Right, hy3:movewindow, r"
+          "Super+Shift, Down, hy3:movewindow, d"
+          "Super+Shift, Left, hy3:movewindow, l"
+
+          "Super, Q, hy3:killactive"
+
+          "Super, T, exec, kitty"
+        ];
       } // cfg.settings;
     };
   };
