@@ -2,13 +2,14 @@
 with lib;
 {
   imports = [
+    ./installer.nix
     ./impermanence.nix
     ./zsh.nix
     ./localization.nix
     ./hyprland.nix
     ./git.nix
     ./firefox.nix
-    ./installer.nix
+    ./slack.nix
   ];
 
   home.stateVersion = "23.11"; # Read the docs before changing

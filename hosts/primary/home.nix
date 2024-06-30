@@ -1,4 +1,5 @@
 { ... }:
 {
-  installer.enable = true; # Scripts for building the installer ISO and writing it to a USB stick
+  installer.enable = true;
+  slack.enable = true;
 }

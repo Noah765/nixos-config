@@ -12,6 +12,6 @@ in
       profiles.noah = { };
     };
 
-    impermanence.folders = [ ".mozilla/firefox/noah" ];
+    impermanence.directories = [ ".mozilla/firefox/noah" ];
   };
 }
