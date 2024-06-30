@@ -93,6 +93,15 @@ in
           "Super, mouse:273, resizewindow"
         ];
 
+        # TODO Binding multiple normal keys doesn't seem to be supported. Find a workaround (using submaps, maybe use https://github.com/hyprland-community/hyprnix to make them easier to configure in nix?)
+
+        binde = [
+          "Super+R, Up, resizeactive, 0 -100"
+          "Super+R, Right, resizeactive, 100 0"
+          "Super+R, Down, resizeactive, 0 100"
+          "Super+R, Left, resizeactive, -100 0"
+        ];
+
         bind = [
           "Super, R, scroller:setmode, row"
           "Super, C, scroller:setmode, col"
@@ -110,9 +119,22 @@ in
           "Super+Shift, Left, scroller:movewindow, l"
           "Super+Shift, Home, scroller:movewindow, begin"
           "Super+Shift, End, scroller:movewindow, end"
+          "Super+Shift, L, scroller:admitwindow"
+          "Super+Shift, R, scroller:expelwindow"
+
+          "Super+A, C, scroller:alignwindow, c"
+          "Super+A, Up, scroller:alignwindow, u"
+          "Super+A, Right, scroller:alignwindow, r"
+          "Super+A, Down, scroller:alignwindow, d"
+          "Super+A, Left, scroller:alignwindow, l"
 
           "Super, Minus, scroller:cyclesize, prev"
           "Super, Plus, scroller:cyclesize, next"
+          "Super+F, V, scroller:fitsize, visible"
+          "Super+F, Up, scroller:fitsize, active"
+          "Super+F, Right, scroller:fitsize, toend"
+          "Super+F, Down, scroller:fitsize, all"
+          "Super+F, Left, scroller:fitsize, tobeg"
 
           "Super, Q, killactive"
 
