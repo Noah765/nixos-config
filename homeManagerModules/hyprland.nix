@@ -65,7 +65,8 @@ in
           force_default_wallpaper = 0;
           # TODO vrr
           disable_autoreload = true;
-          # TODO window swallowing
+          enable_swallow = true;
+          swallow_regex = "^${config.home.sessionVariables.TERMINAL}$";
           focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
           # TODO initial_workspace_tracking
@@ -93,15 +94,15 @@ in
         ];
 
         bind = [
-	  "Super, R, scroller:setmode, row"
-	  "Super, C, scroller:setmode, col"
+          "Super, R, scroller:setmode, row"
+          "Super, C, scroller:setmode, col"
 
           "Super, Up, scroller:movefocus, u"
           "Super, Right, scroller:movefocus, r"
           "Super, Down, scroller:movefocus, d"
           "Super, Left, scroller:movefocus, l"
-	  "Super, Home, scroller:movefocus, begin"
-	  "Super, End, scroller:movefocus, end"
+          "Super, Home, scroller:movefocus, begin"
+          "Super, End, scroller:movefocus, end"
 
           "Super+Shift, Up, scroller:movewindow, u"
           "Super+Shift, Right, scroller:movewindow, r"
@@ -110,10 +111,10 @@ in
           "Super+Shift, Home, scroller:movewindow, begin"
           "Super+Shift, End, scroller:movewindow, end"
 
-	  "Super, Minus, scroller:cyclesize, prev"
-	  "Super, Plus, scroller:cyclesize, next"
+          "Super, Minus, scroller:cyclesize, prev"
+          "Super, Plus, scroller:cyclesize, next"
 
-          "Super, Q, hy3:killactive"
+          "Super, Q, killactive"
 
           "Super, T, exec, kitty"
         ];

@@ -10,7 +10,6 @@
   environment.systemPackages = with pkgs; [
     neovim
     fzf
-    kitty
     nixfmt-rfc-style
   ];
 }

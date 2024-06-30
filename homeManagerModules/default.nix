@@ -8,6 +8,7 @@ with lib;
     ./localization.nix
     ./hyprland.nix
     ./git.nix
+    ./kitty.nix
     ./firefox.nix
     ./slack.nix
   ];
@@ -22,5 +23,6 @@ with lib;
     enable = mkDefault true;
     gitHub = mkDefault true;
   };
+  kitty.enable = mkDefault true;
   firefox.enable = mkDefault true;
 }
