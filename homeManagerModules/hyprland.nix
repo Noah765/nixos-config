@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   osConfig,
   lib,
@@ -29,13 +30,13 @@ in
     wayland.windowManager.hyprland = {
       enable = true;
 
-      plugins = [ pkgs.hyprlandPlugins.hy3 ];
+      plugins = [ inputs.hyprscroller.packages.${pkgs.system}.default ];
 
       settings = {
         general = {
           gaps_in = 4;
           gaps_out = 5;
-          layout = "hy3";
+          layout = "scroller";
           no_focus_fallback = true;
           resize_on_border = true;
           # TODO allow_tearing
@@ -86,25 +87,31 @@ in
           "Unknown-1, disable"
         ];
 
-        plugin.hy3 = {
-          # TODO
-        };
-
         bindm = [
           "Super, mouse:272, movewindow"
           "Super, mouse:273, resizewindow"
         ];
 
         bind = [
-          "Super, Up, hy3:movefocus, u"
-          "Super, Right, hy3:movefocus, r"
-          "Super, Down, hy3:movefocus, d"
-          "Super, Left, hy3:movefocus, l"
+	  "Super, R, scroller:setmode, row"
+	  "Super, C, scroller:setmode, col"
 
-          "Super+Shift, Up, hy3:movewindow, u"
-          "Super+Shift, Right, hy3:movewindow, r"
-          "Super+Shift, Down, hy3:movewindow, d"
-          "Super+Shift, Left, hy3:movewindow, l"
+          "Super, Up, scroller:movefocus, u"
+          "Super, Right, scroller:movefocus, r"
+          "Super, Down, scroller:movefocus, d"
+          "Super, Left, scroller:movefocus, l"
+	  "Super, Home, scroller:movefocus, begin"
+	  "Super, End, scroller:movefocus, end"
+
+          "Super+Shift, Up, scroller:movewindow, u"
+          "Super+Shift, Right, scroller:movewindow, r"
+          "Super+Shift, Down, scroller:movewindow, d"
+          "Super+Shift, Left, scroller:movewindow, l"
+          "Super+Shift, Home, scroller:movewindow, begin"
+          "Super+Shift, End, scroller:movewindow, end"
+
+	  "Super, Minus, scroller:cyclesize, prev"
+	  "Super, Plus, scroller:cyclesize, next"
 
           "Super, Q, hy3:killactive"
 
