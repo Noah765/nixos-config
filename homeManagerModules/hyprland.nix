@@ -12,7 +12,7 @@ let
   cfg = config.hyprland;
 in
 {
-  imports = [ ];
+  imports = [ inputs.hyprnix.homeManagerModules.default ];
 
   options.hyprland = {
     enable = mkEnableOption "hyprland";

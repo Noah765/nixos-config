@@ -19,7 +19,21 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprnix = {
       url = "github:hyprland-community/hyprnix";
-      follows = "hyprland";
+      inputs = {
+        nixpkgs.follows = "hyprland/nixpkgs";
+        systems.follows = "hyprland/systems";
+        hyprland.follows = "hyprland";
+        hyprland-protocols.follows = "hyprland/xdph/hyprland-protocols";
+        hyprland-xdph.follows = "hyprland/xdph";
+        hyprlang.follows = "hyprland/hyprlang";
+        bird-nix-lib = {
+          url = "github:spikespaz/bird-nix-lib";
+          inputs = {
+            nixpkgs.follows = "hyprland/nixpkgs";
+            systems.follows = "hyprland/systems";
+          };
+        };
+      };
     };
     hyprscroller = {
       url = "github:dawsers/hyprscroller";
