@@ -10,6 +10,7 @@ with lib;
     ./user.nix
     ./zsh.nix
     ./localization.nix
+    ./docs.nix
     ./homeManager.nix
     ./hyprland.nix
   ];
@@ -29,5 +30,6 @@ with lib;
   user.enable = mkDefault true;
   zsh.enable = mkDefault true;
   localization.enable = mkDefault true;
+  docs.enable = mkDefault true;
   homeManager.enable = mkDefault true;
 }

@@ -12,6 +12,8 @@ let
   cfg = config.hyprland;
 in
 {
+  imports = [ ];
+
   options.hyprland = {
     enable = mkEnableOption "hyprland";
     settings = options.wayland.windowManager.hyprland.settings;

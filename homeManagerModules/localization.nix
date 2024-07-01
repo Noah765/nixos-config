@@ -6,10 +6,8 @@ in
 {
   options.localization.enable = mkEnableOption "localization";
 
-  config = mkIf cfg.enable {
-    hyprland.settings.input = {
-      kb_layout = "de";
-      kb_variant = "nodeadkeys";
-    };
+  config.hyprland.settings.input = mkIf cfg.enable {
+    kb_layout = "de";
+    kb_variant = "nodeadkeys";
   };
 }

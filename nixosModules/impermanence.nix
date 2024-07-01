@@ -30,6 +30,7 @@ in
       disk = mkOption {
         type = with types; uniq str;
         example = "sda";
+        description = "The disk for disko to manage and to use for impermanence.";
       };
       directories = persistenceOptions.directories;
       files = persistenceOptions.files;

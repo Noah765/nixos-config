@@ -17,6 +17,10 @@
     };
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprnix = {
+      url = "github:hyprland-community/hyprnix";
+      follows = "hyprland";
+    };
     hyprscroller = {
       url = "github:dawsers/hyprscroller";
       inputs.hyprland.follows = "hyprland";

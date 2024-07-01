@@ -6,14 +6,16 @@ in
 {
   options.user = {
     enable = mkEnableOption "user";
-    groups = mkOption { type = with types; listOf str; };
+    groups = mkOption {
+      type = with types; listOf str;
+      default = [ ];
+      description = "The user's auxiliary groups.";
+    };
   };
 
-  config = mkIf cfg.enable {
-    users.users.noah = {
-      isNormalUser = true;
-      initialPassword = "12345";
-      extraGroups = [ "wheel" ] ++ cfg.groups;
-    };
+  config.users.users.noah = mkIf cfg.enable {
+    isNormalUser = true;
+    initialPassword = "12345";
+    extraGroups = [ "wheel" ] ++ cfg.groups;
   };
 }
