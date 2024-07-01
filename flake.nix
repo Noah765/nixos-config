@@ -17,6 +17,13 @@
     };
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    bird-nix-lib = {
+      url = "github:spikespaz/bird-nix-lib";
+      inputs = {
+        nixpkgs.follows = "hyprland/nixpkgs";
+        systems.follows = "hyprland/systems";
+      };
+    };
     hyprnix = {
       url = "github:hyprland-community/hyprnix";
       inputs = {
@@ -26,13 +33,7 @@
         hyprland-protocols.follows = "hyprland/xdph/hyprland-protocols";
         hyprland-xdph.follows = "hyprland/xdph";
         hyprlang.follows = "hyprland/hyprlang";
-        bird-nix-lib = {
-          url = "github:spikespaz/bird-nix-lib";
-          inputs = {
-            nixpkgs.follows = "hyprland/nixpkgs";
-            systems.follows = "hyprland/systems";
-          };
-        };
+        bird-nix-lib.follows = "bird-nix-lib";
       };
     };
     hyprscroller = {

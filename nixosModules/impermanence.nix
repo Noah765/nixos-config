@@ -19,7 +19,7 @@ in
   options.impermanence =
     let
       persistenceOptions =
-        (lib.modules.evalModules {
+        (modules.evalModules {
           modules = [
             { _module.args.name = "/persist/system"; }
           ] ++ options.environment.persistence.type.nestedTypes.elemType.getSubModules;

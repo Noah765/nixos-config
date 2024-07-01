@@ -16,7 +16,13 @@ in
 
   options.hyprland = {
     enable = mkEnableOption "hyprland";
-    settings = options.wayland.windowManager.hyprland.settings;
+    config = options.wayland.windowManager.hyprland.config;
+    monitors = options.wayland.windowManager.hyprland.monitors // {
+      default.default = {
+        name = "";
+        resolution = "highres";
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -34,7 +40,7 @@ in
 
       plugins = [ inputs.hyprscroller.packages.${pkgs.system}.default ];
 
-      settings = {
+      config = {
         general = {
           gaps_in = 4;
           gaps_out = 5;
@@ -50,8 +56,6 @@ in
           # TODO dimming
           # TODO blur
         };
-
-        animations = { }; # TODO
 
         input = {
           repeat_rate = 35;
@@ -85,64 +89,57 @@ in
           # TODO warp_on_change_workspace
         };
 
-        monitor = [
-          ", highres, auto, 1"
-          "Unknown-1, disable"
-        ];
+        #  monitor = [ "Unknown-1, disable" ];
+      } // cfg.config;
 
-        bindm = [
-          "Super, mouse:272, movewindow"
-          "Super, mouse:273, resizewindow"
-        ];
+      animations = { }; # TODO
 
-        # TODO Binding multiple normal keys doesn't seem to be supported. Find a workaround (using submaps, maybe use https://github.com/hyprland-community/hyprnix to make them easier to configure in nix?)
+      monitors = cfg.monitors;
 
-        binde = [
-          "Super+R, Up, resizeactive, 0 -100"
-          "Super+R, Right, resizeactive, 100 0"
-          "Super+R, Down, resizeactive, 0 100"
-          "Super+R, Left, resizeactive, -100 0"
-        ];
+      keyBinds = {
+        bind."Super, R" = "scroller:setmode, row";
+        bind."Super, C" = "scroller:setmode, col";
 
-        bind = [
-          "Super, R, scroller:setmode, row"
-          "Super, C, scroller:setmode, col"
+        bind."Super, Up" = "scroller:movefocus, u";
+        bind."Super, Right" = "scroller:movefocus, r";
+        bind."Super, Down" = "scroller:movefocus, d";
+        bind."Super, Left" = "scroller:movefocus, l";
+        bind."Super, Home" = "scroller:movefocus, begin";
+        bind."Super, End" = "scroller:movefocus, end";
 
-          "Super, Up, scroller:movefocus, u"
-          "Super, Right, scroller:movefocus, r"
-          "Super, Down, scroller:movefocus, d"
-          "Super, Left, scroller:movefocus, l"
-          "Super, Home, scroller:movefocus, begin"
-          "Super, End, scroller:movefocus, end"
+        bind."Super+Shift, Up" = "scroller:movewindow, u";
+        bind."Super+Shift, Right" = "scroller:movewindow, r";
+        bind."Super+Shift, Down" = "scroller:movewindow, d";
+        bind."Super+Shift, Left" = "scroller:movewindow, l";
+        bind."Super+Shift, Home" = "scroller:movewindow, begin";
+        bind."Super+Shift, End" = "scroller:movewindow, end";
+        bind."Super+Shift, L" = "scroller:admitwindow";
+        bind."Super+Shift, R" = "scroller:expelwindow";
+        bindm."Super, mouse:272" = "movewindow";
 
-          "Super+Shift, Up, scroller:movewindow, u"
-          "Super+Shift, Right, scroller:movewindow, r"
-          "Super+Shift, Down, scroller:movewindow, d"
-          "Super+Shift, Left, scroller:movewindow, l"
-          "Super+Shift, Home, scroller:movewindow, begin"
-          "Super+Shift, End, scroller:movewindow, end"
-          "Super+Shift, L, scroller:admitwindow"
-          "Super+Shift, R, scroller:expelwindow"
+        binds."Super_L, A&C" = "scroller:alignwindow, c";
+        binds."Super_L, A&Up" = "scroller:alignwindow, u";
+        binds."Super_L, A&Right" = "scroller:alignwindow, r";
+        binds."Super_L, A&Down" = "scroller:alignwindow, d";
+        binds."Super_L, A&Left" = "scroller:alignwindow, l";
 
-          "Super+A, C, scroller:alignwindow, c"
-          "Super+A, Up, scroller:alignwindow, u"
-          "Super+A, Right, scroller:alignwindow, r"
-          "Super+A, Down, scroller:alignwindow, d"
-          "Super+A, Left, scroller:alignwindow, l"
+        bind."Super, Minus" = "scroller:cyclesize, prev";
+        bind."Super, Plus" = "scroller:cyclesize, next";
+        bindes."Super_L, R&Up" = "resizeactive, 0 -100";
+        bindes."Super_L, R&Right" = "resizeactive, 100 0";
+        bindes."Super_L, R&Down" = "resizeactive, 0 100";
+        bindes."Super_L, R&Left" = "resizeactive, -100 0";
+        bindm."Super, mouse:273" = "resizewindow";
+        binds."Super_L, F&V" = "scroller:fitsize, visible";
+        binds."Super_L, F&Up" = "scroller:fitsize, active";
+        binds."Super_L, F&Right" = "scroller:fitsize, toend";
+        binds."Super_L, F&Down" = "scroller:fitsize, all";
+        binds."Super_L, F&Left" = "scroller:fitsize, tobeg";
 
-          "Super, Minus, scroller:cyclesize, prev"
-          "Super, Plus, scroller:cyclesize, next"
-          "Super+F, V, scroller:fitsize, visible"
-          "Super+F, Up, scroller:fitsize, active"
-          "Super+F, Right, scroller:fitsize, toend"
-          "Super+F, Down, scroller:fitsize, all"
-          "Super+F, Left, scroller:fitsize, tobeg"
+        bind."Super, Q" = "killactive";
 
-          "Super, Q, killactive"
-
-          "Super, T, exec, kitty"
-        ];
-      } // cfg.settings;
+        bind."Super, T" = "exec, kitty";
+      };
     };
   };
 }
