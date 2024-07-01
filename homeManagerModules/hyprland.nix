@@ -89,7 +89,7 @@ in
           # TODO warp_on_change_workspace
         };
 
-        #  monitor = [ "Unknown-1, disable" ];
+        monitor = [ "Unknown-1, disable" ];
       } // cfg.config;
 
       animations = { }; # TODO
@@ -97,8 +97,8 @@ in
       monitors = cfg.monitors;
 
       keyBinds = {
-        bind."Super, R" = "scroller:setmode, row";
-        bind."Super, C" = "scroller:setmode, col";
+        bind."Super, Y" = "scroller:setmode, row";
+        bind."Super, X" = "scroller:setmode, col";
 
         bind."Super, Up" = "scroller:movefocus, u";
         bind."Super, Right" = "scroller:movefocus, r";
@@ -117,11 +117,15 @@ in
         bind."Super+Shift, R" = "scroller:expelwindow";
         bindm."Super, mouse:272" = "movewindow";
 
-        binds."Super_L, A&C" = "scroller:alignwindow, c";
-        binds."Super_L, A&Up" = "scroller:alignwindow, u";
-        binds."Super_L, A&Right" = "scroller:alignwindow, r";
-        binds."Super_L, A&Down" = "scroller:alignwindow, d";
-        binds."Super_L, A&Left" = "scroller:alignwindow, l";
+        bind."Super, A" = "submap, align";
+        submap.align = {
+          bind.", C" = "scroller:alignwindow, c";
+          bind.", Up" = "scroller:alignwindow, u";
+          bind.", Right" = "scroller:alignwindow, r";
+          bind.", Down" = "scroller:alignwindow, d";
+          bind.", Left" = "scroller:alignwindow, l";
+          bind.", catchall" = "submap, reset";
+        };
 
         bind."Super, Minus" = "scroller:cyclesize, prev";
         bind."Super, Plus" = "scroller:cyclesize, next";
