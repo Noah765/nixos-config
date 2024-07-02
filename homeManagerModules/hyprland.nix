@@ -38,13 +38,14 @@ in
     wayland.windowManager.hyprland = {
       enable = true;
 
-      plugins = [ pkgs.hyprlandPlugins.hy3 ];
+      plugins = [ inputs.hy3.packages.${pkgs.system}.default ];
 
       config = attrsets.recursiveUpdate {
         general = {
           gaps_in = 2;
           gaps_out = 5;
           layout = "hy3";
+          resize_on_border = true;
           # TODO allow_tearing
         };
 
@@ -113,15 +114,18 @@ in
       keyBinds = {
         bind."Super+Alt, H" = "hy3:makegroup, h";
         bind."Super+Alt, V" = "hy3:makegroup, v";
-        bindr."Super, Alt" = "hy3:makegroup, opposite";
+        bind."Super+Alt, Space" = "hy3:makegroup, opposite";
         bind."Super+Alt, T" = "hy3:makegroup, tab";
 
-        # TODO hy3:changegroup, hy3:changefocus
+        # TODO Is hy3:changegroup needed?
 
         bind."Super, Up" = "hy3:movefocus, u";
         bind."Super, Right" = "hy3:movefocus, r";
         bind."Super, Down" = "hy3:movefocus, d";
         bind."Super, Left" = "hy3:movefocus, l";
+        bind."Super+Ctrl, Plus" = "hy3:changefocus, raise";
+        bind."Super+Ctrl, Minus" = "hy3:changefocus, lower";
+        bindn.", mouse:272" = "hy3:focustab, mouse";
 
         bind."Super+Shift, Up" = "hy3:movewindow, u";
         bind."Super+Shift, Right" = "hy3:movewindow, r";

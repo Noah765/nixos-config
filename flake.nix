@@ -16,10 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     bird-nix-lib = {
       url = "github:spikespaz/bird-nix-lib";
       inputs = {
@@ -38,6 +35,10 @@
         hyprlang.follows = "hyprland/hyprlang";
         bird-nix-lib.follows = "bird-nix-lib";
       };
+    };
+    hy3 = {
+      url = "github:outfoxxed/hy3";
+      inputs.hyprland.follows = "hyprland";
     };
   };
 
