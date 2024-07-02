@@ -107,6 +107,13 @@ in
         bind."Super, Home" = "scroller:movefocus, begin";
         bind."Super, End" = "scroller:movefocus, end";
 
+        bind."Super+Ctrl, A" = "scroller:marksadd, a";
+        bind."Super+Ctrl, S" = "scroller:marksadd, s";
+        bind."Super+Ctrl, D" = "scroller:marksadd, d";
+        bind."Super, A" = "scroller:marksvisit, a";
+        bind."Super, S" = "scroller:marksvisit, s";
+        bind."Super, D" = "scroller:marksvisit, d";
+
         bind."Super+Shift, Up" = "scroller:movewindow, u";
         bind."Super+Shift, Right" = "scroller:movewindow, r";
         bind."Super+Shift, Down" = "scroller:movewindow, d";
@@ -115,30 +122,33 @@ in
         bind."Super+Shift, End" = "scroller:movewindow, end";
         bind."Super+Shift, L" = "scroller:admitwindow";
         bind."Super+Shift, R" = "scroller:expelwindow";
-        bindm."Super, mouse:272" = "movewindow";
+        bindm."Super, mouse:272" = "movewindow"; # TODO Keep?
 
-        bind."Super, A" = "submap, align";
-        submap.align = {
-          bind.", C" = "scroller:alignwindow, c";
-          bind.", Up" = "scroller:alignwindow, u";
-          bind.", Right" = "scroller:alignwindow, r";
-          bind.", Down" = "scroller:alignwindow, d";
-          bind.", Left" = "scroller:alignwindow, l";
-          bind.", catchall" = "submap, reset";
-        };
+        bind."Super+Shift+Ctrl, C" = "scroller:alignwindow, c";
+        bind."Super+Shift+Ctrl, Up" = "scroller:alignwindow, u";
+        bind."Super+Shift+Ctrl, Right" = "scroller:alignwindow, r";
+        bind."Super+Shift+Ctrl, Down" = "scroller:alignwindow, d";
+        bind."Super+Shift+Ctrl, Left" = "scroller:alignwindow, l";
 
         bind."Super, Minus" = "scroller:cyclesize, prev";
         bind."Super, Plus" = "scroller:cyclesize, next";
-        bindes."Super_L, R&Up" = "resizeactive, 0 -100";
-        bindes."Super_L, R&Right" = "resizeactive, 100 0";
-        bindes."Super_L, R&Down" = "resizeactive, 0 100";
-        bindes."Super_L, R&Left" = "resizeactive, -100 0";
-        bindm."Super, mouse:273" = "resizewindow";
-        binds."Super_L, F&V" = "scroller:fitsize, visible";
-        binds."Super_L, F&Up" = "scroller:fitsize, active";
-        binds."Super_L, F&Right" = "scroller:fitsize, toend";
-        binds."Super_L, F&Down" = "scroller:fitsize, all";
-        binds."Super_L, F&Left" = "scroller:fitsize, tobeg";
+        binde."Super+Alt+Ctrl, Up" = "resizeactive, 0 -100";
+        binde."Super+Alt+Ctrl, Right" = "resizeactive, 100 0";
+        binde."Super+Alt+Ctrl, Down" = "resizeactive, 0 100";
+        binde."Super+Alt+Ctrl, Left" = "resizeactive, -100 0";
+        bindm."Super, mouse:273" = "resizewindow"; # TODO Keep?
+
+        bind."Super+Alt, V" = "scroller:fitsize, visible";
+        bind."Super+Alt, Up" = "scroller:fitsize, active";
+        bind."Super+Alt, Right" = "scroller:fitsize, toend";
+        bind."Super+Alt, Down" = "scroller:fitsize, all";
+        bind."Super+Alt, Left" = "scroller:fitsize, tobeg";
+
+        bind."Super, Tab" = "scroller:toggleoverview"; # TODO Resize overview, or use other overview options like hyprexpo
+
+        bind."Super, 1" = "workspace, 1";
+        bind."Super, 2" = "workspace, 2";
+        bind."Super, 3" = "workspace, 3";
 
         bind."Super, Q" = "killactive";
 
