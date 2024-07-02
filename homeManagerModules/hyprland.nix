@@ -38,13 +38,13 @@ in
     wayland.windowManager.hyprland = {
       enable = true;
 
-      plugins = [ inputs.hyprscroller.packages.${pkgs.system}.default ];
+      plugins = [ pkgs.hyprlandPlugins.hy3 ];
 
-      config = {
+      config = attrsets.recursiveUpdate {
         general = {
           gaps_in = 2;
           gaps_out = 5;
-          layout = "scroller";
+          layout = "hy3";
           # TODO allow_tearing
         };
 
@@ -97,8 +97,6 @@ in
           initial_workspace_tracking = 0;
         };
 
-        binds.scroll_event_delay = 0;
-
         # Only persists the cursor position when switching between workspaces
         cursor = {
           persistent_warps = true;
@@ -106,67 +104,37 @@ in
         };
 
         monitor = [ "Unknown-1, disable" ];
-      } // cfg.config;
+      } cfg.config;
 
       monitors = cfg.monitors;
 
       animations.bezierCurve = { }; # Hyprnix shouldn't include it's default bezier curves
 
       keyBinds = {
-        bind."Super, Y" = "scroller:setmode, row";
-        bind."Super, X" = "scroller:setmode, col";
+        bind."Super+Alt, H" = "hy3:makegroup, h";
+        bind."Super+Alt, V" = "hy3:makegroup, v";
+        bindr."Super, Alt" = "hy3:makegroup, opposite";
+        bind."Super+Alt, T" = "hy3:makegroup, tab";
 
-        bind."Super, Up" = "scroller:movefocus, u";
-        bind."Super, Right" = "scroller:movefocus, r";
-        bind."Super, Down" = "scroller:movefocus, d";
-        bind."Super, Left" = "scroller:movefocus, l";
-        bind."Super, Home" = "scroller:movefocus, begin";
-        bind."Super, End" = "scroller:movefocus, end";
+        # TODO hy3:changegroup, hy3:changefocus
 
-        # TODO Markers don't grab workspaces correctly
-        bind."Super+Ctrl, A" = "scroller:marksadd, a";
-        bind."Super+Ctrl, S" = "scroller:marksadd, s";
-        bind."Super+Ctrl, D" = "scroller:marksadd, d";
-        bind."Super, A" = "scroller:marksvisit, a";
-        bind."Super, S" = "scroller:marksvisit, s";
-        bind."Super, D" = "scroller:marksvisit, d";
+        bind."Super, Up" = "hy3:movefocus, u";
+        bind."Super, Right" = "hy3:movefocus, r";
+        bind."Super, Down" = "hy3:movefocus, d";
+        bind."Super, Left" = "hy3:movefocus, l";
 
-        bind."Super+Shift, Up" = "scroller:movewindow, u";
-        bind."Super+Shift, Right" = "scroller:movewindow, r";
-        bind."Super+Shift, Down" = "scroller:movewindow, d";
-        bind."Super+Shift, Left" = "scroller:movewindow, l";
-        bind."Super+Shift, Home" = "scroller:movewindow, begin";
-        bind."Super+Shift, End" = "scroller:movewindow, end";
-        bind."Super+Shift, L" = "scroller:admitwindow";
-        bind."Super+Shift, R" = "scroller:expelwindow";
+        bind."Super+Shift, Up" = "hy3:movewindow, u";
+        bind."Super+Shift, Right" = "hy3:movewindow, r";
+        bind."Super+Shift, Down" = "hy3:movewindow, d";
+        bind."Super+Shift, Left" = "hy3:movewindow, l";
         bindm."Super, mouse:272" = "movewindow";
 
-        bind."Super+Shift+Ctrl, C" = "scroller:alignwindow, c";
-        bind."Super+Shift+Ctrl, Up" = "scroller:alignwindow, u";
-        bind."Super+Shift+Ctrl, Right" = "scroller:alignwindow, r";
-        bind."Super+Shift+Ctrl, Down" = "scroller:alignwindow, d";
-        bind."Super+Shift+Ctrl, Left" = "scroller:alignwindow, l";
-
-        bind."Super, Plus" = "scroller:cyclesize, next";
-        bind."Super, Minus" = "scroller:cyclesize, prev";
-        binde."Super+Alt+Ctrl, Up" = "resizeactive, 0 -100";
-        binde."Super+Alt+Ctrl, Right" = "resizeactive, 100 0";
-        binde."Super+Alt+Ctrl, Down" = "resizeactive, 0 100";
-        binde."Super+Alt+Ctrl, Left" = "resizeactive, -100 0";
         bindm."Super, mouse:273" = "resizewindow";
         bind."Super, F" = "fullscreen, 0";
         bind."Super, G" = "fullscreen, 1";
 
-        bind."Super+Alt, V" = "scroller:fitsize, visible";
-        bind."Super+Alt, Up" = "scroller:fitsize, active";
-        bind."Super+Alt, Right" = "scroller:fitsize, toend";
-        bind."Super+Alt, Down" = "scroller:fitsize, all";
-        bind."Super+Alt, Left" = "scroller:fitsize, tobeg";
-
         bind."Super, O" = "togglefloating";
         bind."Super, P" = "pin";
-
-        bind."Super, Tab" = "scroller:toggleoverview"; # TODO Resize overview, or use other overview options like hyprexpo
 
         bind."Super, 1" = "focusworkspaceoncurrentmonitor, 1";
         bind."Super, 2" = "focusworkspaceoncurrentmonitor, 2";
@@ -178,23 +146,25 @@ in
         bind."Super, 8" = "focusworkspaceoncurrentmonitor, 8";
         bind."Super, 9" = "focusworkspaceoncurrentmonitor, 9";
         bind."Super, 0" = "focusworkspaceoncurrentmonitor, 10";
-        bind."Super+Ctrl, Plus" = "focusworkspaceoncurrentmonitor, +1";
-        bind."Super+Ctrl, Minus" = "focusworkspaceoncurrentmonitor, -1";
+        bind."Super, Plus" = "focusworkspaceoncurrentmonitor, +1";
+        bind."Super, Minus" = "focusworkspaceoncurrentmonitor, -1";
 
-        bind."Super+Shift, 1" = "movetoworkspacesilent, 1";
-        bind."Super+Shift, 2" = "movetoworkspacesilent, 2";
-        bind."Super+Shift, 3" = "movetoworkspacesilent, 3";
-        bind."Super+Shift, 4" = "movetoworkspacesilent, 4";
-        bind."Super+Shift, 5" = "movetoworkspacesilent, 5";
-        bind."Super+Shift, 6" = "movetoworkspacesilent, 6";
-        bind."Super+Shift, 7" = "movetoworkspacesilent, 7";
-        bind."Super+Shift, 8" = "movetoworkspacesilent, 8";
-        bind."Super+Shift, 9" = "movetoworkspacesilent, 9";
-        bind."Super+Shift, 0" = "movetoworkspacesilent, 0";
+        bind."Super+Shift, 1" = "hy3:movetoworkspace, 1";
+        bind."Super+Shift, 2" = "hy3:movetoworkspace, 2";
+        bind."Super+Shift, 3" = "hy3:movetoworkspace, 3";
+        bind."Super+Shift, 4" = "hy3:movetoworkspace, 4";
+        bind."Super+Shift, 5" = "hy3:movetoworkspace, 5";
+        bind."Super+Shift, 6" = "hy3:movetoworkspace, 6";
+        bind."Super+Shift, 7" = "hy3:movetoworkspace, 7";
+        bind."Super+Shift, 8" = "hy3:movetoworkspace, 8";
+        bind."Super+Shift, 9" = "hy3:movetoworkspace, 9";
+        bind."Super+Shift, 0" = "hy3:movetoworkspace, 0";
+        bind."Super+Shift, Plus" = "hy3:movetoworkspace, +1";
+        bind."Super+Shift, Minus" = "hy3:movetoworkspace, -1";
 
         bind."Super, Space" = "focusmonitor, +1";
 
-        bind."Super, Q" = "killactive";
+        bind."Super, Q" = "hy3:killactive";
 
         bind."Super, T" = "exec, kitty";
       };
