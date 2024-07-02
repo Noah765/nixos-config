@@ -42,7 +42,7 @@ in
 
       config = {
         general = {
-          gaps_in = 4;
+          gaps_in = 2;
           gaps_out = 5;
           layout = "scroller";
           no_focus_fallback = true;
@@ -51,10 +51,33 @@ in
         };
 
         decoration = {
-          rounding = 20;
+          rounding = 12;
           # TODO shadows
           # TODO dimming
           # TODO blur
+        };
+
+        # These values are taken from end-4's config
+        animations = {
+          bezier = [
+            "md3_decel, 0.05, 0.7, 0.1, 1"
+            "md3_accel, 0.3, 0, 0.8, 0.15"
+            "menu_decel, 0.1, 1, 0, 1"
+            "menu_accel, 0.38, 0.04, 1, 0.07"
+          ];
+
+          animation = [
+            "windows, 1, 3, md3_decel, popin 60%"
+            "windowsOut, 1, 3, md3_accel, popin 60%"
+            "layersIn, 1, 3, menu_decel, slide"
+            "layersOut, 1, 1.6, menu_accel"
+            "fade, 1, 3, md3_decel"
+            "fadeLayersIn, 1, 2, menu_decel"
+            "fadeLayersOut, 1, 4.5, menu_accel"
+            "border, 1, 10, default"
+            "workspaces, 1, 7, menu_decel, slide"
+            "specialWorkspace, 1, 3, md3_decel, slidevert"
+          ];
         };
 
         input = {
@@ -91,8 +114,6 @@ in
 
         monitor = [ "Unknown-1, disable" ];
       } // cfg.config;
-
-      animations = { }; # TODO
 
       monitors = cfg.monitors;
 
@@ -137,6 +158,8 @@ in
         binde."Super+Alt+Ctrl, Down" = "resizeactive, 0 100";
         binde."Super+Alt+Ctrl, Left" = "resizeactive, -100 0";
         bindm."Super, mouse:273" = "resizewindow"; # TODO Keep?
+        bind."Super, F" = "fullscreen, 0";
+        bind."Super, G" = "fullscreen, 1";
 
         bind."Super+Alt, V" = "scroller:fitsize, visible";
         bind."Super+Alt, Up" = "scroller:fitsize, active";
@@ -144,11 +167,32 @@ in
         bind."Super+Alt, Down" = "scroller:fitsize, all";
         bind."Super+Alt, Left" = "scroller:fitsize, tobeg";
 
+        bind."Super, O" = "togglefloating";
+        bind."Super, P" = "pin";
+
         bind."Super, Tab" = "scroller:toggleoverview"; # TODO Resize overview, or use other overview options like hyprexpo
 
-        bind."Super, 1" = "workspace, 1";
-        bind."Super, 2" = "workspace, 2";
-        bind."Super, 3" = "workspace, 3";
+        bind."Super, 1" = "focusworkspaceoncurrentmonitor, 1";
+        bind."Super, 2" = "focusworkspaceoncurrentmonitor, 2";
+        bind."Super, 3" = "focusworkspaceoncurrentmonitor, 3";
+        bind."Super, 4" = "focusworkspaceoncurrentmonitor, 4";
+        bind."Super, 5" = "focusworkspaceoncurrentmonitor, 5";
+        bind."Super, 6" = "focusworkspaceoncurrentmonitor, 6";
+        bind."Super, 7" = "focusworkspaceoncurrentmonitor, 7";
+        bind."Super, 8" = "focusworkspaceoncurrentmonitor, 8";
+        bind."Super, 9" = "focusworkspaceoncurrentmonitor, 9";
+        bind."Super, 0" = "focusworkspaceoncurrentmonitor, 10";
+
+        bind."Super+Shift, 1" = "movetoworkspacesilent, 1";
+        bind."Super+Shift, 2" = "movetoworkspacesilent, 2";
+        bind."Super+Shift, 3" = "movetoworkspacesilent, 3";
+        bind."Super+Shift, 4" = "movetoworkspacesilent, 4";
+        bind."Super+Shift, 5" = "movetoworkspacesilent, 5";
+        bind."Super+Shift, 6" = "movetoworkspacesilent, 6";
+        bind."Super+Shift, 7" = "movetoworkspacesilent, 7";
+        bind."Super+Shift, 8" = "movetoworkspacesilent, 8";
+        bind."Super+Shift, 9" = "movetoworkspacesilent, 9";
+        bind."Super+Shift, 0" = "movetoworkspacesilent, 0";
 
         bind."Super, Q" = "killactive";
 
