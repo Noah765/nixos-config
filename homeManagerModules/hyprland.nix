@@ -45,8 +45,6 @@ in
           gaps_in = 2;
           gaps_out = 5;
           layout = "scroller";
-          no_focus_fallback = true;
-          resize_on_border = true;
           # TODO allow_tearing
         };
 
@@ -83,10 +81,8 @@ in
         input = {
           repeat_rate = 35;
           repeat_delay = 250;
-          special_fallthrough = true;
+          special_fallthrough = true; # TODO special workspaces (maybe change this)
         };
-
-        # TODO groups (configure the layout first)
 
         misc = {
           disable_hyprland_logo = true;
@@ -98,24 +94,23 @@ in
           swallow_regex = "^${config.home.sessionVariables.TERMINAL}$";
           focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
-          # TODO initial_workspace_tracking
+          initial_workspace_tracking = 0;
         };
 
-        binds = {
-          scroll_event_delay = 0;
-          # TODO workspace settings
-          # TODO focus_preferred_method
-        };
+        binds.scroll_event_delay = 0;
 
+        # Only persists the cursor position when switching between workspaces
         cursor = {
-          # TODO persistent_warps
-          # TODO warp_on_change_workspace
+          persistent_warps = true;
+          warp_on_change_workspace = true;
         };
 
         monitor = [ "Unknown-1, disable" ];
       } // cfg.config;
 
       monitors = cfg.monitors;
+
+      animations.bezierCurve = { }; # Hyprnix shouldn't include it's default bezier curves
 
       keyBinds = {
         bind."Super, Y" = "scroller:setmode, row";
@@ -128,6 +123,7 @@ in
         bind."Super, Home" = "scroller:movefocus, begin";
         bind."Super, End" = "scroller:movefocus, end";
 
+        # TODO Markers don't grab workspaces correctly
         bind."Super+Ctrl, A" = "scroller:marksadd, a";
         bind."Super+Ctrl, S" = "scroller:marksadd, s";
         bind."Super+Ctrl, D" = "scroller:marksadd, d";
@@ -143,7 +139,7 @@ in
         bind."Super+Shift, End" = "scroller:movewindow, end";
         bind."Super+Shift, L" = "scroller:admitwindow";
         bind."Super+Shift, R" = "scroller:expelwindow";
-        bindm."Super, mouse:272" = "movewindow"; # TODO Keep?
+        bindm."Super, mouse:272" = "movewindow";
 
         bind."Super+Shift+Ctrl, C" = "scroller:alignwindow, c";
         bind."Super+Shift+Ctrl, Up" = "scroller:alignwindow, u";
@@ -151,13 +147,13 @@ in
         bind."Super+Shift+Ctrl, Down" = "scroller:alignwindow, d";
         bind."Super+Shift+Ctrl, Left" = "scroller:alignwindow, l";
 
-        bind."Super, Minus" = "scroller:cyclesize, prev";
         bind."Super, Plus" = "scroller:cyclesize, next";
+        bind."Super, Minus" = "scroller:cyclesize, prev";
         binde."Super+Alt+Ctrl, Up" = "resizeactive, 0 -100";
         binde."Super+Alt+Ctrl, Right" = "resizeactive, 100 0";
         binde."Super+Alt+Ctrl, Down" = "resizeactive, 0 100";
         binde."Super+Alt+Ctrl, Left" = "resizeactive, -100 0";
-        bindm."Super, mouse:273" = "resizewindow"; # TODO Keep?
+        bindm."Super, mouse:273" = "resizewindow";
         bind."Super, F" = "fullscreen, 0";
         bind."Super, G" = "fullscreen, 1";
 
@@ -182,6 +178,8 @@ in
         bind."Super, 8" = "focusworkspaceoncurrentmonitor, 8";
         bind."Super, 9" = "focusworkspaceoncurrentmonitor, 9";
         bind."Super, 0" = "focusworkspaceoncurrentmonitor, 10";
+        bind."Super+Ctrl, Plus" = "focusworkspaceoncurrentmonitor, +1";
+        bind."Super+Ctrl, Minus" = "focusworkspaceoncurrentmonitor, -1";
 
         bind."Super+Shift, 1" = "movetoworkspacesilent, 1";
         bind."Super+Shift, 2" = "movetoworkspacesilent, 2";
@@ -193,6 +191,8 @@ in
         bind."Super+Shift, 8" = "movetoworkspacesilent, 8";
         bind."Super+Shift, 9" = "movetoworkspacesilent, 9";
         bind."Super+Shift, 0" = "movetoworkspacesilent, 0";
+
+        bind."Super, Space" = "focusmonitor, +1";
 
         bind."Super, Q" = "killactive";
 
