@@ -14,13 +14,6 @@ combinedManager.mkFlake {
   initialInputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    impermanence.url = "github:tmarkov/impermanence"; # TODO: Change to nix-community when they fixed https://github.com/nix-community/impermanence/issues/154
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -64,6 +57,7 @@ combinedManager.mkFlake {
     };
     iso = {
       system = "x86_64-linux";
+      useHomeManager = false; # TODO: Working?
       modules = [
         ./hosts/iso/configuration.nix
         ./modules
