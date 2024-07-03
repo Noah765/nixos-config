@@ -1,10 +1,11 @@
 let
-  combinedManager = import (
-    builtins.fetchTarball {
-      url = "https://github.com/flafydev/combined-manager/archive/725f45b519187d6e1a49fe4d92b75d32b0d05687.tar.gz";
-      sha256 = "sha256:0kkwx01m5a28sd0v41axjypmiphqfhnivl8pwk9skf3c1aarghfb";
-    }
-  );
+  #combinedManager = import (
+  #  builtins.fetchTarball {
+  #    url = "https://github.com/flafydev/combined-manager/archive/725f45b519187d6e1a49fe4d92b75d32b0d05687.tar.gz";
+  #    sha256 = "sha256:0kkwx01m5a28sd0v41axjypmiphqfhnivl8pwk9skf3c1aarghfb";
+  #  }
+  #);
+  combinedManager = import /home/noah/Downloads/combined-manager;
 in
 combinedManager.mkFlake {
   description = "NixOS configuration";
@@ -57,7 +58,7 @@ combinedManager.mkFlake {
     };
     iso = {
       system = "x86_64-linux";
-      useHomeManager = false; # TODO: Working?
+      #useHomeManager = false; # TODO: Working?
       modules = [
         ./hosts/iso/configuration.nix
         ./modules

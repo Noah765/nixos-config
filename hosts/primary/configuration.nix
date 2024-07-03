@@ -3,6 +3,7 @@
   osModules = [ ./hardware-configuration.nix ];
 
   impermanence.disk = "nvme0n1";
+  #impermanence.os.directories = ["test"];
   #nvidia.enable = true;
   #homeManager.module = ./home.nix;
   #hyprland.enable = true;
