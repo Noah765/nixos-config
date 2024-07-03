@@ -1,7 +1,17 @@
-{
-  description = "Nixos config flake";
+let
+  combinedManager = import (
+    builtins.fetchTarball {
+      url = "https://github.com/flafydev/combined-manager/archive/725f45b519187d6e1a49fe4d92b75d32b0d05687.tar.gz";
+      sha256 = "sha256:0kkwx01m5a28sd0v41axjypmiphqfhnivl8pwk9skf3c1aarghfb";
+    }
+  );
+in
+combinedManager.mkFlake {
+  description = "NixOS configuration";
 
-  inputs = {
+  lockFile = ./flake.lock;
+
+  initialInputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     disko = {
@@ -15,6 +25,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-super.url = "github:Noah765/nix-super/evaluable-flake-thunk"; # TODO Use https://github.com/privatevoid-net/nix-super, once https://github.com/privatevoid-net/nix-super/pull/19 gets merged
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     bird-nix-lib = {
@@ -42,36 +54,20 @@
     };
   };
 
-  outputs =
-    { self, nixpkgs, ... }@inputs:
-    {
-      nixosConfigurations =
-        let
-          buildHmConfig = name: self.nixosConfigurations.${name}.config.home-manager.users.noah or { };
-        in
-        {
-          primary = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs;
-              hmConfig = buildHmConfig "primary";
-            };
-            modules = [
-              ./hosts/primary/configuration.nix
-              ./nixosModules
-            ];
-          };
-          iso = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs;
-              hmConfig = buildHmConfig "iso";
-            };
-            modules = [
-              ./hosts/iso/configuration.nix
-              ./nixosModules
-            ];
-          };
-        };
-
-      homeManagerModules.default = ./homeManagerModules;
+  configurations = {
+    primary = {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/primary/configuration.nix
+        ./modules
+      ];
     };
+    iso = {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/iso/configuration.nix
+        ./modules
+      ];
+    };
+  };
 }

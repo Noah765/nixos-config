@@ -1,4 +1,9 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 {
   imports = [
@@ -18,10 +23,19 @@ with lib;
   system.stateVersion = "23.11"; # Read the docs before changing
 
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    substituters = [ "https://cache.privatevoid.net" ];
+    trusted-public-keys = [ "cache.privatevoid.net:SErQ8bvNWANeAvtsOESUwVYr2VJynfuc9JRwlzTTkVg=" ];
+  };
+  nix.package = inputs.nix-super.packages.${pkgs.system}.default;
+  # Simplify INSTALLABLE command line arguments, e.g. "nix shell nixpkgs#jq" becomes "nix shell jq"
+  nix.registry.default = {
+    from = {
+      id = "default";
+      type = "indirect";
+    };
+    flake = inputs.nixpkgs;
+  };
 
   impermanence.enable = mkDefault true;
   bootloader.enable = mkDefault true;
