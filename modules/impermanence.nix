@@ -14,19 +14,34 @@ let
   cfg = config.impermanence;
 in
 {
+  inputs = {
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence.url = "github:tmarkov/impermanence"; # TODO: Change to nix-community when they fixed https://github.com/nix-community/impermanence/issues/154
+  };
+
+  osImports = [
+    inputs.disko.nixosModules.default
+    inputs.impermanence.nixosModules.impermanence
+  ];
+  hmImports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
+
   options.impermanence =
     let
-      #os =
-        #(modules.evalModules {
-        #  modules =
-        #    [ { _module.args.name = "/persist/system"; } ]
-        #    #++ (options.os.type.getSubOptions [ ])
-        #    ++ osOptions;#.environment.persistence.type.nestedTypes.elemType.getSubModules;
-        #}).options;
-#	osConfig.environment.pdskfcasjdna;
-      #hm = (options.hm.type.getSubOptions [ ]).home.persistence.type.getSubOptions [ ];
-      #hm = hmOptions.home.persistence.type.getSubOptions [ ];
     in
+    #os =
+    #(modules.evalModules {
+    #  modules =
+    #    [ { _module.args.name = "/persist/system"; } ]
+    #    #++ (options.os.type.getSubOptions [ ])
+    #    ++ osOptions;#.environment.persistence.type.nestedTypes.elemType.getSubModules;
+    #}).options;
+    #	osConfig.environment.pdskfcasjdna;
+    #hm = (options.hm.type.getSubOptions [ ]).home.persistence.type.getSubOptions [ ];
+    #hm = hmOptions.home.persistence.type.getSubOptions [ ];
     {
       enable = mkEnableOption "impermanence";
       disk = mkOption {
@@ -45,22 +60,7 @@ in
     };
 
   config = mkIf cfg.enable {
-    inputs = {
-      disko = {
-        url = "github:nix-community/disko";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-
-      impermanence.url = "github:tmarkov/impermanence"; # TODO: Change to nix-community when they fixed https://github.com/nix-community/impermanence/issues/154
-    };
-
-    osModules = [
-      inputs.disko.nixosModules.default
-      inputs.impermanence.nixosModules.impermanence
-    ];
-    hmModules = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
-
-    #assertions = [ { assertion = cfg.disk != null; } ]; # The disk option may not be set otherwise, this assertion never actually fails, but forces nix to evaluate cfg.disk
+    # TODO assertions = [ { assertion = cfg.disk != null; } ]; # The disk option may not be set otherwise, this assertion never actually fails, but forces nix to evaluate cfg.disk
 
     os = {
       disko.devices = {
@@ -166,14 +166,14 @@ in
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
           "/etc/nixos"
-        ] ;#++ cfg.os.directories;
+        ]; # ++ cfg.os.directories;
         files = [
           "/etc/machine-id"
           {
             file = "/var/keys/secret_file";
             parentDirectory.mode = "u=rwx,g=,o=";
           }
-        ] ;#++ cfg.os.files;
+        ]; # ++ cfg.os.files;
       };
 
       systemd.tmpfiles.rules = [ "d /persist/home 0700 noah users -" ];
@@ -191,8 +191,8 @@ in
         ".gnupg"
         ".local/share/keyrings" # TODO: Remove if unused
         ".local/share/direnv" # TODO: Remove if unused
-      ];# ++ cfg.hm.directories;
-      files = [ ".screenrc" ] ;#++ cfg.hm.files; # TODO: Remove if unused
+      ]; # ++ cfg.hm.directories;
+      files = [ ".screenrc" ]; # ++ cfg.hm.files; # TODO: Remove if unused
     };
   };
 }
