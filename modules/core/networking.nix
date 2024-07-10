@@ -13,6 +13,6 @@ in
       networkmanager.enable = true;
     };
     user.groups = [ "networkmanager" ];
-    # TODO impermanence.directories = [ "/etc/NetworkManager/system-connections" ];
+    impermanence.os.directories = [ "/etc/NetworkManager/system-connections" ];
   };
 }

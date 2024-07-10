@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  useHm,
   options,
   osOptions,
   hmOptions,
@@ -30,19 +31,9 @@ in
 
   options.impermanence =
     let
-      #os =
-      #(modules.evalModules {
-      #  modules =
-      #    [ { _module.args.name = "/persist/system"; } ]
-      #    #++ (options.os.type.getSubOptions [ ])
-      #    ++ osOptions;#.environment.persistence.type.nestedTypes.elemType.getSubModules;
-      #}).options;
-      #	osConfig.environment.pdskfcasjdna;
-      #hm = (options.hm.type.getSubOptions [ ]).home.persistence.type.getSubOptions [ ];
       os = osOptions.environment.persistence "/persist/system";
       hm = hmOptions.home.persistence "/persist/home";
     in
-    builtins.trace (builtins.attrNames ((options.os.type.getSubOptions []).home-manager.users.type))
     {
       enable = mkEnableOption "impermanence";
       disk = mkOption {
@@ -59,7 +50,7 @@ in
     };
 
   config = mkIf cfg.enable {
-    # TODO assertions = [ { assertion = cfg.disk != null; } ]; # The disk option may not be set otherwise, this assertion never actually fails, but forces nix to evaluate cfg.disk
+    assertions = [ { assertion = cfg.disk != null; } ];
 
     os = {
       disko.devices = {
@@ -175,8 +166,8 @@ in
         ] ++ cfg.os.files;
       };
 
-      systemd.tmpfiles.rules = [ "d /persist/home 0700 noah users -" ];
-      programs.fuse.userAllowOther = true;
+      systemd.tmpfiles.rules = mkIf useHm [ "d /persist/home 0700 noah users -" ];
+      programs.fuse.userAllowOther = mkIf useHm true;
     };
 
     hm.home.persistence."/persist/home" = {

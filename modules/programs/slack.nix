@@ -12,7 +12,7 @@ in
   options.slack.enable = mkEnableOption "slack";
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.slack ];
-    impermanence.directories = [ ".config/Slack" ];
+    hm.home.packages = [ pkgs.slack ];
+    impermanence.hm.directories = [ ".config/Slack" ];
   };
 }

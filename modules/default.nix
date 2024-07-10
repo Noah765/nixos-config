@@ -1,17 +1,22 @@
 { lib, ... }:
 with lib;
 {
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   imports = [
-    ./impermanence.nix
-    ./bootloader.nix
-    ./networking.nix
-    ./audio.nix
-    ./nvidia.nix
-    ./user.nix
+    ./core
     ./zsh.nix
     ./localization.nix
     ./docs.nix
     ./hyprland.nix
+    ./programs
   ];
 
   # Read the docs before changing
@@ -20,11 +25,6 @@ with lib;
 
   hmUsername = "noah";
 
-  impermanence.enable = mkDefault true;
-  bootloader.enable = mkDefault true;
-  networking.enable = mkDefault true;
-  audio.enable = mkDefault true;
-  user.enable = mkDefault true;
   zsh.enable = mkDefault true;
   localization.enable = mkDefault true;
   docs.enable = mkDefault true;

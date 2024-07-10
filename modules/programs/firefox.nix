@@ -7,11 +7,11 @@ in
   options.firefox.enable = mkEnableOption "firefox";
 
   config = mkIf cfg.enable {
-    programs.firefox = {
+    hm.programs.firefox = {
       enable = true;
       profiles.noah = { };
     };
 
-    impermanence.directories = [ ".mozilla/firefox/noah" ];
+    impermanence.hm.directories = [ ".mozilla/firefox/noah" ];
   };
 }

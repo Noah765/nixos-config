@@ -6,10 +6,8 @@ in
 {
   options.kitty.enable = mkEnableOption "kitty";
 
-  config = mkIf cfg.enable {
+  config.hm = mkIf cfg.enable {
     programs.kitty.enable = true;
-    home.sessionVariables = {
-      TERMINAL = "kitty";
-    };
+    home.sessionVariables.TERMINAL = "kitty";
   };
 }

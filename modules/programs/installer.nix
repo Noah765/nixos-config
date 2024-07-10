@@ -11,7 +11,7 @@ in
 {
   options.installer.enable = mkEnableOption "installer";
 
-  config.home.packages = mkIf cfg.enable [
+  config.hm.home.packages = mkIf cfg.enable [
     (pkgs.writeShellScriptBin "build-installer" ''
       set -euo pipefail
 
