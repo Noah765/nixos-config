@@ -1,9 +1,6 @@
 let
-  # combinedManager = builtins.getFlake "github:Noah765/combined-manager/de37fac80eea195dfdf768ab442b3f8d89157de9";
-  #combinedManager = import (builtins.fetchTarball {
-  #  url = "https://github.com/Noah765/combined-manager/archive/de37fac80eea195dfdf768ab442b3f8d89157de9.tar.gz";
-  #  sha256 = "sha256:1rnyc89x363l402yiz91wzfnls52yhsqkvdjwr05jr5dgas8hvfl";
-  #});
+  # TODO Put combined manager itself as a flake input for automatic updating?
+  #combinedManager = builtins.getFlake "github:Noah765/combined-manager/b81722f0816d92e3d61d260a8a76b4434f8c505b";
   combinedManager = import ./combined-manager;
 in
 combinedManager.mkFlake {
@@ -57,45 +54,8 @@ combinedManager.mkFlake {
 
   configurations = {
     primary.modules = [
-      #{
-      #  hmUsername = "noah";
-      #osImports = [
-      #  ./nixosModules
-      #  ./hosts/primary/configuration.nix
-      #];
-      #}
       ./modules
       ./hosts/primary/configuration.nix
     ];
   };
-
-  outputs =
-    { self, ... }@inputs:
-    {
-      #    nixosConfigurations =
-      #      let
-      #        buildHmConfig = name: self.nixosConfigurations.${name}.config.home-manager.users.noah or { };
-      #     in
-      #      {
-      #        primary = inputs.nixpkgs.lib.nixosSystem {
-      #          specialArgs = {
-      #            inherit inputs;
-      #            hmConfig = buildHmConfig "primary";
-      #          };
-      #          modules = [
-      #            ./hosts/primary/configuration.nix
-      #            ./nixosModules
-      #          ];
-      #        };
-      #        iso = {
-      #          #useHomeManager = false; # TODO: Working?
-      #          modules = [
-      #            ./hosts/iso/configuration.nix
-      #            ./modules
-      #          ];
-      #        };
-      #      };
-
-      homeManagerModules.default = ./homeManagerModules;
-    };
 }

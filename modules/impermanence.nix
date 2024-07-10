@@ -2,11 +2,10 @@
   lib,
   inputs,
   options,
-  #osOptions,
-  #osOps,
-  osConfig,
-  #hmOptions,
+  osOptions,
+  hmOptions,
   config,
+  osConfig,
   ...
 }:
 with lib;
@@ -31,17 +30,19 @@ in
 
   options.impermanence =
     let
+      #os =
+      #(modules.evalModules {
+      #  modules =
+      #    [ { _module.args.name = "/persist/system"; } ]
+      #    #++ (options.os.type.getSubOptions [ ])
+      #    ++ osOptions;#.environment.persistence.type.nestedTypes.elemType.getSubModules;
+      #}).options;
+      #	osConfig.environment.pdskfcasjdna;
+      #hm = (options.hm.type.getSubOptions [ ]).home.persistence.type.getSubOptions [ ];
+      os = osOptions.environment.persistence "/persist/system";
+      hm = hmOptions.home.persistence "/persist/home";
     in
-    #os =
-    #(modules.evalModules {
-    #  modules =
-    #    [ { _module.args.name = "/persist/system"; } ]
-    #    #++ (options.os.type.getSubOptions [ ])
-    #    ++ osOptions;#.environment.persistence.type.nestedTypes.elemType.getSubModules;
-    #}).options;
-    #	osConfig.environment.pdskfcasjdna;
-    #hm = (options.hm.type.getSubOptions [ ]).home.persistence.type.getSubOptions [ ];
-    #hm = hmOptions.home.persistence.type.getSubOptions [ ];
+    builtins.trace (builtins.attrNames ((options.os.type.getSubOptions []).home-manager.users.type))
     {
       enable = mkEnableOption "impermanence";
       disk = mkOption {
@@ -49,14 +50,12 @@ in
         example = "sda";
         description = "The disk for disko to manager and to use for impermanence.";
       };
-      #os = {
-      #  directories = os.directories;
-      #  files = os.files;
-      #};
-      #hm = {
-      #  directories = hm.directories;
-      #  files = hm.files;
-      #};
+      os = {
+        inherit (os) files directories;
+      };
+      hm = {
+        inherit (hm) files directories;
+      };
     };
 
   config = mkIf cfg.enable {
@@ -166,14 +165,14 @@ in
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
           "/etc/nixos"
-        ]; # ++ cfg.os.directories;
+        ] ++ cfg.os.directories;
         files = [
           "/etc/machine-id"
           {
             file = "/var/keys/secret_file";
             parentDirectory.mode = "u=rwx,g=,o=";
           }
-        ]; # ++ cfg.os.files;
+        ] ++ cfg.os.files;
       };
 
       systemd.tmpfiles.rules = [ "d /persist/home 0700 noah users -" ];
@@ -191,8 +190,8 @@ in
         ".gnupg"
         ".local/share/keyrings" # TODO: Remove if unused
         ".local/share/direnv" # TODO: Remove if unused
-      ]; # ++ cfg.hm.directories;
-      files = [ ".screenrc" ]; # ++ cfg.hm.files; # TODO: Remove if unused
+      ] ++ cfg.hm.directories;
+      files = [ ".screenrc" ] ++ cfg.hm.files; # TODO: Remove if unused
     };
   };
 }
