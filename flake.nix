@@ -1,6 +1,5 @@
 let
   # combinedManager = builtins.getFlake "github:Noah765/combined-manager/de37fac80eea195dfdf768ab442b3f8d89157de9";
-  # combinedManager = builtins.getFlake "";
   #combinedManager = import (builtins.fetchTarball {
   #  url = "https://github.com/Noah765/combined-manager/archive/de37fac80eea195dfdf768ab442b3f8d89157de9.tar.gz";
   #  sha256 = "sha256:1rnyc89x363l402yiz91wzfnls52yhsqkvdjwr05jr5dgas8hvfl";

@@ -6,7 +6,7 @@ in
 {
   options.audio.enable = mkEnableOption "audio";
 
-  config = mkIf cfg.enable {
+  config.os = mkIf cfg.enable {
     security.rtkit.enable = true;
 
     services.pipewire = {

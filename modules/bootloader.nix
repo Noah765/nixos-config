@@ -6,8 +6,8 @@ in
 {
   options.bootloader.enable = mkEnableOption "bootloader";
 
-  config = mkIf cfg.enable {
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+  config.os.boot.loader = mkIf cfg.enable {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
   };
 }

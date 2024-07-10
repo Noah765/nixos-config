@@ -6,7 +6,7 @@ in
 {
   options.docs.enable = mkEnableOption "docs";
 
-  config.documentation = mkIf cfg.enable {
+  config.os.documentation = mkIf cfg.enable {
     dev.enable = true;
     nixos.includeAllModules = true;
   };

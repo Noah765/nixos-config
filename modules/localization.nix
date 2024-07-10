@@ -6,7 +6,7 @@ in
 {
   options.localization.enable = mkEnableOption "localization";
 
-  config = mkIf cfg.enable {
+  config.os = mkIf cfg.enable {
     time.timeZone = "Europe/Berlin";
 
     i18n = {

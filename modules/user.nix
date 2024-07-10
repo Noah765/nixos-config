@@ -13,7 +13,7 @@ in
     };
   };
 
-  config.users.users.noah = mkIf cfg.enable {
+  config.os.users.users.noah = mkIf cfg.enable {
     isNormalUser = true;
     initialPassword = "12345";
     extraGroups = [ "wheel" ] ++ cfg.groups;
