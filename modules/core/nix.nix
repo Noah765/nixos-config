@@ -10,23 +10,18 @@ let
   cfg = config.nix;
 in
 {
-  inputs.nix-super.url = "github:privatevoid-net/nix-super";
-
   options.nix.enable = mkEnableOption "nix";
 
-  config.os.nix = mkIf cfg.enable {
-    settings = {
-      substituters = [ "https://cache.privatevoid.net" ];
-      trusted-public-keys = [ "cache.privatevoid.net:SErQ8bvNWANeAvtsOESUwVYr2VJynfuc9JRwlzTTkVg=" ];
-    };
-    package = inputs.nix-super.packages.${pkgs.system}.default;
-    # Simplify INSTALLABLE command line arguments, e.g. "nix shell nixpkgs#jq" becomes "nix shell jq"
-    registry.default = {
-      from = {
-        id = "default";
-        type = "indirect";
-      };
-      flake = inputs.nixpkgs;
-    };
+  config.os = mkIf cfg.enable {
+    nixpkgs.config.allowUnfree = true;
+
+    nix.package = pkgs.nix.overrideAttrs (old: {
+      patches = old.patches or [ ] ++ [
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/evaluable-flake.patch";
+          hash = "sha256-UZ5hXI1w1mOEe0Bp5rSfeB4jfnwxnNEXJWir4dQGyyo=";
+        })
+      ];
+    });
   };
 }

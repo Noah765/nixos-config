@@ -4,6 +4,7 @@
   pkgs,
   hmOptions,
   config,
+  hmConfig,
   ...
 }:
 with lib;
@@ -12,7 +13,7 @@ let
 in
 {
   inputs = {
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=v0.41.2&submodules=1";
     bird-nix-lib = {
       url = "github:spikespaz/bird-nix-lib";
       inputs = {
@@ -127,7 +128,7 @@ in
           # TODO vrr
           disable_autoreload = true;
           enable_swallow = true;
-          swallow_regex = "^${config.home.sessionVariables.TERMINAL}$";
+          swallow_regex = "^${hmConfig.home.sessionVariables.TERMINAL}$";
           focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
           initial_workspace_tracking = 0;

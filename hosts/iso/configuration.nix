@@ -1,31 +1,31 @@
+{ pkgs, config, ... }:
 {
-  #modulesPath,
-  #pkgs,
-  #config,
-  ...
-}:
-{
-  #imports = [
-  #  /${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix
-  #  ./wifiScript.nix
-  #  ./downloadScript.nix
-  #  ./generateScript.nix
-  #  ./installScript.nix
-  #];
+  osImports = [
+    (
+      { modulesPath, ... }:
+      {
+        imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
+      }
+    )
+  ];
 
-  #nixpkgs.hostPlatform = "x86_64-linux";
+  impermanence.enable = false;
+  user.enable = false;
 
-  #impermanence.enable = false;
-  #user.enable = false;
-  #homeManager.enable = false;
+  os = {
+    nixpkgs.hostPlatform = "x86_64-linux"; # TODO Required?
+    isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
 
-  #isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
-
-  #environment.systemPackages = with pkgs; [
-  #  git
-  #  disko
-  #  neovim
-  #  fzf
-  #  nixfmt-rfc-style
-  #];
+    environment.systemPackages = with pkgs; [
+      (./wifiScript.nix pkgs)
+      (./downloadScript.nix pkgs)
+      (./generateScript.nix pkgs)
+      (./installScript.nix pkgs)
+      git
+      disko
+      neovim
+      fzf
+      nixfmt-rfc-style
+    ];
+  };
 }

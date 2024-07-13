@@ -2,11 +2,9 @@
   lib,
   inputs,
   useHm,
-  options,
   osOptions,
   hmOptions,
   config,
-  osConfig,
   ...
 }:
 with lib;

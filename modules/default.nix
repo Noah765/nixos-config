@@ -19,10 +19,6 @@ with lib;
     ./programs
   ];
 
-  # Read the docs before changing
-  os.system.stateVersion = "24.11";
-  hm.home.stateVersion = "24.11";
-
   hmUsername = "noah";
 
   zsh.enable = mkDefault true;
