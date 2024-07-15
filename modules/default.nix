@@ -9,6 +9,7 @@ with lib;
     ./stylix.nix
     ./sddm.nix
     ./hyprland.nix
+    ./anyrun.nix
     ./programs
   ];
 

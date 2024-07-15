@@ -96,12 +96,13 @@ in
 
         monitor = [ "Unknown-1, disable" ];
 
-        bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
-
         bindm = [
           "Super, mouse:272, movewindow"
           "Super, mouse:273, resizewindow"
         ];
+
+        bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
+        bindr = [ "Super, Super_L, exec, anyrun" ]; # On release
 
         bind = [
           "Super+Alt, H, hy3:makegroup, h"

@@ -7,6 +7,7 @@
   stylix.enable = true;
   sddm.enable = true;
   hyprland.enable = true;
+  anyrun.enable = true;
 
   os.environment.systemPackages = with pkgs; [
     neovim
