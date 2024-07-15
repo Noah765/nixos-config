@@ -256,7 +256,23 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs",
+        "sddm-sugar-candy": "sddm-sugar-candy",
         "stylix": "stylix"
+      }
+    },
+    "sddm-sugar-candy": {
+      "locked": {
+        "lastModified": 1717525368,
+        "narHash": "sha256-3J6ZzuDEzj/9AEZOCB+M0gRn6fn4/a10K7okeC3hf7o=",
+        "owner": "Noah765",
+        "repo": "sddm-sugar-candy",
+        "rev": "04eec37553cb2aceb95d12d2b63b78663f1c9801",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Noah765",
+        "repo": "sddm-sugar-candy",
+        "type": "github"
       }
     },
     "stylix": {

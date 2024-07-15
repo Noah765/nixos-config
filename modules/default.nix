@@ -6,8 +6,9 @@ with lib;
     ./zsh.nix
     ./localization.nix
     ./docs.nix
-    ./hyprland.nix
     ./stylix.nix
+    ./sddm.nix
+    ./hyprland.nix
     ./programs
   ];
 
