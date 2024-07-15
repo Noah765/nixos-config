@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   pkgs,
   hmOptions,
   config,
@@ -12,14 +11,6 @@ let
   cfg = config.hyprland;
 in
 {
-  inputs = {
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    hy3 = {
-      url = "github:outfoxxed/hy3";
-      inputs.hyprland.follows = "hyprland";
-    };
-  };
-
   options.hyprland =
     let
       options = hmOptions.wayland.windowManager.hyprland;
@@ -30,24 +21,14 @@ in
     };
 
   config = mkIf cfg.enable {
-    os = {
-      nix.settings = {
-        substituters = [ "https://hyprland.cachix.org" ];
-        trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-      };
-
-      programs.hyprland = {
-        enable = true;
-        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-      };
-    };
+    os.programs.hyprland.enable = true;
 
     hm.home.sessionVariables.NIXOS_OZONE_WL = 1;
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
 
-      plugins = [ inputs.hy3.packages.${pkgs.system}.default ];
+      plugins = [ pkgs.hyprlandPlugins.hy3 ];
 
       settings = attrsets.recursiveUpdate {
         general = {
