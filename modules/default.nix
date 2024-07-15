@@ -7,6 +7,7 @@ with lib;
     ./localization.nix
     ./docs.nix
     ./hyprland.nix
+    ./stylix.nix
     ./programs
   ];
 
