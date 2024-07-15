@@ -13,33 +13,12 @@ let
 in
 {
   inputs = {
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=v0.41.2&submodules=1";
-    bird-nix-lib = {
-      url = "github:spikespaz/bird-nix-lib";
-      inputs = {
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-      };
-    };
-    hyprnix = {
-      url = "github:hyprland-community/hyprnix";
-      inputs = {
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-        hyprland.follows = "hyprland";
-        hyprland-protocols.follows = "hyprland/xdph/hyprland-protocols";
-        hyprland-xdph.follows = "hyprland/xdph";
-        hyprlang.follows = "hyprland/hyprlang";
-        bird-nix-lib.follows = "bird-nix-lib";
-      };
-    };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hy3 = {
       url = "github:outfoxxed/hy3";
       inputs.hyprland.follows = "hyprland";
     };
   };
-
-  hmImports = [ inputs.hyprnix.homeManagerModules.default ];
 
   options.hyprland =
     let
@@ -47,13 +26,7 @@ in
     in
     {
       enable = mkEnableOption "hyprland";
-      config = options.config;
-      monitors = options.monitors // {
-        default.default = {
-          name = "";
-          resolution = "highres";
-        };
-      };
+      settings = hmOptions.wayland.windowManager.hyprland.settings;
     };
 
   config = mkIf cfg.enable {
@@ -76,7 +49,7 @@ in
 
       plugins = [ inputs.hy3.packages.${pkgs.system}.default ];
 
-      config = attrsets.recursiveUpdate {
+      settings = attrsets.recursiveUpdate {
         general = {
           gaps_in = 2;
           gaps_out = 5;
@@ -141,73 +114,73 @@ in
         };
 
         monitor = [ "Unknown-1, disable" ];
-      } cfg.config;
 
-      monitors = cfg.monitors;
+        bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
 
-      animations.bezierCurve = { }; # Hyprnix shouldn't include it's default bezier curves
+        bindm = [
+          "Super, mouse:272, movewindow"
+          "Super, mouse:273, resizewindow"
+        ];
 
-      keyBinds = {
-        bind."Super+Alt, H" = "hy3:makegroup, h";
-        bind."Super+Alt, V" = "hy3:makegroup, v";
-        bind."Super+Alt, Space" = "hy3:makegroup, opposite";
-        bind."Super+Alt, T" = "hy3:makegroup, tab";
+        bind = [
+          "Super+Alt, H, hy3:makegroup, h"
+          "Super+Alt, V, hy3:makegroup, v"
+          "Super+Alt, Space, hy3:makegroup, opposite"
+          "Super+Alt, T, hy3:makegroup, tab"
 
-        # TODO Is hy3:changegroup needed?
+          # TODO Is hy3:changegroup needed?
 
-        bind."Super, Up" = "hy3:movefocus, u";
-        bind."Super, Right" = "hy3:movefocus, r";
-        bind."Super, Down" = "hy3:movefocus, d";
-        bind."Super, Left" = "hy3:movefocus, l";
-        bind."Super+Ctrl, Plus" = "hy3:changefocus, raise";
-        bind."Super+Ctrl, Minus" = "hy3:changefocus, lower";
-        bindn.", mouse:272" = "hy3:focustab, mouse";
+          "Super, Up, hy3:movefocus, u"
+          "Super, Right, hy3:movefocus, r"
+          "Super, Down, hy3:movefocus, d"
+          "Super, Left, hy3:movefocus, l"
+          "Super+Ctrl, Plus, hy3:changefocus, raise"
+          "Super+Ctrl, Minus, hy3:changefocus, lower"
 
-        bind."Super+Shift, Up" = "hy3:movewindow, u";
-        bind."Super+Shift, Right" = "hy3:movewindow, r";
-        bind."Super+Shift, Down" = "hy3:movewindow, d";
-        bind."Super+Shift, Left" = "hy3:movewindow, l";
-        bindm."Super, mouse:272" = "movewindow";
+          "Super+Shift, Up, hy3:movewindow, u"
+          "Super+Shift, Right, hy3:movewindow, r"
+          "Super+Shift, Down, hy3:movewindow, d"
+          "Super+Shift, Left, hy3:movewindow, l"
 
-        bindm."Super, mouse:273" = "resizewindow";
-        bind."Super, F" = "fullscreen, 0";
-        bind."Super, G" = "fullscreen, 1";
+          "Super, F, fullscreen, 0"
+          "Super, G, fullscreen, 1"
 
-        bind."Super, O" = "togglefloating";
-        bind."Super, P" = "pin";
+          "Super, O, togglefloating"
+          "Super, P, pin"
 
-        bind."Super, 1" = "focusworkspaceoncurrentmonitor, 1";
-        bind."Super, 2" = "focusworkspaceoncurrentmonitor, 2";
-        bind."Super, 3" = "focusworkspaceoncurrentmonitor, 3";
-        bind."Super, 4" = "focusworkspaceoncurrentmonitor, 4";
-        bind."Super, 5" = "focusworkspaceoncurrentmonitor, 5";
-        bind."Super, 6" = "focusworkspaceoncurrentmonitor, 6";
-        bind."Super, 7" = "focusworkspaceoncurrentmonitor, 7";
-        bind."Super, 8" = "focusworkspaceoncurrentmonitor, 8";
-        bind."Super, 9" = "focusworkspaceoncurrentmonitor, 9";
-        bind."Super, 0" = "focusworkspaceoncurrentmonitor, 10";
-        bind."Super, Plus" = "focusworkspaceoncurrentmonitor, +1";
-        bind."Super, Minus" = "focusworkspaceoncurrentmonitor, -1";
+          "Super, 1, focusworkspaceoncurrentmonitor, 1"
+          "Super, 2, focusworkspaceoncurrentmonitor, 2"
+          "Super, 3, focusworkspaceoncurrentmonitor, 3"
+          "Super, 4, focusworkspaceoncurrentmonitor, 4"
+          "Super, 5, focusworkspaceoncurrentmonitor, 5"
+          "Super, 6, focusworkspaceoncurrentmonitor, 6"
+          "Super, 7, focusworkspaceoncurrentmonitor, 7"
+          "Super, 8, focusworkspaceoncurrentmonitor, 8"
+          "Super, 9, focusworkspaceoncurrentmonitor, 9"
+          "Super, 0, focusworkspaceoncurrentmonitor, 10"
+          "Super, Plus, focusworkspaceoncurrentmonitor, +1"
+          "Super, Minus, focusworkspaceoncurrentmonitor, -1"
 
-        bind."Super+Shift, 1" = "hy3:movetoworkspace, 1";
-        bind."Super+Shift, 2" = "hy3:movetoworkspace, 2";
-        bind."Super+Shift, 3" = "hy3:movetoworkspace, 3";
-        bind."Super+Shift, 4" = "hy3:movetoworkspace, 4";
-        bind."Super+Shift, 5" = "hy3:movetoworkspace, 5";
-        bind."Super+Shift, 6" = "hy3:movetoworkspace, 6";
-        bind."Super+Shift, 7" = "hy3:movetoworkspace, 7";
-        bind."Super+Shift, 8" = "hy3:movetoworkspace, 8";
-        bind."Super+Shift, 9" = "hy3:movetoworkspace, 9";
-        bind."Super+Shift, 0" = "hy3:movetoworkspace, 0";
-        bind."Super+Shift, Plus" = "hy3:movetoworkspace, +1";
-        bind."Super+Shift, Minus" = "hy3:movetoworkspace, -1";
+          "Super+Shift, 1, hy3:movetoworkspace, 1"
+          "Super+Shift, 2, hy3:movetoworkspace, 2"
+          "Super+Shift, 3, hy3:movetoworkspace, 3"
+          "Super+Shift, 4, hy3:movetoworkspace, 4"
+          "Super+Shift, 5, hy3:movetoworkspace, 5"
+          "Super+Shift, 6, hy3:movetoworkspace, 6"
+          "Super+Shift, 7, hy3:movetoworkspace, 7"
+          "Super+Shift, 8, hy3:movetoworkspace, 8"
+          "Super+Shift, 9, hy3:movetoworkspace, 9"
+          "Super+Shift, 0, hy3:movetoworkspace, 0"
+          "Super+Shift, Plus, hy3:movetoworkspace, +1"
+          "Super+Shift, Minus, hy3:movetoworkspace, -1"
 
-        bind."Super, Space" = "focusmonitor, +1";
+          "Super, Space, focusmonitor, +1"
 
-        bind."Super, Q" = "hy3:killactive";
+          "Super, Q, hy3:killactive"
 
-        bind."Super, T" = "exec, kitty";
-      };
+          "Super, T, exec, kitty"
+        ];
+      } cfg.settings;
     };
   };
 }
