@@ -1,12 +1,27 @@
 let
-  # TODO Put combined manager itself as a flake input for automatic updating?
-  #combinedManager = builtins.getFlake "github:Noah765/combined-manager/0a7e9f622295f09d48f82d65dfc5300bcfaebe1f";
-  combinedManager = import /home/noah/Downloads/combined-manager;
+  inherit ((builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.combined-manager.locked)
+    rev
+    narHash
+    ;
+  combinedManager = import (
+    builtins.fetchTarball {
+      url = "https://github.com/Noah765/combined-manager/archive/${rev}.tar.gz";
+      sha256 = narHash;
+    }
+  );
 in
 combinedManager.mkFlake {
-  description = "NixOS configuration";
   lockFile = ./flake.lock;
-  stateVersion = "24.11";
+  defaultSystem = "x86_64-linux";
+
+  initialInputs = {
+    combined-manager.url = "github:Noah765/combined-manager";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   configurations = {
     primary.modules = [
