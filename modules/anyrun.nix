@@ -34,59 +34,39 @@ in
     extraCss = ''
       #window {
         background: transparent;
-        /*font-size: 12pt;*/
+      }
+
+      #entry {
+        border-radius: 12px;
+        padding: 8px;
       }
 
       list#main {
         margin-top: 0.5rem;
-        /*border: 1.5px solid @accent_color;*/
-        /*border-radius: 6px;
-        border: 1px solid rgba(0, 0, 0, 0);
-        outline: 1px dashed rgba(213, 196, 161, 0.3);
-        outline-offset: -3px;
-
-        background-color: transparent;
-        padding-left: 8px;
-        padding-right: 8px;*/
-
-        /*box-shadow: 0 0 0 1px rgba(131, 165, 152, 0.5);*/
         border: 2px solid alpha(@accent_color, 0.5);
-        border-radius: 6px;
-
-        /*outline: 10px solid red;*/
-        /*border: 2px solid alpha(@accent_color, 0.3);*/
+        border-radius: 12px;
       }
 
-      /*
-      #match.activatable {
-          border-radius: 16px;
-          padding: 0.3rem 0.9rem;
-          margin-top: 0.01rem;
-      }
-      #match.activatable:first-child {
-          margin-top: 0.0rem;
-      }
-      #match.activatable:last-child {
-          margin-bottom: 0.6rem;
+      row#plugin:first-child {
+        margin-top: 0;
       }
 
-      #entry {
-          border: 1px solid #0b0f10;
-          border-radius: 16px;
-          margin: 0.5rem;
-          padding: 0.3rem 1rem;
+      row#plugin {
+        margin-top: 8px;
+        padding: 0;
       }
 
-      list > #plugin {
-          margin: 0 0.3rem;
+      list#plugin {
+        background: transparent;
       }
-      list > #plugin:first-child {
-          margin-top: 0.3rem;
+
+      row#match {
+        padding: 8px;
       }
-      list > #plugin:last-child {
-          margin-bottom: 0.3rem;
+
+      label#match-desc {
+        font-size: 8pt;
       }
-      */
     '';
   };
 }
