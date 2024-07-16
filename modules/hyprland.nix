@@ -42,40 +42,13 @@ in
         decoration = {
           rounding = 12;
 
-          # These values are temporarily taken from end-4's config
-          drop_shadow = true;
-          shadow_ignore_window = true;
-          shadow_range = 20;
-          shadow_offset = "0 2";
-          shadow_render_power = 4;
+          # TODO Dim inactive windows
+          # TODO Style floating windows and popups (blur, dimming)
 
-          dim_inactive = false;
-          dim_strength = 0.1;
-          dim_special = 0;
-
-          blur = {
-            enabled = true;
-            xray = true;
-            special = false;
-            new_optimizations = true;
-            size = 14;
-            passes = 4;
-            brightness = 1;
-            noise = 1.0e-2;
-            contrast = 1;
-            popups = true;
-            popups_ignorealpha = 0.6;
-          };
+          blur.size = 2;
         };
 
-        # These values are temporarily taken from end-4's config
-        layerrule = [
-          "noanim, anyrun"
-          "blur, launcher"
-          "ignorealpha 0.5, launcher"
-        ];
-
-        # These values are taken from end-4's config
+        # Heavily inspired by end-4's config
         animations = {
           bezier = [
             "md3_decel, 0.05, 0.7, 0.1, 1"
@@ -87,14 +60,11 @@ in
           animation = [
             "windows, 1, 3, md3_decel, popin 60%"
             "windowsOut, 1, 3, md3_accel, popin 60%"
-            "layersIn, 1, 3, menu_decel, slide"
+            "layersIn, 1, 3, menu_decel, fade"
             "layersOut, 1, 1.6, menu_accel"
             "fade, 1, 3, md3_decel"
-            "fadeLayersIn, 1, 2, menu_decel"
-            "fadeLayersOut, 1, 4.5, menu_accel"
-            "border, 1, 10, default"
             "workspaces, 1, 7, menu_decel, slide"
-            "specialWorkspace, 1, 3, md3_decel, slidevert"
+            # TODO "specialWorkspace, 1, 3, md3_decel, slidevert"
           ];
         };
 
@@ -123,7 +93,10 @@ in
           warp_on_change_workspace = true;
         };
 
-        monitor = [ "Unknown-1, disable" ];
+        layerrule = [
+          "blur, anyrun"
+          "dimaround, anyrun"
+        ];
 
         bindm = [
           "Super, mouse:272, movewindow"
