@@ -29,6 +29,7 @@ in
       width.fraction = 0.3;
       hidePluginInfo = true;
       closeOnClick = true;
+      layer = "bottom";
     };
 
     extraCss = ''
@@ -37,8 +38,9 @@ in
       }
 
       list#main {
-        margin-top: 0.5rem; 
-        border: 1px solid @theme_bg_color;
+        margin-top: 0.5rem;
+        border: 1.5px solid @accent_color;
+        border-radius: 10px;
       }
 
       /*
