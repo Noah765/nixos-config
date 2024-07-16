@@ -18,6 +18,5 @@
   os.environment.systemPackages = with pkgs; [
     neovim
     fzf
-    nixfmt-rfc-style
   ];
 }
