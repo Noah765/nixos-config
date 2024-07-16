@@ -41,10 +41,39 @@ in
 
         decoration = {
           rounding = 12;
-          # TODO shadows
-          # TODO dimming
-          # TODO blur
+
+          # These values are temporarily taken from end-4's config
+          drop_shadow = true;
+          shadow_ignore_window = true;
+          shadow_range = 20;
+          shadow_offset = "0 2";
+          shadow_render_power = 4;
+
+          dim_inactive = false;
+          dim_strength = 0.1;
+          dim_special = 0;
+
+          blur = {
+            enabled = true;
+            xray = true;
+            special = false;
+            new_optimizations = true;
+            size = 14;
+            passes = 4;
+            brightness = 1;
+            noise = 1.0e-2;
+            contrast = 1;
+            popups = true;
+            popups_ignorealpha = 0.6;
+          };
         };
+
+        # These values are temporarily taken from end-4's config
+        layerrule = [
+          "noanim, anyrun"
+          "blur, launcher"
+          "ignorealpha 0.5, launcher"
+        ];
 
         # These values are taken from end-4's config
         animations = {
