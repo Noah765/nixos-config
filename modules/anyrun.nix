@@ -14,7 +14,7 @@ in
 
   hmImports = [ inputs.anyrun.homeManagerModules.default ];
 
-  options.anyrun.enable = mkEnableOption "docs";
+  options.anyrun.enable = mkEnableOption "anyrun";
 
   config.hm.programs.anyrun = mkIf cfg.enable {
     enable = true;
