@@ -37,12 +37,14 @@ in
       }
 
       #entry {
+        border: 2px solid alpha(@accent_color, 0.5);
         border-radius: 12px;
+        box-shadow: none;
         padding: 8px;
       }
 
       list#main {
-        margin-top: 0.5rem;
+        margin-top: 16px;
         border: 2px solid alpha(@accent_color, 0.5);
         border-radius: 12px;
       }
@@ -54,10 +56,19 @@ in
       row#plugin {
         margin-top: 8px;
         padding: 0;
+        outline: 0;
+        background: 0;
       }
 
       list#plugin {
-        background: transparent;
+        background: 0;
+      }
+
+      row#plugin:first-child row#match:first-child {
+        border-radius: 8px 8px 0 0;
+      }
+      row#plugin:last-child row#match:last-child {
+        border-radius: 0 0 8px 8px;
       }
 
       row#match {
