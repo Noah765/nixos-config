@@ -39,31 +39,31 @@ in
           ];
         });
 
-        gc = {
-          automatic = true;
-          dates = "monthly";
-          options = "--delete-older-than 30d";
-        };
-
         settings = {
           experimental-features = [
             "nix-command"
             "flakes"
           ];
-
           auto-optimise-store = true;
-
           default-flake = "github:NixOS/nixpkgs/nixos-unstable";
         };
+      };
+
+      programs.nh = {
+        enable = true;
+        clean = {
+          enable = true;
+          extraArgs = "-k 5 -K 7d";
+        };
+        flake = "/etc/nixos";
       };
     };
 
     hm = {
       home.packages = with pkgs; [
         deadnix
-        manix
-        nh
         nixfmt-rfc-style
+        nix-output-monitor
       ];
 
       programs.nix-index-database.comma.enable = true;
