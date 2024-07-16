@@ -29,18 +29,32 @@ in
       width.fraction = 0.3;
       hidePluginInfo = true;
       closeOnClick = true;
-      layer = "bottom";
     };
 
     extraCss = ''
       #window {
         background: transparent;
+        /*font-size: 12pt;*/
       }
 
       list#main {
         margin-top: 0.5rem;
-        border: 1.5px solid @accent_color;
-        border-radius: 10px;
+        /*border: 1.5px solid @accent_color;*/
+        /*border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0);
+        outline: 1px dashed rgba(213, 196, 161, 0.3);
+        outline-offset: -3px;
+
+        background-color: transparent;
+        padding-left: 8px;
+        padding-right: 8px;*/
+
+        /*box-shadow: 0 0 0 1px rgba(131, 165, 152, 0.5);*/
+        border: 2px solid alpha(@accent_color, 0.5);
+        border-radius: 6px;
+
+        /*outline: 10px solid red;*/
+        /*border: 2px solid alpha(@accent_color, 0.3);*/
       }
 
       /*
