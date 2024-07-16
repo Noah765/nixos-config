@@ -3,6 +3,7 @@
   osImports = [ ./hardware-configuration.nix ];
 
   impermanence.disk = "nvme0n1";
+  networking.hostName = "primary";
   nvidia.enable = true;
   stylix.enable = true;
   sddm.enable = true;
