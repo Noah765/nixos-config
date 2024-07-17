@@ -48,9 +48,14 @@ in
         external = [
           {
             name = "calculator";
-            src = pkgs.writeShellScript "walker-calculator" ''
-              echo '[ { "label": "'$@'" } ]'
-            '';
+            src =
+              let
+                script = pkgs.writeShellScriptBin "walker-calculator" ''
+                  result=$(${pkgs.kalker}/bin/kalker "$1" 2>&1)
+                  echo '[ { "label": "'"$result"'", "searchable": '"$1"' } ]'
+                '';
+              in
+              "${script}/bin/walker-calculator '%TERM%'";
           }
         ];
       };
