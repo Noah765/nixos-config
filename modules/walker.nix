@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  pkgs,
   config,
   ...
 }:
@@ -31,7 +32,6 @@ in
         enable_typeahead = true; # TODO It isn't showing up
         show_initial_entries = true;
         fullscreen = false;
-        hyprland.context_aware_history = false; # TODO
         align.width = 400;
         list = {
           height = 300;
@@ -40,10 +40,17 @@ in
         icons.size = 28;
         modules = [
           { name = "applications"; }
-          { name = "websearch"; }
           {
-            name = "hyprland";
-            prefix = ":";
+            name = "websearch";
+            prefix = "?";
+          }
+        ];
+        external = [
+          {
+            name = "calculator";
+            src = pkgs.writeShellScript "walker-calculator" ''
+              echo '[ { "label": "'$@'" } ]'
+            '';
           }
         ];
       };
