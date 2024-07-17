@@ -57,11 +57,22 @@ in
             src_once =
               let
                 script = pkgs.writeShellScriptBin "walker-calculator-start" ''
-		  mkfifo /tmp/walker-calculator-input
-		  mkfifo /tmp/walker-calculator-output
+                  mkfifo /tmp/walker-calculator-input
+                  mkfifo /tmp/walker-calculator-output
 
-		  ${pkgs.kalker}/bin/kalker < /tmp/walker-calculator-input > /tmp/walker-calculator-output &
-		'';
+                  expect -c '
+                    spawn kalker
+                    expect >>
+                    while {1} {
+                      set input [exec cat /tmp/kalker_input]
+                      send "$input\n"
+                      expect \n
+                      expect -re "(.*)>>" { set output $expect_out(1,string) }
+                      exec sh -c "echo \"$output\" > /tmp/kalker_output"
+                    }'
+
+                  ${pkgs.kalker}/bin/kalker < /tmp/walker-calculator-input > /tmp/walker-calculator-output &
+                '';
               in
               "${script}/bin/walker-calculator-start";
 
@@ -79,7 +90,7 @@ in
                   }]"
                 '';
                 #\"exec\": \"${execScript}/bin/walker-calculator-exec '$1; $result'\"
-		#awk '{ print ", {'\
+                #awk '{ print ", {'\
                 #  '\"label\": \""$0"\",'\
                 #  '\"searchable\": \"'"$1"'\",'\
                 #  '\"score_final\": "NR" }" }' \
