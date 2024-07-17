@@ -60,11 +60,8 @@ in
           animation = [
             "windows, 1, 3, md3_decel, popin 60%"
             "windowsOut, 1, 3, md3_accel, popin 60%"
-            "layersIn, 1, 3, menu_decel, fade"
-            "layersOut, 1, 1.6, menu_accel"
             "fade, 1, 3, md3_decel"
             "workspaces, 1, 7, menu_decel, slide"
-            # TODO "specialWorkspace, 1, 3, md3_decel, slidevert"
           ];
         };
 
@@ -94,8 +91,9 @@ in
         };
 
         layerrule = [
-          "blur, anyrun"
-          "dimaround, anyrun"
+          "noanim, walker"
+          "blur, walker"
+          "dimaround, walker"
         ];
 
         bindm = [
@@ -104,7 +102,7 @@ in
         ];
 
         bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
-        bindr = [ "Super, Super_L, exec, anyrun" ]; # On release
+        bindr = [ "Super, Super_L, exec, walker" ]; # On release
 
         bind = [
           "Super+Alt, H, hy3:makegroup, h"

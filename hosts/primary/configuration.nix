@@ -14,7 +14,7 @@
       "HDMI-A-1, 1920x1080@75, 1920x0, 1"
     ];
   };
-  anyrun.enable = true;
+  walker.enable = true;
 
   os.environment.systemPackages = with pkgs; [
     neovim

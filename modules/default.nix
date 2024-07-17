@@ -10,6 +10,7 @@ with lib;
     ./sddm.nix
     ./hyprland.nix
     ./anyrun.nix
+    ./walker.nix
     ./programs
   ];
 
