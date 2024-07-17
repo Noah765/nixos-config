@@ -56,15 +56,21 @@ in
             src =
               let
                 script = pkgs.writeShellScriptBin "walker-calculator" ''
+                  touch /tmp/walker-calculator.kalker
+
                   result=$(${pkgs.kalker}/bin/kalker -i /tmp/walker-calculator.kalker "$1" 2>&1)
 
                   echo "[
-		    {
+                    {
                       \"label\": \"$result\",
                       \"searchable\": \"$1\",
-                      \"exec\": \"echo '$result' >> /tmp/walker-calculator.kalker; walker\"
+                      \"exec\": \"${execScript}/bin/walker-calculator-exec '$1 $result'\"
                     }
-		  ]"
+                  ]"
+                '';
+                execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
+                  echo "$1" >> /tmp/walker-calculator.kalker
+                  walker
                 '';
               in
               "${script}/bin/walker-calculator '%TERM%'";
