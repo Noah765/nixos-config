@@ -31,18 +31,23 @@ in
         placeholder = "Search...";
         enable_typeahead = true; # TODO It isn't showing up
         show_initial_entries = true;
-        fullscreen = false;
+        fullscreen = false; # TODO
         align.width = 400;
         list = {
           height = 300;
           margin_top = 10;
         };
         icons.size = 28;
+        activation_mode.use_alt = true;
         modules = [
           { name = "applications"; }
           {
             name = "websearch";
             prefix = "?";
+          }
+          {
+            name = "commands";
+            prefix = ":";
           }
         ];
         external = [
@@ -51,8 +56,15 @@ in
             src =
               let
                 script = pkgs.writeShellScriptBin "walker-calculator" ''
-                  result=$(${pkgs.kalker}/bin/kalker "$1" 2>&1)
-                  echo '[ { "label": "'"$result"'", "searchable": '"$1"' } ]'
+                  result=$(${pkgs.kalker}/bin/kalker -i /tmp/walker-calculator.kalker "$1" 2>&1)
+
+                  echo "[
+		    {
+                      \"label\": \"$result\",
+                      \"searchable\": \"$1\",
+                      \"exec\": \"echo '$result' >> /tmp/walker-calculator.kalker; walker\"
+                    }
+		  ]"
                 '';
               in
               "${script}/bin/walker-calculator '%TERM%'";
