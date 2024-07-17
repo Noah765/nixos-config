@@ -60,17 +60,18 @@ in
 
                   result=$(${pkgs.kalker}/bin/kalker -i /tmp/walker-calculator.kalker "$1" 2>&1)
 
-                  echo "[
-                    {
-                      \"label\": \"$result\",
-                      \"searchable\": \"$1\",
-                      \"exec\": \"${execScript}/bin/walker-calculator-exec '$1 $result'\"
-                    }
-                  ]"
+                  echo "[{
+                    \"label\": \"$result\",
+                    \"searchable\": \"$1\",
+                    \"score_final\": 100,
+                    \"exec\": \"${execScript}/bin/walker-calculator-exec '$1 $result'\"
+                  }"
+                  awk '{ print ", { \"label\": \""$0"\", \"searchable\": \"'"$1"'\", \"score_final\": "NR" }" }' /tmp/walker-calculator.kalker
+                  echo ']'
                 '';
                 execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
                   echo "$1" >> /tmp/walker-calculator.kalker
-                  walker
+                  walker -m calculator
                 '';
               in
               "${script}/bin/walker-calculator '%TERM%'";
