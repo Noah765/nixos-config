@@ -53,22 +53,37 @@ in
         external = [
           {
             name = "calculator";
+
+            src_once =
+              let
+                script = pkgs.writeShellScriptBin "walker-calculator-start" ''
+		  mkfifo /tmp/walker-calculator-input
+		  mkfifo /tmp/walker-calculator-output
+
+		  ${pkgs.kalker}/bin/kalker < /tmp/walker-calculator-input > /tmp/walker-calculator-output &
+		'';
+              in
+              "${script}/bin/walker-calculator-start";
+
             src =
               let
                 script = pkgs.writeShellScriptBin "walker-calculator" ''
-                  touch /tmp/walker-calculator.kalker
-
-                  result=$(${pkgs.kalker}/bin/kalker -i /tmp/walker-calculator.kalker "$1" 2>&1)
+                  echo "$1" > /tmp/walker-calculator-input
+                  result=$(cat < /tmp/walker-calculator-output)
 
                   echo "[{
                     \"label\": \"$result\",
+                    \"sub\": \"$1\",
                     \"searchable\": \"$1\",
                     \"score_final\": 100,
-                    \"exec\": \"${execScript}/bin/walker-calculator-exec '$1 $result'\"
-                  }"
-                  awk '{ print ", { \"label\": \""$0"\", \"searchable\": \"'"$1"'\", \"score_final\": "NR" }" }' /tmp/walker-calculator.kalker
-                  echo ']'
+                  }]"
                 '';
+                #\"exec\": \"${execScript}/bin/walker-calculator-exec '$1; $result'\"
+		#awk '{ print ", {'\
+                #  '\"label\": \""$0"\",'\
+                #  '\"searchable\": \"'"$1"'\",'\
+                #  '\"score_final\": "NR" }" }' \
+                #  /tmp/walker-calculator.kalker
                 execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
                   echo "$1" >> /tmp/walker-calculator.kalker
                   walker -m calculator
