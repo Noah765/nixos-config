@@ -67,7 +67,6 @@ in
                     [{
                       "label": "$result",
                       "sub": "$1",
-                      "searchable": "$1",
                       "score_final": 31,
                       "exec": "${execScript}/bin/walker-calculator-exec '$1' '$result'"
                     }
@@ -75,14 +74,13 @@ in
 
                   counter=0
                   while read prompt; read result; do
-                    ((++counter)) # Post-increment returns a status code of 1 if it evaluates to 0
+                    ((++counter)) # Postincrement doesn't work with set -e here
 
                     # No other characters are allowed before or after the heredoc delimiter
                     cat << END
                       , {
                         "label": "$result",
                         "sub": "$prompt",
-                        "searchable": "$1",
                         "score_final": $counter
                       }
                   END
@@ -96,7 +94,7 @@ in
                   echo "$1" >> ~/.cache/walker/calculator-history.txt
                   echo "$2" >> ~/.cache/walker/calculator-history.txt
                   tail -n 30 ~/.cache/walker/calculator-history.txt > /tmp/walker-calculator-history
-                  mv /tmp/walker-calculator-history.tmp ~/.cache/walker/calculator-history.txt
+                  mv /tmp/walker-calculator-history ~/.cache/walker/calculator-history.txt
 
                   walker -m calculator &
                   echo $! > /tmp/walker-calculator-pid
