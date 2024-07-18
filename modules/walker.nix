@@ -53,52 +53,18 @@ in
         external = [
           {
             name = "calculator";
-
-            src_once =
-              let
-                script = pkgs.writeShellScriptBin "walker-calculator-start" ''
-                  mkfifo /tmp/walker-calculator-input
-                  mkfifo /tmp/walker-calculator-output
-
-                  ${pkgs.expect}/bin/expect -c '
-                    spawn ${pkgs.kalker}/bin/kalker
-                    expect >>
-                    while true {
-                      set input [exec cat /tmp/walker-calculator-input]
-                      send $input\n
-                      expect \n
-                      expect {
-                        -re "(.*)\n\r"   { set output $expect_out(1,string) }
-                        >>               { set output "" }
-                      }
-                      exec sh -c "echo \"$output\" > /tmp/walker-calculator-output"
-                    }'
-                '';
-              in
-              "${script}/bin/walker-calculator-start";
-
             src =
               let
                 script = pkgs.writeShellScriptBin "walker-calculator" ''
                   echo "$1" > /tmp/walker-calculator-input
-                  result=$(cat < /tmp/walker-calculator-output)
+                  result=$(cat /tmp/walker-calculator-output)
 
                   echo "[{
                     \"label\": \"$result\",
                     \"sub\": \"$1\",
                     \"searchable\": \"$1\",
-                    \"score_final\": 100,
+                    \"score_final\": 100
                   }]"
-                '';
-                #\"exec\": \"${execScript}/bin/walker-calculator-exec '$1; $result'\"
-                #awk '{ print ", {'\
-                #  '\"label\": \""$0"\",'\
-                #  '\"searchable\": \"'"$1"'\",'\
-                #  '\"score_final\": "NR" }" }' \
-                #  /tmp/walker-calculator.kalker
-                execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
-                  echo "$1" >> /tmp/walker-calculator.kalker
-                  walker -m calculator
                 '';
               in
               "${script}/bin/walker-calculator '%TERM%'";
@@ -106,5 +72,31 @@ in
         ];
       };
     };
+
+    hyprland.settings.bindr =
+      let
+        script = pkgs.writeShellScriptBin "walker-startup" ''
+          mkfifo /tmp/walker-calculator-input
+          mkfifo /tmp/walker-calculator-output
+
+          ${pkgs.expect}/bin/expect -c '
+            spawn ${pkgs.kalker}/bin/kalker
+            expect >>
+            while true {
+              set input [exec cat /tmp/walker-calculator-input]
+              send $input\n
+              expect \n
+              expect {
+                -re "(.*)\r\n"   { set output $expect_out(1,string) }
+                >>               { set output "" }
+              }
+              exec sh -c "echo \"$output\" > /tmp/walker-calculator-output"
+            }' &
+          walker
+
+	  rm /tmp/walker-calculator-input /tmp/walker-calculator-output
+        '';
+      in
+      [ "Super, Super_L, exec, ${script}/bin/walker-startup" ];
   };
 }

@@ -102,7 +102,6 @@ in
         ];
 
         bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
-        bindr = [ "Super, Super_L, exec, walker" ]; # On release
 
         bind = [
           "Super+Alt, H, hy3:makegroup, h"
@@ -159,6 +158,8 @@ in
           "Super, Space, focusmonitor, +1"
 
           "Super, Q, hy3:killactive"
+
+          # The Walker keybind is defined in it's module
 
           "Super, T, exec, kitty"
         ];
