@@ -71,20 +71,21 @@ in
                       "score_final": 31,
                       "exec": "${execScript}/bin/walker-calculator-exec '$1' '$result'"
                     }
-		  END
+                  END
 
                   counter=0
                   while read prompt; read result; do
-		    ((counter++))
+                    ((++counter)) # Post-increment returns a status code of 1 if it evaluates to 0
 
+                    # No other characters are allowed before or after the heredoc delimiter
                     cat << END
-		      , {
+                      , {
                         "label": "$result",
                         "sub": "$prompt",
                         "searchable": "$1",
                         "score_final": $counter
                       }
-		    END
+                  END
                   done < ~/.cache/walker/calculator-history.txt
 
                   echo "]"
@@ -135,7 +136,7 @@ in
           while [ -f /tmp/walker-calculator-pid ]; do
             pid=$(cat /tmp/walker-calculator-pid)
             rm /tmp/walker-calculator-pid
-            tail --pid $pid -f /dev/null # Wait for process to complete
+            tail --pid $pid -f /dev/null # Wait for the process to complete
           done
         '';
       in
