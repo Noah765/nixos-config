@@ -65,10 +65,23 @@ in
                     \"searchable\": \"$1\",
                     \"score_final\": 100,
                     \"exec\": \"${execScript}/bin/walker-calculator-exec '$1' '$result'\"
-                  }]"
+                  }"
+
+                  touch /tmp/walker-calculator-session
+                  while read prompt; read result; do
+                    echo ",{
+                      \"label\": \"$result\",
+                      \"sub\": \"$prompt\",
+                      \"searchable\": \"$1\",
+                      \"score_final\": 1
+                    }"
+                  done < /tmp/walker-calculator-session
+
+                  echo "]"
                 '';
                 execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
-                  echo "$1\n$2" >> /tmp/walker-calculator-session
+                  echo "$1" >> /tmp/walker-calculator-session
+                  echo "$2" >> /tmp/walker-calculator-session
                   walker -m calculator
                 '';
               in
