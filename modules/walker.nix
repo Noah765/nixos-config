@@ -60,18 +60,19 @@ in
                   mkfifo /tmp/walker-calculator-input
                   mkfifo /tmp/walker-calculator-output
 
-                  expect -c '
-                    spawn kalker
+                  ${pkgs.expect}/bin/expect -c '
+                    spawn ${pkgs.kalker}/bin/kalker
                     expect >>
-                    while {1} {
-                      set input [exec cat /tmp/kalker_input]
-                      send "$input\n"
+                    while true {
+                      set input [exec cat /tmp/walker-calculator-input]
+                      send $input\n
                       expect \n
-                      expect -re "(.*)>>" { set output $expect_out(1,string) }
-                      exec sh -c "echo \"$output\" > /tmp/kalker_output"
+                      expect {
+                        -re "(.*)\n\r"   { set output $expect_out(1,string) }
+                        >>               { set output "" }
+                      }
+                      exec sh -c "echo \"$output\" > /tmp/walker-calculator-output"
                     }'
-
-                  ${pkgs.kalker}/bin/kalker < /tmp/walker-calculator-input > /tmp/walker-calculator-output &
                 '';
               in
               "${script}/bin/walker-calculator-start";
