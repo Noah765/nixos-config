@@ -82,7 +82,8 @@ in
                 execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
                   echo "$1" >> /tmp/walker-calculator-session
                   echo "$2" >> /tmp/walker-calculator-session
-                  walker -m calculator
+                  walker -m calculator &
+                  echo $! > /tmp/walker-calculator-pid
                 '';
               in
               "${script}/bin/walker-calculator '%TERM%'";
@@ -112,8 +113,11 @@ in
             }' &
           walker
 
+          # wait < /tmp/walker-calculator-pid
+          tail --pid $(cat /tmp/walker-calculator-pid) -f /dev/null
+
           pkill -P $!
-          rm /tmp/walker-calculator-input /tmp/walker-calculator-output
+          rm /tmp/walker-calculator-input /tmp/walker-calculator-output /tmp/walker-calculator-pid
         '';
       in
       [ "Super, Super_L, exec, ${script}/bin/walker-startup" ];
