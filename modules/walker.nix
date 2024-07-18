@@ -63,8 +63,13 @@ in
                     \"label\": \"$result\",
                     \"sub\": \"$1\",
                     \"searchable\": \"$1\",
-                    \"score_final\": 100
+                    \"score_final\": 100,
+                    \"exec\": \"${execScript}/bin/walker-calculator-exec '$1' '$result'\"
                   }]"
+                '';
+                execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
+                  echo "$1\n$2" >> /tmp/walker-calculator-session
+                  walker -m calculator
                 '';
               in
               "${script}/bin/walker-calculator '%TERM%'";
@@ -94,7 +99,8 @@ in
             }' &
           walker
 
-	  rm /tmp/walker-calculator-input /tmp/walker-calculator-output
+          pkill -P $!
+          rm /tmp/walker-calculator-input /tmp/walker-calculator-output
         '';
       in
       [ "Super, Super_L, exec, ${script}/bin/walker-startup" ];
