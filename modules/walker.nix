@@ -56,32 +56,47 @@ in
             src =
               let
                 script = pkgs.writeShellScriptBin "walker-calculator" ''
+                  set -euo pipefail
+
+                  touch ~/.cache/walker/calculator-history.txt
+
                   echo "$1" > /tmp/walker-calculator-input
                   result=$(cat /tmp/walker-calculator-output)
 
-                  echo "[{
-                    \"label\": \"$result\",
-                    \"sub\": \"$1\",
-                    \"searchable\": \"$1\",
-                    \"score_final\": 100,
-                    \"exec\": \"${execScript}/bin/walker-calculator-exec '$1' '$result'\"
-                  }"
+                  cat << END
+                    [{
+                      "label": "$result",
+                      "sub": "$1",
+                      "searchable": "$1",
+                      "score_final": 31,
+                      "exec": "${execScript}/bin/walker-calculator-exec '$1' '$result'"
+                    }
+		  END
 
-                  touch /tmp/walker-calculator-session
+                  counter=0
                   while read prompt; read result; do
-                    echo ",{
-                      \"label\": \"$result\",
-                      \"sub\": \"$prompt\",
-                      \"searchable\": \"$1\",
-                      \"score_final\": 1
-                    }"
-                  done < /tmp/walker-calculator-session
+		    ((counter++))
+
+                    cat << END
+		      , {
+                        "label": "$result",
+                        "sub": "$prompt",
+                        "searchable": "$1",
+                        "score_final": $counter
+                      }
+		    END
+                  done < ~/.cache/walker/calculator-history.txt
 
                   echo "]"
                 '';
                 execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
-                  echo "$1" >> /tmp/walker-calculator-session
-                  echo "$2" >> /tmp/walker-calculator-session
+                  set -euo pipefail
+
+                  echo "$1" >> ~/.cache/walker/calculator-history.txt
+                  echo "$2" >> ~/.cache/walker/calculator-history.txt
+                  tail -n 30 ~/.cache/walker/calculator-history.txt > /tmp/walker-calculator-history
+                  mv /tmp/walker-calculator-history.tmp ~/.cache/walker/calculator-history.txt
+
                   walker -m calculator &
                   echo $! > /tmp/walker-calculator-pid
                 '';
@@ -95,6 +110,10 @@ in
     hyprland.settings.bindr =
       let
         script = pkgs.writeShellScriptBin "walker-startup" ''
+          set -euo pipefail
+
+          trap 'pkill -P $!; rm /tmp/walker-calculator-input /tmp/walker-calculator-output /tmp/walker-calculator-history /tmp/walker-calculator-pid' EXIT
+
           mkfifo /tmp/walker-calculator-input
           mkfifo /tmp/walker-calculator-output
 
@@ -113,11 +132,11 @@ in
             }' &
           walker
 
-          # wait < /tmp/walker-calculator-pid
-          tail --pid $(cat /tmp/walker-calculator-pid) -f /dev/null
-
-          pkill -P $!
-          rm /tmp/walker-calculator-input /tmp/walker-calculator-output /tmp/walker-calculator-pid
+          while [ -f /tmp/walker-calculator-pid ]; do
+            pid=$(cat /tmp/walker-calculator-pid)
+            rm /tmp/walker-calculator-pid
+            tail --pid $pid -f /dev/null # Wait for process to complete
+          done
         '';
       in
       [ "Super, Super_L, exec, ${script}/bin/walker-startup" ];
