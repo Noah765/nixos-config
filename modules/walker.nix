@@ -29,15 +29,14 @@ in
 
         # TODO Clipboard module
         config = {
-          placeholder = "Search...";
-          enable_typeahead = true; # TODO It isn't showing up
-          show_initial_entries = true;
-          fullscreen = false; # TODO
           align.width = 400;
+          placeholder = "Search...";
+          enable_typeahead = true;
           list = {
             height = 300;
             margin_top = 10;
           };
+          show_initial_entries = true;
           icons.size = 28;
           activation_mode.use_alt = true;
           modules = [
@@ -100,6 +99,91 @@ in
             }
           ];
         };
+
+        style = ''
+          #box {
+            padding: 10px;
+            border-radius: 2px;
+          }
+
+          #search {
+            border-radius: 0;
+            outline: none;
+            outline-width: 0px;
+            box-shadow: none;
+            border-bottom: none;
+            border: none;
+            background: none;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            border-radius: 2px;
+          }
+
+          #typeahead {
+            border-radius: 0;
+            outline: none;
+            outline-width: 0px;
+            box-shadow: none;
+            border-bottom: none;
+            border: none;
+            background: none;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            border-radius: 2px;
+          }
+
+          #spinner {
+            opacity: 0;
+          }
+          #spinner.visible {
+            opacity: 1;
+          }
+
+          #typeahead {
+            background: none;
+            opacity: 0.5;
+          }
+
+          #search placeholder {
+            opacity: 0.5;
+          }
+
+          row:selected {
+            background: #1f1f28;
+          }
+
+          .item {
+            padding: 5px;
+            border-radius: 2px;
+          }
+
+          .icon {
+            padding-right: 5px;
+          }
+
+          .sub {
+            opacity: 0.5;
+          }
+
+          .activationlabel {
+            opacity: 0.25;
+          }
+
+          .activation .activationlabel {
+            opacity: 1;
+            color: #76946a;
+          }
+
+          .activation .textwrapper,
+          .activation .icon,
+          .activation .search {
+            opacity: 0.5;
+          }
+        '';
       };
 
       systemd.user.services.walker-calculator =
