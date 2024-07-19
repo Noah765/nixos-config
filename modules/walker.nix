@@ -28,10 +28,15 @@ in
         runAsService = true;
 
         # TODO Clipboard module
+        # TODO Enable the application module cache?
         config = {
-          align.width = 400;
+          align = {
+            width = 400;
+            anchors.top = true;
+          };
           placeholder = "Search...";
           enable_typeahead = true;
+          # TODO Specify in CSS
           list = {
             height = 300;
             margin_top = 10;
@@ -101,39 +106,26 @@ in
         };
 
         style = ''
+          #window {
+            background: 0;
+          }
+
           #box {
-            padding: 10px;
-            border-radius: 2px;
+            background: @window_bg_color;
+            border: 1px solid @accent_color;
+            border-radius: 12px;
+            margin-top: 16px;
+            padding: 8px;
           }
 
           #search {
-            border-radius: 0;
-            outline: none;
-            outline-width: 0px;
-            box-shadow: none;
-            border-bottom: none;
-            border: none;
-            background: none;
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 0px;
-            padding-bottom: 0px;
-            border-radius: 2px;
+            outline: 0;
           }
-
+          #search::placeholder {
+            opacity: 0.5;
+          }
           #typeahead {
-            border-radius: 0;
-            outline: none;
-            outline-width: 0px;
-            box-shadow: none;
-            border-bottom: none;
-            border: none;
-            background: none;
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 0px;
-            padding-bottom: 0px;
-            border-radius: 2px;
+            opacity: 0.5;
           }
 
           #spinner {
@@ -141,15 +133,6 @@ in
           }
           #spinner.visible {
             opacity: 1;
-          }
-
-          #typeahead {
-            background: none;
-            opacity: 0.5;
-          }
-
-          #search placeholder {
-            opacity: 0.5;
           }
 
           row:selected {

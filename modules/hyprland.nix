@@ -44,8 +44,10 @@ in
 
           # TODO Dim inactive windows
           # TODO Style floating windows and popups (blur, dimming)
+          # TODO Style transparent windows (blur, shadows, dimming)
 
-          blur.size = 2;
+          drop_shadow = false;
+          blur.enabled = false;
         };
 
         # Heavily inspired by end-4's config
@@ -90,11 +92,7 @@ in
           warp_on_change_workspace = true;
         };
 
-        layerrule = [
-          "noanim, walker"
-          "blur, walker"
-          "dimaround, walker"
-        ];
+        layerrule = [ "noanim, walker" ];
 
         bindm = [
           "Super, mouse:272, movewindow"
