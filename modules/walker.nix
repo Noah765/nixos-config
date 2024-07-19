@@ -3,6 +3,7 @@
   inputs,
   pkgs,
   config,
+  osConfig,
   ...
 }:
 with lib;
@@ -17,6 +18,13 @@ in
   options.walker.enable = mkEnableOption "walker";
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = config.stylix.enabled;
+        message = "The walker module is dependent on the stylix module.";
+      }
+    ];
+
     os.nix.settings = {
       substituters = [ "https://walker.cachix.org" ];
       trusted-public-keys = [ "walker.cachix.org-1:fG8q+uAaMqhsMxWjwvk0IMb4mFPFLqHjuvfwQxE4oJM=" ];
@@ -30,10 +38,7 @@ in
         # TODO Clipboard module
         # TODO Enable the application module cache?
         config = {
-          align = {
-            width = 400;
-            anchors.top = true;
-          };
+          align.anchors.top = true;
           placeholder = "Search...";
           enable_typeahead = true;
           # TODO Specify in CSS
@@ -105,14 +110,15 @@ in
           ];
         };
 
-        style = ''
+        style = with osConfig.lib.stylix.colors; ''
           #window {
             background: 0;
+            min-width: 400px;
           }
 
           #box {
-            background: @window_bg_color;
-            border: 1px solid @accent_color;
+            background: #${base00};
+            border: 1px solid #${base0D};
             border-radius: 12px;
             margin-top: 16px;
             padding: 8px;
@@ -121,11 +127,9 @@ in
           #search {
             outline: 0;
           }
-          #search::placeholder {
-            opacity: 0.5;
-          }
           #typeahead {
-            opacity: 0.5;
+            background: #${base01};
+            color: #${base05}88;
           }
 
           #spinner {
@@ -136,12 +140,12 @@ in
           }
 
           row:selected {
-            background: #1f1f28;
+            background: #${base02};
+            border-radius: 8px;
           }
 
           .item {
-            padding: 5px;
-            border-radius: 2px;
+            padding: 4px;
           }
 
           .icon {
