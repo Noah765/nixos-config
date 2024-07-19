@@ -119,6 +119,17 @@ in
             border-radius: 12px;
           }
 
+          #searchwrapper {
+            margin-right: -16px;
+          }
+
+          entry {
+            min-height: 32px;
+            padding: 0 12px 0 12px;
+            border-radius: 8px;
+          }
+          entry > image:last-child { opacity: 0; }
+
           #search {
             background: 0;
             outline: 0;
@@ -133,7 +144,7 @@ in
           #spinner { opacity: 0; }
           #spinner.visible {
             opacity: 1;
-            transform: translateX(-50px);
+            transform: translateX(-16px);
             animation: spin 1s linear infinite;
           }
 
@@ -146,6 +157,7 @@ in
             padding: 4px 8px 4px 8px;
             outline: 0;
           }
+          row:hover { background: 0; }
           row:selected {
             background: #${base02};
             border-radius: 8px;
