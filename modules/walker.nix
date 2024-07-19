@@ -20,7 +20,7 @@ in
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.stylix.enabled;
+        assertion = config.stylix.enable;
         message = "The walker module is dependent on the stylix module.";
       }
     ];
@@ -120,6 +120,7 @@ in
           }
 
           #search {
+            background: 0;
             outline: 0;
           }
           #typeahead {
@@ -127,11 +128,13 @@ in
             color: #${base05}88;
           }
 
-          #spinner {
-            opacity: 0;
-          }
+          @keyframes spin { to { transform: rotate(1turn); } }
+
+          #spinner { opacity: 0; }
           #spinner.visible {
             opacity: 1;
+            transform: translateX(-50px);
+            animation: spin 1s linear infinite;
           }
 
           scrolledwindow {
@@ -141,32 +144,27 @@ in
 
           row {
             padding: 4px 8px 4px 8px;
+            outline: 0;
           }
           row:selected {
             background: #${base02};
             border-radius: 8px;
           }
 
-          .icon {
-            padding-right: 12px;
-          }
+          .icon { padding-right: 12px;}
 
-          .sub {
-            opacity: 0.5;
-          }
+          .sub { opacity: 0.5; }
 
-          .activationlabel {
-            opacity: 0.25;
-          }
+          .activationlabel { opacity: 0.25; }
 
           .activation .activationlabel {
             opacity: 1;
             color: #${base0D};
           }
 
-          .activation .textwrapper,
+          .activation #searchwrapper,
           .activation .icon,
-          .activation .search {
+          .activation .textwrapper {
             opacity: 0.5;
           }
         '';
