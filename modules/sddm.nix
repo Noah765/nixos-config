@@ -36,7 +36,7 @@ in
         AccentColor = "#${base0D}";
         BackgroundColor = "#${base00}";
         OverrideLoginButtonTextColor = "#${base00}";
-        Font = stylix.fonts.sansSerif.name;
+        Font = osConfig.stylix.fonts.sansSerif.name;
       };
     };
   };
