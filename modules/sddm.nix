@@ -33,7 +33,7 @@ in
         BlurRadius = 25;
         FormPosition = "center";
         MainColor = "#${base05}";
-        AccentColor = "#${base0A}";
+        AccentColor = "#${base0D}";
         BackgroundColor = "#${base00}";
         OverrideLoginButtonTextColor = "#${base00}";
         Font = stylix.fonts.sansSerif.name;
