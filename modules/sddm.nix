@@ -16,7 +16,7 @@ in
 
   options.sddm.enable = mkEnableOption "sddm";
 
-  config = {
+  config = mkIf cfg.enable {
     assertions = [
       {
         assertion = config.stylix.enable;
@@ -24,25 +24,20 @@ in
       }
     ];
 
-    os.services.displayManager.sddm = mkIf cfg.enable {
+    os.services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
-      sugarCandy.settings =
-        let
-          stylix = osConfig.stylix;
-          colors = osConfig.lib.stylix.colors;
-        in
-        {
-          Background = stylix.image;
-          FullBlur = true;
-          BlurRadius = 25;
-          FormPosition = "center";
-          MainColor = "#${colors.base05}";
-          AccentColor = "#${colors.base0A}";
-          BackgroundColor = "#${colors.base00}";
-          OverrideLoginButtonTextColor = "#${colors.base00}";
-          Font = stylix.fonts.sansSerif.name;
-        };
+      sugarCandy.settings = with osConfig.lib.stylix.colors; {
+        Background = osConfig.stylix.image;
+        FullBlur = true;
+        BlurRadius = 25;
+        FormPosition = "center";
+        MainColor = "#${base05}";
+        AccentColor = "#${base0A}";
+        BackgroundColor = "#${base00}";
+        OverrideLoginButtonTextColor = "#${base00}";
+        Font = stylix.fonts.sansSerif.name;
+      };
     };
   };
 }
