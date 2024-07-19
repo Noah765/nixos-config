@@ -107,7 +107,7 @@ in
 
         style = with osConfig.lib.stylix.colors; ''
           #window {
-            min-width: 360px;
+            min-width: 380px;
             background: 0;
           }
 
@@ -119,16 +119,22 @@ in
             border-radius: 12px;
           }
 
-          #searchwrapper {
-            margin-right: -16px;
-          }
+          #searchwrapper { margin-right: -16px; }
 
           entry {
             min-height: 32px;
             padding: 0 12px 0 12px;
             border-radius: 8px;
           }
-          entry > image:last-child { opacity: 0; }
+          entry > image:first-child {
+            opacity: 1;
+            margin-right: 2px;
+          }
+          entry placeholder { opacity: 0.5; }
+          entry > image:last-child {
+            opacity: 0;
+            margin-left: 2px;
+          }
 
           #search {
             background: 0;
@@ -139,12 +145,11 @@ in
             color: #${base05}88;
           }
 
-          @keyframes spin { to { transform: rotate(1turn); } }
-
+          @keyframes spin { to { -gtk-icon-transform: rotate(1turn); } }
           #spinner { opacity: 0; }
           #spinner.visible {
             opacity: 1;
-            transform: translateX(-16px);
+            transform: translateX(-28px);
             animation: spin 1s linear infinite;
           }
 
