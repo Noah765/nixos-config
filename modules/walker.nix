@@ -41,11 +41,6 @@ in
           align.anchors.top = true;
           placeholder = "Search...";
           enable_typeahead = true;
-          # TODO Specify in CSS
-          list = {
-            height = 300;
-            margin_top = 10;
-          };
           show_initial_entries = true;
           icons.size = 28;
           activation_mode.use_alt = true;
@@ -112,16 +107,16 @@ in
 
         style = with osConfig.lib.stylix.colors; ''
           #window {
+            min-width: 360px;
             background: 0;
-            min-width: 400px;
           }
 
           #box {
+            margin-top: 16px;
+            padding: 8px;
             background: #${base00};
             border: 1px solid #${base0D};
             border-radius: 12px;
-            margin-top: 16px;
-            padding: 8px;
           }
 
           #search {
@@ -139,17 +134,21 @@ in
             opacity: 1;
           }
 
+          scrolledwindow {
+            min-height: 280px;
+            margin-top: 20px;
+          }
+
+          row {
+            padding: 4px 8px 4px 8px;
+          }
           row:selected {
             background: #${base02};
             border-radius: 8px;
           }
 
-          .item {
-            padding: 4px;
-          }
-
           .icon {
-            padding-right: 5px;
+            padding-right: 12px;
           }
 
           .sub {
@@ -162,7 +161,7 @@ in
 
           .activation .activationlabel {
             opacity: 1;
-            color: #76946a;
+            color: #${base0D};
           }
 
           .activation .textwrapper,
