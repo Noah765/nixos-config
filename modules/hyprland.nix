@@ -92,16 +92,12 @@ in
           warp_on_change_workspace = true;
         };
 
-        layerrule = [ "noanim, walker" ];
-
         bindm = [
           "Super, mouse:272, movewindow"
           "Super, mouse:273, resizewindow"
         ];
 
         bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
-
-        bindr = [ "Super, Super_L, exec, walker" ]; # On release
 
         bind = [
           "Super+Alt, H, hy3:makegroup, h"

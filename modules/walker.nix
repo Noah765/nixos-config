@@ -20,6 +20,10 @@ in
   config = mkIf cfg.enable {
     assertions = [
       {
+        assertion = config.hyprland.enable;
+        message = "The walker module is dependent on the hyprland module.";
+      }
+      {
         assertion = config.stylix.enable;
         message = "The walker module is dependent on the stylix module.";
       }
@@ -60,7 +64,7 @@ in
               name = "calculator";
               src =
                 let
-                  script = pkgs.writeShellScriptBin "walker-calculator" ''
+                  script = pkgs.writeShellScriptBin "walker-calculator-plugin" ''
                     touch ~/.cache/walker/calculator-history.txt
 
                     echo "$1" > /tmp/walker-calculator-input
@@ -71,7 +75,7 @@ in
                         "label": "$result",
                         "sub": "$1",
                         "score_final": 31,
-                        "exec": "${execScript}/bin/walker-calculator-exec '$1' '$result'"
+                        "exec": "${execScript}/bin/walker-calculator-plugin-exec '$1' '$result'"
                       }
                     END
 
@@ -91,7 +95,7 @@ in
 
                     echo "]"
                   '';
-                  execScript = pkgs.writeShellScriptBin "walker-calculator-exec" ''
+                  execScript = pkgs.writeShellScriptBin "walker-calculator-plugin-exec" ''
                     echo "$1" >> ~/.cache/walker/calculator-history.txt
                     echo "$2" >> ~/.cache/walker/calculator-history.txt
                     tail -n 30 ~/.cache/walker/calculator-history.txt > /tmp/walker-calculator-history
@@ -100,7 +104,7 @@ in
                     walker -m calculator
                   '';
                 in
-                "${script}/bin/walker-calculator '%TERM%'";
+                "${script}/bin/walker-calculator-plugin '%TERM%'";
             }
           ];
         };
@@ -216,6 +220,18 @@ in
             ExecStopPost = "rm /tmp/walker-calculator-input /tmp/walker-calculator-output /tmp/walker-calculator-history";
           };
         };
+    };
+
+    hyprland.settings = {
+      layerrule = [ "noanim, walker" ];
+
+      bindr =
+        let
+          script = pkgs.writeShellScriptBin "walker-startup" ''
+
+          '';
+        in
+        [ "Super, Super_L, exec, ${script}/bin/walker-startup" ];
     };
   };
 }
