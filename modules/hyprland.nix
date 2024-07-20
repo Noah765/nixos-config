@@ -21,7 +21,23 @@ in
     };
 
   config = mkIf cfg.enable {
-    os.programs.hyprland.enable = true;
+    os = {
+      # TODO Remove once https://github.com/hyprwm/Hyprland/pull/5777 gets merged
+      nixpkgs.overlays = [
+        (final: prev: {
+          hyprland = prev.hyprland.overrideAttrs (old: {
+            patches = old.patches or [ ] ++ [
+              (pkgs.fetchpatch {
+                url = "https://patch-diff.githubusercontent.com/raw/hyprwm/Hyprland/pull/5777.diff";
+                hash = "sha256-yWMp8VUeo171wqRS0mkI8ww4iTDc/6xzg4pgmM+vdXk=";
+              })
+            ];
+          });
+        })
+      ];
+
+      programs.hyprland.enable = true;
+    };
 
     hm.home.sessionVariables.NIXOS_OZONE_WL = 1;
 
