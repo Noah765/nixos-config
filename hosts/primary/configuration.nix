@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-{
-  osImports = [ ./hardware-configuration.nix ];
+{pkgs, ...}: {
+  osImports = [./hardware-configuration.nix];
 
   impermanence.disk = "nvme0n1";
   networking.hostName = "primary";

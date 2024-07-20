@@ -1,10 +1,12 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   osImports = [
     (
-      { modulesPath, ... }:
-      {
-        imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
+      {modulesPath, ...}: {
+        imports = ["${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"];
       }
     )
   ];

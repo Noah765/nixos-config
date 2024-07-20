@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.git;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.git;
+in {
   options.git = {
     enable = mkEnableOption "git";
     gitHub = mkEnableOption "GitHub CLI";
@@ -20,6 +22,6 @@ in
       gh.enable = mkIf cfg.gitHub true;
     };
 
-    impermanence.hm.files = mkIf cfg.gitHub [ ".config/gh/hosts.yml" ];
+    impermanence.hm.files = mkIf cfg.gitHub [".config/gh/hosts.yml"];
   };
 }

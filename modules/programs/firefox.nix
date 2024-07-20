@@ -1,17 +1,19 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.firefox;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.firefox;
+in {
   options.firefox.enable = mkEnableOption "firefox";
 
   config = mkIf cfg.enable {
     hm.programs.firefox = {
       enable = true;
-      profiles.noah = { };
+      profiles.noah = {};
     };
 
-    impermanence.hm.directories = [ ".mozilla/firefox/noah" ];
+    impermanence.hm.directories = [".mozilla/firefox/noah"];
   };
 }

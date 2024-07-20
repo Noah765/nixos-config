@@ -1,14 +1,16 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.user;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.user;
+in {
   options.user = {
     enable = mkEnableOption "user";
     groups = mkOption {
       type = with types; listOf str;
-      default = [ ];
+      default = [];
       description = "The user's auxiliary groups.";
     };
   };
@@ -16,6 +18,6 @@ in
   config.os.users.users.noah = mkIf cfg.enable {
     isNormalUser = true;
     initialPassword = "12345";
-    extraGroups = [ "wheel" ] ++ cfg.groups;
+    extraGroups = ["wheel"] ++ cfg.groups;
   };
 }

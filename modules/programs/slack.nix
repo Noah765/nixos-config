@@ -4,15 +4,13 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.slack;
-in
-{
+in {
   options.slack.enable = mkEnableOption "slack";
 
   config = mkIf cfg.enable {
-    hm.home.packages = [ pkgs.slack ];
-    impermanence.hm.directories = [ ".config/Slack" ];
+    hm.home.packages = [pkgs.slack];
+    impermanence.hm.directories = [".config/Slack"];
   };
 }

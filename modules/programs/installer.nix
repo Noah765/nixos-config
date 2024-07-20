@@ -4,11 +4,9 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.installer;
-in
-{
+in {
   options.installer.enable = mkEnableOption "installer";
 
   config.hm.home.packages = mkIf cfg.enable [

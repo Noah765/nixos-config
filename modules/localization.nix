@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.localization;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.localization;
+in {
   options.localization.enable = mkEnableOption "localization";
 
   config = mkIf cfg.enable {

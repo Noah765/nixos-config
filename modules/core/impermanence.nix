@@ -2,16 +2,12 @@
   lib,
   inputs,
   useHm,
-  osOptions,
-  hmOptions,
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.impermanence;
-in
-{
+in {
   inputs = {
     disko = {
       url = "github:nix-community/disko";
@@ -21,34 +17,30 @@ in
     impermanence.url = "github:tmarkov/impermanence"; # TODO: Change to nix-community when they fixed https://github.com/nix-community/impermanence/issues/154
   };
 
+  imports = [
+    (mkAliasOptionModule ["impermanence" "os" "files"] ["os" "environment" "persistence" "/persist/system" "files"])
+    (mkAliasOptionModule ["impermanence" "os" "directories"] ["os" "environment" "persistence" "/persist/system" "directories"])
+    (mkAliasOptionModule ["impermanence" "hm" "files"] ["hm" "home" "persistence" "/persist/home" "files"])
+    (mkAliasOptionModule ["impermanence" "hm" "directories"] ["hm" "home" "persistence" "/persist/home" "directories"])
+  ];
+
   osImports = [
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.impermanence
   ];
-  hmImports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
+  hmImports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  options.impermanence =
-    let
-      os = osOptions.environment.persistence "/persist/system";
-      hm = hmOptions.home.persistence "/persist/home";
-    in
-    {
-      enable = mkEnableOption "impermanence";
-      disk = mkOption {
-        type = with types; uniq str;
-        example = "sda";
-        description = "The disk for disko to manager and to use for impermanence.";
-      };
-      os = {
-        inherit (os) files directories;
-      };
-      hm = {
-        inherit (hm) files directories;
-      };
+  options.impermanence = {
+    enable = mkEnableOption "impermanence";
+    disk = mkOption {
+      type = with types; uniq str;
+      example = "sda";
+      description = "The disk for disko to manager and to use for impermanence.";
     };
+  };
 
   config = mkIf cfg.enable {
-    assertions = [ { assertion = cfg.disk != null; } ];
+    assertions = [{assertion = cfg.disk != null;}];
 
     os = {
       disko.devices = {
@@ -70,7 +62,7 @@ in
                 content = {
                   type = "filesystem";
                   format = "vfat";
-                  mountOptions = [ "umask=0077" ];
+                  mountOptions = ["umask=0077"];
                   mountpoint = "/boot";
                 };
               };
@@ -98,7 +90,7 @@ in
             size = "100%FREE";
             content = {
               type = "btrfs";
-              extraArgs = [ "-f" ];
+              extraArgs = ["-f"];
               subvolumes = {
                 "/root".mountpoint = "/";
                 "/persist" = {
@@ -154,17 +146,17 @@ in
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
           "/etc/nixos"
-        ] ++ cfg.os.directories;
+        ];
         files = [
           "/etc/machine-id"
           {
             file = "/var/keys/secret_file";
             parentDirectory.mode = "u=rwx,g=,o=";
           }
-        ] ++ cfg.os.files;
+        ];
       };
 
-      systemd.tmpfiles.rules = mkIf useHm [ "d /persist/home 0700 noah users -" ];
+      systemd.tmpfiles.rules = mkIf useHm ["d /persist/home 0700 noah users -"];
       programs.fuse.userAllowOther = mkIf useHm true;
     };
 
@@ -179,8 +171,8 @@ in
         ".gnupg"
         ".local/share/keyrings" # TODO: Remove if unused
         ".local/share/direnv" # TODO: Remove if unused
-      ] ++ cfg.hm.directories;
-      files = [ ".screenrc" ] ++ cfg.hm.files; # TODO: Remove if unused
+      ];
+      files = [".screenrc"]; # TODO: Remove if unused
     };
   };
 }

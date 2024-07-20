@@ -5,11 +5,9 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.nix;
-in
-{
+in {
   inputs = {
     nix-dram = {
       url = "github:dramforever/nix-dram";
@@ -21,7 +19,7 @@ in
     };
   };
 
-  hmImports = [ inputs.nix-index-database.hmModules.nix-index ];
+  hmImports = [inputs.nix-index-database.hmModules.nix-index];
 
   options.nix.enable = mkEnableOption "nix";
 
@@ -31,12 +29,15 @@ in
 
       nix = {
         package = (inputs.nix-dram.packages.${pkgs.system}.default).overrideAttrs (old: {
-          patches = old.patches or [ ] ++ [
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
-              hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
-            })
-          ];
+          patches =
+            old.patches
+            or []
+            ++ [
+              (pkgs.fetchpatch {
+                url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
+                hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
+              })
+            ];
         });
 
         settings = {
@@ -61,9 +62,9 @@ in
 
     hm = {
       home.packages = with pkgs; [
-        deadnix
-        nixfmt-rfc-style
+        alejandra
         nix-output-monitor
+        deadnix
       ];
 
       programs.nix-index-database.comma.enable = true;

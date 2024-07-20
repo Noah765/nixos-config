@@ -5,14 +5,12 @@
   osConfig,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.sddm;
-in
-{
+in {
   inputs.sddm-sugar-candy.url = "github:Noah765/sddm-sugar-candy";
 
-  osImports = [ inputs.sddm-sugar-candy.nixosModules.default ];
+  osImports = [inputs.sddm-sugar-candy.nixosModules.default];
 
   options.sddm.enable = mkEnableOption "sddm";
 

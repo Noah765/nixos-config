@@ -4,18 +4,16 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.zsh;
-in
-{
+in {
   options.zsh.enable = mkEnableOption "zsh";
 
   config = mkIf cfg.enable {
     os = {
       programs.zsh.enable = true;
       users.defaultUserShell = pkgs.zsh;
-      environment.pathsToLink = [ "/share/zsh" ];
+      environment.pathsToLink = ["/share/zsh"];
     };
     hm.programs.zsh = {
       enable = true;

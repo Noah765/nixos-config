@@ -136,11 +136,11 @@
     },
     "combined-manager": {
       "locked": {
-        "lastModified": 1721037034,
-        "narHash": "sha256-y/KVlfMjPArhb/AEqTVv9j5gH5fMGbiDWGzV7OwMcss=",
+        "lastModified": 1721488362,
+        "narHash": "sha256-0bhYCm24EOS1IdA7uxrdudCTQEmo/c73uhqfPIoAXxM=",
         "owner": "Noah765",
         "repo": "combined-manager",
-        "rev": "9630085a931379986f1b2db7649e86182e26e73f",
+        "rev": "dd01e88551dc21ed8e27c41c06611c331dde5f8d",
         "type": "github"
       },
       "original": {

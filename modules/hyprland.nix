@@ -1,24 +1,16 @@
 {
   lib,
   pkgs,
-  hmOptions,
   config,
   hmConfig,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.hyprland;
-in
-{
-  options.hyprland =
-    let
-      options = hmOptions.wayland.windowManager.hyprland;
-    in
-    {
-      enable = mkEnableOption "hyprland";
-      settings = hmOptions.wayland.windowManager.hyprland.settings;
-    };
+in {
+  imports = [(mkAliasOptionModule ["hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
+
+  options.hyprland.enable = mkEnableOption "hyprland";
 
   config = mkIf cfg.enable {
     os = {
@@ -26,12 +18,15 @@ in
       nixpkgs.overlays = [
         (final: prev: {
           hyprland = prev.hyprland.overrideAttrs (old: {
-            patches = old.patches or [ ] ++ [
-              (pkgs.fetchpatch {
-                url = "https://patch-diff.githubusercontent.com/raw/hyprwm/Hyprland/pull/5777.diff";
-                hash = "sha256-yWMp8VUeo171wqRS0mkI8ww4iTDc/6xzg4pgmM+vdXk=";
-              })
-            ];
+            patches =
+              old.patches
+              or []
+              ++ [
+                (pkgs.fetchpatch {
+                  url = "https://patch-diff.githubusercontent.com/raw/hyprwm/Hyprland/pull/5777.diff";
+                  hash = "sha256-yWMp8VUeo171wqRS0mkI8ww4iTDc/6xzg4pgmM+vdXk=";
+                })
+              ];
           });
         })
       ];
@@ -44,9 +39,9 @@ in
     hm.wayland.windowManager.hyprland = {
       enable = true;
 
-      plugins = [ pkgs.hyprlandPlugins.hy3 ];
+      plugins = [pkgs.hyprlandPlugins.hy3];
 
-      settings = attrsets.recursiveUpdate {
+      settings = {
         general = {
           gaps_in = 2;
           gaps_out = 5;
@@ -112,7 +107,7 @@ in
           "Super, mouse:273, resizewindow"
         ];
 
-        bindn = [ ", mouse:272, hy3:focustab, mouse" ]; # Non-capturing
+        bindn = [", mouse:272, hy3:focustab, mouse"]; # Non-capturing
 
         bind = [
           "Super+Alt, H, hy3:makegroup, h"
@@ -169,10 +164,8 @@ in
           "Super, Space, focusmonitor, +1"
 
           "Super, Q, hy3:killactive"
-
-          "Super, T, exec, kitty"
         ];
-      } cfg.settings;
+      };
     };
   };
 }

@@ -1,5 +1,6 @@
 let
-  inherit ((builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.combined-manager.locked)
+  inherit
+    ((builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.combined-manager.locked)
     rev
     narHash
     ;
@@ -10,31 +11,31 @@ let
     }
   );
 in
-combinedManager.mkFlake {
-  lockFile = ./flake.lock;
-  defaultSystem = "x86_64-linux";
+  combinedManager.mkFlake {
+    lockFile = ./flake.lock;
+    defaultSystem = "x86_64-linux";
 
-  initialInputs = {
-    combined-manager.url = "github:Noah765/combined-manager";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    initialInputs = {
+      combined-manager.url = "github:Noah765/combined-manager";
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+      home-manager = {
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
-  };
 
-  configurations = {
-    primary.modules = [
-      ./modules
-      ./hosts/primary/configuration.nix
-    ];
-
-    iso = {
-      useHomeManager = false;
-      modules = [
+    configurations = {
+      primary.modules = [
         ./modules
-        ./hosts/iso/configuration.nix
+        ./hosts/primary/configuration.nix
       ];
+
+      iso = {
+        useHomeManager = false;
+        modules = [
+          ./modules
+          ./hosts/iso/configuration.nix
+        ];
+      };
     };
-  };
-}
+  }

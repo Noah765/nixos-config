@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.networking;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.networking;
+in {
   options.networking = {
     enable = mkEnableOption "networking";
     hostName = mkOption {
@@ -18,7 +20,7 @@ in
       hostName = cfg.hostName;
       networkmanager.enable = true;
     };
-    user.groups = [ "networkmanager" ];
-    impermanence.os.directories = [ "/etc/NetworkManager/system-connections" ];
+    user.groups = ["networkmanager"];
+    impermanence.os.directories = ["/etc/NetworkManager/system-connections"];
   };
 }

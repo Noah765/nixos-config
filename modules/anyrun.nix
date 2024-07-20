@@ -5,14 +5,12 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.anyrun;
-in
-{
+in {
   inputs.anyrun.url = "github:anyrun-org/anyrun";
 
-  hmImports = [ inputs.anyrun.homeManagerModules.default ];
+  hmImports = [inputs.anyrun.homeManagerModules.default];
 
   options.anyrun.enable = mkEnableOption "anyrun";
 

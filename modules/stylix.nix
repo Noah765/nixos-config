@@ -5,11 +5,9 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.stylix;
-in
-{
+in {
   inputs.stylix = {
     url = "github:danth/stylix";
     inputs = {
@@ -18,7 +16,7 @@ in
     };
   };
 
-  osImports = [ inputs.stylix.nixosModules.stylix ];
+  osImports = [inputs.stylix.nixosModules.stylix];
 
   options.stylix.enable = mkEnableOption "stylix";
 
@@ -39,7 +37,7 @@ in
     };
 
     fonts.monospace = {
-      package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+      package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
       name = "JetBrainsMono Nerd Font Mono";
     };
   };
