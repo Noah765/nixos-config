@@ -46,8 +46,7 @@ in
           # TODO Style floating windows and popups (blur, dimming)
           # TODO Style transparent windows (blur, shadows, dimming)
 
-          drop_shadow = false;
-          blur.enabled = false;
+          blur.size = 2;
         };
 
         # Heavily inspired by end-4's config

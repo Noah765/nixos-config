@@ -42,7 +42,11 @@ in
         # TODO Clipboard module
         # TODO Enable the application module cache?
         config = {
-          align.anchors.top = true;
+          fullscreen = true;
+          align = {
+            horizontal = "center";
+            vertical = "center";
+          };
           placeholder = "Search...";
           enable_typeahead = true;
           show_initial_entries = true;
@@ -110,13 +114,10 @@ in
         };
 
         style = with osConfig.lib.stylix.colors; ''
-          #window {
-            min-width: 380px;
-            background: 0;
-          }
+          #window { background: 0; }
 
           #box {
-            margin-top: 16px;
+            min-width: 380px;
             padding: 8px;
             background: #${base00};
             border: 1px solid #${base0D};
@@ -223,15 +224,13 @@ in
     };
 
     hyprland.settings = {
-      layerrule = [ "noanim, walker" ];
+      layerrule = [
+        "noanim, walker"
+        "blur, walker"
+        "dimaround, walker"
+      ];
 
-      bindr =
-        let
-          script = pkgs.writeShellScriptBin "walker-startup" ''
-
-          '';
-        in
-        [ "Super, Super_L, exec, ${script}/bin/walker-startup" ];
+      bindr = [ "Super, Super_L, exec, walker" ];
     };
   };
 }
