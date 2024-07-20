@@ -118,6 +118,7 @@ in
 
           #box {
             min-width: 380px;
+            min-height: 332px;
             padding: 8px;
             background: #${base00};
             border: 1px solid #${base0D};
