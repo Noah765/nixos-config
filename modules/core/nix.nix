@@ -32,7 +32,7 @@ in
       nix = {
         package = (inputs.nix-dram.packages.${pkgs.system}.default).overrideAttrs (old: {
           patches = old.patches or [ ] ++ [
-            (pkgs.fetchurl {
+            (pkgs.fetchpatch {
               url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
               hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
             })
