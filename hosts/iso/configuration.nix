@@ -1,28 +1,30 @@
 {
+  lib,
   pkgs,
   config,
   ...
-}: {
+}:
+with lib; {
   osImports = [
-    (
-      {modulesPath, ...}: {
-        imports = ["${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"];
-      }
-    )
+    ({modulesPath, ...}: {
+      imports = ["${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"];
+      nixpkgs.hostPlatform.system = "x86_64-linux";
+    })
   ];
 
+  hmUsername = mkForce "nixos";
+
   impermanence.enable = false;
-  user.enable = false;
+  networking.hostName = "nixos";
 
   os = {
-    nixpkgs.hostPlatform = "x86_64-linux"; # TODO Required?
     isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
 
     environment.systemPackages = with pkgs; [
-      (./wifiScript.nix pkgs)
-      (./downloadScript.nix pkgs)
-      (./generateScript.nix pkgs)
-      (./installScript.nix pkgs)
+      (import ./wifiScript.nix pkgs)
+      (import ./downloadScript.nix pkgs)
+      (import ./generateScript.nix pkgs)
+      (import ./installScript.nix pkgs)
       git
       disko
       neovim

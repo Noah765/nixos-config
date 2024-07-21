@@ -16,11 +16,11 @@ pkgs.writeShellScriptBin "install-os" ''
     esac
   done
 
-  config=$(nix eval ~/dots#nixosConfigurations --no-warn-dirty --raw --apply 'a: builtins.concatStringsSep "\n" (builtins.attrNames a)' | fzf --border --border-label 'Configuration selection' --prompt 'Config> ')
-  impermanence=$(nix eval ~/dots#nixosConfigurations."$config".config.impermanence.enable --no-warn-dirty)
+  config=$(nix eval ~/dots#combinedManagerConfigurations --no-warn-dirty --raw --apply 'a: builtins.concatStringsSep "\n" (builtins.attrNames a)' | fzf --border --border-label 'Configuration selection' --prompt 'Config> ')
+  impermanence=$(nix eval ~/dots#combinedManagerConfigurations."$config".config.impermanence.enable --no-warn-dirty)
 
   if $impermanence; then
-    disk=$(nix eval ~/dots#nixosConfigurations."$config".config.impermanence.disk --no-warn-dirty --raw)
+    disk=$(nix eval ~/dots#combinedManagerConfigurations."$config".config.impermanence.disk --no-warn-dirty --raw)
 
     echo -e "\nFormatting a disk can cause the disk's contents to be ''${red}lost forever$normal!"
     while true; do
