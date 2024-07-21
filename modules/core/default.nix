@@ -1,19 +1,29 @@
-{lib, ...}:
-with lib; {
+{
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.core;
+in {
   imports = [
     ./nix.nix
     ./impermanence.nix
-    ./bootloader.nix
+    ./systemd-boot.nix
     ./networking.nix
-    ./audio.nix
+    ./pipewire.nix
     ./nvidia.nix
     ./user.nix
   ];
 
-  nix.enable = mkDefault true;
-  impermanence.enable = mkDefault true;
-  bootloader.enable = mkDefault true;
-  networking.enable = mkDefault true;
-  audio.enable = mkDefault true;
-  user.enable = mkDefault true;
+  options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system.";
+
+  config.core = mkIf cfg.enable {
+    nix.enable = mkDefault true;
+    impermanence.enable = mkDefault true;
+    systemd-boot.enable = mkDefault true;
+    networking.enable = mkDefault true;
+    pipewire.enable = mkDefault true;
+    user.enable = mkDefault true;
+  };
 }

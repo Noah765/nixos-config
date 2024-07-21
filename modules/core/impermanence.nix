@@ -8,7 +8,7 @@
   ...
 }:
 with lib; let
-  cfg = config.impermanence;
+  cfg = config.core.impermanence;
 in {
   inputs = {
     disko = {
@@ -25,7 +25,7 @@ in {
   ];
   hmImports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  options.impermanence = let
+  options.core.impermanence = let
     # mkAliasOptionModule doesn't work here because defining e.g. os.files should have no effect if impermanence is disabled
     os = osOptions.environment.persistence "/persist/system";
     hm = hmOptions.home.persistence "/persist/home";
@@ -161,6 +161,11 @@ in {
             parentDirectory.mode = "u=rwx,g=,o=";
           }
         ];
+      };
+
+      programs.nh.clean = {
+        enable = true;
+        extraArgs = "-k 5 -K 7d";
       };
 
       systemd.tmpfiles.rules = mkIf useHm ["d /persist/home 0700 noah users -"];

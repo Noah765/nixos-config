@@ -24,18 +24,10 @@ in
       };
     };
 
-    configurations = {
-      primary.modules = [
-        ./modules
-        ./hosts/primary/configuration.nix
-      ];
+    globalModules = [./modules];
 
-      iso = {
-        useHomeManager = false;
-        modules = [
-          ./modules
-          ./hosts/iso/configuration.nix
-        ];
-      };
+    configurations = {
+      primary.modules = [./hosts/primary/configuration.nix];
+      iso.modules = [./hosts/iso/configuration.nix];
     };
   }

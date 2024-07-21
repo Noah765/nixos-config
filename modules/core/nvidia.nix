@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.nvidia;
+  cfg = config.core.nvidia;
 in {
-  options.nvidia.enable = mkEnableOption "nvidia";
+  options.core.nvidia.enable = mkEnableOption "nvidia";
 
   config.os = mkIf cfg.enable {
     hardware.graphics.enable = true;

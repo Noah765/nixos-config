@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.networking;
+  cfg = config.core.networking;
 in {
-  options.networking = {
+  options.core.networking = {
     enable = mkEnableOption "networking";
     hostName = mkOption {
       type = types.str;

@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.user;
+  cfg = config.core.user;
 in {
-  options.user = {
+  options.core.user = {
     enable = mkEnableOption "user";
     groups = mkOption {
       type = with types; listOf str;

@@ -14,6 +14,9 @@
     ];
   };
   walker.enable = true;
+  apps.enable = true;
+
+  installer.enable = true;
 
   os.environment.systemPackages = with pkgs; [
     neovim

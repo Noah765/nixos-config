@@ -6,7 +6,7 @@
   ...
 }:
 with lib; let
-  cfg = config.nix;
+  cfg = config.core.nix;
 in {
   inputs = {
     nix-dram = {
@@ -21,7 +21,7 @@ in {
 
   osImports = [inputs.nix-index-database.nixosModules.nix-index];
 
-  options.nix.enable = mkEnableOption "nix";
+  options.core.nix.enable = mkEnableOption "a patched version of the Nix language, as well as utilities for working with Nix.";
 
   config.os = mkIf cfg.enable {
     nix = {
@@ -51,10 +51,6 @@ in {
 
     programs.nh = {
       enable = true;
-      clean = {
-        enable = true;
-        extraArgs = "-k 5 -K 7d";
-      };
       flake = "/etc/nixos";
     };
 
