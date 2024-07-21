@@ -2,6 +2,8 @@
   lib,
   inputs,
   useHm,
+  osOptions,
+  hmOptions,
   config,
   ...
 }:
@@ -17,26 +19,27 @@ in {
     impermanence.url = "github:tmarkov/impermanence"; # TODO: Change to nix-community when they fixed https://github.com/nix-community/impermanence/issues/154
   };
 
-  imports = [
-    (mkAliasOptionModule ["impermanence" "os" "files"] ["os" "environment" "persistence" "/persist/system" "files"])
-    (mkAliasOptionModule ["impermanence" "os" "directories"] ["os" "environment" "persistence" "/persist/system" "directories"])
-    (mkAliasOptionModule ["impermanence" "hm" "files"] ["hm" "home" "persistence" "/persist/home" "files"])
-    (mkAliasOptionModule ["impermanence" "hm" "directories"] ["hm" "home" "persistence" "/persist/home" "directories"])
-  ];
-
   osImports = [
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.impermanence
   ];
   hmImports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  options.impermanence = {
+  options.impermanence = let
+    # mkAliasOptionModule doesn't work here because defining e.g. os.files should have no effect if impermanence is disabled
+    os = osOptions.environment.persistence "/persist/system";
+    hm = hmOptions.home.persistence "/persist/home";
+  in {
     enable = mkEnableOption "impermanence";
+
     disk = mkOption {
       type = with types; uniq str;
       example = "sda";
       description = "The disk for disko to manager and to use for impermanence.";
     };
+
+    os = {inherit (os) files directories;};
+    hm = {inherit (hm) files directories;};
   };
 
   config = mkIf cfg.enable {
@@ -145,7 +148,11 @@ in {
           "/var/log"
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
-          "/etc/nixos"
+          {
+            directory = "/etc/nixos";
+            user = "noah";
+            group = "users";
+          }
         ];
         files = [
           "/etc/machine-id"
