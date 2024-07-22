@@ -144,23 +144,27 @@ in {
       fileSystems."/persist".neededForBoot = true;
       environment.persistence."/persist/system" = {
         hideMounts = true;
-        directories = [
-          "/var/log"
-          "/var/lib/nixos"
-          "/var/lib/systemd/coredump"
-          {
-            directory = "/etc/nixos";
-            user = "noah";
-            group = "users";
-          }
-        ];
-        files = [
-          "/etc/machine-id"
-          {
-            file = "/var/keys/secret_file";
-            parentDirectory.mode = "u=rwx,g=,o=";
-          }
-        ];
+        directories =
+          [
+            "/var/log"
+            "/var/lib/nixos"
+            "/var/lib/systemd/coredump"
+            {
+              directory = "/etc/nixos";
+              user = "noah";
+              group = "users";
+            }
+          ]
+          ++ cfg.os.directories;
+        files =
+          [
+            "/etc/machine-id"
+            {
+              file = "/var/keys/secret_file";
+              parentDirectory.mode = "u=rwx,g=,o=";
+            }
+          ]
+          ++ cfg.os.files;
       };
 
       nix.settings.auto-optimise-store = true;
@@ -179,13 +183,16 @@ in {
 
     hm.home.persistence."/persist/home" = {
       allowOther = true;
-      directories = [
-        "Downloads"
-        "Music"
-        "Pictures"
-        "Documents"
-        "Videos"
-      ];
+      directories =
+        [
+          "Downloads"
+          "Music"
+          "Pictures"
+          "Documents"
+          "Videos"
+        ]
+        ++ cfg.hm.directories;
+      files = cfg.hm.files;
     };
   };
 }
