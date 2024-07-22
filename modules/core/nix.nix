@@ -21,26 +21,30 @@ in {
     os = {
       system.stateVersion = "24.11";
 
-      nix = {
-        package = inputs.nix-dram.packages.${pkgs.system}.default.overrideAttrs (old: {
-          patches =
-            old.patches
-            or []
-            ++ [
-              (pkgs.fetchpatch {
-                url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
-                hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
-              })
-            ];
-        });
-
-        settings = {
-          experimental-features = ["nix-command" "flakes"];
-          default-flake = "github:NixOS/nixpkgs/nixos-unstable";
-        };
+      nix.settings = {
+        experimental-features = ["nix-command" "flakes"];
+        default-flake = "github:NixOS/nixpkgs/nixos-unstable";
       };
 
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs = {
+        config.allowUnfree = true;
+
+        overlays = [
+          (final: prev: {
+            nix = inputs.nix-dram.packages.${pkgs.system}.default.overrideAttrs (old: {
+              patches =
+                old.patches
+                or []
+                ++ [
+                  (pkgs.fetchpatch {
+                    url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
+                    hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
+                  })
+                ];
+            });
+          })
+        ];
+      };
     };
   };
 }

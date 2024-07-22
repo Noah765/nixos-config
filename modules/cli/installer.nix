@@ -50,7 +50,7 @@ in {
         esac
       done
 
-      nom shell qemu -c qemu-system-x86_64 -enable-kvm -m 2G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso
+      nom shell qemu -c qemu-system-x86_64 -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso
     '')
     (pkgs.writeShellScriptBin "write-installer" ''
       set -euo pipefail

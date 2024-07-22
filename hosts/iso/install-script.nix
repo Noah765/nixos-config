@@ -33,7 +33,7 @@ pkgs.writeShellScriptBin "install-os" ''
     done
 
     echo -e "\nInstalling NixOS on the $bold$disk$normal disk using the $bold$config$normal configuration...\n"
-    sudo nix run 'github:nix-community/disko#disko-install' -- --flake ~/config#"$config"
+    sudo disko-install -f ~/config#"$config"
   else
     echo -e "\nInstalling NixOS using the $bold$config$normal configuration...\n"
     sudo nixos-install --flake ~/config#"$config"
