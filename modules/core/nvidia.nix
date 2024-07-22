@@ -6,7 +6,7 @@
 with lib; let
   cfg = config.core.nvidia;
 in {
-  options.core.nvidia.enable = mkEnableOption "nvidia";
+  options.core.nvidia.enable = mkEnableOption "Nvidia drivers";
 
   config.os = mkIf cfg.enable {
     hardware.graphics.enable = true;

@@ -10,19 +10,19 @@ in {
     ./nix.nix
     ./impermanence.nix
     ./systemd-boot.nix
-    ./networking.nix
+    ./network-manager.nix
     ./pipewire.nix
     ./nvidia.nix
     ./user.nix
   ];
 
-  options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system.";
+  options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system";
 
   config.core = mkIf cfg.enable {
     nix.enable = mkDefault true;
     impermanence.enable = mkDefault true;
     systemd-boot.enable = mkDefault true;
-    networking.enable = mkDefault true;
+    networkmanager.enable = mkDefault true;
     pipewire.enable = mkDefault true;
     user.enable = mkDefault true;
   };

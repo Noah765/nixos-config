@@ -180,11 +180,7 @@ in {
         "Pictures"
         "Documents"
         "Videos"
-        ".gnupg"
-        ".local/share/keyrings" # TODO: Remove if unused
-        ".local/share/direnv" # TODO: Remove if unused
       ];
-      files = [".screenrc"]; # TODO: Remove if unused
     };
   };
 }
