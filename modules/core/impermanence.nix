@@ -30,7 +30,7 @@ in {
     os = osOptions.environment.persistence "/persist/system";
     hm = hmOptions.home.persistence "/persist/home";
   in {
-    enable = mkEnableOption "impermanence";
+    enable = mkEnableOption "automatic system cleanup using impermanence";
 
     disk = mkOption {
       type = with types; uniq str;
@@ -162,6 +162,8 @@ in {
           }
         ];
       };
+
+      nix.settings.auto-optimise-store = true;
 
       programs.nh.clean = {
         enable = true;

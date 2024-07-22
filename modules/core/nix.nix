@@ -8,20 +8,12 @@
 with lib; let
   cfg = config.core.nix;
 in {
-  inputs = {
-    nix-dram = {
-      url = "github:dramforever/nix-dram";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  inputs.nix-dram = {
+    url = "github:dramforever/nix-dram";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  osImports = [inputs.nix-index-database.nixosModules.nix-index];
-
-  options.core.nix.enable = mkEnableOption "a patched version of the Nix language, as well as utilities for working with Nix.";
+  options.core.nix.enable = mkEnableOption "a patched version of the Nix language and core settings required for Nix";
 
   config = mkIf cfg.enable {
     os = {
@@ -31,7 +23,7 @@ in {
             old.patches
             or []
             ++ [
-              (pkgs.fetchurl {
+              (pkgs.fetchpatch {
                 url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
                 hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
               })
@@ -39,26 +31,13 @@ in {
         });
 
         settings = {
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-          auto-optimise-store = true;
+          experimental-features = ["nix-command" "flakes"];
           default-flake = "github:NixOS/nixpkgs/nixos-unstable";
         };
       };
 
       os.system.stateVersion = "24.11";
       nixpkgs.config.allowUnfree = true;
-
-      programs.nh = {
-        enable = true;
-        flake = "/etc/nixos";
-      };
-
-      programs.nix-index-database.comma.enable = true;
-
-      environment.systemPackages = with pkgs; [alejandra nix-output-monitor deadnix];
     };
 
     hm.home.stateVersion = "24.11";

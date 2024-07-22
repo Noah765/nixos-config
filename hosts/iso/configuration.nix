@@ -12,24 +12,22 @@ with lib; {
     })
   ];
 
-  hmUsername = mkForce "nixos";
+  hmUsername = "nixos";
 
   impermanence.enable = false;
-  networking.hostName = "nixos";
+  networkmanager.hostName = "nixos";
+  user.enable = false;
+  desktop.enable = false;
 
-  os = {
-    isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
+  os.isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
 
-    environment.systemPackages = with pkgs; [
-      (import ./wifiScript.nix pkgs)
-      (import ./downloadScript.nix pkgs)
-      (import ./generateScript.nix pkgs)
-      (import ./installScript.nix pkgs)
-      git
-      disko
-      neovim
-      fzf
-      nixfmt-rfc-style
-    ];
-  };
+  hm.home.packages = with pkgs; [
+    (import ./wifiScript.nix pkgs)
+    (import ./downloadScript.nix pkgs)
+    (import ./generateScript.nix pkgs)
+    (import ./installScript.nix pkgs)
+    # TODO Provide these in separate modules
+    disko
+    fzf
+  ];
 }

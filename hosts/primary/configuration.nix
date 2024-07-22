@@ -4,22 +4,9 @@
   impermanence.disk = "nvme0n1";
   networking.hostName = "primary";
   nvidia.enable = true;
-  stylix.enable = true;
-  sddm.enable = true;
-  hyprland = {
-    enable = true;
-    settings.monitor = [
-      "DP-1, 1920x1080@144, 0x0, 1"
-      "HDMI-A-1, 1920x1080@75, 1920x0, 1"
-    ];
-  };
-  walker.enable = true;
-  apps.enable = true;
-
-  installer.enable = true;
-
-  os.environment.systemPackages = with pkgs; [
-    neovim
-    fzf
+  hyprland.settings.monitor = [
+    "DP-1, 1920x1080@144, 0x0, 1"
+    "HDMI-A-1, 1920x1080@75, 1920x0, 1"
   ];
+  installer.enable = true;
 }

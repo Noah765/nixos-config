@@ -1,4 +1,8 @@
-{lib, ...}:
+{
+  lib,
+  config,
+  ...
+}:
 with lib; {
   imports = [
     ./core
@@ -12,7 +16,7 @@ with lib; {
   core.enable = mkDefault true;
   cli.enable = mkDefault true;
   desktop.enable = mkDefault true;
-  apps.enable = mkDefault true;
+  apps.enable = mkIf config.desktop.enable (mkDefault true);
   localisation.enable = mkDefault true;
   documentation.enable = mkDefault true;
 }
