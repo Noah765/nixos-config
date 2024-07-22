@@ -17,7 +17,7 @@ pkgs.writeShellScriptBin "generate" ''
     esac
   done
 
-  echo $'\n\n'
+  echo $'\n'
   sudo nixos-generate-config --no-filesystems --show-hardware-config > ~/config/hosts/"$config"/hardware-configuration.nix
   alejandra ~/config/hosts/"$config"/hardware-configuration.nix
 

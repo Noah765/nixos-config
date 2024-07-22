@@ -32,13 +32,12 @@ pkgs.writeShellScriptBin "install-os" ''
       esac
     done
 
-    echo $'\nFormatting...'
-    sudo disko -m disko -f ~/dots#"$config"
-    echo -e "\nSuccessfully formatted the disk $bold$disk$normal!"
+    echo -e "\nInstalling NixOS on the $bold$disk$normal disk using the $bold$config$normal configuration...\n"
+    sudo nix run 'github:nix-community/disko#disko-install' -- --flake ~/config#"$config"
+  else
+    echo -e "\nInstalling NixOS using the $bold$config$normal configuration...\n"
+    sudo nixos-install --flake ~/config#"$config"
   fi
-
-  echo -e "\nInstalling NixOS using the $bold$config$normal configuration...\n"
-  sudo nixos-install --flake ~/dots#"$config"
 
   echo $'\nCopying the configuration...'
   sudo cp -r ~/config/. /mnt/persist/system/etc/nixos

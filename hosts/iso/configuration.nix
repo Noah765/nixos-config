@@ -29,8 +29,6 @@ with lib; {
     (import ./download-script.nix pkgs)
     (import ./generate-script.nix pkgs)
     (import ./install-script.nix pkgs)
-    # TODO Provide these in separate modules
-    disko
-    fzf
+    fzf # TODO Provide fzf in a separate module
   ];
 }
