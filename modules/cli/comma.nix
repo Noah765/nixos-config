@@ -16,5 +16,5 @@ in {
 
   options.cli.comma.enable = mkEnableOption "comma";
 
-  config.os.programs.nix-index.database.comma = mkIf cfg.enable true;
+  config.os.programs.nix-index-database.comma.enable = mkIf cfg.enable true;
 }

@@ -17,7 +17,7 @@ in {
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.stylix.enable;
+        assertion = config.desktop.stylix.enable;
         message = "The sddm module is dependent on the stylix module.";
       }
     ];

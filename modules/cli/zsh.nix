@@ -19,7 +19,7 @@ in {
       enable = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      history.path = mkIf config.impermanence.enable "/persist/home/.zsh_history"; # The file can get replaced by zsh, which breaks symlinks, so the normal impermanence module won't work here
+      history.path = mkIf config.core.impermanence.enable "/persist/home/.zsh_history"; # The file can get replaced by zsh, which breaks symlinks, so the normal impermanence module won't work here
     };
   };
 }

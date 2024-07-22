@@ -165,9 +165,12 @@ in {
 
       nix.settings.auto-optimise-store = true;
 
-      programs.nh.clean = {
+      programs.nh = {
         enable = true;
-        extraArgs = "-k 5 -K 7d";
+        clean = {
+          enable = true;
+          extraArgs = "-k 5 -K 7d";
+        };
       };
 
       systemd.tmpfiles.rules = mkIf useHm ["d /persist/home 0700 noah users -"];

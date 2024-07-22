@@ -20,7 +20,7 @@ in {
       hostName = cfg.hostName;
       networkmanager.enable = true;
     };
-    user.groups = ["networkmanager"];
-    impermanence.os.directories = ["/etc/NetworkManager/system-connections"];
+    core.user.groups = ["networkmanager"];
+    core.impermanence.os.directories = ["/etc/NetworkManager/system-connections"];
   };
 }

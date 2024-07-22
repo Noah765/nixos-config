@@ -15,7 +15,7 @@ in {
       console.keyMap = "de-latin1-nodeadkeys";
     };
 
-    hyprland.settings.input = mkIf cfg.enable {
+    desktop.hyprland.settings.input = mkIf cfg.enable {
       kb_layout = "de";
       kb_variant = "nodeadkeys";
     };

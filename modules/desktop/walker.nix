@@ -18,11 +18,11 @@ in {
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.hyprland.enable;
+        assertion = config.desktop.hyprland.enable;
         message = "The walker module is dependent on the hyprland module.";
       }
       {
-        assertion = config.stylix.enable;
+        assertion = config.desktop.stylix.enable;
         message = "The walker module is dependent on the stylix module.";
       }
     ];
@@ -218,7 +218,7 @@ in {
       };
     };
 
-    hyprland.settings = {
+    desktop.hyprland.settings = {
       layerrule = [
         "noanim, walker"
         "blur, walker"

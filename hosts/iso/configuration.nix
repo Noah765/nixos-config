@@ -14,18 +14,21 @@ with lib; {
 
   hmUsername = "nixos";
 
-  impermanence.enable = false;
-  networkmanager.hostName = "nixos";
-  user.enable = false;
+  core = {
+    impermanence.enable = false;
+    networkmanager.hostName = "nixos";
+    user.enable = false;
+  };
+
   desktop.enable = false;
 
   os.isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
 
   hm.home.packages = with pkgs; [
-    (import ./wifiScript.nix pkgs)
-    (import ./downloadScript.nix pkgs)
-    (import ./generateScript.nix pkgs)
-    (import ./installScript.nix pkgs)
+    (import ./wifi-script.nix pkgs)
+    (import ./download-script.nix pkgs)
+    (import ./generate-script.nix pkgs)
+    (import ./install-script.nix pkgs)
     # TODO Provide these in separate modules
     disko
     fzf

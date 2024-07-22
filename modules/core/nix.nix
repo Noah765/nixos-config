@@ -16,7 +16,11 @@ in {
   options.core.nix.enable = mkEnableOption "a patched version of the Nix language and core settings required for Nix";
 
   config = mkIf cfg.enable {
+    hm.home.stateVersion = "24.11";
+
     os = {
+      system.stateVersion = "24.11";
+
       nix = {
         package = inputs.nix-dram.packages.${pkgs.system}.default.overrideAttrs (old: {
           patches =
@@ -36,10 +40,7 @@ in {
         };
       };
 
-      os.system.stateVersion = "24.11";
       nixpkgs.config.allowUnfree = true;
     };
-
-    hm.home.stateVersion = "24.11";
   };
 }

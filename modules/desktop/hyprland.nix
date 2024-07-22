@@ -8,7 +8,7 @@
 with lib; let
   cfg = config.desktop.hyprland;
 in {
-  imports = [(mkAliasOptionModule ["hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
+  imports = [(mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
   options.desktop.hyprland.enable = mkEnableOption "Hyprland";
 

@@ -7,7 +7,7 @@
 with lib; let
   cfg = config.cli.installer;
 in {
-  options.installer.enable = mkEnableOption "scripts for building, testing and writing the installer to a USB";
+  options.cli.installer.enable = mkEnableOption "scripts for building, testing and writing the installer to a USB";
 
   config.hm.home.packages = mkIf cfg.enable [
     (pkgs.writeShellScriptBin "build-installer" ''

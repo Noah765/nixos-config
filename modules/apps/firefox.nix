@@ -14,6 +14,6 @@ in {
       profiles.noah = {};
     };
 
-    impermanence.hm.directories = [".mozilla/firefox/noah"];
+    core.impermanence.hm.directories = [".mozilla/firefox/noah"];
   };
 }

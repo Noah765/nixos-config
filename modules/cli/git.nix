@@ -22,6 +22,6 @@ in {
       gh.enable = mkIf cfg.gitHub true;
     };
 
-    impermanence.hm.files = mkIf cfg.gitHub [".config/gh/hosts.yml"];
+    core.impermanence.hm.files = mkIf cfg.gitHub [".config/gh/hosts.yml"];
   };
 }
