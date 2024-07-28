@@ -4,16 +4,13 @@ let
     rev
     narHash
     ;
-  combinedManager = import (
-    builtins.fetchTarball {
-      url = "https://github.com/Noah765/combined-manager/archive/${rev}.tar.gz";
-      sha256 = narHash;
-    }
-  );
+  combinedManager = import (builtins.fetchTarball {
+    url = "https://github.com/Noah765/combined-manager/archive/${rev}.tar.gz";
+    sha256 = narHash;
+  });
 in
   combinedManager.mkFlake {
     lockFile = ./flake.lock;
-    defaultSystem = "x86_64-linux";
 
     initialInputs = {
       combined-manager.url = "github:Noah765/combined-manager";

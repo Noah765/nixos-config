@@ -27,12 +27,11 @@ in {
         esac
       done
 
-      pushd /etc/nixos
-      nom build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
-      popd
+      ${pkgs.nix-output-monitor}/bin/nom build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
 
       echo "The installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
     '')
+    # TODO Update or remove.
     (pkgs.writeShellScriptBin "test-installer" ''
       set -euo pipefail
 
@@ -50,7 +49,7 @@ in {
         esac
       done
 
-      nom shell qemu -c qemu-system-x86_64 -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso
+      ${pkgs.qemu}/bin/qemu-system-x86_64 -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso
     '')
     (pkgs.writeShellScriptBin "write-installer" ''
       set -euo pipefail
@@ -70,7 +69,7 @@ in {
         esac
       done
 
-      disk=$(lsblk -dno name | fzf --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
+      disk=$(lsblk -dno name | ${pkgs.fzf}/bin/fzf --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
 
       echo -e "\nOverwriting a disk can cause the disk's contents to be ''${red}lost forever$normal!"
       while true; do
@@ -86,7 +85,7 @@ in {
       sudo umount /dev/$disk* || true
 
       echo 'Writing...'
-      sudo dd bs=4M conv=fsync oflag=direct status=progress if=/etc/nixos/result/iso/nixos-*.iso of=/dev/$disk
+      sudo dd bs=4M conv=fsync oflag=direct status=progress if=$(echo /etc/nixos/result/iso/nixos-*.iso) of=/dev/$disk
 
       echo -e "\nThe installer ISO has been successfully written to $bold$disk$normal!"
     '')
