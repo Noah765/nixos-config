@@ -40,27 +40,19 @@ in {
         # TODO Clipboard module
         # TODO Enable the application module cache?
         config = {
-          fullscreen = true;
-          align = {
-            horizontal = "center";
-            vertical = "center";
-          };
-          placeholder = "Search...";
-          enable_typeahead = true;
-          show_initial_entries = true;
-          icons.size = 28;
           activation_mode.use_alt = true;
-          modules = [
-            {name = "applications";}
-            {
-              name = "websearch";
-              prefix = "?";
-            }
-            {
-              name = "commands";
+
+          disabled = ["clipboard" "custom_commands" "emojis" "finder" "hyprland" "runner" "ssh" "switcher" "dmenu"];
+
+          builtins = {
+            applications.typeahead = true;
+            commands = {
               prefix = ":";
-            }
-          ];
+              switcher_only = false;
+            };
+            websearch.prefix = "?";
+          };
+
           external = [
             {
               name = "calculator";
