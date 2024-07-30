@@ -183,44 +183,51 @@ in {
 
       # TODO memory leaks?
       systemd.user.services.walker-calculator = let
-        script = pkgs.writeShellScriptBin "walker-calculator" ''
-          mkfifo /tmp/walker-calculator-input
-          mkfifo /tmp/walker-calculator-output
+        inputFifo = "/tmp/walker-calculator-input";
+        outputFifo = "/tmp/walker-calculator-output";
 
-          ${pkgs.expect}/bin/expect -c '
-            set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
+        # TODO Call fconfigure before opening the FIFOs?
+        script = pkgs.writeScriptBin "walker-calculator" ''
+          #!${pkgs.expect}
 
-            spawn ${pkgs.kalker}/bin/kalker
-            expect >>
+          set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
 
-            while true {
-              set input [exec cat /tmp/walker-calculator-input]
+          exec mkfifo ${inputFifo}
+          exec mkfifo ${outputFifo}
+          set input_fifo [open ${inputFifo} r]
+          set output_fifo [open ${outputFifo} a]
 
-              foreach {open close} $group_symbols {
-                set open_count [regexp -all \\$open $input]
-                set close_count [regexp -all \\$close $input]
+          spawn ${pkgs.kalker}/bin/kalker
+          expect >>
 
-                if {$open_count != $close_count} {
-                  puts "Not balanced"
-                  exit
-                }
+          while true {
+            gets $input_fifo input
+
+            foreach {open close} $group_symbols {
+              set open_count [regexp -all \\$open $input]
+              set close_count [regexp -all \\$close $input]
+
+              if {$open_count != $close_count} {
+                puts "Not balanced"
+                exit
               }
+            }
 
-              send $input\n
-              expect \n
-              expect {
-                -re "(.*)\r\n"   { set output $expect_out(1,string) }
-                >>               { set output "" }
-              }
-              exec sh -c "echo \"$output\" > /tmp/walker-calculator-output"
-            }'
+            send $input\n
+            expect \n
+            expect {
+              -re "(.*)\r\n"   { set output $expect_out(1,string) }
+              >>               { set output "" }
+            }
+            puts $ouput_fifo $output
+          }
         '';
       in {
         Unit.Description = "Calculator plugin for walker";
         Install.WantedBy = ["walker.service"];
         Service = {
           ExecStart = "${script}/bin/walker-calculator";
-          ExecStopPost = "rm /tmp/walker-calculator-input /tmp/walker-calculator-output /tmp/walker-calculator-history";
+          ExecStopPost = "rm ${inputFifo} ${outputFifo} /tmp/walker-calculator-history";
         };
       };
     };
