@@ -40,10 +40,11 @@ in {
         # TODO Clipboard module
         # TODO Enable the application module cache?
         config = {
+          ui.fullscreen = true;
+
           activation_mode.use_alt = true;
 
           disabled = ["clipboard" "custom_commands" "emojis" "finder" "hyprland" "runner" "ssh" "switcher" "dmenu"];
-
           builtins = {
             applications.typeahead = true;
             commands = {
@@ -53,7 +54,7 @@ in {
             websearch.prefix = "?";
           };
 
-          external = [
+          plugins = [
             {
               name = "calculator";
               src = let
