@@ -31,7 +31,6 @@ in {
 
       echo "The installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
     '')
-    # TODO Update or remove.
     (pkgs.writeShellScriptBin "test-installer" ''
       set -euo pipefail
 
@@ -49,7 +48,10 @@ in {
         esac
       done
 
-      ${pkgs.qemu}/bin/qemu-system-x86_64 -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso
+      echo
+      ${pkgs.qemu}/bin/qemu-img create /tmp/installer.img 20G
+      trap 'rm /tmp/installer.img' EXIT
+      ${pkgs.qemu}/bin/qemu-system-x86_64 -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso -drive file=/tmp/installer.img,format=raw
     '')
     (pkgs.writeShellScriptBin "write-installer" ''
       set -euo pipefail

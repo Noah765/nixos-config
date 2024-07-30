@@ -12,6 +12,7 @@ in {
     inputs = {
       nixpkgs.follows = "nixpkgs";
       home-manager.follows = "home-manager";
+      nuschtosSearch.follows = "";
       nix-darwin.follows = "";
       devshell.follows = "";
       treefmt-nix.follows = "";
