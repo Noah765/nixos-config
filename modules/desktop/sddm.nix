@@ -25,16 +25,21 @@ in {
     os.services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
-      sugarCandy.settings = with osConfig.lib.stylix.colors; {
-        Background = osConfig.stylix.image;
-        FullBlur = true;
-        BlurRadius = 25;
-        FormPosition = "center";
-        MainColor = "#${base05}";
-        AccentColor = "#${base0D}";
-        BackgroundColor = "#${base00}";
-        OverrideLoginButtonTextColor = "#${base00}";
-        Font = osConfig.stylix.fonts.sansSerif.name;
+
+      sugarCandy = {
+        enable = true;
+
+        settings = with osConfig.lib.stylix.colors; {
+          Background = osConfig.stylix.image;
+          FullBlur = true;
+          BlurRadius = 25;
+          FormPosition = "center";
+          MainColor = "#${base05}";
+          AccentColor = "#${base0D}";
+          BackgroundColor = "#${base00}";
+          OverrideLoginButtonTextColor = "#${base00}";
+          Font = osConfig.stylix.fonts.sansSerif.name;
+        };
       };
     };
   };
