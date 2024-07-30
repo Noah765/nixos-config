@@ -114,6 +114,7 @@ in {
             border-radius: 12px;
           }
 
+          /* TODO Verify the following CSS once https://github.com/abenz1267/walker/issues/84 is fixed
           #searchwrapper { margin-right: -16px; }
 
           entry {
@@ -147,11 +148,9 @@ in {
             transform: translateX(-28px);
             animation: spin 1s linear infinite;
           }
+          */
 
-          scrolledwindow {
-            min-height: 280px;
-            margin-top: 20px;
-          }
+          #scroll { margin-top: 20px; }
 
           row {
             padding: 4px 8px 4px 8px;
@@ -182,16 +181,31 @@ in {
         '';
       };
 
+      # TODO memory leaks?
       systemd.user.services.walker-calculator = let
         script = pkgs.writeShellScriptBin "walker-calculator" ''
           mkfifo /tmp/walker-calculator-input
           mkfifo /tmp/walker-calculator-output
 
           ${pkgs.expect}/bin/expect -c '
+            set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
+
             spawn ${pkgs.kalker}/bin/kalker
             expect >>
+
             while true {
               set input [exec cat /tmp/walker-calculator-input]
+
+              foreach {open close} $group_symbols {
+                set open_count [regexp -all \\$open $input]
+                set close_count [regexp -all \\$close $input]
+
+                if {$open_count != $close_count} {
+                  puts "Not balanced"
+                  exit
+                }
+              }
+
               send $input\n
               expect \n
               expect {
