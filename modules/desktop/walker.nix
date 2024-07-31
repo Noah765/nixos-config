@@ -109,9 +109,6 @@ in {
             border-radius: 12px;
           }
 
-          /* TODO Verify the following CSS once https://github.com/abenz1267/walker/issues/84 is fixed
-          #searchwrapper { margin-right: -16px; }
-
           entry {
             min-height: 32px;
             padding: 0 12px 0 12px;
@@ -135,15 +132,6 @@ in {
             background: #${base01};
             color: #${base05}88;
           }
-
-          @keyframes spin { to { -gtk-icon-transform: rotate(1turn); } }
-          #spinner { opacity: 0; }
-          #spinner.visible {
-            opacity: 1;
-            transform: translateX(-28px);
-            animation: spin 1s linear infinite;
-          }
-          */
 
           #scroll { margin-top: 20px; }
 
@@ -184,19 +172,16 @@ in {
         # TODO Call fconfigure before opening the FIFOs?
         script = pkgs.writeScriptBin "walker-calculator" ''
           #!${pkgs.expect}
-
           set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
 
           exec mkfifo ${inputFifo}
           exec mkfifo ${outputFifo}
-          set input_fifo [open ${inputFifo} r]
-          set output_fifo [open ${outputFifo} a]
 
           spawn ${pkgs.kalker}/bin/kalker
           expect >>
 
           while true {
-            gets $input_fifo input
+            set input [exec cat ${inputFifo}]
 
             foreach {open close} $group_symbols {
               set open_count [regexp -all \\$open $input]
@@ -214,7 +199,8 @@ in {
               -re "(.*)\r\n"   { set output $expect_out(1,string) }
               >>               { set output "" }
             }
-            puts $ouput_fifo $output
+
+            exec echo $output > ${outputFifo}
           }
         '';
       in {
