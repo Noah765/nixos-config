@@ -42,6 +42,7 @@ pkgs.writeShellScriptBin "install-os" ''
 
   echo $'\nCopying the configuration...'
   sudo cp -r ~/config/. /mnt/persist/system/etc/nixos
+  sudo chown noah:users /mnt/persist/system/etc/nixos -R
 
   echo $'\nCopying WIFI connections...'
   sudo cp -r /etc/NetworkManager/system-connections /mnt/persist/system/etc/NetworkManager
