@@ -38,7 +38,7 @@ in {
                 ++ [
                   (pkgs.fetchpatch {
                     url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
-                    hash = "sha256-/VoR8Ygm4bHPVqNz7PkKMoptDSqV666R0xza/YBfKEE=";
+                    hash = "sha256-UUOZeAzDt54h/vmiRe6IXVdTMG/kUnqGdLUYalWy/fU=";
                   })
                 ];
             });
