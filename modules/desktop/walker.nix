@@ -172,7 +172,25 @@ in {
         # TODO Call fconfigure before opening the FIFOs?
         script = pkgs.writeScriptBin "walker-calculator" ''
           #!${pkgs.expect}
-          set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
+
+          proc is_input_invalid {x} {
+            set stack {}
+
+            foreach character [split $x ""] {
+              if {[string first $x "[C(\[\{⌈⌊|"] != -1} {puts "TEST"}
+              if [string match $x "(\[\{⌈⌊|"] {puts "TEST"}
+              if {[lsearch {( [ \{ ⌈ ⌊ |} $x] != -1} {puts "TEST"}
+
+              foreach {open close} {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |} {
+                set open_count [regexp -all \\$open $x]
+                set close_count [regexp -all \\$close $x]
+
+                if {$open_count != $close_count} { return true }
+              }
+            }
+
+            return false
+          }
 
           exec mkfifo ${inputFifo}
           exec mkfifo ${outputFifo}
@@ -183,14 +201,9 @@ in {
           while true {
             set input [exec cat ${inputFifo}]
 
-            foreach {open close} $group_symbols {
-              set open_count [regexp -all \\$open $input]
-              set close_count [regexp -all \\$close $input]
-
-              if {$open_count != $close_count} {
-                puts "Not balanced"
-                exit
-              }
+            if [is_input_invalid $input] {
+              exec echo "Invalid input" > /tmp/walker-calculator-output
+              continue
             }
 
             send $input\n
