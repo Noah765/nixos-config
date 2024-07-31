@@ -172,20 +172,17 @@ in {
         # TODO Call fconfigure before opening the FIFOs?
         script = pkgs.writeScriptBin "walker-calculator" ''
           #!${pkgs.expect}
-
-          proc is_input_invalid {x} {
+          proc is_input_invalid {input} {
             set stack {}
 
-            foreach character [split $x ""] {
-              if {[string first $x "[C(\[\{⌈⌊|"] != -1} {puts "TEST"}
-              if [string match $x "(\[\{⌈⌊|"] {puts "TEST"}
-              if {[lsearch {( [ \{ ⌈ ⌊ |} $x] != -1} {puts "TEST"}
-
-              foreach {open close} {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |} {
-                set open_count [regexp -all \\$open $x]
-                set close_count [regexp -all \\$close $x]
-
-                if {$open_count != $close_count} { return true }
+            foreach x [split $input ""] {
+              switch -regexp $x {
+                [([\{⌈⌊|]   { lappend stack $x }
+                \\)         { if {[lindex stack end] != "("} { puts "Unbalanced! $x" } }
+                [)\\]\}⌉⌋|] {
+                  set stack [lrange stack 0 end-1]
+                  puts "TEST4: $x"
+                }
               }
             }
 
@@ -209,8 +206,8 @@ in {
             send $input\n
             expect \n
             expect {
-              -re "(.*)\r\n"   { set output $expect_out(1,string) }
-              >>               { set output "" }
+              -re "(.*)\r\n" { set output $expect_out(1,string) }
+              >>             { set output "" }
             }
 
             exec echo $output > ${outputFifo}
