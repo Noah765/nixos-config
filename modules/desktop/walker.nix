@@ -64,7 +64,7 @@ in {
                       "label": "$result",
                       "sub": "$1",
                       "score_final": 31,
-                      "exec": "${execScript}/bin/walker-calculator-plugin-exec '$1' '$result'"
+                      "exec": "${getExe execScript} '$1' '$result'"
                     }
                   END
 
@@ -92,7 +92,7 @@ in {
 
                   walker -m calculator
                 '';
-              in "${script}/bin/walker-calculator-plugin '%TERM%'";
+              in "${getExe script} '%TERM%'";
             }
           ];
         };
@@ -170,7 +170,7 @@ in {
         outputFifo = "/tmp/walker-calculator-output";
 
         script = pkgs.writeScriptBin "walker-calculator" ''
-          #!${pkgs.expect}/bin/expect -f
+          #!${getBin pkgs.expect}
 
           proc validate_input {input} {
             set group_symbols {| ( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋}
@@ -204,7 +204,7 @@ in {
           exec mkfifo ${inputFifo}
           exec mkfifo ${outputFifo}
 
-          spawn ${pkgs.kalker}/bin/kalker
+          spawn ${getExe pkgs.kalker}
           expect >>
 
           while true {
@@ -230,8 +230,8 @@ in {
         Unit.Description = "Calculator plugin for walker";
         Install.WantedBy = ["walker.service"];
         Service = {
-          ExecStart = "${script}/bin/walker-calculator";
-          ExecStopPost = "${pkgs.coreutils}/bin/rm -f ${inputFifo} ${outputFifo} /tmp/walker-calculator-history";
+          ExecStart = getExe script;
+          ExecStopPost = "${getExe' pkgs.coreutils "rm"} -f ${inputFifo} ${outputFifo} /tmp/walker-calculator-history";
         };
       };
     };

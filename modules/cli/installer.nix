@@ -27,7 +27,7 @@ in {
         esac
       done
 
-      ${pkgs.nix-output-monitor}/bin/nom build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
+      ${getExe pkgs.nix-output-monitor} build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
 
       echo "The installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
     '')
@@ -49,9 +49,9 @@ in {
       done
 
       echo
-      ${pkgs.qemu}/bin/qemu-img create /tmp/installer.img 20G
-      trap 'rm /tmp/installer.img' EXIT
-      ${pkgs.qemu}/bin/qemu-system-x86_64 -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso -drive file=/tmp/installer.img,format=raw
+      ${getExe' pkgs.qemu "qemu-img"} create /tmp/installer.img 20G
+      trap 'rm -f /tmp/installer.img' EXIT
+      ${getExe' pkgs.qemu "qemu-system-x86_64"} -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso -drive file=/tmp/installer.img,format=raw
     '')
     (pkgs.writeShellScriptBin "write-installer" ''
       set -euo pipefail
@@ -71,7 +71,7 @@ in {
         esac
       done
 
-      disk=$(lsblk -dno name | ${pkgs.fzf}/bin/fzf --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
+      disk=$(lsblk -dno name | ${getExe pkgs.fzf} --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
 
       echo -e "\nOverwriting a disk can cause the disk's contents to be ''${red}lost forever$normal!"
       while true; do
