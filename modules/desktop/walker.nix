@@ -169,36 +169,38 @@ in {
         inputFifo = "/tmp/walker-calculator-input";
         outputFifo = "/tmp/walker-calculator-output";
 
-        # TODO Call fconfigure before opening the FIFOs?
         script = pkgs.writeScriptBin "walker-calculator" ''
-          #!${pkgs.expect}
-          # TODO Handle pipes correctly, finish refactor, CHECK THAT STACK IS EMPTY IN THE END
+          #!${pkgs.expect}/bin/expect -f
+
           proc validate_input {input} {
-            set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
+            set group_symbols {| ( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋}
 
             set stack {}
 
             foreach x [split $input ""] {
-              if {[lsearch -exact $group_symbols $x] == -1} { continue }
+              set index [lsearch -exact $group_symbols $x]
+              if {$index == -1} { continue }
 
-              if {[lsearch -exact $group_symbols $x] % 2 == 0} {
+              set last [lindex $stack end]
+
+              if {$index % 2 == 1 || $x == "|" && $last != "|"} {
                 lappend stack $x
                 continue
               }
 
-              set last [lindex $stack end]
               set stack [lrange $stack 0 end-1]
 
-              if {[lsearch -exact $group_symbols $last] + 1 == [lsearch -exact $group_symbols $x]} { continue }
+              if {[lsearch -exact $group_symbols $last] + 1 == $index || $x == "|"} { continue }
 
               if {$last == ""} { return "Mismatched brackets: '$x' is unpaired" }
               return "Mismatched brackets: '$last' is not properly closed"
             }
 
             set last [lindex $stack end]
-            if {[llength $stack] != 0} { return "Mismatched brackets: $last is not properly closed" }
+            if {$last != ""} { return "Mismatched brackets: '$last' is not properly closed" }
           }
 
+          exec rm -f ${inputFifo} ${outputFifo}
           exec mkfifo ${inputFifo}
           exec mkfifo ${outputFifo}
 
@@ -208,8 +210,9 @@ in {
           while true {
             set input [exec cat ${inputFifo}]
 
-            if [is_input_invalid $input] {
-              exec echo "Invalid input" > /tmp/walker-calculator-output
+            set validation_result [validate_input $input]
+            if {$validation_result != ""} {
+              exec echo $validation_result > ${outputFifo}
               continue
             }
 
@@ -228,7 +231,7 @@ in {
         Install.WantedBy = ["walker.service"];
         Service = {
           ExecStart = "${script}/bin/walker-calculator";
-          ExecStopPost = "rm ${inputFifo} ${outputFifo} /tmp/walker-calculator-history";
+          ExecStopPost = "${pkgs.coreutils}/bin/rm -f ${inputFifo} ${outputFifo} /tmp/walker-calculator-history";
         };
       };
     };
