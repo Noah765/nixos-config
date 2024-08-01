@@ -172,46 +172,31 @@ in {
         # TODO Call fconfigure before opening the FIFOs?
         script = pkgs.writeScriptBin "walker-calculator" ''
           #!${pkgs.expect}
-          # TODO Handle pipes correctly, finish refactor
-
+          # TODO Handle pipes correctly, finish refactor, CHECK THAT STACK IS EMPTY IN THE END
           proc validate_input {input} {
+            set group_symbols {( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋ | |}
+
             set stack {}
 
             foreach x [split $input ""] {
-              if [string match {[([\{⌈⌊|]} $x] {
-              if {[string first $x "(\[\{⌈⌊|"] != -1} {
+              if {[lsearch -exact $group_symbols $x] == -1} { continue }
 
-              switch -regexp $x {
-                [([\{⌈⌊|] { lappend stack $x }
-                \\)       { if {[lindex $stack end] != "("} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
-                ]         { if {[lindex $stack end] != "\["} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
-                \}        { if {[lindex $stack end] != \{} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
-                ⌉         { if {[lindex $stack end] != ⌈} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
-                ⌋         { if {[lindex $stack end] != ⌊} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
-                \\|       { if {[lindex $stack end] != |} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
-              }
-            }
-          }
-          proc validate_input {input} {
-            set stack {}
-
-            foreach x [split $input ""] {
-              if {[string first $x "(\[\{⌈⌊|"] != -1} {
+              if {[lsearch -exact $group_symbols $x] % 2 == 0} {
                 lappend stack $x
-                continue
-              } elseif {[string first $x ")]\}⌉⌋|"] == -1} {
                 continue
               }
 
               set last [lindex $stack end]
               set stack [lrange $stack 0 end-1]
 
-              puts $x$last
+              if {[lsearch -exact $group_symbols $last] + 1 == [lsearch -exact $group_symbols $x]} { continue }
 
-              if {$x == ")" && $last != "("} {
-                return "Unbalanced!: $x"
-              }
+              if {$last == ""} { return "Mismatched brackets: '$x' is unpaired" }
+              return "Mismatched brackets: '$last' is not properly closed"
             }
+
+            set last [lindex $stack end]
+            if {[llength $stack] != 0} { return "Mismatched brackets: $last is not properly closed" }
           }
 
           exec mkfifo ${inputFifo}
