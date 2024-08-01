@@ -172,21 +172,46 @@ in {
         # TODO Call fconfigure before opening the FIFOs?
         script = pkgs.writeScriptBin "walker-calculator" ''
           #!${pkgs.expect}
-          proc is_input_invalid {input} {
+          # TODO Handle pipes correctly, finish refactor
+
+          proc validate_input {input} {
             set stack {}
 
             foreach x [split $input ""] {
+              if [string match {[([\{⌈⌊|]} $x] {
+              if {[string first $x "(\[\{⌈⌊|"] != -1} {
+
               switch -regexp $x {
-                [([\{⌈⌊|]   { lappend stack $x }
-                \\)         { if {[lindex stack end] != "("} { puts "Unbalanced! $x" } }
-                [)\\]\}⌉⌋|] {
-                  set stack [lrange stack 0 end-1]
-                  puts "TEST4: $x"
-                }
+                [([\{⌈⌊|] { lappend stack $x }
+                \\)       { if {[lindex $stack end] != "("} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
+                ]         { if {[lindex $stack end] != "\["} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
+                \}        { if {[lindex $stack end] != \{} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
+                ⌉         { if {[lindex $stack end] != ⌈} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
+                ⌋         { if {[lindex $stack end] != ⌊} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
+                \\|       { if {[lindex $stack end] != |} { return "Unbalanced! $x" } else { set stack [lrange $stack 0 end-1] } }
               }
             }
+          }
+          proc validate_input {input} {
+            set stack {}
 
-            return false
+            foreach x [split $input ""] {
+              if {[string first $x "(\[\{⌈⌊|"] != -1} {
+                lappend stack $x
+                continue
+              } elseif {[string first $x ")]\}⌉⌋|"] == -1} {
+                continue
+              }
+
+              set last [lindex $stack end]
+              set stack [lrange $stack 0 end-1]
+
+              puts $x$last
+
+              if {$x == ")" && $last != "("} {
+                return "Unbalanced!: $x"
+              }
+            }
           }
 
           exec mkfifo ${inputFifo}
