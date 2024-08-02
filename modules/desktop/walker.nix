@@ -40,15 +40,6 @@ in {
 
           activation_mode.use_alt = true;
 
-          disabled = ["clipboard" "custom_commands" "emojis" "finder" "hyprland" "runner" "ssh" "switcher" "dmenu"];
-          builtins = {
-            applications.typeahead = true;
-            commands = {
-              prefix = ":";
-              switcher_only = false;
-            };
-            websearch.prefix = "?";
-          };
           plugins = [
             {
               name = "calculator";
