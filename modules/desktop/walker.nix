@@ -36,6 +36,7 @@ in {
         # TODO Enable the application module cache?
         config = {
           ui.fullscreen = true;
+          list.show_sub_single_module = true;
 
           activation_mode.use_alt = true;
 
@@ -48,23 +49,28 @@ in {
             };
             websearch.prefix = "?";
           };
-
           plugins = [
             {
               name = "calculator";
               src = let
                 script = pkgs.writeShellScriptBin "walker-calculator-plugin" ''
+                  prompt=$(cat)
+
+                  mkdir -p ~/.cache/walker
                   touch ~/.cache/walker/calculator-history.txt
 
-                  echo "$1" > /tmp/walker-calculator-input
+                  echo "$prompt" > /tmp/walker-calculator-input
                   result=$(cat /tmp/walker-calculator-output)
+
+                  escape_json() { echo "$1" | sed 's/"/\\"/g'; }
+                  escape_json_bash() { escape_json "$(echo "$1" | sed "s/'/'\\\\\\\\'''/g")"; }
 
                   cat << END
                     [{
-                      "label": "$result",
-                      "sub": "$1",
+                      "label": "$(escape_json "$result")",
+                      "sub": "$(escape_json "$prompt")",
                       "score_final": 31,
-                      "exec": "${getExe execScript} '$1' '$result'"
+                      "exec": "${getExe execScript} '$(escape_json_bash "$prompt")' '$(escape_json_bash "$result")'"
                     }
                   END
 
@@ -75,14 +81,15 @@ in {
                     # No other characters are allowed before or after the heredoc delimiter
                     cat << END
                       , {
-                        "label": "$result",
-                        "sub": "$prompt",
-                        "score_final": $counter
+                        "label": "$(escape_json "$result")",
+                        "sub": "$(escape_json "$prompt")",
+                        "score_final": $counter,
+                        "exec": "${getExe execScript} '$(escape_json_bash "$prompt")' '$(escape_json_bash "$result")'"
                       }
                   END
                   done < ~/.cache/walker/calculator-history.txt
 
-                  echo "]"
+                  echo ]
                 '';
                 execScript = pkgs.writeShellScriptBin "walker-calculator-plugin-exec" ''
                   echo "$1" >> ~/.cache/walker/calculator-history.txt
@@ -92,7 +99,8 @@ in {
 
                   walker -m calculator
                 '';
-              in "${getExe script} '%TERM%'";
+              in
+                getExe script;
             }
           ];
         };
@@ -164,13 +172,12 @@ in {
         '';
       };
 
-      # TODO memory leaks?
       systemd.user.services.walker-calculator = let
         inputFifo = "/tmp/walker-calculator-input";
         outputFifo = "/tmp/walker-calculator-output";
 
         script = pkgs.writeScriptBin "walker-calculator" ''
-          #!${getBin pkgs.expect}
+          #!${getExe pkgs.expect}
 
           proc validate_input {input} {
             set group_symbols {| ( ) [ ] \{ \} ⌈ ⌉ ⌊ ⌋}
@@ -192,12 +199,12 @@ in {
 
               if {[lsearch -exact $group_symbols $last] + 1 == $index || $x == "|"} { continue }
 
-              if {$last == ""} { return "Mismatched brackets: '$x' is unpaired" }
-              return "Mismatched brackets: '$last' is not properly closed"
+              if {$last == ""} { return "'$x' is unpaired." }
+              return "'$last' is not properly closed."
             }
 
             set last [lindex $stack end]
-            if {$last != ""} { return "Mismatched brackets: '$last' is not properly closed" }
+            if {$last != ""} { return "'$last' is not properly closed." }
           }
 
           exec rm -f ${inputFifo} ${outputFifo}
