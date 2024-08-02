@@ -65,31 +65,29 @@ in {
                   escape_json() { echo "$1" | sed 's/"/\\"/g'; }
                   escape_json_bash() { escape_json "$(echo "$1" | sed "s/'/'\\\\\\\\'''/g")"; }
 
-                  cat << END
-                    [{
-                      "label": "$(escape_json "$result")",
-                      "sub": "$(escape_json "$prompt")",
-                      "score_final": 31,
-                      "exec": "${getExe execScript} '$(escape_json_bash "$prompt")' '$(escape_json_bash "$result")'"
-                    }
+                  output=()
+                  add_item() {
+                    output+=("$(cat << END
+                      {
+                        "label": "$(escape_json "$2")",
+                        "sub": "$(escape_json "$1")",
+                        "score_final": $3,
+                        "exec": "${getExe execScript} '$(escape_json_bash "$1")' '$(escape_json_bash "$2")'"
+                      }
                   END
+                    )")
+                  }
+
+                  add_item "$prompt" "$result" 31
 
                   counter=0
                   while read prompt; read result; do
                     ((counter++))
-
-                    # No other characters are allowed before or after the heredoc delimiter
-                    cat << END
-                      , {
-                        "label": "$(escape_json "$result")",
-                        "sub": "$(escape_json "$prompt")",
-                        "score_final": $counter,
-                        "exec": "${getExe execScript} '$(escape_json_bash "$prompt")' '$(escape_json_bash "$result")'"
-                      }
-                  END
+                    add_item "$prompt" "$result" $counter
                   done < ~/.cache/walker/calculator-history.txt
 
-                  echo ]
+                  IFS=,
+                  echo "[''${output[*]}]"
                 '';
                 execScript = pkgs.writeShellScriptBin "walker-calculator-plugin-exec" ''
                   echo "$1" >> ~/.cache/walker/calculator-history.txt
