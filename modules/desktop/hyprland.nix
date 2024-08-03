@@ -93,13 +93,14 @@ in {
           swallow_regex = "^${hmConfig.home.sessionVariables.TERMINAL}$";
           focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
-          initial_workspace_tracking = 0;
+          initial_workspace_tracking = 1; # TODO Doesn't work with window swallowing (e.g. Slack)
         };
 
-        # Only persists the cursor position when switching between workspaces
+        binds.workspace_center_on = 1;
+
         cursor = {
-          persistent_warps = true;
-          warp_on_change_workspace = true;
+          persistent_warps = true; # TODO Doesn't work (with hy3:changefocus?)
+          warp_on_change_workspace = true; # TODO Is this actually the same as binds.workspace_center_on?
         };
 
         bindm = [
@@ -145,8 +146,6 @@ in {
           "Super, 8, focusworkspaceoncurrentmonitor, 8"
           "Super, 9, focusworkspaceoncurrentmonitor, 9"
           "Super, 0, focusworkspaceoncurrentmonitor, 10"
-          "Super, Plus, focusworkspaceoncurrentmonitor, +1"
-          "Super, Minus, focusworkspaceoncurrentmonitor, -1"
 
           "Super+Shift, 1, hy3:movetoworkspace, 1"
           "Super+Shift, 2, hy3:movetoworkspace, 2"
@@ -158,8 +157,6 @@ in {
           "Super+Shift, 8, hy3:movetoworkspace, 8"
           "Super+Shift, 9, hy3:movetoworkspace, 9"
           "Super+Shift, 0, hy3:movetoworkspace, 0"
-          "Super+Shift, Plus, hy3:movetoworkspace, +1"
-          "Super+Shift, Minus, hy3:movetoworkspace, -1"
 
           "Super, Space, focusmonitor, +1"
 
