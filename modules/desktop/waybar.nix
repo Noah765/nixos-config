@@ -20,33 +20,77 @@ in {
       enable = true;
       # TODO systemd.enable
 
-      settings = {
-        modules-left = ["image" "hyprland/workspaces"];
-        modules-center = ["clock"];
-        modules-right = ["network" "wireplumber"];
+      settings = [
+        {
+          modules-left = ["image" "hyprland/workspaces"];
+          modules-center = ["clock"];
+          modules-right = ["network" "pulseaudio/slider" "backlight/slider"];
 
-        image.path = "/home/noah/Downloads/nix-snowflake.svg";
-        "hyprland/workspaces" = {
-          persistent-workspaces."*" = [1 2 3 4 5 6 7 8 9 10];
-          move-to-monitor = true;
-        };
+          image.path = "/home/noah/Downloads/nix-snowflake.svg";
+          "hyprland/workspaces" = {
+            persistent-workspaces."*" = [1 2 3 4 5 6 7 8 9 10];
+            move-to-monitor = true;
+          };
 
-        clock.format = "{:%A, %B %d, %Y (%R)}";
+          clock.format = "{:%A, %B %d, %Y (%R)}";
 
-        network = {
-          format-icons = ["󰤟" "󰤢" "󰤥" "󰤨"];
-          format-wifi = "<big>{icon}</big>";
-          format-ethernet = "<big></big>";
-          format-disconnected = "<big>󰤭</big>";
-        };
+          network = {
+            format-icons = ["󰤟" "󰤢" "󰤥" "󰤨"];
+            format-wifi = "<big>{icon}</big>";
+            format-ethernet = "<big></big>";
+            format-disconnected = "<big>󰤭</big>";
+          };
 
-        wireplumber = {
-          format = "{volume}% {icon}";
-          format-muted = "";
-          on-click = "helvum";
-          format-icons = ["" "" ""];
-        };
-      };
+          wireplumber = {
+            format = "{volume}% {icon}";
+            format-muted = "";
+            on-click = "helvum";
+            format-icons = ["" "" ""];
+          };
+        }
+      ];
+
+      style = ''
+        #pulseaudio-slider slider {
+            min-width: 0px;
+            min-height: 0px;
+            opacity: 0;
+            background-image: none;
+            border: none;
+            box-shadow: none;
+        }
+        #pulseaudio-slider trough {
+            min-width: 80px;
+            min-height: 10px;
+            border-radius: 5px;
+            background-color: black;
+        }
+        #pulseaudio-slider highlight {
+            min-height: 10px;
+            border-radius: 5px;
+            background-color: green;
+        }
+
+        #backlight-slider slider {
+            min-width: 0px;
+            min-height: 0px;
+            opacity: 0;
+            background-image: none;
+            border: none;
+            box-shadow: none;
+        }
+        #backlight-slider trough {
+            min-width: 80px;
+            min-height: 10px;
+            border-radius: 5px;
+            background-color: black;
+        }
+        #backlight-slider highlight {
+            min-height: 10px;
+            border-radius: 5px;
+            background-color: red;
+        }
+      '';
     };
   };
 }
