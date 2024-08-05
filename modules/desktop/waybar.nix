@@ -23,11 +23,28 @@ in {
       settings = {
         modules-left = ["image" "hyprland/workspaces"];
         modules-center = ["clock"];
+        modules-right = ["network" "wireplumber"];
 
         image.path = "/home/noah/Downloads/nix-snowflake.svg";
         "hyprland/workspaces" = {
           persistent-workspaces."*" = [1 2 3 4 5 6 7 8 9 10];
           move-to-monitor = true;
+        };
+
+        clock.format = "{:%A, %B %d, %Y (%R)}";
+
+        network = {
+          format-icons = ["󰤟" "󰤢" "󰤥" "󰤨"];
+          format-wifi = "<big>{icon}</big>";
+          format-ethernet = "<big></big>";
+          format-disconnected = "<big>󰤭</big>";
+        };
+
+        wireplumber = {
+          format = "{volume}% {icon}";
+          format-muted = "";
+          on-click = "helvum";
+          format-icons = ["" "" ""];
         };
       };
     };
