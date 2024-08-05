@@ -11,7 +11,7 @@ in {
     ./impermanence.nix
     ./systemd-boot.nix
     ./network-manager.nix
-    ./pipewire.nix
+    ./pulseaudio.nix
     ./nvidia.nix
     ./user.nix
   ];
@@ -23,7 +23,7 @@ in {
     impermanence.enable = mkDefault true;
     systemd-boot.enable = mkDefault true;
     networkmanager.enable = mkDefault true;
-    pipewire.enable = mkDefault true;
+    pulseaudio.enable = mkDefault true;
     user.enable = mkDefault true;
   };
 }
