@@ -13,6 +13,7 @@ in {
     ./network-manager.nix
     ./pulseaudio.nix
     ./nvidia.nix
+    ./ddccontrol.nix
     ./user.nix
   ];
 

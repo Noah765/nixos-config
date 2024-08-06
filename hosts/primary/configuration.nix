@@ -5,6 +5,7 @@
     impermanence.disk = "nvme0n1";
     networkmanager.hostName = "primary";
     nvidia.enable = true;
+    ddccontrol.enable = true;
   };
 
   cli.installer.enable = true;
