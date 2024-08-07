@@ -53,7 +53,7 @@ in {
         {
           modules-left = ["image" "hyprland/workspaces"];
           modules-center = ["clock"];
-          modules-right = ["network" "pulseaudio/slider" "backlight/slider"];
+          modules-right = ["network" "pulseaudio/slider"];
 
           image.path = "/home/noah/Downloads/nix-snowflake.svg";
           "hyprland/workspaces" = {
@@ -98,26 +98,6 @@ in {
             min-height: 10px;
             border-radius: 5px;
             background-color: green;
-        }
-
-        #backlight-slider slider {
-            min-width: 0px;
-            min-height: 0px;
-            opacity: 0;
-            background-image: none;
-            border: none;
-            box-shadow: none;
-        }
-        #backlight-slider trough {
-            min-width: 80px;
-            min-height: 10px;
-            border-radius: 5px;
-            background-color: black;
-        }
-        #backlight-slider highlight {
-            min-height: 10px;
-            border-radius: 5px;
-            background-color: red;
         }
       '';
     };
