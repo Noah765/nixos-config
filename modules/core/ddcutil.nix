@@ -16,7 +16,7 @@ in {
     core.user.groups = ["i2c"];
 
     os = {
-      environment.systemPackages = [pkgs.ddcutil];
+      environment.systemPackages = [pkgs.ddcutil]; # TODO Does this even need to be exposed to the user?
       boot.extraModulePackages = [osConfig.boot.kernelPackages.ddcci-driver];
 
       services.udev.extraRules = ''
@@ -35,7 +35,7 @@ in {
           id=$(echo $1 | cut -d "-" -f 2)
           counter=5
           while [ $counter -gt 0 ]; do
-            if ${pkgs.ddcutil}/bin/ddcutil getvcp 10 -b $id; then
+            if ${getExe pkgs.ddcutil} getvcp 10 -b $id; then
               echo ddcci 0x37 > /sys/bus/i2c/devices/$1/new_device
               break
             fi
