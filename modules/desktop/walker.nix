@@ -9,7 +9,7 @@
 with lib; let
   cfg = config.desktop.walker;
 in {
-  inputs.walker.url = "github:abenz1267/walker";
+  inputs.walker.url = "github:abenz1267/walker/512b728c4282edd810ba0aee2d438f2f2c5197ee";
 
   hmImports = [inputs.walker.homeManagerModules.default];
 
