@@ -37,8 +37,8 @@ in {
                 or []
                 ++ [
                   (pkgs.fetchpatch {
-                    url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.22.1/evaluable-flake.patch";
-                    hash = "sha256-UUOZeAzDt54h/vmiRe6IXVdTMG/kUnqGdLUYalWy/fU=";
+                    url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.24.4/evaluable-flake.patch";
+                    hash = "sha256-72mFg401gUMeSRMqxdcFhW4e4FCFMMz2AFhwoxqg8oc=";
                   })
                 ];
             });
