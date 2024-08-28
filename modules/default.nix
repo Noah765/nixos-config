@@ -9,7 +9,6 @@ with lib; {
     ./cli
     ./desktop
     ./apps
-    ./localisation.nix
     ./documentation.nix
   ];
 
@@ -17,6 +16,5 @@ with lib; {
   cli.enable = mkDefault true;
   desktop.enable = mkDefault true;
   apps.enable = mkIf config.desktop.enable (mkDefault true);
-  localisation.enable = mkDefault true;
   documentation.enable = mkDefault true;
 }
