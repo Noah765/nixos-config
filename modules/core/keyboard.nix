@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -30,11 +29,11 @@ in {
 
           a = "overloadt2(alt, n, 500)";
           s = "overloadt2(meta, r, 500)";
-          d = "overloadt2(shift, t, 500)";
-          f = "overloadt2(control, s, 500)";
+          d = "overloadt2(control, t, 500)";
+          f = "overloadt2(shift, s, 500)";
           h = "y";
-          j = "overloadt2(control, h, 500)";
-          k = "overloadt2(shift, a, 500)";
+          j = "overloadt2(shift, h, 500)";
+          k = "overloadt2(control, a, 500)";
           l = "overloadt2(meta, e, 500)";
           ";" = "overloadt2(alt, i, 500)";
 
@@ -46,6 +45,7 @@ in {
           m = "p";
           "/" = "_";
 
+          capslock = "esc";
           rightalt = "layer(symbols)";
         };
 
@@ -69,12 +69,12 @@ in {
 
           a = "overloadt2(alt, 1, 500)";
           s = "overloadt2(meta, 2, 500)";
-          d = "overloadt2(symbolsshift, 3, 500)";
-          f = "overloadt2(control, 4, 500)";
+          d = "overloadt2(control, 3, 500)";
+          f = "overloadt2(symbolsshift, 4, 500)";
           g = "5";
           h = "6";
-          j = "overloadt2(control, 7, 500)";
-          k = "overloadt2(symbolsshift, 8, 500)";
+          j = "overloadt2(symbolsshift, 7, 500)";
+          k = "overloadt2(control, 8, 500)";
           l = "overloadt2(meta, 9, 500)";
           ";" = "overloadt2(alt, 0, 500)";
 
