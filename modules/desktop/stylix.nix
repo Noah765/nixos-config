@@ -40,5 +40,11 @@ in {
       package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
       name = "JetBrainsMono Nerd Font Mono";
     };
+
+    opacity.terminal = 0.75;
+    targets.nixvim.transparentBackground = {
+      main = true;
+      signColumn = true;
+    };
   };
 }

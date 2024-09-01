@@ -14,9 +14,6 @@ in {
       home.sessionVariables.TERMINAL = "kitty";
     };
 
-    desktop.hyprland.settings = {
-      bind = ["Super, T, exec, kitty"];
-      windowrule = ["opaque, ^kitty$"];
-    };
+    desktop.hyprland.settings.bind = ["Super, T, exec, kitty"];
   };
 }
