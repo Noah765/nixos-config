@@ -2,7 +2,7 @@
   osImports = [./hardware-configuration.nix];
 
   core = {
-    impermanence.disk = "";
+    impermanence.disk = "nvme0n1";
     networkmanager.hostName = "laptop";
   };
 
