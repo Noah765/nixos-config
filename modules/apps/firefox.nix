@@ -15,5 +15,6 @@ in {
     };
 
     core.impermanence.hm.directories = [".mozilla/firefox/noah"];
+    desktop.hyprland.settings.bind = ["Super, B, exec, firefox"];
   };
 }
