@@ -34,8 +34,8 @@ in {
     defaultEditor = true;
     # TODO vimdiffAlias, luaLoader
 
-    extraPackages = [pkgs.stylua];
-    extraPlugins = [pkgs.vimPlugins.nvim-web-devicons]; # TODO Is this enabled by default?
+    extraPackages = with pkgs; [stylua alejandra rustfmt];
+    extraPlugins = [pkgs.vimPlugins.nvim-web-devicons];
     extraConfigLua = ''
       require('mini.statusline').section_location = function()
         return '%2l:%-2v'
@@ -277,9 +277,13 @@ in {
       lsp = {
         enable = true;
         # TODO Do we have to modify the capabilities table using lsp.capabilities?
-        servers.lua-ls = {
-          enable = true;
-          settings.completion.callSnippet = "Replace";
+        servers = {
+          nixd.enable = true;
+          lua-ls = {
+            enable = true;
+            settings.completion.callSnippet = "Replace";
+          };
+          rust-analyzer.enable = true;
         };
         # TODO What does buffer = event.buf do?
         keymaps = {
@@ -386,8 +390,11 @@ in {
       conform-nvim = {
         enable = true;
         settings = {
-          notify_on_error = false;
-          formatters_by_ft.lua = ["stylua"];
+          formatters_by_ft = {
+            lua = ["stylua"];
+            nix = ["alejandra"];
+            rust = ["rustfmt"];
+          };
           format_on_save = ''
             function(bufnr)
               local disable_filetypes = { c = true, cpp = true }
