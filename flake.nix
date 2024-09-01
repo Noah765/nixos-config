@@ -25,6 +25,7 @@ in
 
     configurations = {
       primary.modules = [./hosts/primary/configuration.nix];
+      laptop.modules = [./hosts/laptop/configuration.nix];
       iso.modules = [./hosts/iso/configuration.nix];
     };
   }
