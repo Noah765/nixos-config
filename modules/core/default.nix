@@ -17,6 +17,7 @@ in {
     ./user.nix
     ./time-zone.nix
     ./keyboard.nix
+    ./plover.nix
   ];
 
   options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system";
@@ -30,5 +31,6 @@ in {
     user.enable = mkDefault true;
     timeZone.enable = mkDefault true;
     keyboard.enable = mkDefault true;
+    plover.enable = mkDefault true;
   };
 }

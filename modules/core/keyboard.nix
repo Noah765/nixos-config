@@ -8,91 +8,95 @@ with lib; let
 in {
   options.core.keyboard.enable = mkEnableOption "the Graphite keyboard layout with home row mods";
 
-  config.os.services.keyd = mkIf cfg.enable {
-    enable = true;
+  config.os = {
+    users.groups.uinput = {}; # Required when Plover is enabled because it disables the default uinput module
 
-    keyboards.default = {
-      ids = ["*"];
+    services.keyd = mkIf cfg.enable {
+      enable = true;
 
-      settings = {
-        main = {
-          q = "b";
-          w = "l";
-          e = "d";
-          r = "w";
-          t = "z";
-          y = "'";
-          u = "f";
-          i = "o";
-          o = "u";
-          p = "j";
+      keyboards.default = {
+        ids = ["*"];
 
-          a = "overloadt2(alt, n, 500)";
-          s = "overloadt2(meta, r, 500)";
-          d = "overloadt2(control, t, 500)";
-          f = "overloadt2(shift, s, 500)";
-          h = "y";
-          j = "overloadt2(shift, h, 500)";
-          k = "overloadt2(control, a, 500)";
-          l = "overloadt2(meta, e, 500)";
-          ";" = "overloadt2(alt, i, 500)";
+        settings = {
+          main = {
+            q = "b";
+            w = "l";
+            e = "d";
+            r = "w";
+            t = "z";
+            y = "'";
+            u = "f";
+            i = "o";
+            o = "u";
+            p = "j";
 
-          z = "q";
-          c = "m";
-          v = "c";
-          b = "v";
-          n = "k";
-          m = "p";
-          "/" = "_";
+            a = "overloadt2(alt, n, 500)";
+            s = "overloadt2(meta, r, 500)";
+            d = "overloadt2(control, t, 500)";
+            f = "overloadt2(shift, s, 500)";
+            h = "y";
+            j = "overloadt2(shift, h, 500)";
+            k = "overloadt2(control, a, 500)";
+            l = "overloadt2(meta, e, 500)";
+            ";" = "overloadt2(alt, i, 500)";
 
-          capslock = "esc";
-          rightalt = "layer(symbols)";
-        };
+            z = "q";
+            c = "m";
+            v = "c";
+            b = "v";
+            n = "k";
+            m = "p";
+            "/" = "_";
 
-        shift = {
-          "," = "(";
-          "." = ")";
-          "/" = "=";
-        };
+            capslock = "esc";
+            rightalt = "layer(symbols)";
+          };
 
-        symbols = {
-          q = "#";
-          w = "^";
-          e = ":";
-          r = "{";
-          t = "[";
-          y = "]";
-          u = "}";
-          i = ";";
-          o = "$";
-          p = "|";
+          shift = {
+            "," = "(";
+            "." = ")";
+            "/" = "=";
+          };
 
-          a = "overloadt2(alt, 1, 500)";
-          s = "overloadt2(meta, 2, 500)";
-          d = "overloadt2(control, 3, 500)";
-          f = "overloadt2(symbolsshift, 4, 500)";
-          g = "5";
-          h = "6";
-          j = "overloadt2(symbolsshift, 7, 500)";
-          k = "overloadt2(control, 8, 500)";
-          l = "overloadt2(meta, 9, 500)";
-          ";" = "overloadt2(alt, 0, 500)";
+          symbols = {
+            q = "#";
+            w = "^";
+            e = ":";
+            r = "{";
+            t = "[";
+            y = "]";
+            u = "}";
+            i = ";";
+            o = "$";
+            p = "|";
 
-          z = "?";
-          x = "*";
-          c = "/";
-          v = "%";
-          b = "<";
-          n = ">";
-          m = "\\";
-          "," = "+";
-          "." = "-";
-          "/" = "&";
-        };
+            a = "overloadt2(alt, 1, 500)";
+            s = "overloadt2(meta, 2, 500)";
+            d = "overloadt2(control, 3, 500)";
+            f = "overloadt2(symbolsshift, 4, 500)";
+            g = "5";
+            h = "6";
+            j = "overloadt2(symbolsshift, 7, 500)";
+            k = "overloadt2(control, 8, 500)";
+            l = "overloadt2(meta, 9, 500)";
+            ";" = "overloadt2(alt, 0, 500)";
 
-        "symbolsshift:S" = {
-          d = "`";
-          f = "~";
+            z = "?";
+            x = "*";
+            c = "/";
+            v = "%";
+            b = "<";
+            n = ">";
+            m = "\\";
+            "," = "+";
+            "." = "-";
+            "/" = "&";
+          };
+
+          "symbolsshift:S" = {
+            d = "`";
+            f = "~";
+          };
         };
       };
     };
