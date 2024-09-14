@@ -22,6 +22,14 @@ in {
       services.udev.extraRules = ''KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"'';
     };
 
-    hm.home.packages = [(inputs.plover.packages.${pkgs.system}.default.with-plugins (ps: [ps.plover-lapwing-aio]))];
+    hm = {
+      home.packages = [(inputs.plover.packages.${pkgs.system}.default.with-plugins (ps: [ps.plover-lapwing-aio]))];
+
+      xdg.configFile = {
+        "plover/plover.cfg".text = generators.toINI {} {System.name = "Lapwing";};
+
+        "plover/user.json".text = generators.toJSON {} {};
+      };
+    };
   };
 }
