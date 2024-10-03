@@ -5,6 +5,7 @@
 }:
 with lib; {
   imports = [
+    ./dependencies.nix
     ./core
     ./cli
     ./desktop

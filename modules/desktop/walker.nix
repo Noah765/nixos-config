@@ -16,16 +16,7 @@ in {
   options.desktop.walker.enable = mkEnableOption "Walker";
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.desktop.hyprland.enable;
-        message = "The walker module is dependent on the hyprland module.";
-      }
-      {
-        assertion = config.desktop.stylix.enable;
-        message = "The walker module is dependent on the stylix module.";
-      }
-    ];
+    dependencies = ["desktop.hyprland" "desktop.stylix"];
 
     hm = {
       programs.walker = {

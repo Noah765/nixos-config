@@ -15,12 +15,7 @@ in {
   options.desktop.sddm.enable = mkEnableOption "SDDM";
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.desktop.stylix.enable;
-        message = "The sddm module is dependent on the stylix module.";
-      }
-    ];
+    dependencies = ["desktop.stylix"];
 
     os.services.displayManager.sddm = {
       enable = true;

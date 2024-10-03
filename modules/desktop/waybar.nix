@@ -10,12 +10,7 @@ in {
   options.desktop.waybar.enable = mkEnableOption "Waybar";
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.desktop.stylix.enable;
-        message = "The waybar module is dependent on the stylix module.";
-      }
-    ];
+    dependencies = ["desktop.stylix"];
 
     # TODO Temporarily fixes https://github.com/Alexays/Waybar/issues/3302
     os.nixpkgs.overlays = [
