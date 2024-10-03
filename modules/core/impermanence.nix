@@ -190,6 +190,7 @@ in {
           "Pictures"
           "Documents"
           "Videos"
+          "projects"
         ]
         ++ cfg.hm.directories;
       files = cfg.hm.files;

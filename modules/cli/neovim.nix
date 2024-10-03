@@ -283,6 +283,10 @@ in {
             enable = true;
             settings.completion.callSnippet = "Replace";
           };
+          dartls = {
+            enable = true;
+            settings.lineLength = 200;
+          };
           rust-analyzer.enable = true;
         };
         # TODO What does buffer = event.buf do?
@@ -395,15 +399,10 @@ in {
             nix = ["alejandra"];
             rust = ["rustfmt"];
           };
-          format_on_save = ''
-            function(bufnr)
-              local disable_filetypes = { c = true, cpp = true }
-              return {
-                timeout_ms = 500,
-                lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-              }
-            end
-          '';
+          format_on_save = {
+            timeout_ms = 500;
+            lsp_format = "fallback";
+          };
         };
       };
 
