@@ -173,7 +173,7 @@ in {
         enable = true;
         clean = {
           enable = true;
-          extraArgs = "-k 5 -K 7d";
+          extraArgs = "-k 5 -K 30d";
         };
       };
 
