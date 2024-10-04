@@ -11,13 +11,10 @@ in {
     ./impermanence.nix
     ./systemd-boot.nix
     ./network-manager.nix
-    ./pulseaudio.nix
     ./nvidia.nix
-    ./ddcutil.nix
     ./user.nix
     ./time-zone.nix
     ./keyboard.nix
-    ./plover.nix
   ];
 
   options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system";
@@ -27,10 +24,8 @@ in {
     impermanence.enable = mkDefault true;
     systemd-boot.enable = mkDefault true;
     networkmanager.enable = mkDefault true;
-    pulseaudio.enable = mkDefault true;
     user.enable = mkDefault true;
     timeZone.enable = mkDefault true;
     keyboard.enable = mkDefault true;
-    plover.enable = mkDefault true;
   };
 }
