@@ -10,9 +10,10 @@ in {
     ./nix.nix
     ./impermanence.nix
     ./systemd-boot.nix
-    ./network-manager.nix
     ./nvidia.nix
     ./user.nix
+    ./yubikey.nix
+    ./network-manager.nix
     ./time-zone.nix
     ./keyboard.nix
   ];
@@ -23,8 +24,9 @@ in {
     nix.enable = mkDefault true;
     impermanence.enable = mkDefault true;
     systemd-boot.enable = mkDefault true;
-    networkmanager.enable = mkDefault true;
     user.enable = mkDefault true;
+    yubikey.enable = mkDefault true;
+    networkmanager.enable = mkDefault true;
     timeZone.enable = mkDefault true;
     keyboard.enable = mkDefault true;
   };
