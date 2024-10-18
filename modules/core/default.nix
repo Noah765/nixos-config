@@ -13,6 +13,7 @@ in {
     ./nvidia.nix
     ./user.nix
     ./yubikey.nix
+    ./agenix.nix
     ./network-manager.nix
     ./time-zone.nix
     ./keyboard.nix
@@ -26,6 +27,7 @@ in {
     systemd-boot.enable = mkDefault true;
     user.enable = mkDefault true;
     yubikey.enable = mkDefault true;
+    agenix.enable = mkDefault true;
     networkmanager.enable = mkDefault true;
     timeZone.enable = mkDefault true;
     keyboard.enable = mkDefault true;

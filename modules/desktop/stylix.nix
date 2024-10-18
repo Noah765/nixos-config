@@ -16,6 +16,8 @@ in {
     };
   };
 
+  imports = [(mkAliasOptionModule ["desktop" "stylix" "targets"] ["os" "stylix" "targets"])];
+
   osImports = [inputs.stylix.nixosModules.stylix];
 
   options.desktop.stylix.enable = mkEnableOption "Stylix";
@@ -23,11 +25,11 @@ in {
   config.os.stylix = mkIf cfg.enable {
     enable = true;
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
 
     image = pkgs.fetchurl {
-      url = "https://codeberg.org/exorcist/wallpapers/raw/branch/master/gruvbox/forest-4.jpg";
-      hash = "sha256-mqrwRvJmRLK3iyEiXmaw5UQPftEaqg33NhwzpZvyXws=";
+      url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";
+      hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
     };
 
     cursor = {
@@ -36,15 +38,17 @@ in {
       size = 24;
     };
 
-    fonts.monospace = {
-      package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
-      name = "JetBrainsMono Nerd Font Mono";
+    fonts = {
+      monospace = {
+        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+        name = "JetBrainsMono Nerd Font Mono";
+      };
+      sizes = {
+        terminal = 10;
+        applications = 10;
+      };
     };
 
     opacity.terminal = 0.75;
-    targets.nixvim.transparentBackground = {
-      main = true;
-      signColumn = true;
-    };
   };
 }

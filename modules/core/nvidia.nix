@@ -14,6 +14,7 @@ in {
     hardware.nvidia = {
       open = false;
       nvidiaSettings = false; # Configuration app
+      powerManagement.enable = true;
     };
   };
 }

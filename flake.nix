@@ -28,4 +28,15 @@ in
       laptop.modules = [./hosts/laptop/configuration.nix];
       iso.modules = [./hosts/iso/configuration.nix];
     };
+
+    outputs = {
+      self,
+      agenix-rekey,
+      ...
+    }: {
+      agenix-rekey = agenix-rekey.configure {
+        userFlake = self;
+        nodes = self.nixosConfigurations;
+      };
+    };
   }

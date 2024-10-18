@@ -8,5 +8,6 @@
 
   cli.installer.enable = true;
 
+  # TODO
   desktop.hyprland.settings.monitor = [];
 }

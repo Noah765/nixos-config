@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  osConfig,
   hmConfig,
   ...
 }:
@@ -103,32 +104,39 @@ in {
           warp_on_change_workspace = true; # TODO Is this actually the same as binds.workspace_center_on?
         };
 
+        plugin.hy3.tabs = with osConfig.lib.stylix.colors; {
+          padding = 2;
+          rounding = 6;
+          render_text = false;
+          "col.inactive" = "rgb(${base03})";
+          "col.active" = "rgb(${base0D})";
+          "col.urgent" = "rgb(${base08})";
+        };
+
         bindm = [
           "Super, mouse:272, movewindow"
           "Super, mouse:273, resizewindow"
         ];
 
-        bindn = [", mouse:272, hy3:focustab, mouse"]; # Non-capturing
-
         bind = [
-          "Super+Alt, H, hy3:makegroup, h"
-          "Super+Alt, V, hy3:makegroup, v"
-          "Super+Alt, Space, hy3:makegroup, opposite"
-          "Super+Alt, T, hy3:makegroup, tab"
+          "Super+Alt, H, hy3:makegroup, h, ephemeral"
+          "Super+Alt, V, hy3:makegroup, v, ephemeral"
+          "Super+Alt, Space, hy3:makegroup, opposite, ephemeral"
+          "Super+Alt, T, hy3:makegroup, tab, ephemeral"
 
           # TODO Is hy3:changegroup needed?
 
-          "Super, Up, hy3:movefocus, u"
-          "Super, Right, hy3:movefocus, r"
-          "Super, Down, hy3:movefocus, d"
-          "Super, Left, hy3:movefocus, l"
-          "Super+Ctrl, Plus, hy3:changefocus, raise"
-          "Super+Ctrl, Minus, hy3:changefocus, lower"
+          "Super, K, hy3:movefocus, u"
+          "Super, L, hy3:movefocus, r"
+          "Super, J, hy3:movefocus, d"
+          "Super, H, hy3:movefocus, l"
+          "Super, Plus, hy3:changefocus, raise"
+          "Super, Minus, hy3:changefocus, lower"
 
-          "Super+Shift, Up, hy3:movewindow, u"
-          "Super+Shift, Right, hy3:movewindow, r"
-          "Super+Shift, Down, hy3:movewindow, d"
-          "Super+Shift, Left, hy3:movewindow, l"
+          "Super+Shift, K, hy3:movewindow, u"
+          "Super+Shift, L, hy3:movewindow, r"
+          "Super+Shift, J, hy3:movewindow, d"
+          "Super+Shift, H, hy3:movewindow, l"
 
           "Super, F, fullscreen, 0"
           "Super, G, fullscreen, 1"

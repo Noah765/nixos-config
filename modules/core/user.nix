@@ -21,10 +21,14 @@ in {
   };
 
   config = mkIf cfg.enable {
-    os.users.users.noah = {
-      isNormalUser = true;
-      initialPassword = "12345";
-      extraGroups = ["wheel"] ++ cfg.groups;
+    os.users = {
+      mutableUsers = false;
+
+      users.noah = {
+        isNormalUser = true;
+        initialPassword = "12345";
+        extraGroups = ["wheel"] ++ cfg.groups;
+      };
     };
 
     hmUsername = "noah";

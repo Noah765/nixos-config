@@ -15,6 +15,6 @@ in {
       flake = "/etc/nixos";
     };
 
-    hm.home.packages = with pkgs; [alejandra nix-output-monitor deadnix];
+    hm.home.packages = [pkgs.nix-output-monitor];
   };
 }
