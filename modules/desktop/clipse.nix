@@ -3,7 +3,6 @@
   pkgs,
   config,
   osConfig,
-  hmConfig,
   ...
 }:
 with lib; let
@@ -12,6 +11,8 @@ in {
   options.desktop.clipse.enable = mkEnableOption "clipse";
 
   config = mkIf cfg.enable {
+    dependencies = ["apps.kitty"];
+
     hm.home.packages = with pkgs; [wl-clipboard clipse];
 
     core.impermanence.hm.files = [".config/clipse/clipboard_history.json"];
@@ -19,7 +20,7 @@ in {
     desktop.hyprland.settings = {
       exec-once = ["clipse -listen"];
       windowrule = ["float, ^clipse$" "size 954 534, ^clipse$"];
-      bind = ["Super, V, exec, ${hmConfig.home.sessionVariables.TERMINAL} --class clipse -e 'clipse'"];
+      bind = ["Super, V, exec, kitty --class clipse -e 'clipse'"];
     };
 
     hm.xdg.configFile."clipse/custom_theme.json".text = generators.toJSON {} (with osConfig.lib.stylix.colors.withHashtag; {

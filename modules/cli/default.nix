@@ -7,7 +7,7 @@ with lib; let
   cfg = config.cli;
 in {
   imports = [
-    ./zsh.nix
+    ./cli.nix
     ./git.nix
     ./ripgrep.nix
     ./fd.nix
@@ -20,7 +20,7 @@ in {
   options.cli.enable = mkEnableOption "the default CLI configuration and programs";
 
   config.cli = mkIf cfg.enable {
-    zsh.enable = mkDefault true;
+    cli.enable = mkDefault true;
     git = {
       enable = mkDefault true;
       gitHub = mkDefault true;

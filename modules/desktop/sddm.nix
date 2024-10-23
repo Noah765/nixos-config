@@ -18,7 +18,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    dependencies = ["core.user" "desktop.stylix"];
+    # TODO dependencies = ["core.user" "desktop.stylix"];
 
     os.services.displayManager = {
       autoLogin.user = mkIf cfg.autoLogin "noah";

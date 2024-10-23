@@ -16,39 +16,54 @@ in {
     };
   };
 
-  imports = [(mkAliasOptionModule ["desktop" "stylix" "targets"] ["os" "stylix" "targets"])];
-
   osImports = [inputs.stylix.nixosModules.stylix];
 
   options.desktop.stylix.enable = mkEnableOption "Stylix";
 
-  config.os.stylix = mkIf cfg.enable {
-    enable = true;
+  config.os = {
+    # TODO Remove the overlay once nixpkgs includes the commit
+    nixpkgs.overlays = [
+      (final: prev: {
+        base16-schemes = prev.base16-schemes.overrideAttrs (old: {
+          src = pkgs.fetchFromGitHub {
+            owner = "tinted-theming";
+            repo = "schemes";
+            rev = "43ba59b50b9cd49ddc67f9aab82826f9007ee4e6";
+            hash = "sha256-7TgpQx6JP3t/aSJW+yv5gEXceCIw8qTnhCAT3LtfmeY=";
+          };
+        });
+      })
+    ];
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
+    # TODO Delete or fix the enable option
+    stylix = {
+      enable = cfg.enable;
 
-    image = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";
-      hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
-    };
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
 
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 24;
-    };
-
-    fonts = {
-      monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
-        name = "JetBrainsMono Nerd Font Mono";
+      image = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";
+        hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
       };
-      sizes = {
-        terminal = 10;
-        applications = 10;
-      };
-    };
 
-    opacity.terminal = 0.75;
+      cursor = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
+        size = 24;
+      };
+
+      fonts = {
+        monospace = {
+          package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+          name = "JetBrainsMono Nerd Font Mono";
+        };
+        sizes = {
+          terminal = 10;
+          applications = 10;
+        };
+      };
+
+      opacity.terminal = 0.75;
+    };
   };
 }

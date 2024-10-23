@@ -3,7 +3,6 @@
   pkgs,
   config,
   osConfig,
-  hmConfig,
   ...
 }:
 with lib; let
@@ -42,17 +41,22 @@ in {
 
       plugins = [pkgs.hyprlandPlugins.hy3];
 
-      settings = {
+      settings = let
+        inherit (config.theme) colors;
+        colorToFunction = x: "rgb(${removePrefix "#" x})";
+      in {
         general = {
           gaps_in = 2;
           gaps_out = 5;
+          "col.inactive_border" = colorToFunction colors.background; # TODO Change if this looks bad
+          "col.active_border" = colorToFunction colors.accent;
           layout = "hy3";
-          resize_on_border = true;
           # TODO allow_tearing
         };
 
         decoration = {
           rounding = 12;
+          "col.shadow" = colorToFunction colors.background; # TODO Maybe adjust the opacity?
 
           # TODO Dim inactive windows
           # TODO Style floating windows and popups (blur, dimming)
@@ -91,7 +95,6 @@ in {
           # TODO vrr
           disable_autoreload = true;
           enable_swallow = true;
-          swallow_regex = "^${hmConfig.home.sessionVariables.TERMINAL}$";
           focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
           initial_workspace_tracking = 1; # TODO Doesn't work with window swallowing (e.g. Slack)

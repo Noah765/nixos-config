@@ -6,8 +6,8 @@
     clipboard = "unnamedplus"; # TODO Schedule?
     #   breakindent = true;
     #   undofile = true; # TODO Sessions
-    #   ignorecase = true;
-    #   smartcase = true;
+    ignorecase = true;
+    smartcase = true;
     signcolumn = "yes";
     #   updatetime = 250; TODO Experiment with update times
     #   timeoutlen = 300;
@@ -22,5 +22,6 @@
     inccommand = "split";
     # TODO cursorline = true;
     scrolloff = 9;
+    spell = true;
   };
 }

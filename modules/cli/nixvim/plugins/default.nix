@@ -4,6 +4,5 @@
   hm.programs.nixvim.plugins = {
     sleuth.enable = true;
     web-devicons.enable = true;
-    fidget.enable = true;
   };
 }

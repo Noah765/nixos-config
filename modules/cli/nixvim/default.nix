@@ -30,7 +30,7 @@ in {
   config = {
     dependencies = ["cli.ripgrep"];
 
-    desktop.stylix.targets.nixvim.enable = false;
+    hm.stylix.targets.nixvim.enable = false;
 
     hm.programs.nixvim = mkIf cfg.enable {
       enable = true;
