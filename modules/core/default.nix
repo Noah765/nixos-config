@@ -9,7 +9,7 @@ in {
   imports = [
     ./nix.nix
     ./impermanence.nix
-    ./systemd-boot.nix
+    ./boot.nix
     ./nvidia.nix
     ./user.nix
     ./yubikey.nix
@@ -24,7 +24,7 @@ in {
   config.core = mkIf cfg.enable {
     nix.enable = mkDefault true;
     impermanence.enable = mkDefault true;
-    systemd-boot.enable = mkDefault true;
+    boot.enable = mkDefault true;
     user.enable = mkDefault true;
     yubikey.enable = mkDefault true;
     agenix.enable = mkDefault true;

@@ -21,9 +21,13 @@ in {
     os = {
       system.stateVersion = "24.11";
 
-      nix.settings = {
-        experimental-features = ["nix-command" "flakes"];
-        default-flake = "github:NixOS/nixpkgs/nixos-unstable";
+      nix = {
+        settings = {
+          experimental-features = ["nix-command" "flakes"];
+          default-flake = inputs.nixpkgs;
+        };
+        channel.enable = false;
+        nixPath = ["nixpkgs=${inputs.nixpkgs}"];
       };
 
       nixpkgs = {
