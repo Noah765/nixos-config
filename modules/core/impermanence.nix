@@ -118,8 +118,10 @@ in {
 
       boot.initrd.systemd.services.impermanence = {
         description = "Creates a new root subvolume and gradually deletes old ones.";
-        wants = ["dev-root_vg-root.device"];
-        after = ["dev-root_vg-root.device"];
+        wantedBy = ["initrd.target"];
+        after = ["initrd-root-device.target"];
+        before = ["sysroot.mount"];
+        unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = ''
           mkdir /btrfs_tmp
