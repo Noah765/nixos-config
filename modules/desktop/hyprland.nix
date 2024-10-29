@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  osConfig,
   ...
 }:
 with lib; let
@@ -42,21 +41,20 @@ in {
       plugins = [pkgs.hyprlandPlugins.hy3];
 
       settings = let
-        inherit (config.theme) colors;
-        colorToFunction = x: "rgb(${removePrefix "#" x})";
+        getColor = x: "rgb(${removePrefix "#" config.theme.colors.${x}})";
       in {
         general = {
           gaps_in = 2;
           gaps_out = 5;
-          "col.inactive_border" = colorToFunction colors.background; # TODO Change if this looks bad
-          "col.active_border" = colorToFunction colors.accent;
+          "col.inactive_border" = getColor "inactiveWindowBorder";
+          "col.active_border" = getColor "activeWindowBorder";
           layout = "hy3";
           # TODO allow_tearing
         };
 
         decoration = {
           rounding = 12;
-          "col.shadow" = colorToFunction colors.background; # TODO Maybe adjust the opacity?
+          "col.shadow" = getColor "background"; # TODO Maybe adjust the opacity?
 
           # TODO Dim inactive windows
           # TODO Style floating windows and popups (blur, dimming)
@@ -107,13 +105,13 @@ in {
           warp_on_change_workspace = true; # TODO Is this actually the same as binds.workspace_center_on?
         };
 
-        plugin.hy3.tabs = with osConfig.lib.stylix.colors; {
+        plugin.hy3.tabs = {
           padding = 2;
           rounding = 6;
           render_text = false;
-          "col.inactive" = "rgb(${base03})";
-          "col.active" = "rgb(${base0D})";
-          "col.urgent" = "rgb(${base08})";
+          "col.inactive" = getColor "inactiveTabBackground";
+          "col.active" = getColor "activeTabBackground";
+          # TODO Setup urgent tab color?
         };
 
         bindm = [
@@ -122,24 +120,23 @@ in {
         ];
 
         bind = [
-          "Super+Alt, H, hy3:makegroup, h, ephemeral"
-          "Super+Alt, V, hy3:makegroup, v, ephemeral"
-          "Super+Alt, Space, hy3:makegroup, opposite, ephemeral"
+          "Super+Alt, R, hy3:makegroup, h, ephemeral"
+          "Super+Alt, S, hy3:makegroup, v, ephemeral"
           "Super+Alt, T, hy3:makegroup, tab, ephemeral"
 
           # TODO Is hy3:changegroup needed?
 
+          "Super, H, hy3:movefocus, l"
+          "Super, J, hy3:movefocus, d"
           "Super, K, hy3:movefocus, u"
           "Super, L, hy3:movefocus, r"
-          "Super, J, hy3:movefocus, d"
-          "Super, H, hy3:movefocus, l"
           "Super, Plus, hy3:changefocus, raise"
           "Super, Minus, hy3:changefocus, lower"
 
+          "Super+Shift, H, hy3:movewindow, l"
+          "Super+Shift, J, hy3:movewindow, d"
           "Super+Shift, K, hy3:movewindow, u"
           "Super+Shift, L, hy3:movewindow, r"
-          "Super+Shift, J, hy3:movewindow, d"
-          "Super+Shift, H, hy3:movewindow, l"
 
           "Super, F, fullscreen, 0"
           "Super, G, fullscreen, 1"

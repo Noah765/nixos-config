@@ -10,11 +10,14 @@ in {
   options.apps.kitty.enable = mkEnableOption "Kitty";
 
   config = mkIf cfg.enable {
+    dependencies = ["cli.nixvim"];
+
     hm.programs.kitty = {
       enable = true;
-      #font = {}; # TODO
-      #keybindings = {}; # TODO
+
       settings = with config.theme.colors; {
+        font_size = config.theme.fonts.size;
+
         inherit foreground background;
         background_opacity = config.theme.terminalOpacity;
         selection_foreground =
@@ -22,32 +25,122 @@ in {
           then "none"
           else selectionForeground;
         selection_background = selectionBackground;
+
         cursor = foreground;
         cursor_text_color = background;
 
-        color0 = black;
-        color1 = red;
-        color2 = green;
-        color3 = yellow;
-        color4 = blue;
-        color5 = magenta;
-        color6 = cyan;
-        color7 = white;
-        color8 = black; # TODO Maybe change to a grey color?
-        color9 = red;
-        color10 = green;
-        color11 = yellow;
-        color12 = blue;
-        color13 = magenta;
-        color14 = cyan;
-        color15 = white; # TODO Maybe change to a grey color?
+        #url_color = url;
+        url_style = "straight";
+
+        enable_audio_bell = "no";
+        visual_bell_duration = 0.2; # TODO Test different durations and easing functions
+        # bell_border_color = urgent; # TODO Maybe change
+
+        remember_window_size = "no";
+        initial_window_width = "70c";
+        initial_window_height = "30c";
+        enabled_layouts = "splits";
+        active_border_color = activeWindowBorder;
+        inactive_border_color = inactiveWindowBorder;
+        tab_bar_edge = "top";
+        tab_bar_style = "custom";
+        active_tab_foreground = activeTabForeground;
+        active_tab_background = activeTabBackground;
+        active_tab_font_style = "normal";
+        inactive_tab_foreground = inactiveTabForeground;
+        inactive_tab_background = inactiveTabBackground;
+
+        color0 = terminal0;
+        color1 = terminal1;
+        color2 = terminal2;
+        color3 = terminal3;
+        color4 = terminal4;
+        color5 = terminal5;
+        color6 = terminal6;
+        color7 = terminal7;
+        color8 = terminal8;
+        color9 = terminal9;
+        color10 = terminal10;
+        color11 = terminal11;
+        color12 = terminal12;
+        color13 = terminal13;
+        color14 = terminal14;
+        color15 = terminal15;
+
+        allow_remote_control = "password";
+        remote_control_password = "password kitten focus-window"; # TODO Generate a password
+        listen_on = "unix:@mykitty";
       };
+
+      keybindings = {
+        # Set up control-shift-key mappings for neovim
+        "ctrl+shift+h" = "send_text all \\x1b[72;5u";
+        "ctrl+shift+j" = "send_text all \\x1b[74;5u";
+        "ctrl+shift+k" = "send_text all \\x1b[75;5u";
+        "ctrl+shift+l" = "send_text all \\x1b[76;5u";
+
+        "alt+r" = "launch --cwd=current --location=vsplit";
+        "alt+s" = "launch --cwd=current --location=hsplit";
+        "alt+t" = "launch --cwd=current --type=tab";
+
+        "ctrl+h" = "kitten pass_keys.py left ctrl+h";
+        "ctrl+j" = "kitten pass_keys.py bottom ctrl+j";
+        "ctrl+k" = "kitten pass_keys.py top ctrl+k";
+        "ctrl+l" = "kitten pass_keys.py right ctrl+l";
+
+        "alt+h" = "previous_tab";
+        "alt+l" = "next_tab";
+        "alt+1" = "goto_tab 1";
+        "alt+2" = "goto_tab 2";
+        "alt+3" = "goto_tab 3";
+        "alt+4" = "goto_tab 4";
+        "alt+5" = "goto_tab 5";
+        "alt+6" = "goto_tab 6";
+        "alt+7" = "goto_tab 7";
+        "alt+8" = "goto_tab 8";
+        "alt+9" = "goto_tab 9";
+        "alt+0" = "goto_tab 0";
+
+        "alt+shift+h" = "move_window left";
+        "alt+shift+j" = "move_window down";
+        "alt+shift+k" = "move_window up";
+        "alt+shift+l" = "move_window right";
+
+        "alt+ctrl+shift+h" = "move_tab_backward";
+        "alt+ctrl+shift+l" = "move_tab_forward";
+
+        "alt+q" = "close_window";
+      };
+    };
+
+    hm.xdg.configFile = {
+      "kitty/pass_keys.py".source = "${pkgs.vimPlugins.vim-kitty-navigator}/pass_keys.py";
+      "kitty/get_layout.py".source = "${pkgs.vimPlugins.vim-kitty-navigator}/get_layout.py";
+
+      "kitty/tab_bar.py".text = let
+        color = removePrefix "#" config.theme.colors.tabLineBackground;
+      in ''
+        from kitty.fast_data_types import Screen
+        from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
+
+        def draw_tab(
+          draw_data: DrawData, screen: Screen, tab: TabBarData,
+          before: int, max_tab_length: int, index: int, is_last: bool,
+          extra_data: ExtraData
+        ) -> int:
+          screen.draw(' ')
+          draw_title(draw_data, screen, tab, index, max_tab_length)
+          screen.draw(' ')
+          if is_last:
+            screen.cursor.bg = as_rgb(0x${color})
+            screen.draw(' ' * (screen.columns - screen.cursor.x))
+          return screen.cursor.x
+      '';
     };
 
     desktop.hyprland.settings = {
       misc.swallow_regex = "^kitty$";
-      # TODO Remove
-      bind = ["Super, T, exec, kitty" "Super, J, exec, ${getExe (pkgs.writeShellScriptBin "test" "${getExe pkgs.hyprpicker} > ~/test")}"];
+      bind = ["Super, T, exec, kitty"];
     };
   };
 }

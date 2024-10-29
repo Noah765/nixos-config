@@ -12,9 +12,9 @@
           "(".neigh_pattern = "[^\\][^%w({%[]";
           "{".neigh_pattern = "[^\\][^%w({%[]";
           "[".neigh_pattern = "[^\\][^%w({%[]";
-          "\"".neigh_pattern = "[^\\\"%w]%W";
-          "'".neigh_pattern = "[^\\'%w]%W";
-          "`".neigh_pattern = "[^\\`%w]%W";
+          "\"".neigh_pattern = "[^\\\"({%[%w]%W";
+          "'".neigh_pattern = "[^\\'({%[%w]%W";
+          "`".neigh_pattern = "[^\\`({%[%w]%W";
         };
         statusline = {};
         surround = {};

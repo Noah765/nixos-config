@@ -6,39 +6,30 @@
       action = "<cmd>nohlsearch<CR>";
       options.desc = "Clear search highlights";
     }
-    # TODO What is terminal mode, and is this bind useful?
-    {
-      mode = "t";
-      key = "<Esc><Esc>";
-      action = "<C-\\><C-n>";
-      options.desc = "Exit terminal mode";
-    }
 
     {
       mode = "n";
-      key = "<C-h>";
-      action = "<C-w>h";
-      options.desc = "Move focus to the left window";
+      key = "<C-S-h>";
+      action = "<C-w>H";
+      options.desc = "Move window left";
     }
     {
       mode = "n";
-      key = "<C-j>";
-      action = "<C-w>j";
-      options.desc = "Move focus to the lower window";
+      key = "<C-S-j>";
+      action = "<C-w>J";
+      options.desc = "Move window down";
     }
     {
       mode = "n";
-      key = "<C-k>";
-      action = "<C-w>k";
-      options.desc = "Move focus to the upper window";
+      key = "<C-S-k>";
+      action = "<C-w>K";
+      options.desc = "Move window up";
     }
     {
       mode = "n";
-      key = "<C-l>";
-      action = "<C-w>l";
-      options.desc = "Move focus to the right window";
+      key = "<C-S-l>";
+      action = "<C-w>L";
+      options.desc = "Move window right";
     }
-
-    # TODO Set up control shift keymaps (requires configuring the terminal emulator https://www.reddit.com/r/neovim/comments/mbj8m5/how_to_setup_ctrlshiftkey_mappings_in_neovim_and/)
   ];
 }

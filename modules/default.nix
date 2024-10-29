@@ -11,7 +11,7 @@ with lib; {
     ./desktop
     ./apps
     ./documentation.nix
-    ./theme.nix
+    ./themes
   ];
 
   core.enable = mkDefault true;

@@ -42,6 +42,16 @@
           options.desc = "Find existing buffers";
         };
       };
+      settings.defaults.mappings = {
+        i = {
+          "<C-r>" = "select_vertical";
+          "<C-s>" = "select_horizontal";
+        };
+        n = {
+          "<C-r>" = "select_vertical";
+          "<C-s>" = "select_horizontal";
+        };
+      };
     };
     keymaps = [
       {
