@@ -9,6 +9,7 @@ in {
   imports = [
     ./kitty.nix
     ./firefox.nix
+    ./unity.nix
   ];
 
   options.apps.enable = mkEnableOption "the default apps";

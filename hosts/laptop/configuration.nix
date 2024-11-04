@@ -10,4 +10,6 @@
 
   # TODO
   desktop.hyprland.settings.monitor = [];
+
+  apps.unity.enable = true;
 }

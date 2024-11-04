@@ -17,6 +17,8 @@
     ];
   };
 
+  apps.unity.enable = true;
+
   hm.home.packages = with pkgs; [
     cargo
     rustc
