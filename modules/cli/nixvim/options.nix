@@ -20,8 +20,9 @@
       nbsp = "␣";
     };
     inccommand = "split";
-    # TODO cursorline = true;
     scrolloff = 9;
     spell = true;
+    wrap = false;
+    matchpairs = "(:),{:},[:],<:>";
   };
 }

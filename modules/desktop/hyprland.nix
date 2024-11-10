@@ -12,26 +12,7 @@ in {
   options.desktop.hyprland.enable = mkEnableOption "Hyprland";
 
   config = mkIf cfg.enable {
-    os = {
-      # TODO Remove once https://github.com/hyprwm/Hyprland/pull/5777 gets merged
-      nixpkgs.overlays = [
-        (final: prev: {
-          hyprland = prev.hyprland.overrideAttrs (old: {
-            patches =
-              old.patches
-              or []
-              ++ [
-                (pkgs.fetchpatch {
-                  url = "https://patch-diff.githubusercontent.com/raw/hyprwm/Hyprland/pull/5777.diff";
-                  hash = "sha256-yWMp8VUeo171wqRS0mkI8ww4iTDc/6xzg4pgmM+vdXk=";
-                })
-              ];
-          });
-        })
-      ];
-
-      programs.hyprland.enable = true;
-    };
+    os.programs.hyprland.enable = true;
 
     hm.home.sessionVariables.NIXOS_OZONE_WL = 1;
 
@@ -92,10 +73,9 @@ in {
           force_default_wallpaper = 0;
           # TODO vrr
           disable_autoreload = true;
-          enable_swallow = true;
           focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
-          initial_workspace_tracking = 1; # TODO Doesn't work with window swallowing (e.g. Slack)
+          initial_workspace_tracking = 1;
         };
 
         binds.workspace_center_on = 1;

@@ -17,14 +17,16 @@
     ];
   };
 
-  apps.unity.enable = true;
+  dev = {
+    unity.enable = true;
+    flutter.enable = true;
+  };
+
+  apps.slack.enable = true;
 
   hm.home.packages = with pkgs; [
     cargo
     rustc
-    gcc
-
-    flutter
 
     protonup
   ];
@@ -41,6 +43,4 @@
       method = "symlink";
     }
   ];
-
-  desktop.hyprland.settings.bind = ["Super, S, exec, steam"];
 }

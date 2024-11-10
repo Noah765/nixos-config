@@ -8,13 +8,26 @@
         ai.n_lines = 500;
         # TODO Remove if unused
         operators = {};
-        pairs.mappings = {
-          "(".neigh_pattern = "[^\\][^%w({%[]";
-          "{".neigh_pattern = "[^\\][^%w({%[]";
-          "[".neigh_pattern = "[^\\][^%w({%[]";
-          "\"".neigh_pattern = "[^\\\"({%[%w]%W";
-          "'".neigh_pattern = "[^\\'({%[%w]%W";
-          "`".neigh_pattern = "[^\\`({%[%w]%W";
+        pairs.mappings = let
+          bracketPattern = "[^\\][^%w%.({%[]";
+          getQuotePattern = x: "[^\\${x}%w]%W";
+        in {
+          "(".neigh_pattern = bracketPattern;
+          "{".neigh_pattern = bracketPattern;
+          "[".neigh_pattern = bracketPattern;
+          "<" = {
+            action = "open";
+            pair = "<>";
+            neigh_pattern = bracketPattern;
+          };
+          ">" = {
+            action = "close";
+            pair = "<>";
+            neigh_pattern = bracketPattern;
+          };
+          "\"".neigh_pattern = getQuotePattern "\"";
+          "'".neigh_pattern = getQuotePattern "'";
+          "`".neigh_pattern = getQuotePattern "`";
         };
         statusline = {};
         surround = {};

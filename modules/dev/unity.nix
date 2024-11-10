@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.apps.unity;
+  cfg = config.dev.unity;
 in {
-  options.apps.unity.enable = mkEnableOption "Unity";
+  options.dev.unity.enable = mkEnableOption "Unity";
 
   config = mkIf cfg.enable {
     hm = {
@@ -15,7 +15,7 @@ in {
       programs.nixvim.plugins.lsp.servers.csharp_ls.enable = true;
     };
     os.services.gnome.gnome-keyring.enable = true;
-    core.impermanence.hm.directories = ["Unity" ".config/unityhub" ".config/unity3d" ".local/share/keyrings"];
+    core.impermanence.hm.directories = ["Unity" ".config/unityhub" ".config/unity3d" ".plastic4" ".local/share/keyrings"];
     desktop.hyprland.settings.bind = ["Super, U, exec, unityhub"];
   };
 }

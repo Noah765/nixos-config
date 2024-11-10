@@ -7,17 +7,11 @@ with lib; {
   hm.programs.nixvim.plugins.lsp = {
     enable = true;
     inlayHints = true;
-    servers = {
-      nixd = {
-        enable = true;
-        settings = {
-          formatting.command = [(getExe pkgs.alejandra)];
-          options.combined-manager.expr = "(builtins.getFlake \"/etc/nixos\").combinedManagerConfigurations.primary.options";
-        };
-      };
-      dartls = {
-        enable = true;
-        settings.lineLength = 200;
+    servers.nixd = {
+      enable = true;
+      settings = {
+        formatting.command = [(getExe pkgs.alejandra)];
+        options.combined-manager.expr = "(builtins.getFlake \"/etc/nixos\").combinedManagerConfigurations.primary.options";
       };
     };
     # TODO Modify / remove bindings as needed

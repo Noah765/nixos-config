@@ -9,6 +9,7 @@ with lib; {
     ./core
     ./cli
     ./desktop
+    ./dev
     ./apps
     ./documentation.nix
     ./themes

@@ -37,5 +37,6 @@ in {
       inherit package name size;
       gtk.enable = true;
     };
+    hm.dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   };
 }

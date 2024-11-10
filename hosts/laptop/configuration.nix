@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{
   osImports = [./hardware-configuration.nix];
 
   core = {
@@ -11,8 +11,8 @@
   # TODO
   desktop.hyprland.settings.monitor = [];
 
-  apps.unity.enable = true;
-
-  hm.home.packages = [pkgs.flutter];
-  core.impermanence.hm.directories = [".pub-cache"];
+  dev = {
+    unity.enable = true;
+    flutter.enable = true;
+  };
 }

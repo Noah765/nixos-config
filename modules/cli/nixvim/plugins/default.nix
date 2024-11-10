@@ -1,5 +1,14 @@
 {pkgs, ...}: {
-  imports = [./telescope.nix ./treesitter.nix ./mini.nix ./lsp.nix ./cmp.nix ./conform.nix ./gitsigns.nix];
+  imports = [
+    ./telescope.nix
+    ./treesitter.nix
+    ./mini.nix
+    ./lsp.nix
+    # TODO ./dap.nix
+    ./cmp.nix
+    ./conform.nix
+    ./gitsigns.nix
+  ];
 
   dependencies = ["apps.kitty"];
 

@@ -138,9 +138,6 @@ in {
       '';
     };
 
-    desktop.hyprland.settings = {
-      misc.swallow_regex = "^kitty$";
-      bind = ["Super, T, exec, kitty"];
-    };
+    desktop.hyprland.settings.bind = ["Super, T, exec, kitty"];
   };
 }
