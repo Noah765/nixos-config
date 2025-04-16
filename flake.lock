@@ -483,11 +483,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744743693,
-        "narHash": "sha256-YRGC4W+9GW6z4P2qMAUIyMWEQ+9SwVBgDrzOrJNReEI=",
+        "lastModified": 1744792654,
+        "narHash": "sha256-zBmcTIlcHrKwgZywHX+fFlFJXByOLWPnhUm6L6ySXbQ=",
         "owner": "Noah765",
         "repo": "modulix",
-        "rev": "f24ad9d56b4a0795db4b348b17e5458dc5e95f0a",
+        "rev": "ae6b0327d49228cf2844619cc075e090d8151f9c",
         "type": "github"
       },
       "original": {
