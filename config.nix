@@ -20,8 +20,11 @@
       nodes = self.nixosConfigurations;
     };
 
-    devShells.x86_64-linux.default = with nixpkgs.legacyPackages.x86_64-linux;
-      mkShell {
+    devShells.x86_64-linux.default = let
+      inherit (nixpkgs.lib) getExe';
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in
+      pkgs.mkShell {
         packages = [
           # TODO
           (pkgs.writeShellScriptBin "test-installer" ''
