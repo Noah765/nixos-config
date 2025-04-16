@@ -9,7 +9,9 @@
         # TODO Remove if unused
         operators = {};
         pairs.mappings = let
-          bracketPattern = "[^\\][^%w%.({%[]";
+          bracketPatternAfter = "[^%w%.%$({%[]";
+          bracketPattern = "[^\\]${bracketPatternAfter}";
+          angleBracketPattern = "%w${bracketPatternAfter}";
           getQuotePattern = x: "[^\\${x}%w]%W";
         in {
           "(".neigh_pattern = bracketPattern;
@@ -18,12 +20,12 @@
           "<" = {
             action = "open";
             pair = "<>";
-            neigh_pattern = bracketPattern;
+            neigh_pattern = angleBracketPattern;
           };
           ">" = {
             action = "close";
             pair = "<>";
-            neigh_pattern = bracketPattern;
+            neigh_pattern = angleBracketPattern;
           };
           "\"".neigh_pattern = getQuotePattern "\"";
           "'".neigh_pattern = getQuotePattern "'";

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./telescope.nix
     ./treesitter.nix
@@ -10,14 +14,19 @@
     ./gitsigns.nix
   ];
 
-  dependencies = ["apps.kitty"];
-
   hm.programs.nixvim = {
     plugins = {
       sleuth.enable = true;
       web-devicons.enable = true;
       luasnip.enable = true;
+      fidget.enable = true;
     };
-    extraPlugins = [pkgs.vimPlugins.vim-kitty-navigator];
+    extraPlugins =
+      [pkgs.vimPlugins.vim-wordmotion]
+      ++ (
+        if config.apps.kitty.enable
+        then [pkgs.vimPlugins.vim-kitty-navigator]
+        else []
+      );
   };
 }
