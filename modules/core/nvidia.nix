@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.core.nvidia;
 in {
   options.core.nvidia.enable = mkEnableOption "Nvidia drivers";

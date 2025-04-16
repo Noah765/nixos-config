@@ -4,8 +4,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.core.agenix;
 in {
   inputs = {

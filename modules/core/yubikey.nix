@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.core.yubikey;
 in {
   options.core.yubikey.enable = mkEnableOption "using a YubiKey for login and sudo access";

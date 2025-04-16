@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.cli.fd;
 in {
   options.cli.fd.enable = mkEnableOption "fd";

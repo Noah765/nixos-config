@@ -4,8 +4,7 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
   cfg = config.desktop.stylix;
 in {
   inputs.stylix = {
@@ -18,7 +17,7 @@ in {
 
   osImports = [inputs.stylix.nixosModules.stylix];
 
-  options.desktop.stylix.enable = mkEnableOption "Stylix";
+  options.desktop.stylix.enable = lib.mkEnableOption "Stylix";
 
   config.os = {
     # TODO Remove the overlay once nixpkgs includes the commit

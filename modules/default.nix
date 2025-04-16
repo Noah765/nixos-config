@@ -2,8 +2,9 @@
   lib,
   config,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) mkDefault mkIf;
+in {
   imports = [
     ./dependencies.nix
     ./core

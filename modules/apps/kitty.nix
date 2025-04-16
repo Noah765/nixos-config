@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf removePrefix;
   cfg = config.apps.kitty;
 in {
   options.apps.kitty.enable = mkEnableOption "Kitty";

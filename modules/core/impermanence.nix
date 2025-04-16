@@ -4,8 +4,9 @@
   useHm,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkAliasOptionModule mkEnableOption mkIf mkMerge mkOption;
+  inherit (lib.types) str uniq;
   cfg = config.core.impermanence;
 in {
   inputs = {
@@ -31,7 +32,7 @@ in {
     enable = mkEnableOption "automatic system cleanup using impermanence";
 
     disk = mkOption {
-      type = with types; uniq str;
+      type = uniq str;
       example = "sda";
       description = "The disk for disko to manager and to use for impermanence.";
     };

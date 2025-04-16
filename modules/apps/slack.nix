@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.apps.slack;
 in {
   options.apps.slack.enable = mkEnableOption "Slack";

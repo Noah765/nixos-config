@@ -3,8 +3,9 @@
   pkgs,
   config,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) mkDefault mkIf;
+in {
   # TODO Check if the mkDefault works as expected
   config.theme = mkIf (config.theme.preset == "everforest") (mkDefault {
     # TODO Explore alternative fonts

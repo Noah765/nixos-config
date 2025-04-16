@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.core.boot;
 in {
   options.core.boot.enable = mkEnableOption "the default boot configuration";

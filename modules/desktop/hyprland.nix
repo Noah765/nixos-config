@@ -5,7 +5,8 @@
   ...
 }:
 # TODO https://wiki.hyprland.org/Useful-Utilities/Systemd-start/
-with lib; let
+let
+  inherit (lib) mkAliasOptionModule mkEnableOption mkIf removePrefix;
   cfg = config.desktop.hyprland;
 in {
   imports = [(mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];

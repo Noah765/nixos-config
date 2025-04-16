@@ -2,19 +2,20 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf mkOption;
+  inherit (lib.types) bool listOf str;
   cfg = config.core.user;
 in {
   options.core.user = {
     enable = mkOption {
-      type = types.bool;
+      type = bool;
       default = false;
       description = "Whether to create a user account called noah.";
     };
 
     groups = mkOption {
-      type = with types; listOf str;
+      type = listOf str;
       default = [];
       description = "The user's auxiliary groups.";
     };

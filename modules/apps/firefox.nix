@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.apps.firefox;
 in {
   options.apps.firefox.enable = mkEnableOption "Firefox";

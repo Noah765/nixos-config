@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.dev.flutter;
 in {
   options.dev.flutter.enable = mkEnableOption "Flutter";

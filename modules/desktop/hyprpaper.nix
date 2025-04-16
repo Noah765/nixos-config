@@ -2,9 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; {
-  hm.services.hyprpaper = mkIf config.desktop.enable {
+}: {
+  hm.services.hyprpaper = lib.mkIf config.desktop.enable {
     enable = true;
     settings = {
       preload = [config.theme.wallpaper.outPath];

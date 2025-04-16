@@ -3,8 +3,8 @@
   inputs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.cli.comma;
 in {
   inputs.nix-index-database = {

@@ -3,8 +3,8 @@
   inputs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.core.nix;
 in {
   options.core.nix.enable = mkEnableOption "a patched version of the Nix language and core settings required for Nix";

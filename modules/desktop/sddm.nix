@@ -3,8 +3,8 @@
   inputs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.desktop.sddm;
 in {
   inputs.sddm-sugar-candy.url = "github:Noah765/sddm-sugar-candy";
@@ -29,7 +29,9 @@ in {
         sugarCandy = {
           enable = true;
 
-          settings = with config.os.lib.stylix.colors.withHashtag; {
+          settings = let
+            inherit (config.os.lib.stylix.colors.withHashtag) base00 base05 base0D;
+          in {
             Background = config.os.stylix.image;
             FullBlur = true;
             BlurRadius = 25;

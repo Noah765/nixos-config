@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkDefault mkEnableOption mkIf;
   cfg = config.core;
 in {
   imports = [

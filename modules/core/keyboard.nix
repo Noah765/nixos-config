@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.core.keyboard;
 in {
   options.core.keyboard.enable = mkEnableOption "the Graphite keyboard layout with home row mods";

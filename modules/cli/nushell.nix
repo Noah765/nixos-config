@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.cli.nushell;
 in {
   options.cli.nushell.enable = mkEnableOption "nushell";

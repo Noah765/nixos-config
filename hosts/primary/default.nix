@@ -3,8 +3,9 @@
   inputs,
   pkgs,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) getExe;
+in {
   # TODO Disable global flake registry?
 
   osImports = [./hardware-configuration.nix];

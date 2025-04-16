@@ -2,8 +2,7 @@
   lib,
   pkgs,
   ...
-}:
-with lib; {
+}: {
   hm.programs.nixvim = {
     # TODO Is conform necessary, e.g. for the text to not jump around or to preserve marks and folds?
     plugins.conform-nvim = {
@@ -19,7 +18,7 @@ with lib; {
           end
         '';
         formatters_by_ft.yaml = ["yamlfmt"];
-        formatters.yamlfmt.command = getExe pkgs.yamlfmt;
+        formatters.yamlfmt.command = lib.getExe pkgs.yamlfmt;
       };
     };
     keymaps = [

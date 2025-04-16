@@ -1,5 +1,7 @@
-{lib, ...}:
-with lib; {
+{lib, ...}: let
+  inherit (lib) concatMapStrings elemAt genAttrs isList mkOption split toLower;
+  inherit (lib.types) enum float int nullOr package str;
+in {
   imports = [./everforest.nix];
 
   options.theme = let
@@ -12,7 +14,7 @@ with lib; {
       ) (split "([[:upper:]])" x);
   in {
     preset = mkOption {
-      type = types.enum [null "everforest"];
+      type = enum [null "everforest"];
       default = "everforest";
       description = "The theme preset to apply.";
     };
@@ -20,17 +22,17 @@ with lib; {
     fonts =
       genAttrs ["serif" "sansSerif" "monospace" "emoji"] (x: {
         package = mkOption {
-          type = types.package;
+          type = package;
           description = "The package providing the ${camelCaseToLowercase x} font.";
         };
         name = mkOption {
-          type = types.str;
+          type = str;
           description = "The font name within the ${camelCaseToLowercase x} font package.";
         };
       })
       // {
         size = mkOption {
-          type = types.int;
+          type = int;
           description = "The font size.";
         };
       };
@@ -68,39 +70,39 @@ with lib; {
         "terminal15"
       ] (x:
         mkOption {
-          type = types.str;
+          type = str;
           example = "#FFFFFF";
           description = "The ${camelCaseToLowercase x} color in hex.";
         })
       // genAttrs ["selectionForeground"] (x:
         mkOption {
-          type = with types; nullOr str;
+          type = nullOr str;
           default = null;
           example = "#FFFFFF";
           description = "The optional ${camelCaseToLowercase x} color in hex.";
         });
 
     terminalOpacity = mkOption {
-      type = types.float;
+      type = float;
       description = "The opacity of the terminal background.";
     };
 
     wallpaper = mkOption {
-      type = types.package;
+      type = package;
       description = "The wallpaper to use.";
     };
 
     cursor = {
       package = mkOption {
-        type = types.package;
+        type = package;
         description = "The package providing the cursor theme.";
       };
       name = mkOption {
-        type = types.str;
+        type = str;
         description = "The cursor name within the cursor theme package.";
       };
       size = mkOption {
-        type = types.int;
+        type = int;
         description = "The cursor size.";
       };
     };

@@ -3,15 +3,14 @@
   pkgs,
   configName,
   ...
-}:
-with lib; {
+}: {
   hm.programs.nixvim.plugins.lsp = {
     enable = true;
     inlayHints = true;
     servers.nixd = {
       enable = true;
       settings = {
-        formatting.command = [(getExe pkgs.alejandra)];
+        formatting.command = [(lib.getExe pkgs.alejandra)];
         options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.${configName}.options";
       };
     };

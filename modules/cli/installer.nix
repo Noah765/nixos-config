@@ -3,8 +3,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) getExe mkEnableOption mkIf;
   cfg = config.cli.installer;
 in {
   options.cli.installer.enable = mkEnableOption "scripts for building, testing and writing the installer to a USB";

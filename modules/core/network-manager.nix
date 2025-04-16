@@ -2,14 +2,14 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf mkOption;
   cfg = config.core.networkmanager;
 in {
   options.core.networkmanager = {
     enable = mkEnableOption "NetworkManager";
     hostName = mkOption {
-      type = types.str;
+      type = lib.types.str;
       description = "The name of the machine.";
     };
   };

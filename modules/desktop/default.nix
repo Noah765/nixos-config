@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkDefault mkEnableOption mkIf;
   cfg = config.desktop;
 in {
   imports = [
@@ -24,7 +24,9 @@ in {
       hyprland.enable = mkDefault true;
       clipse.enable = mkDefault true;
     };
-    os.fonts = with config.theme.fonts; {
+    os.fonts = let
+      inherit (config.theme.fonts) serif sansSerif monospace emoji;
+    in {
       packages = [serif.package sansSerif.package monospace.package emoji.package];
       fontconfig.defaultFonts = {
         serif = [serif.name];
@@ -33,8 +35,8 @@ in {
         emoji = [emoji.name];
       };
     };
-    hm.home.pointerCursor = with config.theme.cursor; {
-      inherit package name size;
+    hm.home.pointerCursor = {
+      inherit (config.theme.cursor) package name size;
       gtk.enable = true;
     };
     hm.dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";

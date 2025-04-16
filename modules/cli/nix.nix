@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.cli.nix;
 in {
   options.cli.nix.enable = mkEnableOption "useful utilities when working with Nix";

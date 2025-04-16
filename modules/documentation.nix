@@ -2,12 +2,12 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf mkOption;
   cfg = config.documentation;
 in {
   options.documentation.enable = mkOption {
-    type = types.bool;
+    type = lib.types.bool;
     default = false;
     description = "Whether to install documentation for Modulix, NixOS and Home Manager options.";
   };

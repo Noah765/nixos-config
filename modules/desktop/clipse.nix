@@ -3,8 +3,8 @@
   pkgs,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.desktop.clipse;
 in {
   options.desktop.clipse.enable = mkEnableOption "clipse";
@@ -22,7 +22,9 @@ in {
       bind = ["Super, V, exec, kitty --class clipse -e 'clipse'"];
     };
 
-    hm.xdg.configFile."clipse/custom_theme.json".text = generators.toJSON {} (with config.os.lib.stylix.colors.withHashtag; {
+    hm.xdg.configFile."clipse/custom_theme.json".text = lib.generators.toJSON {} (let
+      inherit (config.os.lib.stylix.colors.withHashtag) base04 base05 base08 base0A base0D;
+    in {
       useCustomTheme = true;
       TitleFore = base08;
       TitleInfo = base05;
