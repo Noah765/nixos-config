@@ -18,7 +18,7 @@ in {
 
     desktop.hyprland.settings = {
       exec-once = ["clipse -listen"];
-      windowrule = ["float, ^clipse$" "size 954 534, ^clipse$"];
+      windowrule = ["float, class:clipse" "size 954 534, class:clipse"];
       bind = ["Super, V, exec, kitty --class clipse -e 'clipse'"];
     };
 

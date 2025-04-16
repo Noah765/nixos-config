@@ -4,6 +4,7 @@
   config,
   ...
 }:
+# TODO https://wiki.hyprland.org/Useful-Utilities/Systemd-start/
 with lib; let
   cfg = config.desktop.hyprland;
 in {
@@ -30,18 +31,18 @@ in {
           "col.inactive_border" = getColor "inactiveWindowBorder";
           "col.active_border" = getColor "activeWindowBorder";
           layout = "hy3";
-          # TODO allow_tearing
+          # TODO allow_tearing, snap
         };
 
         decoration = {
           rounding = 12;
-          "col.shadow" = getColor "background"; # TODO Maybe adjust the opacity?
+          # TODO inactive_opacity, dim_inactive
 
-          # TODO Dim inactive windows
           # TODO Style floating windows and popups (blur, dimming)
           # TODO Style transparent windows (blur, shadows, dimming)
 
           blur.size = 2;
+          shadow.color = getColor "background"; # TODO Maybe adjust the opacity?
         };
 
         # Heavily inspired by end-4's config
