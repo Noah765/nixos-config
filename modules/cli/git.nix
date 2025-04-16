@@ -17,6 +17,8 @@ in {
         enable = true;
         userName = "Noah765";
         userEmail = "noland62007@gmail.com";
+        extraConfig.init.defaultBranch = "main";
+        difftastic.enable = true;
       };
 
       gh.enable = mkIf cfg.gitHub true;
