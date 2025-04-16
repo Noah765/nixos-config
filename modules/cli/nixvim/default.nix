@@ -12,7 +12,13 @@ in {
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  imports = [./options.nix ./globals.nix ./autocommands.nix ./keymaps.nix ./plugins];
+  imports = [
+    ./autocommands.nix
+    ./globals.nix
+    ./keymaps.nix
+    ./options.nix
+    ./plugins
+  ];
 
   hmImports = [inputs.nixvim.homeManagerModules.default];
 

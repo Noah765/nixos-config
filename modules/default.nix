@@ -6,19 +6,19 @@
   inherit (lib) mkDefault mkIf;
 in {
   imports = [
-    ./dependencies.nix
-    ./core
+    ./apps
     ./cli
+    ./core
+    ./dependencies.nix
     ./desktop
     ./dev
-    ./apps
     ./documentation.nix
     ./themes
   ];
 
-  core.enable = mkDefault true;
-  cli.enable = mkDefault true;
-  desktop.enable = mkDefault true;
   apps.enable = mkIf config.desktop.enable (mkDefault true);
+  cli.enable = mkDefault true;
+  core.enable = mkDefault true;
+  desktop.enable = mkDefault true;
   documentation.enable = mkDefault true;
 }

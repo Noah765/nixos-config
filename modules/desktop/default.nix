@@ -7,11 +7,11 @@
   cfg = config.desktop;
 in {
   imports = [
-    ./stylix.nix
-    ./sddm.nix
+    ./clipse.nix
     ./hyprland.nix
     ./hyprpaper.nix
-    ./clipse.nix
+    ./sddm.nix
+    ./stylix.nix
   ];
 
   options.desktop.enable = mkEnableOption "the desktop environment";
@@ -20,9 +20,9 @@ in {
     desktop = {
       # TODO Remove the enable options of the individual parts of my DE, and expose options as DE options as necessary
       #stylix.enable = mkDefault true;
-      sddm.enable = mkDefault true;
-      hyprland.enable = mkDefault true;
       clipse.enable = mkDefault true;
+      hyprland.enable = mkDefault true;
+      sddm.enable = mkDefault true;
     };
     os.fonts = let
       inherit (config.theme.fonts) serif sansSerif monospace emoji;

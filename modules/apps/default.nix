@@ -7,15 +7,15 @@
   cfg = config.apps;
 in {
   imports = [
-    ./kitty.nix
     ./firefox.nix
+    ./kitty.nix
     ./slack.nix
   ];
 
   options.apps.enable = mkEnableOption "the default apps";
 
   config.apps = mkIf cfg.enable {
-    kitty.enable = mkDefault true;
     firefox.enable = mkDefault true;
+    kitty.enable = mkDefault true;
   };
 }

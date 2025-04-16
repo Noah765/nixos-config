@@ -1,3 +1,1 @@
-{
-  imports = [./unity.nix ./flutter.nix];
-}
+{imports = [./flutter.nix ./unity.nix];}

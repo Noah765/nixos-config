@@ -4,14 +4,14 @@
   ...
 }: {
   imports = [
-    ./telescope.nix
-    ./treesitter.nix
-    ./mini.nix
-    ./lsp.nix
-    # TODO ./dap.nix
     ./cmp.nix
     ./conform.nix
+    # TODO ./dap.nix
     ./gitsigns.nix
+    ./lsp.nix
+    ./mini.nix
+    ./telescope.nix
+    ./treesitter.nix
   ];
 
   hm.programs.nixvim = {
