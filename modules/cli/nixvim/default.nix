@@ -9,16 +9,7 @@ with lib; let
 in {
   inputs.nixvim = {
     url = "github:nix-community/nixvim";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-      home-manager.follows = "home-manager";
-      nuschtosSearch.follows = "";
-      nix-darwin.follows = "";
-      devshell.follows = "";
-      treefmt-nix.follows = "";
-      flake-compat.follows = "";
-      git-hooks.follows = "";
-    };
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   imports = [./options.nix ./globals.nix ./autocommands.nix ./keymaps.nix ./plugins];
@@ -35,6 +26,7 @@ in {
     hm.programs.nixvim = mkIf cfg.enable {
       enable = true;
       defaultEditor = true;
+      nixpkgs.useGlobalPackages = true;
 
       colorschemes.everforest = {
         enable = true;

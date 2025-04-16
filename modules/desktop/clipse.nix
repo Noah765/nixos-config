@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  osConfig,
   ...
 }:
 with lib; let
@@ -23,7 +22,7 @@ in {
       bind = ["Super, V, exec, kitty --class clipse -e 'clipse'"];
     };
 
-    hm.xdg.configFile."clipse/custom_theme.json".text = generators.toJSON {} (with osConfig.lib.stylix.colors.withHashtag; {
+    hm.xdg.configFile."clipse/custom_theme.json".text = generators.toJSON {} (with config.os.lib.stylix.colors.withHashtag; {
       useCustomTheme = true;
       TitleFore = base08;
       TitleInfo = base05;

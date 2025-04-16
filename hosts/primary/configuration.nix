@@ -29,6 +29,8 @@
     rustc
 
     protonup
+
+    (pkgs.writeShellScriptBin "rb" "${getExe inputs.modulix.packages.${pkgs.system}.mxg} && ${getExe pkgs.nh} os $*")
   ];
 
   os.programs = {

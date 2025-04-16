@@ -2,7 +2,6 @@
   lib,
   inputs,
   config,
-  osConfig,
   ...
 }:
 with lib; let
@@ -30,8 +29,8 @@ in {
         sugarCandy = {
           enable = true;
 
-          settings = with osConfig.lib.stylix.colors.withHashtag; {
-            Background = osConfig.stylix.image;
+          settings = with config.os.lib.stylix.colors.withHashtag; {
+            Background = config.os.stylix.image;
             FullBlur = true;
             BlurRadius = 25;
             FormPosition = "center";
@@ -39,7 +38,7 @@ in {
             AccentColor = base0D;
             BackgroundColor = base00;
             OverrideLoginButtonTextColor = base00;
-            Font = osConfig.stylix.fonts.sansSerif.name;
+            Font = config.os.stylix.fonts.sansSerif.name;
           };
         };
       };

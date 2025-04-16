@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  configName,
   ...
 }:
 with lib; {
@@ -11,7 +12,7 @@ with lib; {
       enable = true;
       settings = {
         formatting.command = [(getExe pkgs.alejandra)];
-        options.combined-manager.expr = "(builtins.getFlake \"/etc/nixos\").combinedManagerConfigurations.primary.options";
+        options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.${configName}.options";
       };
     };
     # TODO Modify / remove bindings as needed
@@ -122,23 +123,4 @@ with lib; {
     #   end
     # '';
   };
-
-  os.nixpkgs.overlays = [
-    (final: prev: {
-      # Override nixd instead of the nix version so that when nixd updates its nix version, compilation fails
-      nixd = prev.nixd.override {
-        nix = pkgs.nixVersions.nix_2_19.overrideAttrs (old: {
-          patches =
-            old.patches
-            or []
-            ++ [
-              (pkgs.fetchpatch {
-                url = "https://raw.githubusercontent.com/Noah765/combined-manager/main/nix-patches/2.19.2/evaluable-flake.patch";
-                hash = "sha256-F5oTfme3ckZY5U3lH4Y/z52EAX7degMnEEMSFVpydQw=";
-              })
-            ];
-        });
-      };
-    })
-  ];
 }

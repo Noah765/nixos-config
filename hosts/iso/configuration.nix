@@ -6,8 +6,6 @@
     })
   ];
 
-  hmUsername = "nixos";
-
   core = {
     impermanence.enable = false;
     networkmanager.hostName = "nixos";

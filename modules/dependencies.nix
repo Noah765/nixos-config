@@ -3,28 +3,24 @@
   options,
   config,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) concatMap concatStringsSep drop flip getAttrFromPath mkOption removeSuffix splitString;
+  inherit (lib.types) listOf str;
+in {
   options.dependencies = mkOption {
-    type = with types; listOf str;
+    type = listOf str;
     internal = true;
     default = [];
     description = "Allows modules to express dependencies that must be enabled for the module to work properly. If the dependencies are not enabled, an error is thrown.";
   };
 
-  config.assertions = foldl (assertions: {
-    file,
-    value,
-  }: let
-    dependent = removeSuffix ".nix" (concatStringsSep "." (drop 5 (splitString "/" file)));
-  in
-    assertions
-    ++ map (x: let
-      path = strings.splitString "." x ++ ["enable"];
-    in {
-      assertion = attrsets.getAttrFromPath path config;
-      message = "The ${dependent} module is dependent on the ${x} module.";
-    })
-    value) []
-  options.dependencies.definitionsWithLocations;
+  config.assertions = flip concatMap options.dependencies.definitionsWithLocations (
+    x: let
+      dependent = removeSuffix ".nix" (concatStringsSep "." (drop 5 (splitString "/" x.file)));
+    in
+      flip map x.value (x: {
+        assertion = getAttrFromPath (splitString "." x ++ ["enable"]) config;
+        message = "${dependent} depends on ${x}, but ${x} is disabled.";
+      })
+  );
 }

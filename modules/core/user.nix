@@ -20,17 +20,13 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    os.users = {
-      mutableUsers = false;
+  config.os.users = mkIf cfg.enable {
+    mutableUsers = false;
 
-      users.noah = {
-        isNormalUser = true;
-        initialPassword = "12345";
-        extraGroups = ["wheel"] ++ cfg.groups;
-      };
+    users.noah = {
+      isNormalUser = true;
+      initialPassword = "12345";
+      extraGroups = ["wheel"] ++ cfg.groups;
     };
-
-    hmUsername = "noah";
   };
 }
