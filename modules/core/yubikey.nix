@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.core.yubikey;
 in {
   options.core.yubikey.enable = mkEnableOption "using a YubiKey for login and sudo access";
 
-  config.os.security.pam = mkIf cfg.enable {
+  config.os.security.pam = mkIf config.core.yubikey.enable {
     services = {
       login.u2fAuth = true;
       sudo.u2fAuth = true;

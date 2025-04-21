@@ -4,7 +4,6 @@
   ...
 }: let
   inherit (lib) mkIf mkOption;
-  cfg = config.documentation;
 in {
   options.documentation.enable = mkOption {
     type = lib.types.bool;
@@ -12,7 +11,7 @@ in {
     description = "Whether to install documentation for Modulix, NixOS and Home Manager options.";
   };
 
-  config.os.documentation = mkIf cfg.enable {
+  config.os.documentation = mkIf config.documentation.enable {
     # TODO
     # dev.enable = true;
     # nixos.includeAllModules = true;

@@ -4,11 +4,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.apps.firefox;
 in {
   options.apps.firefox.enable = mkEnableOption "Firefox";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.apps.firefox.enable {
     hm.programs.firefox = {
       enable = true;
       profiles.noah = {};

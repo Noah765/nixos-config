@@ -4,7 +4,6 @@
   ...
 }: let
   inherit (lib) mkDefault mkEnableOption mkIf;
-  cfg = config.core;
 in {
   imports = [
     ./agenix.nix
@@ -21,7 +20,7 @@ in {
 
   options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system";
 
-  config.core = mkIf cfg.enable {
+  config.core = mkIf config.core.enable {
     agenix.enable = mkDefault true;
     boot.enable = mkDefault true;
     impermanence.enable = mkDefault true;

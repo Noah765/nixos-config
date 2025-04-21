@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.dev.unity;
 in {
   options.dev.unity.enable = mkEnableOption "Unity";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.dev.unity.enable {
     hm = {
       home.packages = [pkgs.unityhub];
       programs.nixvim.plugins.lsp.servers.csharp_ls.enable = true;

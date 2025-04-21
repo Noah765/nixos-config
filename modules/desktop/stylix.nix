@@ -4,9 +4,7 @@
   pkgs,
   config,
   ...
-}: let
-  cfg = config.desktop.stylix;
-in {
+}: {
   inputs.stylix = {
     url = "github:danth/stylix";
     inputs = {
@@ -36,7 +34,7 @@ in {
 
     # TODO Delete or fix the enable option
     stylix = {
-      enable = cfg.enable;
+      enable = config.desktop.stylix.enable;
 
       base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
 

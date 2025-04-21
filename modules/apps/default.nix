@@ -4,7 +4,6 @@
   ...
 }: let
   inherit (lib) mkDefault mkEnableOption mkIf;
-  cfg = config.apps;
 in {
   imports = [
     ./firefox.nix
@@ -14,7 +13,7 @@ in {
 
   options.apps.enable = mkEnableOption "the default apps";
 
-  config.apps = mkIf cfg.enable {
+  config.apps = mkIf config.apps.enable {
     firefox.enable = mkDefault true;
     kitty.enable = mkDefault true;
   };

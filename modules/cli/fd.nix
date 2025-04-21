@@ -4,9 +4,8 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.cli.fd;
 in {
   options.cli.fd.enable = mkEnableOption "fd";
 
-  config.hm.programs.fd.enable = mkIf cfg.enable true;
+  config.hm.programs.fd.enable = mkIf config.cli.fd.enable true;
 }

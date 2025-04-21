@@ -7,13 +7,12 @@
 # TODO https://wiki.hyprland.org/Useful-Utilities/Systemd-start/
 let
   inherit (lib) mkAliasOptionModule mkEnableOption mkIf removePrefix;
-  cfg = config.desktop.hyprland;
 in {
   imports = [(mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
   options.desktop.hyprland.enable = mkEnableOption "Hyprland";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.desktop.hyprland.enable {
     os.programs.hyprland.enable = true;
 
     hm.home.sessionVariables.NIXOS_OZONE_WL = 1;

@@ -4,11 +4,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.core.keyboard;
 in {
   options.core.keyboard.enable = mkEnableOption "the Graphite keyboard layout with home row mods";
 
-  config.os.services.keyd = mkIf cfg.enable {
+  config.os.services.keyd = mkIf config.core.keyboard.enable {
     enable = true;
 
     keyboards.default = {

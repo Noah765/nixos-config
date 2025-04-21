@@ -4,11 +4,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.core.boot;
 in {
   options.core.boot.enable = mkEnableOption "the default boot configuration";
 
-  config.os.boot = mkIf cfg.enable {
+  config.os.boot = mkIf config.core.boot.enable {
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;

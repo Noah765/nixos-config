@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.dev.flutter;
 in {
   options.dev.flutter.enable = mkEnableOption "Flutter";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.dev.flutter.enable {
     hm = {
       home.packages = [pkgs.flutter];
 

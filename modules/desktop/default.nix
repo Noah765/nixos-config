@@ -4,7 +4,6 @@
   ...
 }: let
   inherit (lib) mkDefault mkEnableOption mkIf;
-  cfg = config.desktop;
 in {
   imports = [
     ./clipse.nix
@@ -16,7 +15,7 @@ in {
 
   options.desktop.enable = mkEnableOption "the desktop environment";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.desktop.enable {
     desktop = {
       # TODO Remove the enable options of the individual parts of my DE, and expose options as DE options as necessary
       #stylix.enable = mkDefault true;

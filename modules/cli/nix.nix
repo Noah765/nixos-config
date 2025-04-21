@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.cli.nix;
 in {
   options.cli.nix.enable = mkEnableOption "useful utilities when working with Nix";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.cli.nix.enable {
     os.programs.nh = {
       enable = true;
       flake = "/etc/nixos";

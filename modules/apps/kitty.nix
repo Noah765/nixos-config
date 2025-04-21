@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf removePrefix;
-  cfg = config.apps.kitty;
 in {
   options.apps.kitty.enable = mkEnableOption "Kitty";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.apps.kitty.enable {
     dependencies = ["cli.nixvim"];
 
     hm.programs.kitty = {

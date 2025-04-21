@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.cli.nixvim;
 in {
   inputs.nixvim = {
     url = "github:nix-community/nixvim";
@@ -29,7 +28,7 @@ in {
 
     hm.stylix.targets.nixvim.enable = false;
 
-    hm.programs.nixvim = mkIf cfg.enable {
+    hm.programs.nixvim = mkIf config.cli.nixvim.enable {
       enable = true;
       defaultEditor = true;
       nixpkgs.useGlobalPackages = true;

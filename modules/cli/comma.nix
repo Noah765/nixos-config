@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.cli.comma;
 in {
   inputs.nix-index-database = {
     url = "github:nix-community/nix-index-database";
@@ -16,5 +15,5 @@ in {
 
   options.cli.comma.enable = mkEnableOption "comma";
 
-  config.os.programs.nix-index-database.comma.enable = mkIf cfg.enable true;
+  config.os.programs.nix-index-database.comma.enable = mkIf config.cli.comma.enable true;
 }

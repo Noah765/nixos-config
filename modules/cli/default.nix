@@ -4,7 +4,6 @@
   ...
 }: let
   inherit (lib) mkDefault mkEnableOption mkIf;
-  cfg = config.cli;
 in {
   imports = [
     ./comma.nix
@@ -19,7 +18,7 @@ in {
 
   options.cli.enable = mkEnableOption "the default CLI configuration and programs";
 
-  config.cli = mkIf cfg.enable {
+  config.cli = mkIf config.cli.enable {
     comma.enable = mkDefault true;
     fd.enable = mkDefault true;
     git = {

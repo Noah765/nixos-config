@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.desktop.clipse;
 in {
   options.desktop.clipse.enable = mkEnableOption "clipse";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.desktop.clipse.enable {
     dependencies = ["apps.kitty"];
 
     hm.home.packages = with pkgs; [wl-clipboard clipse];

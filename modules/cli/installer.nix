@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) getExe mkEnableOption mkIf;
-  cfg = config.cli.installer;
 in {
   options.cli.installer.enable = mkEnableOption "scripts for building, testing and writing the installer to a USB";
 
-  config.hm.home.packages = mkIf cfg.enable [
+  config.hm.home.packages = mkIf config.cli.installer.enable [
     (pkgs.writeShellScriptBin "build-installer" ''
       set -euo pipefail
 

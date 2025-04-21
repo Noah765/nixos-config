@@ -4,11 +4,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.core.nvidia;
 in {
   options.core.nvidia.enable = mkEnableOption "Nvidia drivers";
 
-  config.os = mkIf cfg.enable {
+  config.os = mkIf config.core.nvidia.enable {
     services.xserver.videoDrivers = ["nvidia"]; # This does not enable xserver, the name is historical
 
     hardware.nvidia = {

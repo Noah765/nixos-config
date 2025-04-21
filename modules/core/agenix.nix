@@ -6,7 +6,6 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.core.agenix;
 in {
   inputs = {
     agenix = {
@@ -29,7 +28,7 @@ in {
 
   options.core.agenix.enable = mkEnableOption "agenix and agenix-rekey for secret management";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.core.agenix.enable {
     dependencies = ["core.yubikey"];
 
     hm.home.packages = [inputs.agenix-rekey.packages.${pkgs.system}.default];

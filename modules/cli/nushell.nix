@@ -5,11 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.cli.nushell;
 in {
   options.cli.nushell.enable = mkEnableOption "nushell";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.cli.nushell.enable {
     os.users.defaultUserShell = pkgs.nushell;
 
     hm.programs.nushell = {
