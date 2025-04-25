@@ -13,6 +13,7 @@ in {
 
     hm.programs.nushell = {
       enable = true;
+      environmentVariables = config.hm.home.sessionVariables; # TODO https://github.com/nix-community/home-manager/issues/4313
       settings = {
         history.file_format = "sqlite";
         # TODO history.isolation
