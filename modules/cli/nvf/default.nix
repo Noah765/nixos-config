@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  pkgs,
   configName,
   config,
   ...
@@ -88,6 +89,7 @@
         };
         # TODO diagnostics.enable; diagnostics.config; probably no need to set this manually
         # TODO diagnostics.nvim-lint settings (used by languages extra diagnostics)
+        extraPlugins.kitty-navigator.package = pkgs.vimPlugins.vim-kitty-navigator;
         # TODO is conform-nvim needed or is lsp formatting enough? auto installed
         git.enable = true; # TODO configure, also look at mini.diff and mini.git
         # TODO globals

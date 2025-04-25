@@ -33,7 +33,5 @@ in {
         # TODO render_right_prompt_on_last_line
       };
     };
-
-    hm.programs.nixvim.plugins.lsp.servers.nushell.enable = true;
   };
 }

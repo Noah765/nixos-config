@@ -7,21 +7,17 @@
 in {
   imports = [
     ./comma.nix
-    ./fd.nix
     ./git.nix
     ./installer.nix
     ./nix.nix
-    ./nixvim
     ./nushell.nix
     ./nvf
-    ./ripgrep.nix
   ];
 
   options.cli.enable = mkEnableOption "the default CLI configuration and programs";
 
   config.cli = mkIf config.cli.enable {
     comma.enable = mkDefault true;
-    fd.enable = mkDefault true;
     git = {
       enable = mkDefault true;
       gitHub = mkDefault true;
@@ -29,6 +25,5 @@ in {
     nix.enable = mkDefault true;
     nushell.enable = mkDefault true;
     nvf.enable = mkDefault true;
-    ripgrep.enable = mkDefault true;
   };
 }

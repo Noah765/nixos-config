@@ -9,7 +9,7 @@ in {
   options.apps.kitty.enable = mkEnableOption "Kitty";
 
   config = mkIf config.apps.kitty.enable {
-    dependencies = ["cli.nixvim"];
+    dependencies = ["cli.nvf"]; # TODO Update once vim-kitty-navigator is moved to a individual module
 
     hm.programs.kitty = {
       enable = true;
