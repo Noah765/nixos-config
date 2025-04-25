@@ -13,6 +13,7 @@ in {
     ./nix.nix
     ./nixvim
     ./nushell.nix
+    ./nvf
     ./ripgrep.nix
   ];
 
@@ -26,8 +27,8 @@ in {
       gitHub = mkDefault true;
     };
     nix.enable = mkDefault true;
-    nixvim.enable = mkDefault true;
     nushell.enable = mkDefault true;
+    nvf.enable = mkDefault true;
     ripgrep.enable = mkDefault true;
   };
 }

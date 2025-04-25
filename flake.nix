@@ -39,6 +39,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sddm-sugar-candy.url = "github:Noah765/sddm-sugar-candy";
     stylix = {
       url = "github:danth/stylix";
