@@ -109,6 +109,7 @@
             };
           };
           markdown.enable = true; # TODO
+          markdown.format.enable = false;
           nix = {
             enable = true;
             lsp = {
