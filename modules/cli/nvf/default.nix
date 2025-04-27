@@ -123,7 +123,7 @@
         };
         lsp = {
           formatOnSave = true;
-          inlayHints.enable = true;
+          # TODO enable inlay hints for specific languages
           # TODO is lspSignature better than blink's signature feature?
           # TOOD lspkind, lspsaga
           # TODO mappings
