@@ -8,11 +8,5 @@
 
   cli.installer.enable = true;
 
-  # TODO
-  desktop.hyprland.settings.monitor = [];
-
-  dev = {
-    unity.enable = true;
-    flutter.enable = true;
-  };
+  dev.flutter.enable = true;
 }
