@@ -140,7 +140,7 @@
           icons.enable = true; # TODO compare to nvim-web-devicons, use mock_nvim_web_devicons?
           # TODO MiniMisc.setup_restore_cursor, MiniMisc.use_nested_comments, MiniMisc.zoom?
           move.enable = true;
-          notify.enable = true; # TODO compare to fidget.nvim and nvim-notify
+          # notify.enable = true; # TODO compare to fidget.nvim and nvim-notify
           operators.enable = true; # TODO whichkey completion
           # TODO pick
           # TODO sessions for session managment
