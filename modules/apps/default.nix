@@ -9,6 +9,7 @@ in {
     ./firefox.nix
     ./kitty.nix
     ./slack.nix
+    ./steam.nix
   ];
 
   options.apps.enable = mkEnableOption "the default apps";

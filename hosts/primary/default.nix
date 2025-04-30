@@ -23,33 +23,18 @@
   dev.flutter.enable = true;
 
   apps.slack.enable = true;
+  apps.steam.enable = true;
 
   hm.home.packages = with pkgs; [
     cargo
     rustc
-
-    protonup
 
     prismlauncher
 
     discord
   ];
 
-  os.programs = {
-    steam.enable = true;
-    steam.gamescopeSession.enable = true;
-    gamemode.enable = true;
-  };
-  hm.home.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-  core.impermanence.hm.directories = [
-    {
-      directory = ".local/share/Steam";
-      method = "symlink";
-    }
-    ".local/share/godot/app_userdata/Turing Complete"
-    ".local/share/PrismLauncher"
-    ".config/discord"
-  ];
+  core.impermanence.hm.directories = [".local/share/PrismLauncher" ".config/discord"];
 
   core.user.groups = ["dialout"];
 

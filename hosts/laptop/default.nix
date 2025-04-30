@@ -6,6 +6,8 @@
     networkmanager.hostName = "laptop";
   };
 
+  apps.steam.enable = true;
+
   cli.installer.enable = true;
 
   dev.flutter.enable = true;
