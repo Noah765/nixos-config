@@ -9,9 +9,9 @@ in {
     ./comma.nix
     ./git.nix
     ./installer.nix
-    ./nix.nix
     ./nushell.nix
     ./nvf
+    ./rb.nix
   ];
 
   options.cli.enable = mkEnableOption "the default CLI configuration and programs";
@@ -22,8 +22,8 @@ in {
       enable = mkDefault true;
       gitHub = mkDefault true;
     };
-    nix.enable = mkDefault true;
     nushell.enable = mkDefault true;
     nvf.enable = mkDefault true;
+    rb.enable = mkDefault true;
   };
 }

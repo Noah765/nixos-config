@@ -1,11 +1,4 @@
-{
-  lib,
-  inputs,
-  pkgs,
-  ...
-}: let
-  inherit (lib) getExe;
-in {
+{pkgs, ...}: {
   # TODO Disable global flake registry?
 
   osImports = [./hardware-configuration.nix];
@@ -40,8 +33,6 @@ in {
     prismlauncher
 
     discord
-
-    (pkgs.writeShellScriptBin "rb" "${getExe inputs.modulix.packages.${pkgs.system}.mxg} && ${getExe pkgs.nh} os $*")
   ];
 
   os.programs = {
