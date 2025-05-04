@@ -94,12 +94,14 @@ in {
             end
 
             local buf_id = args.data.buf_id
-            vim.keymap.set('n', 'gy',    yank_path,                         { buffer = buf_id, desc = 'Yank path' })
-            vim.keymap.set('n', 'g~',    set_cwd,                           { buffer = buf_id, desc = 'Set cwd' })
-            vim.keymap.set('n', 'gx',    open,                              { buffer = buf_id, desc = 'OS open' })
-            vim.keymap.set('n', '<C-h>', function() split('split') end,     { buffer = buf_id, desc = 'Split horizontal' })
-            vim.keymap.set('n', '<C-s>', function() split('vsplit') end,    { buffer = buf_id, desc = 'Split vertical' })
-            vim.keymap.set('n', '<C-t>', function() split('tab split') end, { buffer = buf_id, desc = 'Split tab' })
+            vim.keymap.set('n', '<Esc>', MiniFiles.close,                                          { buffer = buf_id, desc = 'Close' })
+            vim.keymap.set('n', '<CR>',  function() MiniFiles.go_in({ close_on_file = true }) end, { buffer = buf_id, desc = 'Go in entry plus' })
+            vim.keymap.set('n', 'gy',    yank_path,                                                { buffer = buf_id, desc = 'Yank path' })
+            vim.keymap.set('n', 'g~',    set_cwd,                                                  { buffer = buf_id, desc = 'Set cwd' })
+            vim.keymap.set('n', 'gx',    open,                                                     { buffer = buf_id, desc = 'OS open' })
+            vim.keymap.set('n', '<C-h>', function() split('split') end,                            { buffer = buf_id, desc = 'Split horizontal' })
+            vim.keymap.set('n', '<C-s>', function() split('vsplit') end,                           { buffer = buf_id, desc = 'Split vertical' })
+            vim.keymap.set('n', '<C-t>', function() split('tab split') end,                        { buffer = buf_id, desc = 'Split tab' })
           end
         '';
       }
