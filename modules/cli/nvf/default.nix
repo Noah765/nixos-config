@@ -45,7 +45,6 @@
       enable = true;
       defaultEditor = true;
 
-      # TODO set options like breakindent, linebreak, completeopt, ignorecase, infercase, smartcase, smartindent?, virtualedit?, list, listchars, pumblend, pumbheight, winblend
       # TODO window borders (https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/basics.lua#L541-L547 helpful?)
       # TODO movement by visible lines (wrapping) https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/basics.lua#L556-L561
       settings.vim = {
@@ -159,12 +158,23 @@
         # TODO navigation.harpoon
         # TODO notes, notes.todo-comments
         # TODO compare nvim-notify to mini.notify
-        # TODO options
+        options = {
+          # TODO updatetime timeoutlen wrap matchpairs completeopt infercase smartindent? virtualedit? pumblend pumbheight winblend
+          breakindent = true;
+          clipboard = "unnamedplus";
+          confirm = true;
+          ignorecase = true;
+          inccommand = "split";
+          list = true;
+          listchars = "tab:» ,multispace:·,lead: ,trail:·,nbsp:␣"; # TODO extends, precedes
+          scrolloff = 9;
+          shiftwidth = 2;
+          smartcase = true;
+        };
         # TODO neocord
         # TODO preventJunkFiles
         # TODO project-nvim
         # TODO run-nvim
-        # TODO scrollOffset, searchCase
         # TODO nvim-session-manager
         # TODO luasnip
         spellcheck.enable = true; # TODO extraSpellWords, ignoredFiletypes, languages
