@@ -20,5 +20,6 @@ in {
   cli.enable = mkDefault true;
   core.enable = mkDefault true;
   desktop.enable = mkDefault true;
+  dev.enable = mkDefault true;
   documentation.enable = mkDefault true;
 }
