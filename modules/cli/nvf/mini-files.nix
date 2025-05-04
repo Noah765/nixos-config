@@ -72,6 +72,8 @@ in {
               local path = (MiniFiles.get_fs_entry() or {}).path
               if path == nil then return vim.notify('Cursor is not on a valid file system entry', vim.log.levels.WARN) end
               vim.fn.chdir(vim.fs.dirname(path))
+              MiniFiles.close()
+              MiniFiles.open()
             end
 
             local function open() vim.ui.open(MiniFiles.get_fs_entry().path) end
