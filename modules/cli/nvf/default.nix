@@ -25,6 +25,7 @@
     ./mini-indentscope.nix
     ./mini-jump.nix
     ./mini-jump2d.nix
+    ./navbuddy.nix
   ];
   hmImports = [inputs.nvf.homeManagerModules.default];
 
@@ -37,6 +38,7 @@
       mini-indentscope.enable = lib.mkDefault true;
       mini-jump.enable = lib.mkDefault true;
       mini-jump2d.enable = lib.mkDefault true;
+      navbuddy.enable = lib.mkDefault true;
     };
 
     hm.programs.nvf = {
@@ -179,7 +181,7 @@
           transparent = true;
         };
         # TODO treesitter
-        # TODO ui options like navbuddy
+        # TODO ui
         # TODO look at remaining options starting from ui
         utility.sleuth.enable = true;
       };
