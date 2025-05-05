@@ -102,7 +102,6 @@
           enableDAP = true;
           enableExtraDiagnostics = true;
           enableFormat = true;
-          enableLSP = true;
           enableTreesitter = true;
 
           # TODO move to dev modules
@@ -125,6 +124,7 @@
           tailwind.enable = true;
         };
         lsp = {
+          enable = true;
           formatOnSave = true;
           # TODO enable inlay hints for specific languages
           # TODO is lspSignature better than blink's signature feature?
