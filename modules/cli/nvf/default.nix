@@ -21,6 +21,7 @@
       withPriority = false;
     })
     ./fastaction.nix
+    ./illuminate.nix
     ./mini-ai.nix
     ./mini-files.nix
     ./mini-indentscope.nix
@@ -35,6 +36,7 @@
   config = lib.mkIf config.cli.nvf.enable {
     cli.nvf = {
       fastaction.enable = lib.mkDefault true;
+      illuminate.enable = lib.mkDefault true;
       mini-ai.enable = lib.mkDefault true;
       mini-files.enable = lib.mkDefault true;
       mini-indentscope.enable = lib.mkDefault true;
