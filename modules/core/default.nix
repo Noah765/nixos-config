@@ -8,6 +8,7 @@ in {
   imports = [
     ./agenix.nix
     ./boot.nix
+    ./charachorder.nix
     ./impermanence.nix
     ./keyboard.nix
     ./network-manager.nix
@@ -24,7 +25,6 @@ in {
     agenix.enable = mkDefault true;
     boot.enable = mkDefault true;
     impermanence.enable = mkDefault true;
-    keyboard.enable = mkDefault true;
     networkmanager.enable = mkDefault true;
     nix.enable = mkDefault true;
     timeZone.enable = mkDefault true;

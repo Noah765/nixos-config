@@ -3,6 +3,7 @@
 
   core = {
     impermanence.disk = "nvme0n1";
+    keyboard.enable = true;
     networkmanager.hostName = "laptop";
   };
 
