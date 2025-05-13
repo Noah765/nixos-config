@@ -4,23 +4,23 @@
   config,
   ...
 }: let
-  inherit (lib) getExe literalExpression mkEnableOption mkIf;
+  inherit (lib) getExe mkDefault mkEnableOption mkIf;
   cfg = config.cli.vcs;
-  mkEnableOptionWithDefault = name:
-    mkEnableOption name
-    // {
-      default = cfg.enable;
-      defaultText = literalExpression "config.cli.vcs.enable";
-    };
 in {
   options.cli.vcs = {
     enable = mkEnableOption "Jujutsu, Git and the GitHub CLI";
-    jj.enable = mkEnableOptionWithDefault "Jujutsu";
-    git.enable = mkEnableOptionWithDefault "Git";
-    gh.enable = mkEnableOptionWithDefault "the GitHub CLI";
+    jj.enable = mkEnableOption "Jujutsu";
+    git.enable = mkEnableOption "Git";
+    gh.enable = mkEnableOption "the GitHub CLI";
   };
 
-  config = mkIf cfg.enable {
+  config = {
+    cli.vcs = mkIf cfg.enable {
+      jj.enable = mkDefault true;
+      git.enable = mkDefault true;
+      gh.enable = mkDefault true;
+    };
+
     hm.programs = {
       jujutsu.enable = cfg.jj.enable;
       jujutsu.settings = {
