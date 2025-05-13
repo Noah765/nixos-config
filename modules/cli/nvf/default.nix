@@ -28,6 +28,7 @@
     ./mini-jump.nix
     ./mini-jump2d.nix
     ./navbuddy.nix
+    ./noice.nix
   ];
   hmImports = [inputs.nvf.homeManagerModules.default];
 
@@ -43,6 +44,7 @@
       mini-jump.enable = lib.mkDefault true;
       mini-jump2d.enable = lib.mkDefault true;
       navbuddy.enable = lib.mkDefault true;
+      noice.enable = lib.mkDefault true;
     };
 
     hm.programs.nvf = {
