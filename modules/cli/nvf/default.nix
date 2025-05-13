@@ -197,7 +197,8 @@
           transparent = true;
         };
         # TODO treesitter
-        # TODO ui
+        # TODO ui.borders
+        # TODO ui.colorizer or https://github.com/neovim/neovim/pull/33440
         # TODO look at remaining options starting from ui
         utility.sleuth.enable = true;
       };
