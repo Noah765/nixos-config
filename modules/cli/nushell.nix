@@ -11,27 +11,24 @@ in {
   config = mkIf config.cli.nushell.enable {
     os.users.defaultUserShell = pkgs.nushell;
 
+    core.impermanence.hm.files = [".config/nushell/history.sqlite3"];
     hm.programs.nushell = {
       enable = true;
       environmentVariables = config.hm.home.sessionVariables; # TODO https://github.com/nix-community/home-manager/issues/4313
+      # TODO keybindings, completions, menus, color scheme and prompt
       settings = {
         history.file_format = "sqlite";
-        # TODO history.isolation
+        history.isolation = true;
         show_banner = false;
         edit_mode = "vi";
-        # TODO cursor_shape
+        cursor_shape.vi_insert = "line";
+        cursor_shape.vi_normal = "block";
         completions.algorithm = "fuzzy";
-        # TODO completions.case_sensitive, completions.partial, completions.external.{max_results, completer}
-        # TODO use_kitty_protocol, shell_integration.osc9_9
-        # TODO display_errors.exit_code
-        # TODO footer_mode, table.trim
-
-        # TODO table.abbreviated_row_count = 15;
-        # TODO explore, history.file_format
-        filesize.metric = true;
-        # color_config, footer_mode
-        # TODO env.editor is wrong
-        # TODO render_right_prompt_on_last_line
+        use_kitty_protocol = config.apps.kitty.enable;
+        display_errors.termination_signal = false;
+        footer_mode = "auto";
+        table.footer_inheritance = true;
+        table.missing_value_symbol = "❌";
       };
     };
   };
