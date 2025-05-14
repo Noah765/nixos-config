@@ -3,9 +3,12 @@
   config,
   ...
 }: {
-  imports = [./flutter.nix ./nix.nix ./unity.nix];
+  imports = [./basic.nix ./flutter.nix ./nix.nix ./unity.nix];
 
   options.dev.enable = lib.mkEnableOption "the default development tools";
 
-  config.dev.nix.enable = lib.mkIf config.dev.enable (lib.mkDefault true);
+  config.dev = lib.mkIf config.dev.enable {
+    basic.enable = lib.mkDefault true;
+    nix.enable = lib.mkDefault true;
+  };
 }

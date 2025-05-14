@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  excludedEntries = [".dart_tool" ".git" ".idea" ".jj" ".metadata" "build"];
+  excludedEntries = [".dart_tool" ".direnv" ".git" ".idea" ".jj" ".metadata" "build"];
   excludedSuffixes = ["iml" "lock"];
   filterFunction = ''
     function(fs_entry)
