@@ -124,6 +124,7 @@
             };
           };
           nu.enable = true;
+          rust.enable = true;
           svelte.enable = true;
           tailwind.enable = true;
         };
