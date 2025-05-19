@@ -86,6 +86,9 @@ in {
           warp_on_change_workspace = true; # TODO Is this actually the same as binds.workspace_center_on?
         };
 
+        ecosystem.no_update_news = true;
+        ecosystem.no_donation_nag = true;
+
         plugin.hy3.tabs = {
           padding = 2;
           rounding = 6;
