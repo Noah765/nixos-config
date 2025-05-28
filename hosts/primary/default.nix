@@ -26,9 +26,6 @@
   apps.steam.enable = true;
 
   hm.home.packages = with pkgs; [
-    cargo
-    rustc
-
     prismlauncher
 
     discord

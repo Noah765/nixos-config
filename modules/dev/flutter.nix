@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }: let
@@ -8,8 +7,5 @@
 in {
   options.dev.flutter.enable = mkEnableOption "Flutter";
 
-  config = mkIf config.dev.flutter.enable {
-    hm.home.packages = [pkgs.flutter];
-    core.impermanence.hm.directories = [".pub-cache"];
-  };
+  config.core.impermanence.hm.directories = mkIf config.dev.flutter.enable [".pub-cache"];
 }
