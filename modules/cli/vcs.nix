@@ -28,7 +28,7 @@ in {
         user.email = "noland62007@gmail.com";
         ui = {
           default-command = "log";
-          diff.tool = "${getExe pkgs.difftastic} --color always --sort-paths $left $right";
+          diff-formatter = "${getExe pkgs.difftastic} --color always --sort-paths $left $right";
           pager = "less -FRX";
         };
       };
