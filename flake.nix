@@ -48,13 +48,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sddm-sugar-candy.url = "github:Noah765/sddm-sugar-candy";
-    stylix = {
-      url = "github:danth/stylix";
-      inputs = {
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
   };
 
   outputs = inputs: inputs.modulix.modulixSystems (import ./config.nix) inputs;

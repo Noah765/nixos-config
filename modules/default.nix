@@ -13,7 +13,7 @@ in {
     ./desktop
     ./dev
     ./documentation.nix
-    ./themes
+    ./theme
   ];
 
   apps.enable = mkIf config.desktop.enable (mkDefault true);

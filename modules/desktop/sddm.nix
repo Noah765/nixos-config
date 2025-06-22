@@ -30,17 +30,18 @@ in {
           enable = true;
 
           settings = let
-            inherit (config.os.lib.stylix.colors.withHashtag) base00 base05 base0D;
+            # inherit (config.os.lib.stylix.colors.withHashtag) base00 base05 base0D;
           in {
-            Background = config.os.stylix.image;
+            # Background = config.os.stylix.image;
             FullBlur = true;
             BlurRadius = 25;
             FormPosition = "center";
-            MainColor = base05;
-            AccentColor = base0D;
-            BackgroundColor = base00;
-            OverrideLoginButtonTextColor = base00;
-            Font = config.os.stylix.fonts.sansSerif.name;
+            # TODO
+            # MainColor = base05;
+            # AccentColor = base0D;
+            # BackgroundColor = base00;
+            # OverrideLoginButtonTextColor = base00;
+            # Font = config.os.stylix.fonts.sansSerif.name;
           };
         };
       };

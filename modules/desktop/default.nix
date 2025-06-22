@@ -5,21 +5,13 @@
 }: let
   inherit (lib) mkDefault mkEnableOption mkIf;
 in {
-  imports = [
-    ./clipse.nix
-    ./hyprland.nix
-    ./hyprpaper.nix
-    ./sddm.nix
-    ./stylix.nix
-  ];
+  imports = [./hyprland.nix ./hyprpaper.nix ./sddm.nix];
 
   options.desktop.enable = mkEnableOption "the desktop environment";
 
   config = mkIf config.desktop.enable {
     desktop = {
       # TODO Remove the enable options of the individual parts of my DE, and expose options as DE options as necessary
-      #stylix.enable = mkDefault true;
-      clipse.enable = mkDefault true;
       hyprland.enable = mkDefault true;
       sddm.enable = mkDefault true;
     };

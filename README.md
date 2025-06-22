@@ -1,5 +1,7 @@
-# Installer
+# My personal NixOS config
+
 ## Using the installer
+
 Available scripts:
 - `wifi`: Allows you to easily connect to a wifi network. The details are automatically copied from the installer to the actual machine when `install-os` is run.
 - `download`: Downloads this config to `~/config`.
