@@ -21,6 +21,7 @@
   };
 
   dev.flutter.enable = true;
+  dev.rust.enable = true;
 
   apps.slack.enable = true;
   apps.steam.enable = true;

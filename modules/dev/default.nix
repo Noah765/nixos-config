@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  imports = [./basic.nix ./flutter.nix ./nix.nix ./unity.nix];
+  imports = [./basic.nix ./flutter.nix ./nix.nix ./rust.nix ./unity.nix];
 
   options.dev.enable = lib.mkEnableOption "the default development tools";
 
