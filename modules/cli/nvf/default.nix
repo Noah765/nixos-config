@@ -54,6 +54,22 @@
       # TODO window borders (https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/basics.lua#L541-L547 helpful?)
       # TODO movement by visible lines (wrapping) https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/basics.lua#L556-L561
       settings.vim = {
+        additionalRuntimePaths = [
+          (pkgs.runCommandLocal "nvf-spellfiles" {
+              germanSpl = pkgs.fetchurl {
+                url = "https://ftp.nluug.nl/pub/vim/runtime/spell/de.utf-8.spl";
+                hash = "sha256-c8cQfqM5hWzb6SHeuSpFk5xN5uucByYdobndGfaDo9E=";
+              };
+              germanSug = pkgs.fetchurl {
+                url = "https://ftp.nluug.nl/pub/vim/runtime/spell/de.utf-8.sug";
+                hash = "sha256-E9Ds+Shj2J72DNSopesqWhOg6Pm6jRxqvkerqFcUqUg=";
+              };
+            } ''
+              mkdir -p $out/spell
+              cp $germanSpl $out/spell/de.utf-8.spl
+              cp $germanSug $out/spell/de.utf-8.sug
+            '').outPath
+        ];
         # enableLuaLoader = true;
         # TODO assistant
         autocomplete.blink-cmp = {
@@ -183,6 +199,7 @@
         # TODO nvim-session-manager
         # TODO luasnip
         spellcheck.enable = true; # TODO extraSpellWords, ignoredFiletypes, languages
+        spellcheck.languages = ["en" "de"];
         # spellcheck.programmingWordlist.enable = true; # TODO fix if useful
         # TODO statusline
         # TODO what does syntaxHighlighting do exactly?
