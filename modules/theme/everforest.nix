@@ -11,12 +11,16 @@ in {
     # TODO Explore alternative fonts
     fonts = {
       serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
+        # package = pkgs.dejavu_fonts;
+        # name = "DejaVu Serif";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font Mono";
       };
       sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
+        # package = pkgs.dejavu_fonts;
+        # name = "DejaVu Sans";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font Mono";
       };
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
@@ -61,8 +65,6 @@ in {
       foreground = fg;
       background = bg0;
 
-      selectionBackground = bgVisual;
-
       activeWindowBorder = green;
       inactiveWindowBorder = bg4;
       tabLineBackground = bg1;
@@ -70,6 +72,12 @@ in {
       activeTabBackground = statusline1;
       inactiveTabForeground = grey2;
       inactiveTabBackground = bg3;
+
+      border = green;
+      url = blue;
+      activeForeground = bg0;
+      activeBackground = statusline1;
+      selectionBackground = bgVisual;
 
       terminal0 = bg3;
       terminal1 = red;

@@ -42,8 +42,6 @@ in {
         "foreground"
         "background"
 
-        "selectionBackground"
-
         "activeWindowBorder"
         "inactiveWindowBorder"
         "tabLineBackground"
@@ -51,6 +49,12 @@ in {
         "activeTabBackground"
         "inactiveTabForeground"
         "inactiveTabBackground"
+
+        "border"
+        "url"
+        "activeForeground"
+        "activeBackground"
+        "selectionBackground"
 
         "terminal0"
         "terminal1"
