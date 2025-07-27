@@ -35,12 +35,11 @@ in {
             fetchNews = false;
             theme = {
               useFont = true;
-              # fontFamily = "monospace"; # TODO Control via theming system, everything is monospace?
               darkSchemeBackgroundColor = config.theme.colors.background;
               darkSchemeTextColor = config.theme.colors.foreground;
               scrollbarColor = "auto";
             };
-            changeBrowserTheme = true; # TODO Modify browser theme further, control via actual browser theme (startup)
+            # changeBrowserTheme = true; # TODO Modify browser theme further, control via actual browser theme (startup)
             syncSettings = false;
             # TODO enableForPDF = false;
             enableForProtectedPages = true; # TODO Adjust permissions
@@ -56,27 +55,6 @@ in {
           "layout.css.prefers-color-scheme.content-override" = 0;
 
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-
-          # Theme
-          # "font.default.x-western" = "monospace";
-          # "font.name.monospace.x-western" = config.theme.fonts.monospace.name;
-          # "gfx.webrender.all" = true;
-          # "layers.acceleration.force-enabled" = true;
-          # "svg.context-properties.content.enabled" = true;
-          # "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-          # TODO browser.startup.preXulSkeletonUI
-
-          # Theme
-          # "uc.tweak.hide-tabs-bar" = true;
-          # "uc.tweak.hide-forward-button" = true;
-          # "uc.tweak.rounded-corners" = true;
-          # "uc.tweak.floating-tabs" = true;
-          # "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-          # "svg.context-properties.content.enabled" = true;
-          # "layout.css.color-mix.enabled" = true;
-          # "layout.css.light-dark.enabled" = true;
-          # "layout.css.has-selector.enabled" = true;
-          # "af.edgyarc.minimal-navbar" = true;
         };
         # TODO Control opacity with the theming system
         # userChrome = ''
