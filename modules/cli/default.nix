@@ -10,6 +10,7 @@ in {
     ./installer.nix
     ./nushell.nix
     ./nvf
+    ./ouch.nix
     ./rb.nix
     ./vcs.nix
   ];
@@ -20,6 +21,7 @@ in {
     comma.enable = mkDefault true;
     nushell.enable = mkDefault true;
     nvf.enable = mkDefault true;
+    ouch.enable = mkDefault true;
     rb.enable = mkDefault true;
     vcs.enable = mkDefault true;
   };
