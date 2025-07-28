@@ -9,17 +9,7 @@
     iso.modules = [./hosts/iso];
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    agenix-rekey,
-    ...
-  }: {
-    agenix-rekey = agenix-rekey.configure {
-      userFlake = self;
-      nodes = self.nixosConfigurations;
-    };
-
+  outputs = {nixpkgs, ...}: {
     devShells.x86_64-linux.default = let
       inherit (nixpkgs.lib) getExe';
       pkgs = nixpkgs.legacyPackages.x86_64-linux;

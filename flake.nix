@@ -2,18 +2,6 @@
 # and will be overwritten without warning on subsequent runs of the generator.
 {
   inputs = {
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        darwin.follows = "";
-        home-manager.follows = "nixpkgs";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-    agenix-rekey = {
-      url = "github:oddlama/agenix-rekey";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
