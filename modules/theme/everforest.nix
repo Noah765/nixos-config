@@ -97,7 +97,7 @@ in {
       terminal15 = fg;
     };
 
-    terminalOpacity = 0.75;
+    windowOpacity = 0.75;
 
     wallpaper = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";

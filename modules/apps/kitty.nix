@@ -18,7 +18,6 @@ in {
         font_size = config.theme.fonts.size;
 
         inherit foreground background;
-        background_opacity = config.theme.terminalOpacity;
         selection_foreground =
           if selectionForeground == null
           then "none"

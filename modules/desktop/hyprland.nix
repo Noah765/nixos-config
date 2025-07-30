@@ -36,7 +36,8 @@ in {
 
         decoration = {
           rounding = 12;
-          # TODO inactive_opacity, dim_inactive
+          active_opacity = config.theme.windowOpacity;
+          inactive_opacity = config.theme.windowOpacity;
 
           # TODO Style floating windows and popups (blur, dimming)
           # TODO Style transparent windows (blur, shadows, dimming)
@@ -64,7 +65,7 @@ in {
 
         input = {
           repeat_rate = 35;
-          repeat_delay = 250;
+          repeat_delay = 200;
           special_fallthrough = true; # TODO special workspaces (maybe change this)
         };
 
@@ -82,12 +83,17 @@ in {
         binds.workspace_center_on = 1;
 
         cursor = {
+          hotspot_padding = 5;
+          inactive_timeout = 5;
           persistent_warps = true; # TODO Doesn't work (with hy3:changefocus?)
           warp_on_change_workspace = true; # TODO Is this actually the same as binds.workspace_center_on?
+          # TODO warp_on_toggle_special
+          hide_on_key_press = true;
         };
 
         ecosystem.no_update_news = true;
         ecosystem.no_donation_nag = true;
+        # TODO enforce_permissions
 
         plugin.hy3.tabs = {
           padding = 2;

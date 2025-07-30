@@ -86,9 +86,9 @@ in {
           description = "The optional ${camelCaseToLowercase x} color in hex.";
         });
 
-    terminalOpacity = mkOption {
+    windowOpacity = mkOption {
       type = float;
-      description = "The opacity of the terminal background.";
+      description = "The opacity of the windows.";
     };
 
     wallpaper = mkOption {
