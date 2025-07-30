@@ -1,6 +1,6 @@
 {lib, ...}: let
   inherit (lib) concatMapStrings elemAt genAttrs isList mkOption split toLower;
-  inherit (lib.types) enum float int nullOr package str;
+  inherit (lib.types) bool enum float int nullOr package str;
 in {
   imports = [./everforest.nix];
 
@@ -42,20 +42,62 @@ in {
         "foreground"
         "background"
 
+        # Window
         "activeWindowBorder"
         "inactiveWindowBorder"
+
+        # Tab
         "tabLineBackground"
         "activeTabForeground"
         "activeTabBackground"
         "inactiveTabForeground"
         "inactiveTabBackground"
 
-        "border"
+        # Status Line
+        "statusLineBackground"
+
+        # Picker
+        "selectedForeground"
+        "selectedBackground"
+        "matched"
+
+        # Popup
+        "popupForeground"
+        "popupBackground"
+        "popupDisabledForeground"
+        "popupDisabledBackground"
+        "popupSelectedForeground"
+        "popupSelectedBackground"
+
+        # Progress
+        "progressStartForeground"
+        "progressStartBackground"
+        "progressFinishForeground"
+        "progressFinishBackground"
+        "errorForeground"
+        "errorBackground"
+
+        # Keychain
+        "nextKey"
+        "previousKeys"
+        "futureKeys"
+
+        # Mode indicators
+        "modeForeground"
+        "normalMode"
+        "visualMode"
+        "insertMode"
+        "commandMode"
+        "replaceMode"
+
+        # Generic
+        "title"
         "url"
-        "activeForeground"
-        "activeBackground"
+        "scrollbarHandle"
+        "border"
         "selectionBackground"
 
+        # Terminal
         "terminal0"
         "terminal1"
         "terminal2"
@@ -78,13 +120,19 @@ in {
           example = "#FFFFFF";
           description = "The ${camelCaseToLowercase x} color in hex.";
         })
-      // genAttrs ["selectionForeground"] (x:
+      // genAttrs ["scrollbarTrack" "selectionForeground"] (x:
         mkOption {
           type = nullOr str;
           default = null;
           example = "#FFFFFF";
           description = "The optional ${camelCaseToLowercase x} color in hex.";
         });
+
+    bold = genAttrs ["title" "jumpSpot"] (x:
+      mkOption {
+        type = bool;
+        description = "Whether to make ${camelCaseToLowercase x}s bold.";
+      });
 
     windowOpacity = mkOption {
       type = float;

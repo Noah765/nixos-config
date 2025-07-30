@@ -11,16 +11,12 @@ in {
     # TODO Explore alternative fonts
     fonts = {
       serif = {
-        # package = pkgs.dejavu_fonts;
-        # name = "DejaVu Serif";
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font Mono";
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
       };
       sansSerif = {
-        # package = pkgs.dejavu_fonts;
-        # name = "DejaVu Sans";
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font Mono";
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
       };
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
@@ -66,17 +62,49 @@ in {
       background = bg0;
 
       activeWindowBorder = green;
-      inactiveWindowBorder = bg4;
+      inactiveWindowBorder = grey1;
+
       tabLineBackground = bg1;
       activeTabForeground = bg0;
       activeTabBackground = statusline1;
       inactiveTabForeground = grey2;
       inactiveTabBackground = bg3;
 
-      border = green;
+      statusLineBackground = bg2;
+
+      selectedForeground = fg;
+      selectedBackground = bgGreen;
+      matched = green;
+
+      popupForeground = fg;
+      popupBackground = bg2;
+      popupDisabledForeground = grey1;
+      popupDisabledBackground = bg2;
+      popupSelectedForeground = bg0;
+      popupSelectedBackground = statusline1;
+
+      progressStartForeground = bg0;
+      progressStartBackground = blue;
+      progressFinishForeground = bg0;
+      progressFinishBackground = green;
+      errorForeground = bg0;
+      errorBackground = red;
+
+      nextKey = orange;
+      previousKeys = aqua;
+      futureKeys = aqua;
+
+      modeForeground = bg0;
+      normalMode = statusline1;
+      visualMode = statusline3;
+      insertMode = statusline2;
+      commandMode = aqua;
+      replaceMode = orange;
+
+      title = orange;
       url = blue;
-      activeForeground = bg0;
-      activeBackground = statusline1;
+      scrollbarHandle = grey0;
+      border = grey1;
       selectionBackground = bgVisual;
 
       terminal0 = bg3;
@@ -96,6 +124,9 @@ in {
       terminal14 = aqua;
       terminal15 = fg;
     };
+
+    bold.title = true;
+    bold.jumpSpot = true;
 
     windowOpacity = 0.75;
 

@@ -6,7 +6,7 @@
   inherit (lib) mkDefault mkEnableOption mkIf;
 in {
   imports = [
-    ./firefox.nix
+    ./browser.nix
     ./kitty.nix
     ./slack.nix
     ./steam.nix
@@ -15,7 +15,7 @@ in {
   options.apps.enable = mkEnableOption "the default apps";
 
   config.apps = mkIf config.apps.enable {
-    firefox.enable = mkDefault true;
+    browser.enable = mkDefault true;
     kitty.enable = mkDefault true;
   };
 }
