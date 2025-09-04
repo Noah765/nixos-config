@@ -10,7 +10,7 @@
       enable = true;
       # TODO hm.programs.qutebrowser.quickmarks
       searchEngines = {
-        DEFAULT = "https://duckduckgo.com/?q={}";
+        DEFAULT = "https://www.ecosia.org/search?q={}";
         g = "https://www.google.com/search?q={}";
         gh = "https://github.com/search?q={}&s=stars";
         np = "https://search.nixos.org/packages?channel=unstable&query={}";
@@ -148,7 +148,10 @@
         # TODO scrolling.smooth, search.incremental, spellcheck.languages, statusbar, tabs.{close_mouse_button_on_bar, favicons.scale, focus_stack_size, indicator}
         tabs.last_close = "default-page";
         # TODO tabs.{max_width, min_width, mode_on_change, new_position, padding, pinned, position, select_on_remove, show, show_switching_delay, title.{alignment, format, format_pinned}, tooltips, undo_stack_size, width}
-        # TODO url.{auto_search, default_page, incdec_segments, open_base_url, searchengines, start_pages}, window.{hide_decoration, title_format, transparent}, zoom.mouse_divider
+        # TODO url.auto_search
+        url.default_page = "https://www.ecosia.org";
+        url.start_pages = "https://www.ecosia.org";
+        # TODO url.{incdec_segments, open_base_url, searchengines}, window.{hide_decoration, title_format, transparent}, zoom.mouse_divider
       };
     };
     core.impermanence.hm.directories = [".local/share/qutebrowser"];
