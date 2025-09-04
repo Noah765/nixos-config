@@ -1,16 +1,11 @@
 {
   lib,
-  pkgs,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf removePrefix;
-in {
-  options.apps.kitty.enable = mkEnableOption "Kitty";
+}: {
+  options.apps.terminal.enable = lib.mkEnableOption "Kitty";
 
-  config = mkIf config.apps.kitty.enable {
-    dependencies = ["cli.nvf"]; # TODO Update once vim-kitty-navigator is moved to a individual module
-
+  config = lib.mkIf config.apps.terminal.enable {
     hm.programs.kitty = {
       enable = true;
 
@@ -67,7 +62,6 @@ in {
 
         allow_remote_control = "password";
         remote_control_password = "password kitten focus-window"; # TODO Generate a password
-        listen_on = "unix:@mykitty";
       };
 
       keybindings = {
@@ -111,30 +105,23 @@ in {
       };
     };
 
-    hm.xdg.configFile = {
-      "kitty/pass_keys.py".source = "${pkgs.vimPlugins.vim-kitty-navigator}/pass_keys.py";
-      "kitty/get_layout.py".source = "${pkgs.vimPlugins.vim-kitty-navigator}/get_layout.py";
+    hm.xdg.configFile."kitty/tab_bar.py".text = ''
+      from kitty.fast_data_types import Screen
+      from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
 
-      "kitty/tab_bar.py".text = let
-        color = removePrefix "#" config.theme.colors.tabLineBackground;
-      in ''
-        from kitty.fast_data_types import Screen
-        from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
-
-        def draw_tab(
-          draw_data: DrawData, screen: Screen, tab: TabBarData,
-          before: int, max_tab_length: int, index: int, is_last: bool,
-          extra_data: ExtraData
-        ) -> int:
-          screen.draw(' ')
-          draw_title(draw_data, screen, tab, index, max_tab_length)
-          screen.draw(' ')
-          if is_last:
-            screen.cursor.bg = as_rgb(0x${color})
-            screen.draw(' ' * (screen.columns - screen.cursor.x))
-          return screen.cursor.x
-      '';
-    };
+      def draw_tab(
+        draw_data: DrawData, screen: Screen, tab: TabBarData,
+        before: int, max_tab_length: int, index: int, is_last: bool,
+        extra_data: ExtraData
+      ) -> int:
+        screen.draw(' ')
+        draw_title(draw_data, screen, tab, index, max_tab_length)
+        screen.draw(' ')
+        if is_last:
+          screen.cursor.bg = as_rgb(0x${lib.removePrefix "#" config.theme.colors.tabLineBackground})
+          screen.draw(' ' * (screen.columns - screen.cursor.x))
+        return screen.cursor.x
+    '';
 
     desktop.hyprland.settings.bind = ["Super, T, exec, kitty"];
   };

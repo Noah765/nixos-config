@@ -7,15 +7,15 @@
 in {
   imports = [
     ./browser.nix
-    ./kitty.nix
     ./slack.nix
     ./steam.nix
+    ./terminal.nix
   ];
 
   options.apps.enable = mkEnableOption "the default apps";
 
   config.apps = mkIf config.apps.enable {
     browser.enable = mkDefault true;
-    kitty.enable = mkDefault true;
+    terminal.enable = mkDefault true;
   };
 }

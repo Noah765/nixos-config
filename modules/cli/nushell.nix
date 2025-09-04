@@ -24,7 +24,7 @@ in {
         cursor_shape.vi_insert = "line";
         cursor_shape.vi_normal = "block";
         completions.algorithm = "fuzzy";
-        use_kitty_protocol = config.apps.kitty.enable;
+        use_kitty_protocol = config.apps.terminal.enable;
         display_errors.termination_signal = false;
         footer_mode = "auto";
         table.footer_inheritance = true;
