@@ -2,22 +2,19 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption;
-  cfg = config.core.networkmanager;
-in {
+}: {
   options.core.networkmanager = {
-    enable = mkEnableOption "NetworkManager";
-    hostName = mkOption {
+    enable = lib.mkEnableOption "NetworkManager";
+    hostName = lib.mkOption {
       type = lib.types.str;
       description = "The name of the machine.";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf config.core.networkmanager.enable {
     os.networking = {
+      inherit (config.core.networkmanager) hostName;
       wireless.enable = false; # The iso config has this enabled by default
-      hostName = cfg.hostName;
       networkmanager.enable = true;
     };
     core.user.groups = ["networkmanager"];

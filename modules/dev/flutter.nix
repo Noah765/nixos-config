@@ -2,10 +2,8 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.dev.flutter.enable = mkEnableOption "Flutter";
+}: {
+  options.dev.flutter.enable = lib.mkEnableOption "Flutter";
 
-  config.core.impermanence.hm.directories = mkIf config.dev.flutter.enable [".pub-cache"];
+  config.core.impermanence.hm.directories = lib.mkIf config.dev.flutter.enable [".pub-cache"];
 }

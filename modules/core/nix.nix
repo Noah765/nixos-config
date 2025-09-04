@@ -3,12 +3,10 @@
   inputs,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.core.nix.enable = mkEnableOption "a patched version of the Nix language and core settings required for Nix";
+}: {
+  options.core.nix.enable = lib.mkEnableOption "the Nix language";
 
-  config = mkIf config.core.nix.enable {
+  config = lib.mkIf config.core.nix.enable {
     os.system.stateVersion = "24.11";
     hm.home.stateVersion = "24.11";
 

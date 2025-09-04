@@ -2,18 +2,16 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkDefault mkEnableOption mkIf;
-in {
+}: {
   imports = [./hyprland.nix ./hyprpaper.nix ./sddm.nix];
 
-  options.desktop.enable = mkEnableOption "the desktop environment";
+  options.desktop.enable = lib.mkEnableOption "the desktop environment";
 
-  config = mkIf config.desktop.enable {
+  config = lib.mkIf config.desktop.enable {
     desktop = {
       # TODO Remove the enable options of the individual parts of my DE, and expose options as DE options as necessary
-      hyprland.enable = mkDefault true;
-      sddm.enable = mkDefault true;
+      hyprland.enable = lib.mkDefault true;
+      sddm.enable = lib.mkDefault true;
     };
     os.fonts = let
       inherit (config.theme.fonts) serif sansSerif monospace emoji;

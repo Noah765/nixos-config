@@ -2,16 +2,11 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.core.boot.enable = mkEnableOption "the default boot configuration";
+}: {
+  options.core.boot.enable = lib.mkEnableOption "the default boot configuration";
 
-  config.os.boot = mkIf config.core.boot.enable {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
-    initrd.systemd.enable = true;
+  config.os.boot.loader = lib.mkIf config.core.boot.enable {
+    systemd-boot.enable = true; # TODO Configure and style systemd-boot
+    efi.canTouchEfiVariables = true;
   };
 }

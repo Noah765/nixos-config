@@ -2,9 +2,7 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkDefault mkIf;
-in {
+}: {
   imports = [
     ./apps
     ./cli
@@ -16,10 +14,10 @@ in {
     ./theme
   ];
 
-  apps.enable = mkIf config.desktop.enable (mkDefault true);
-  cli.enable = mkDefault true;
-  core.enable = mkDefault true;
-  desktop.enable = mkDefault true;
-  dev.enable = mkDefault true;
-  documentation.enable = mkDefault true;
+  apps.enable = lib.mkIf config.desktop.enable (lib.mkDefault true);
+  cli.enable = lib.mkDefault true;
+  core.enable = lib.mkDefault true;
+  desktop.enable = lib.mkDefault true;
+  dev.enable = lib.mkDefault true;
+  documentation.enable = lib.mkDefault true;
 }

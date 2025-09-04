@@ -2,9 +2,7 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkDefault mkEnableOption mkIf;
-in {
+}: {
   imports = [
     ./browser.nix
     ./slack.nix
@@ -12,10 +10,10 @@ in {
     ./terminal.nix
   ];
 
-  options.apps.enable = mkEnableOption "the default apps";
+  options.apps.enable = lib.mkEnableOption "the default apps";
 
-  config.apps = mkIf config.apps.enable {
-    browser.enable = mkDefault true;
-    terminal.enable = mkDefault true;
+  config.apps = lib.mkIf config.apps.enable {
+    browser.enable = lib.mkDefault true;
+    terminal.enable = lib.mkDefault true;
   };
 }

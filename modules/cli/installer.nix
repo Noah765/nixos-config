@@ -3,12 +3,10 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) getExe mkEnableOption mkIf;
-in {
-  options.cli.installer.enable = mkEnableOption "scripts for building, testing and writing the installer to a USB";
+}: {
+  options.cli.installer.enable = lib.mkEnableOption "scripts for building, testing and writing the installer to a USB";
 
-  config.hm.home.packages = mkIf config.cli.installer.enable [
+  config.hm.home.packages = lib.mkIf config.cli.installer.enable [
     (pkgs.writeShellScriptBin "build-installer" ''
       set -euo pipefail
 
@@ -26,7 +24,7 @@ in {
         esac
       done
 
-      ${getExe pkgs.nix-output-monitor} build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
+      ${lib.getExe pkgs.nix-output-monitor} build /etc/nixos#nixosConfigurations.iso.config.system.build.isoImage
 
       echo "The installer ISO has been successfully created and is located in $bold/etc/nixos/result/iso$normal!"
     '')
@@ -48,7 +46,7 @@ in {
         esac
       done
 
-      disk=$(lsblk -dno name | ${getExe pkgs.fzf} --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
+      disk=$(lsblk -dno name | ${lib.getExe pkgs.fzf} --border --border-label 'Disk selection' --prompt 'Disk> ' --preview 'lsblk /dev/{}')
 
       echo -e "\nOverwriting a disk can cause the disk's contents to be ''${red}lost forever$normal!"
       while true; do

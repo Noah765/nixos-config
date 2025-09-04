@@ -3,12 +3,10 @@
   pkgs,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.cli.nushell.enable = mkEnableOption "nushell";
+}: {
+  options.cli.nushell.enable = lib.mkEnableOption "nushell";
 
-  config = mkIf config.cli.nushell.enable {
+  config = lib.mkIf config.cli.nushell.enable {
     os.users.defaultUserShell = pkgs.nushell;
 
     core.impermanence.hm.files = [".config/nushell/history.sqlite3"];

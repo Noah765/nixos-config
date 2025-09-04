@@ -3,24 +3,21 @@
   inputs,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.desktop.sddm;
-in {
+}: {
   inputs.sddm-sugar-candy.url = "github:Noah765/sddm-sugar-candy";
 
   osImports = [inputs.sddm-sugar-candy.nixosModules.default];
 
   options.desktop.sddm = {
-    enable = mkEnableOption "SDDM";
-    autoLogin = mkEnableOption "automatic user login";
+    enable = lib.mkEnableOption "SDDM";
+    autoLogin = lib.mkEnableOption "automatic user login";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf config.desktop.sddm.enable {
     # TODO dependencies = ["core.user" "desktop.stylix"];
 
     os.services.displayManager = {
-      autoLogin.user = mkIf cfg.autoLogin "noah";
+      autoLogin.user = lib.mkIf config.desktop.sddm.autoLogin "noah";
 
       sddm = {
         enable = true;

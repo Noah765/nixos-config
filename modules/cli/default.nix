@@ -2,9 +2,7 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkDefault mkEnableOption mkIf;
-in {
+}: {
   imports = [
     ./comma.nix
     ./installer.nix
@@ -15,14 +13,14 @@ in {
     ./vcs.nix
   ];
 
-  options.cli.enable = mkEnableOption "the default CLI configuration and programs";
+  options.cli.enable = lib.mkEnableOption "the default CLI configuration and programs";
 
-  config.cli = mkIf config.cli.enable {
-    comma.enable = mkDefault true;
-    nushell.enable = mkDefault true;
-    nvf.enable = mkDefault true;
-    ouch.enable = mkDefault true;
-    rb.enable = mkDefault true;
-    vcs.enable = mkDefault true;
+  config.cli = lib.mkIf config.cli.enable {
+    comma.enable = lib.mkDefault true;
+    nushell.enable = lib.mkDefault true;
+    nvf.enable = lib.mkDefault true;
+    ouch.enable = lib.mkDefault true;
+    rb.enable = lib.mkDefault true;
+    vcs.enable = lib.mkDefault true;
   };
 }

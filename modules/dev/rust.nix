@@ -2,10 +2,8 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.dev.rust.enable = mkEnableOption "Rust";
+}: {
+  options.dev.rust.enable = lib.mkEnableOption "Rust";
 
-  config.core.impermanence.hm.directories = mkIf config.dev.rust.enable [".cargo" ".rustup"];
+  config.core.impermanence.hm.directories = lib.mkIf config.dev.rust.enable [".cargo" ".rustup"];
 }

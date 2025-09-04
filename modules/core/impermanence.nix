@@ -4,11 +4,7 @@
   useHm,
   config,
   ...
-}: let
-  inherit (lib) mkAliasOptionModule mkEnableOption mkIf mkMerge mkOption;
-  inherit (lib.types) str uniq;
-  cfg = config.core.impermanence;
-in {
+}: {
   inputs = {
     disko = {
       url = "github:nix-community/disko";
@@ -19,8 +15,8 @@ in {
   };
 
   imports = [
-    (mkAliasOptionModule ["core" "impermanence" "os"] ["os" "environment" "persistence" "/persist/system"])
-    (mkAliasOptionModule ["core" "impermanence" "hm"] ["hm" "home" "persistence" "/persist/home"])
+    (lib.mkAliasOptionModule ["core" "impermanence" "os"] ["os" "environment" "persistence" "/persist/system"])
+    (lib.mkAliasOptionModule ["core" "impermanence" "hm"] ["hm" "home" "persistence" "/persist/home"])
   ];
   osImports = [
     inputs.disko.nixosModules.default
@@ -29,23 +25,23 @@ in {
   hmImports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
   options.core.impermanence = {
-    enable = mkEnableOption "automatic system cleanup using impermanence";
+    enable = lib.mkEnableOption "automatic system cleanup using impermanence";
 
-    disk = mkOption {
-      type = uniq str;
+    disk = lib.mkOption {
+      type = lib.types.uniq lib.types.str;
       example = "sda";
       description = "The disk for disko to manager and to use for impermanence.";
     };
   };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
-      assertions = [{assertion = cfg.disk != null;}];
+  config = lib.mkMerge [
+    (lib.mkIf config.core.impermanence.enable {
+      assertions = [{assertion = config.core.impermanence.disk != null;}];
 
       os = {
         disko.devices = {
           disk.main = {
-            device = "/dev/${cfg.disk}";
+            device = "/dev/${config.core.impermanence.disk}";
             type = "disk";
             content = {
               type = "gpt";
@@ -178,8 +174,8 @@ in {
           };
         };
 
-        systemd.tmpfiles.rules = mkIf useHm ["d /persist/home 0700 noah users -"];
-        programs.fuse.userAllowOther = mkIf useHm true;
+        systemd.tmpfiles.rules = lib.mkIf useHm ["d /persist/home 0700 noah users -"];
+        programs.fuse.userAllowOther = lib.mkIf useHm true;
       };
 
       hm.home.persistence."/persist/home" = {
@@ -194,7 +190,7 @@ in {
         ];
       };
     })
-    (mkIf (!cfg.enable) {
+    (lib.mkIf (!config.core.impermanence.enable) {
       os.environment.persistence."/persist/system".enable = false;
       hm.home.persistence."/persist/home".enable = false;
     })

@@ -2,12 +2,10 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.core.keyboard.enable = mkEnableOption "the Graphite keyboard layout with home row mods";
+}: {
+  options.core.keyboard.enable = lib.mkEnableOption "the Graphite keyboard layout with home row mods";
 
-  config.os.services.keyd = mkIf config.core.keyboard.enable {
+  config.os.services.keyd = lib.mkIf config.core.keyboard.enable {
     enable = true;
 
     keyboards.default = {

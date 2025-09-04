@@ -2,10 +2,8 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.core.timeZone.enable = mkEnableOption "the German time zone";
+}: {
+  options.core.timeZone.enable = lib.mkEnableOption "the German time zone";
 
-  config.os.time.timeZone = mkIf config.core.timeZone.enable "Europe/Berlin";
+  config.os.time.timeZone = lib.mkIf config.core.timeZone.enable "Europe/Berlin";
 }

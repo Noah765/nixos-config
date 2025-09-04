@@ -3,12 +3,10 @@
   pkgs,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.apps.steam.enable = mkEnableOption "Steam";
+}: {
+  options.apps.steam.enable = lib.mkEnableOption "Steam";
 
-  config = mkIf config.apps.steam.enable {
+  config = lib.mkIf config.apps.steam.enable {
     os.programs.steam = {
       enable = true;
       gamescopeSession.enable = true;

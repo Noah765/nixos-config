@@ -2,12 +2,10 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-in {
-  options.core.nvidia.enable = mkEnableOption "Nvidia drivers";
+}: {
+  options.core.nvidia.enable = lib.mkEnableOption "Nvidia drivers";
 
-  config.os = mkIf config.core.nvidia.enable {
+  config.os = lib.mkIf config.core.nvidia.enable {
     services.xserver.videoDrivers = ["nvidia"]; # This does not enable xserver, the name is historical
 
     hardware.nvidia = {

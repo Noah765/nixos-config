@@ -3,44 +3,35 @@
   pkgs,
   config,
   ...
-}: let
-  inherit (lib) getExe mkDefault mkEnableOption mkIf;
-  cfg = config.cli.vcs;
-in {
+}: {
   options.cli.vcs = {
-    enable = mkEnableOption "Jujutsu, Git and the GitHub CLI";
-    jj.enable = mkEnableOption "Jujutsu";
-    git.enable = mkEnableOption "Git";
-    gh.enable = mkEnableOption "the GitHub CLI";
+    enable = lib.mkEnableOption "Jujutsu, Git and the GitHub CLI";
+    jj.enable = lib.mkEnableOption "Jujutsu" // {default = true;};
+    git.enable = lib.mkEnableOption "Git" // {default = true;};
+    gh.enable = lib.mkEnableOption "the GitHub CLI" // {default = true;};
   };
 
-  config = {
-    cli.vcs = mkIf cfg.enable {
-      jj.enable = mkDefault true;
-      git.enable = mkDefault true;
-      gh.enable = mkDefault true;
-    };
-
+  config = lib.mkIf config.cli.vcs.enable {
     hm.programs = {
-      jujutsu.enable = cfg.jj.enable;
+      jujutsu.enable = config.cli.vcs.jj.enable;
       jujutsu.settings = {
         user.name = "Noah765";
         user.email = "noland62007@gmail.com";
         ui = {
           default-command = "log";
-          diff-formatter = "${getExe pkgs.difftastic} --color always --sort-paths $left $right";
+          diff-formatter = "${lib.getExe pkgs.difftastic} --color always --sort-paths $left $right";
           pager = "less -FRX";
         };
       };
       git = {
-        inherit (cfg.git) enable;
+        inherit (config.cli.vcs.git) enable;
         userName = "Noah765";
         userEmail = "noland62007@gmail.com";
         extraConfig.init.defaultBranch = "main";
         difftastic.enable = true;
       };
-      gh.enable = cfg.gh.enable;
+      gh.enable = config.cli.vcs.gh.enable;
     };
-    core.impermanence.hm.files = mkIf cfg.gh.enable [".config/gh/hosts.yml"];
+    core.impermanence.hm.files = lib.mkIf config.cli.vcs.gh.enable [".config/gh/hosts.yml"];
   };
 }

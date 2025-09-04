@@ -5,14 +5,12 @@
   ...
 }:
 # TODO https://wiki.hyprland.org/Useful-Utilities/Systemd-start/
-let
-  inherit (lib) mkAliasOptionModule mkEnableOption mkIf removePrefix;
-in {
-  imports = [(mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
+{
+  imports = [(lib.mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
-  options.desktop.hyprland.enable = mkEnableOption "Hyprland";
+  options.desktop.hyprland.enable = lib.mkEnableOption "Hyprland";
 
-  config = mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.desktop.hyprland.enable {
     os.programs.hyprland.enable = true;
 
     hm.home.sessionVariables.NIXOS_OZONE_WL = 1;
@@ -23,7 +21,7 @@ in {
       plugins = [pkgs.hyprlandPlugins.hy3];
 
       settings = let
-        getColor = x: "rgb(${removePrefix "#" config.theme.colors.${x}})";
+        getColor = x: "rgb(${lib.removePrefix "#" config.theme.colors.${x}})";
       in {
         general = {
           gaps_in = 2;

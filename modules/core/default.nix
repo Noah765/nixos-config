@@ -2,9 +2,7 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkDefault mkEnableOption mkIf;
-in {
+}: {
   imports = [
     ./boot.nix
     ./charachorder.nix
@@ -18,15 +16,15 @@ in {
     ./user.nix
   ];
 
-  options.core.enable = mkEnableOption "core programs and services needed for a working NixOS system";
+  options.core.enable = lib.mkEnableOption "core programs and services needed for a working NixOS system";
 
-  config.core = mkIf config.core.enable {
-    boot.enable = mkDefault true;
-    impermanence.enable = mkDefault true;
-    networkmanager.enable = mkDefault true;
-    nix.enable = mkDefault true;
-    secrets.enable = mkDefault true;
-    timeZone.enable = mkDefault true;
-    user.enable = mkDefault true;
+  config.core = lib.mkIf config.core.enable {
+    boot.enable = lib.mkDefault true;
+    impermanence.enable = lib.mkDefault true;
+    networkmanager.enable = lib.mkDefault true;
+    nix.enable = lib.mkDefault true;
+    secrets.enable = lib.mkDefault true;
+    timeZone.enable = lib.mkDefault true;
+    user.enable = lib.mkDefault true;
   };
 }
