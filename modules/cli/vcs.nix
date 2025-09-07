@@ -16,7 +16,7 @@
       jujutsu.enable = config.cli.vcs.jj.enable;
       jujutsu.settings = {
         user.name = "Noah765";
-        user.email = "noland62007@gmail.com";
+        user.email = "noah.landgraf@gmx.de";
         ui = {
           default-command = "log";
           diff-formatter = "${lib.getExe pkgs.difftastic} --color always --sort-paths $left $right";
@@ -26,7 +26,7 @@
       git = {
         inherit (config.cli.vcs.git) enable;
         userName = "Noah765";
-        userEmail = "noland62007@gmail.com";
+        userEmail = "noah.landgraf@gmx.de";
         extraConfig.init.defaultBranch = "main";
         difftastic.enable = true;
       };
