@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./browser.nix
+    ./signal.nix
     ./slack.nix
     ./steam.nix
     ./terminal.nix

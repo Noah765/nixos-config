@@ -8,6 +8,7 @@
   };
 
   apps.steam.enable = true;
+  apps.signal.enable = true;
 
   cli.installer.enable = true;
 
