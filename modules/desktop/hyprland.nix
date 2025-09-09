@@ -48,14 +48,10 @@
 
       plugins = [pkgs.hyprlandPlugins.hy3];
 
-      settings = let
-        getColor = x: "rgb(${lib.removePrefix "#" config.theme.colors.${x}})";
-      in {
+      settings = {
         general = {
           gaps_in = 2;
           gaps_out = 5;
-          "col.inactive_border" = getColor "inactiveWindowBorder";
-          "col.active_border" = getColor "activeWindowBorder";
           layout = "hy3";
           # TODO allow_tearing, snap
         };
@@ -69,7 +65,6 @@
           # TODO Style transparent windows (blur, shadows, dimming)
 
           blur.size = 2;
-          shadow.color = getColor "background"; # TODO Maybe adjust the opacity?
         };
 
         # Heavily inspired by end-4's config
@@ -122,11 +117,10 @@
         # TODO enforce_permissions
 
         plugin.hy3.tabs = {
+          # TODO Finish styling hy3 tabs
           padding = 2;
           rounding = 6;
           render_text = false;
-          "col.inactive" = getColor "inactiveTabBackground";
-          "col.active" = getColor "activeTabBackground";
           # TODO Setup urgent tab color?
         };
 

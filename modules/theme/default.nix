@@ -1,162 +1,69 @@
-{lib, ...}: let
-  inherit (lib) concatMapStrings elemAt genAttrs isList mkOption split toLower;
-  inherit (lib.types) bool enum float int nullOr package str;
-in {
-  imports = [./everforest.nix];
+{lib, ...}: {
+  imports = [./everforest.nix ./stylix.nix];
 
-  options.theme = let
-    camelCaseToLowercase = x:
-      concatMapStrings (
-        x:
-          if isList x
-          then " " + toLower (elemAt x 0)
-          else x
-      ) (split "([[:upper:]])" x);
-  in {
-    preset = mkOption {
-      type = enum [null "everforest"];
-      default = "everforest";
-      description = "The theme preset to apply.";
-    };
-
-    fonts =
-      genAttrs ["serif" "sansSerif" "monospace" "emoji"] (x: {
-        package = mkOption {
-          type = package;
-          description = "The package providing the ${camelCaseToLowercase x} font.";
-        };
-        name = mkOption {
-          type = str;
-          description = "The font name within the ${camelCaseToLowercase x} font package.";
-        };
-      })
-      // {
-        size = mkOption {
-          type = int;
-          description = "The font size.";
-        };
-      };
-
-    colors =
-      genAttrs [
-        "foreground"
-        "background"
-
-        # Window
-        "activeWindowBorder"
-        "inactiveWindowBorder"
-
-        # Tab
-        "tabLineBackground"
-        "activeTabForeground"
-        "activeTabBackground"
-        "inactiveTabForeground"
-        "inactiveTabBackground"
-
-        # Status Line
-        "statusLineBackground"
-
-        # Picker
-        "selectedForeground"
-        "selectedBackground"
-        "matched"
-
-        # Popup
-        "popupForeground"
-        "popupBackground"
-        "popupDisabledForeground"
-        "popupDisabledBackground"
-        "popupSelectedForeground"
-        "popupSelectedBackground"
-
-        # Progress
-        "progressStartForeground"
-        "progressStartBackground"
-        "progressFinishForeground"
-        "progressFinishBackground"
-        "errorForeground"
-        "errorBackground"
-
-        # Keychain
-        "nextKey"
-        "previousKeys"
-        "futureKeys"
-
-        # Mode indicators
-        "modeForeground"
-        "normalMode"
-        "visualMode"
-        "insertMode"
-        "commandMode"
-        "replaceMode"
-
-        # Generic
-        "title"
-        "url"
-        "scrollbarHandle"
-        "border"
-        "selectionBackground"
-
-        # Terminal
-        "terminal0"
-        "terminal1"
-        "terminal2"
-        "terminal3"
-        "terminal4"
-        "terminal5"
-        "terminal6"
-        "terminal7"
-        "terminal8"
-        "terminal9"
-        "terminal10"
-        "terminal11"
-        "terminal12"
-        "terminal13"
-        "terminal14"
-        "terminal15"
-      ] (x:
-        mkOption {
-          type = str;
-          example = "#FFFFFF";
-          description = "The ${camelCaseToLowercase x} color in hex.";
-        })
-      // genAttrs ["scrollbarTrack" "selectionForeground"] (x:
-        mkOption {
-          type = nullOr str;
-          default = null;
-          example = "#FFFFFF";
-          description = "The optional ${camelCaseToLowercase x} color in hex.";
-        });
-
-    bold = genAttrs ["title" "jumpSpot"] (x:
-      mkOption {
-        type = bool;
-        description = "Whether to make ${camelCaseToLowercase x}s bold.";
-      });
-
-    windowOpacity = mkOption {
-      type = float;
-      description = "The opacity of the windows.";
-    };
-
-    wallpaper = mkOption {
-      type = package;
-      description = "The wallpaper to use.";
-    };
-
+  options.theme = {
     cursor = {
-      package = mkOption {
-        type = package;
+      package = lib.mkOption {
+        type = lib.types.package;
         description = "The package providing the cursor theme.";
       };
-      name = mkOption {
-        type = str;
+      name = lib.mkOption {
+        type = lib.types.str;
         description = "The cursor name within the cursor theme package.";
       };
-      size = mkOption {
-        type = int;
+      size = lib.mkOption {
+        type = lib.types.int;
         description = "The cursor size.";
       };
     };
+
+    fontSizes = let
+      mkFontSizeOption = x:
+        lib.mkOption {
+          type = lib.types.int;
+          description = "The font size used for ${x}.";
+        };
+    in {
+      desktop = mkFontSizeOption "general elements of the desktop";
+      applications = mkFontSizeOption "applications";
+      terminal = mkFontSizeOption "the terminal and text editors";
+      popups = mkFontSizeOption "overlay elements of the desktop";
+    };
+
+    fonts =
+      lib.mapAttrs (_: x: {
+        package = lib.mkOption {
+          type = lib.types.package;
+          description = "The package providing the ${x} font.";
+        };
+        name = lib.mkOption {
+          type = lib.types.str;
+          description = "The font name within the ${x} font package.";
+        };
+      }) {
+        serif = "serif";
+        sansSerif = "sans-serif";
+        monospace = "monospace";
+        emoji = "emoji";
+      };
+
+    colors = lib.genAttrs ["base00" "base01" "base02" "base03" "base04" "base05" "base06" "base07" "base08" "base09" "base0A" "base0B" "base0C" "base0D" "base0E" "base0F"] (x:
+      lib.mkOption {
+        type = lib.types.str;
+        description = "The ${x} color.";
+      });
+
+    windowOpacity = lib.mkOption {
+      type = lib.types.float;
+      description = "The opacity of the windows.";
+    };
+
+    wallpaper = lib.mkOption {
+      type = lib.types.package;
+      description = "The wallpaper to use.";
+    };
   };
+
+  config.theme.everforest.enable = lib.mkDefault true;
+  config.theme.stylix.enable = lib.mkDefault true;
 }

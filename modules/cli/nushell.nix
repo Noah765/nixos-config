@@ -12,7 +12,7 @@
     core.impermanence.hm.files = [".config/nushell/history.sqlite3"];
     hm.programs.nushell = {
       enable = true;
-      environmentVariables = config.hm.home.sessionVariables; # TODO https://github.com/nix-community/home-manager/issues/4313
+      environmentVariables = lib.filterAttrs (_: x: !lib.isString x || !lib.hasInfix "\${" x) config.hm.home.sessionVariables; # TODO https://github.com/nix-community/home-manager/issues/4313
       # TODO keybindings, completions, menus, color scheme and prompt
       settings = {
         history.file_format = "sqlite";

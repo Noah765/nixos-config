@@ -4,9 +4,22 @@
   config,
   ...
 }: {
-  # TODO Check if the mkDefault works as expected
-  config.theme = lib.mkIf (config.theme.preset == "everforest") (lib.mkDefault {
-    # TODO Explore alternative fonts
+  options.theme.everforest.enable = lib.mkEnableOption "Everforest";
+
+  config.theme = lib.mkIf config.theme.everforest.enable {
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+    };
+
+    fontSizes = {
+      desktop = 10;
+      applications = 10;
+      terminal = 10;
+      popups = 10;
+    };
+
     fonts = {
       serif = {
         package = pkgs.dejavu_fonts;
@@ -24,107 +37,26 @@
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
-
-      size = 10;
     };
 
-    colors = let
-      bgDim = "#1E2326";
-      bg0 = "#272E33";
-      bg1 = "#2E383C";
-      bg2 = "#374145";
-      bg3 = "#414B50";
-      bg4 = "#495156";
-      bg5 = "#4F5B58";
-      bgVisual = "#4C3743";
-      bgRed = "#493B40";
-      bgGreen = "#3C4841";
-      bgBlue = "#384B55";
-      bgYellow = "#45443C";
-      fg = "#D3C6AA";
-      red = "#E67E80";
-      orange = "#E69875";
-      yellow = "#DBBC7F";
-      green = "#A7C080";
-      aqua = "#83C092";
-      blue = "#7FBBB3";
-      purple = "#D699B6";
-      grey0 = "#7A8478";
-      grey1 = "#859289";
-      grey2 = "#9DA9A0";
-      statusline1 = green;
-      statusline2 = fg;
-      statusline3 = red;
-    in {
-      foreground = fg;
-      background = bg0;
-
-      activeWindowBorder = green;
-      inactiveWindowBorder = grey1;
-
-      tabLineBackground = bg1;
-      activeTabForeground = bg0;
-      activeTabBackground = statusline1;
-      inactiveTabForeground = grey2;
-      inactiveTabBackground = bg3;
-
-      statusLineBackground = bg2;
-
-      selectedForeground = fg;
-      selectedBackground = bgGreen;
-      matched = green;
-
-      popupForeground = fg;
-      popupBackground = bg2;
-      popupDisabledForeground = grey1;
-      popupDisabledBackground = bg2;
-      popupSelectedForeground = bg0;
-      popupSelectedBackground = statusline1;
-
-      progressStartForeground = bg0;
-      progressStartBackground = blue;
-      progressFinishForeground = bg0;
-      progressFinishBackground = green;
-      errorForeground = bg0;
-      errorBackground = red;
-
-      nextKey = orange;
-      previousKeys = aqua;
-      futureKeys = aqua;
-
-      modeForeground = bg0;
-      normalMode = statusline1;
-      visualMode = statusline3;
-      insertMode = statusline2;
-      commandMode = aqua;
-      replaceMode = orange;
-
-      title = orange;
-      url = blue;
-      scrollbarHandle = grey0;
-      border = grey1;
-      selectionBackground = bgVisual;
-
-      terminal0 = bg3;
-      terminal1 = red;
-      terminal2 = green;
-      terminal3 = yellow;
-      terminal4 = blue;
-      terminal5 = purple;
-      terminal6 = aqua;
-      terminal7 = fg;
-      terminal8 = bg3;
-      terminal9 = red;
-      terminal10 = green;
-      terminal11 = yellow;
-      terminal12 = blue;
-      terminal13 = purple;
-      terminal14 = aqua;
-      terminal15 = fg;
+    colors = {
+      base00 = "#272e33";
+      base01 = "#2e383c";
+      base02 = "#414b50";
+      base03 = "#859289";
+      base04 = "#9da9a0";
+      base05 = "#d3c6aa";
+      base06 = "#edeada";
+      base07 = "#fffbef";
+      base08 = "#e67e80";
+      base09 = "#e69875";
+      base0A = "#dbbc7f";
+      base0B = "#a7c080";
+      base0C = "#83c092";
+      base0D = "#7fbbb3";
+      base0E = "#d699b6";
+      base0F = "#9da9a0";
     };
-
-    bold.title = true;
-    bold.jumpSpot = true;
 
     windowOpacity = 0.75;
 
@@ -132,11 +64,5 @@
       url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";
       hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
     };
-
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 24;
-    };
-  });
+  };
 }

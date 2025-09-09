@@ -19,104 +19,6 @@
         y = "https://www.youtube.com/results?search_query={}";
       };
       settings = {
-        colors = let
-          inherit (config.theme.colors) foreground background statusLineBackground selectedForeground selectedBackground matched popupForeground popupBackground popupDisabledForeground popupDisabledBackground popupSelectedForeground popupSelectedBackground progressStartForeground progressStartBackground progressFinishForeground progressFinishBackground errorForeground errorBackground nextKey previousKeys modeForeground normalMode visualMode insertMode commandMode title scrollbarTrack scrollbarHandle border;
-        in {
-          completion = {
-            category = {
-              bg = background;
-              border.bottom = background;
-              border.top = background;
-              fg = title;
-            };
-            even.bg = background;
-            fg = foreground;
-            item.selected = {
-              bg = selectedBackground;
-              border.bottom = selectedBackground;
-              border.top = selectedBackground;
-              fg = selectedForeground;
-              match.fg = matched;
-            };
-            match.fg = matched;
-            odd.bg = background;
-            scrollbar.bg =
-              if scrollbarTrack == null
-              then background
-              else scrollbarTrack;
-            scrollbar.fg = scrollbarHandle;
-          };
-          contextmenu = {
-            disabled.bg = popupDisabledBackground;
-            disabled.fg = popupDisabledForeground;
-            menu.bg = popupBackground;
-            menu.fg = popupForeground;
-            selected.bg = popupSelectedBackground;
-            selected.fg = popupSelectedForeground;
-          };
-          downloads = {
-            bar.bg = statusLineBackground;
-            error.bg = errorBackground;
-            error.fg = errorForeground;
-            start.bg = progressStartBackground;
-            start.fg = progressStartForeground;
-            stop.bg = progressFinishBackground;
-            stop.fg = progressFinishForeground;
-          };
-          hints = {
-            bg = background;
-            fg = nextKey;
-            match.fg = previousKeys;
-          };
-          keyhint = {
-            bg = background;
-            fg = foreground;
-            suffix.fg = nextKey;
-          };
-          # TODO messages
-          prompts = {
-            bg = background;
-            border = "1px sold ${border}";
-            fg = foreground;
-            selected.bg = selectedBackground;
-            selected.fg = selectedForeground;
-          };
-          statusbar = {
-            caret = {
-              # bg = "";
-              # fg = modeForeground;
-              selection.bg = visualMode;
-              selection.fg = modeForeground;
-            };
-            command = {
-              bg = commandMode;
-              fg = modeForeground;
-              # private.bg = "";
-              # private.fg = "";
-            };
-            insert.bg = insertMode;
-            insert.fg = modeForeground;
-            normal.bg = normalMode;
-            normal.fg = modeForeground;
-            # passthrough.bg = "";
-            # passthrough.fg = "";
-            # private.bg = "";
-            # private.fg = "";
-            progress.bg = modeForeground;
-            # url = {
-            #   error.fg = "";
-            #   fg = "";
-            #   hover.fg = "";
-            #   succees.http.fg = "";
-            #   success.https.fg = "";
-            #   warn.fg = "";
-            # };
-          };
-          # TODO tabs, tooltip
-          webpage.bg = config.theme.colors.background; # TODO empty to use the theme's color
-          # TODO webpage.darkmode
-          webpage.preferred_color_scheme = "dark"; # TODO configure system-wide color scheme setting (and remove this?)
-        };
         completion.height = "30%";
         # TODO completion.{scrollbar, use_best_match}
         # completion.web_history.max_items = 100; # TODO does this only affect the completions?
@@ -133,11 +35,7 @@
         # TODO downloads.open_dispatcher
         downloads.remove_finished = 5000;
         # TODO editor, fileselect
-        fonts.completion.category = "${lib.optionalString config.theme.bold.title "bold "}default_size default_family";
-        fonts.hints = "${lib.optionalString config.theme.bold.jumpSpot "bold "}default_size default_family";
-        # TODO fonts.{contextmenu, default_size, hints, keyhint, prompts, tooltip, web}
         hints.auto_follow = "always"; # TODO
-        hints.border = "1px solid ${config.theme.colors.border}";
         # TODO hints.{chars, hide_unmatched_rapid_hints, leave_on_load, next_regexes, padding, prev_regexes, radius, scatter, selectors, uppercase}
         # TODO history_gap_interval
         # TODO input.forward_unbound_keys
