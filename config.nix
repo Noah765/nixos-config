@@ -1,6 +1,8 @@
 {
   defaultHmUsername = "noah";
 
+  initialInputs.nixvim.url = "github:nix-community/nixvim";
+
   globalModules = [./modules];
 
   configurations = {
@@ -9,7 +11,11 @@
     iso.modules = [./hosts/iso];
   };
 
-  outputs = {nixpkgs, ...}: {
+  outputs = {
+    nixpkgs,
+    nixvim,
+    ...
+  }: {
     devShells.x86_64-linux.default = let
       inherit (nixpkgs.lib) getExe';
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -43,6 +49,11 @@
 
         shellHook = "test-installer";
       };
+
+    packages.x86_64-linux = rec {
+      nvim = nixvim.legacyPackages.x86_64-linux.makeNixvim ./nvim;
+      default = nvim;
+    };
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
   };

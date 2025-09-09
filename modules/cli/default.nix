@@ -5,9 +5,9 @@
 }: {
   imports = [
     ./comma.nix
+    ./editor.nix
     ./installer.nix
     ./nushell.nix
-    ./nvf
     ./ouch.nix
     ./rb.nix
     ./vcs.nix
@@ -17,8 +17,8 @@
 
   config.cli = lib.mkIf config.cli.enable {
     comma.enable = lib.mkDefault true;
+    editor.enable = lib.mkDefault true;
     nushell.enable = lib.mkDefault true;
-    nvf.enable = lib.mkDefault true;
     ouch.enable = lib.mkDefault true;
     rb.enable = lib.mkDefault true;
     vcs.enable = lib.mkDefault true;
