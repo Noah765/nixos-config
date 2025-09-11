@@ -1,7 +1,7 @@
 {lib, ...}: let
   inherit (lib.nixvim.utils) mkRaw;
 in {
-  imports = [./formatting.nix ./mini-ai.nix ./mini-files.nix ./mini-jump2d.nix ./navbuddy.nix ./spell-checking.nix];
+  imports = [./formatting.nix ./himalaya.nix ./mini-ai.nix ./mini-files.nix ./mini-jump2d.nix ./navbuddy.nix ./spell-checking.nix];
 
   autoCmd = lib.singleton {
     event = "TextYankPost";
