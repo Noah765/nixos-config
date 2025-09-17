@@ -1,14 +1,15 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: {
   options.core.keyboard.enable = lib.mkEnableOption "the Graphite keyboard layout with home row mods";
 
-  config.os.services.keyd = lib.mkIf config.core.keyboard.enable {
-    enable = true;
+  config = lib.mkIf config.core.keyboard.enable {
+    os.services.keyd.enable = true;
 
-    keyboards.default = {
+    os.services.keyd.keyboards.default = {
       ids = ["*"];
 
       settings = {
@@ -97,5 +98,7 @@
         };
       };
     };
+
+    hm.home.file.".XCompose".source = "${pkgs.keyd}/share/keyd/keyd.compose";
   };
 }
