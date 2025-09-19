@@ -22,24 +22,30 @@
         default = true;
         email = "noah.landgraf@gmx.de";
         # TODO folder, envelope, message, template, pgp;
-        folder.aliases.inbox = "INBOX";
-        folder.aliases.sent = "Gesendet";
-        folder.aliases.drafts = "Entwürfe";
-        folder.aliases.trash = "Gelöscht";
-        backend.type = "imap";
-        backend.host = "imap.gmx.net";
-        backend.port = 993;
-        backend.login = "noah.landgraf@gmx.de";
-        backend.encryption.type = "tls";
-        backend.auth.type = "password";
-        backend.auth.cmd = "${pkgs.coreutils}/bin/cat ~/.cache/nvim/himalaya-gmx.txt";
-        message.send.backend.type = "smtp";
-        message.send.backend.host = "mail.gmx.net";
-        message.send.backend.port = 587;
-        message.send.backend.login = "noah.landgraf@gmx.de";
-        message.send.backend.encryption.type = "start-tls";
-        message.send.backend.auth.type = "password";
-        message.send.backend.auth.cmd = "${pkgs.coreutils}/bin/cat ~/.cache/nvim/himalaya-gmx.txt";
+        folder.aliases = {
+          inbox = "INBOX";
+          sent = "Gesendet";
+          drafts = "Entwürfe";
+          trash = "Gelöscht";
+        };
+        backend = {
+          type = "imap";
+          host = "imap.gmx.net";
+          port = 993;
+          login = "noah.landgraf@gmx.de";
+          encryption.type = "tls";
+          auth.type = "password";
+          auth.cmd = "${pkgs.coreutils}/bin/cat ~/.cache/nvim/himalaya-gmx.txt";
+        };
+        message.send.backend = {
+          type = "smtp";
+          host = "mail.gmx.net";
+          port = 587;
+          login = "noah.landgraf@gmx.de";
+          encryption.type = "start-tls";
+          auth.type = "password";
+          auth.cmd = "${pkgs.coreutils}/bin/cat ~/.cache/nvim/himalaya-gmx.txt";
+        };
       };
     };
 
