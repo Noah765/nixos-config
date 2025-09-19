@@ -5,5 +5,8 @@
 }: {
   options.dev.flutter.enable = lib.mkEnableOption "Flutter";
 
-  config.core.impermanence.hm.directories = lib.mkIf config.dev.flutter.enable [".pub-cache"];
+  config = lib.mkIf config.dev.flutter.enable {
+    core.impermanence.hm.directories = [".pub-cache"];
+    cli.editor.lsp.servers.dartls.enable = true;
+  };
 }

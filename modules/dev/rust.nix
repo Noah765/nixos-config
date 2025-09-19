@@ -5,5 +5,8 @@
 }: {
   options.dev.rust.enable = lib.mkEnableOption "Rust";
 
-  config.core.impermanence.hm.directories = lib.mkIf config.dev.rust.enable [".cargo" ".rustup"];
+  config = lib.mkIf config.dev.rust.enable {
+    core.impermanence.hm.directories = [".cargo" ".rustup"];
+    cli.editor.lsp.servers.rust_analyzer.enable = true;
+  };
 }

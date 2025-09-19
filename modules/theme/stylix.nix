@@ -7,6 +7,7 @@
   inputs.stylix.url = "github:nix-community/stylix";
   inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
 
+  imports = [(lib.mkAliasOptionModule ["theme" "stylix" "osTargets"] ["os" "stylix" "targets"]) (lib.mkAliasOptionModule ["theme" "stylix" "hmTargets"] ["hm" "stylix" "targets"])];
   osImports = [inputs.stylix.nixosModules.stylix];
 
   options.theme.stylix.enable = lib.mkEnableOption "Stylix";

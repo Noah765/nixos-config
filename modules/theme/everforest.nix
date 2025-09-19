@@ -64,5 +64,11 @@
       url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";
       hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
     };
+
+    editor.everforest.enable = true;
+    editor.everforest.settings = {
+      background = "hard";
+      enable_italic = 1;
+    };
   };
 }

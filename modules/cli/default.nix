@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./comma.nix
-    ./editor.nix
+    ./editor
     ./installer.nix
     ./nushell.nix
     ./ouch.nix
