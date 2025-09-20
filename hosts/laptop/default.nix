@@ -13,4 +13,5 @@
   cli.installer.enable = true;
 
   dev.flutter.enable = true;
+  dev.typst.enable = true;
 }
