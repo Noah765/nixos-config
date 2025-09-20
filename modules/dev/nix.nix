@@ -10,17 +10,17 @@
     hm.home.packages = with pkgs; [alejandra statix deadnix];
 
     cli.vcs.jj.fix.nix-fmt = {
-      command = [(lib.getExe pkgs.nix) "fmt"];
+      command = ["nix" "fmt"];
       patterns = ["glob:**/*.nix"];
     };
     cli.editor = {
+      lsp.servers.nixd.enable = true;
+      lsp.servers.nixd.settings.settings.nixd.options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.primary.options";
       formatting.formatters.nix-fmt = {
         command = "nix";
         args = ["fmt"];
       };
       formatting.formattersByFt.nix = ["nix-fmt"];
-      lsp.servers.nixd.enable = true;
-      lsp.servers.nixd.settings.settings.nixd.options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.primary.options";
     };
   };
 }
