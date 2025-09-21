@@ -113,6 +113,7 @@
         which-key.settings = {
           delay = 0;
           preset = "helix";
+          plugins.spelling.enabled = false;
         };
       };
     };
