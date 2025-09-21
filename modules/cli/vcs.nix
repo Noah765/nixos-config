@@ -24,7 +24,6 @@
           diff-formatter = "${lib.getExe pkgs.difftastic} --color always --sort-paths $left $right";
           movement.edit = true;
           log-word-wrap = true;
-          diff-editor = "vimdiff";
         };
         aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (lib.getExe pkgs.nushell) (pkgs.writeText "jj-${name}" script)]) {
           push = ''
