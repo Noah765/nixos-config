@@ -7,8 +7,8 @@
 in {
   options.cli.editor.mini-ai.enable = lib.mkEnableOption "mini-ai";
 
-  config.cli.editor.settings = lib.mkIf config.cli.editor.mini-ai.enable {
-    plugins.mini.modules = {
+  config.cli.editor.settings.plugins = lib.mkIf config.cli.editor.mini-ai.enable {
+    mini.modules = {
       # TODO config, treesitter textobjects
       ai.n_lines = 500;
       # TODO https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/coding.lua#L37-L54
@@ -37,7 +37,7 @@ in {
       indentscope.mappings.goto_top = "g[i";
       indentscope.mappings.goto_bottom = "g]i";
     };
-    plugins.which-key.settings = {
+    which-key.settings = {
       plugins.presets.text_objects = false;
       spec = let
         # TODO MatchitVisualTextObject
