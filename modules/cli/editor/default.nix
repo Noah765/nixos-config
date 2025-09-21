@@ -16,6 +16,7 @@
     ./mini-jump2d.nix
     ./navbuddy.nix
     ./spell-checking.nix
+    ./telescope.nix
   ];
   hmImports = [inputs.nixvim.homeModules.default];
 
@@ -31,6 +32,7 @@
       mini-jump2d.enable = lib.mkDefault true;
       navbuddy.enable = lib.mkDefault true;
       spell-checking.enable = lib.mkDefault true;
+      telescope.enable = lib.mkDefault true;
     };
 
     theme.stylix.hmTargets.nixvim.enable = false;
@@ -106,25 +108,6 @@
         };
         nvim-autopairs.enable = true; # TODO Maybe use mini.pairs instead
         sleuth.enable = true;
-        telescope.enable = true;
-        telescope.keymaps = {
-          "<leader>pf" = {
-            action = "find_files";
-            options.desc = "Telescope find files";
-          };
-          "<leader>pg" = {
-            action = "live_grep";
-            options.desc = "Telescope grep";
-          };
-          "<leader>ph" = {
-            action = "help_tags";
-            options.desc = "Telescope help tags";
-          };
-          "<leader>pr" = {
-            action = "resume";
-            options.desc = "Telescope resume";
-          };
-        };
         treesitter.enable = true;
         which-key.enable = true;
         which-key.settings = {
