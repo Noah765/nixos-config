@@ -44,7 +44,7 @@ in {
             MiniFiles.refresh({ content = { filter = ${filterFunction} } })
           end
         '';
-        options.desc = "Explorer toggle hidden";
+        options.desc = "Explorer hidden";
       }
     ];
     autoCmd = [

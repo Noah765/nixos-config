@@ -22,7 +22,7 @@
         key = "<leader>tf";
         mode = "n";
         action = config.hm.lib.nixvim.utils.mkRaw "function() vim.g.disable_format_on_save = not vim.g.disable_format_on_save end";
-        options.desc = "Toggle format on save";
+        options.desc = "Format on save";
       }
     ];
     plugins.conform-nvim.enable = true;

@@ -111,8 +111,9 @@
         treesitter.enable = true;
         which-key.enable = true;
         which-key.settings = {
-          delay = 0;
           preset = "helix";
+          delay = 0;
+          spec = lib.singleton (config.hm.lib.nixvim.utils.listToUnkeyedAttrs ["<leader>t"] // {group = "Toggle";});
           plugins.spelling.enabled = false;
         };
       };
