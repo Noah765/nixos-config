@@ -70,6 +70,7 @@
         shiftwidth = 2;
         signcolumn = "yes";
         smartcase = true;
+        smartindent = true;
         splitbelow = true;
         splitright = true;
       };
