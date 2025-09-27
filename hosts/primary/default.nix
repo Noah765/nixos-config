@@ -16,6 +16,7 @@
 
   dev = {
     flutter.enable = true;
+    java.enable = true;
     rust.enable = true;
     typst.enable = true;
   };
