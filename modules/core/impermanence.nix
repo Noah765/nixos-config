@@ -147,13 +147,7 @@
               group = "users";
             }
           ];
-          files = [
-            "/etc/machine-id"
-            {
-              file = "/var/keys/secret_file";
-              parentDirectory.mode = "u=rwx,g=,o=";
-            }
-          ];
+          files = ["/etc/machine-id"];
         };
 
         nix.settings.auto-optimise-store = true;

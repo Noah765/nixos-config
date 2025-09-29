@@ -28,6 +28,11 @@
         '';
       };
     };
-    core.impermanence.os.files = ["/var/keys/wireless.conf"];
+    core.impermanence.os.files = [
+      {
+        file = "/var/keys/wireless.conf";
+        parentDirectory.mode = "u=rwx,g=,o=";
+      }
+    ];
   };
 }
