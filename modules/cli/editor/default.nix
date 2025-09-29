@@ -68,11 +68,13 @@
         relativenumber = true;
         scrolloff = 9;
         shiftwidth = 2;
+        sidescroll = 0;
         signcolumn = "yes";
         smartcase = true;
         smartindent = true;
         splitbelow = true;
         splitright = true;
+        wrap = false;
       };
       plugins = {
         blink-cmp.enable = true;
