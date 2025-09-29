@@ -6,7 +6,7 @@
   core = {
     charachorder.enable = true;
     impermanence.disk = "nvme0n1";
-    networkmanager.hostName = "primary";
+    networking.hostName = "primary";
     nvidia.enable = true;
   };
 

@@ -8,7 +8,7 @@
     ./charachorder.nix
     ./impermanence.nix
     ./keyboard.nix
-    ./network-manager.nix
+    ./networking.nix
     ./nix.nix
     ./nvidia.nix
     ./secrets.nix
@@ -21,7 +21,7 @@
   config.core = lib.mkIf config.core.enable {
     boot.enable = lib.mkDefault true;
     impermanence.enable = lib.mkDefault true;
-    networkmanager.enable = lib.mkDefault true;
+    networking.enable = lib.mkDefault true;
     nix.enable = lib.mkDefault true;
     secrets.enable = lib.mkDefault true;
     timeZone.enable = lib.mkDefault true;
