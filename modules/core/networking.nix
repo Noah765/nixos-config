@@ -22,7 +22,8 @@
         mieter.pskRaw = "ext:mieter";
         eduroam.auth = ''
           key_mgmt=WPA-EAP
-          eap=PWD
+          eap=PEAP
+          phase2="auth=MSCHAPV2"
           identity="nlandgraf@student-net.ethz.ch"
           password=ext:eduroam
         '';
