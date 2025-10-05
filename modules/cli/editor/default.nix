@@ -9,6 +9,7 @@
   imports = [
     (lib.mkAliasOptionModule ["cli" "editor" "settings"] ["hm" "programs" "nixvim"])
     ./basic.nix
+    ./folding.nix
     ./formatting.nix
     ./himalaya.nix
     ./linting.nix
@@ -28,6 +29,7 @@
   config = lib.mkIf config.cli.editor.enable {
     cli.editor = {
       basic.enable = lib.mkDefault true;
+      folding.enable = lib.mkDefault true;
       formatting.enable = lib.mkDefault true;
       himalaya.enable = lib.mkDefault true;
       linting.enable = lib.mkDefault true;
