@@ -9,14 +9,16 @@
     iso.modules = [./hosts/iso];
   };
 
-  outputs = {nixpkgs, ...}: {
-    devShells.x86_64-linux.default = let
-      inherit (nixpkgs.lib) getExe';
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in
-      pkgs.mkShell {
-        packages = [
-          # TODO
+  outputs = {nixpkgs, ...}: let
+    inherit (nixpkgs.lib) genAttrs getExe' mapAttrs systems;
+    forAllSystems = f: mapAttrs f (genAttrs systems.flakeExposed (x: nixpkgs.legacyPackages.${x}));
+  in {
+    devShells = forAllSystems (system: pkgs: {
+      default = pkgs.mkShell {buildInputs = [pkgs.statix pkgs.deadnix];};
+
+      # TODO
+      test-installer = pkgs.mkShell {
+        buildInputs = [
           (pkgs.writeShellScriptBin "test-installer" ''
             set -euo pipefail
 
@@ -40,10 +42,10 @@
             ${getExe' pkgs.qemu "qemu-system-x86_64"} -enable-kvm -m 4G -bios ${pkgs.OVMF.fd}/FV/OVMF.fd -cdrom /etc/nixos/result/iso/nixos-*.iso -drive file=/tmp/installer.img,format=raw
           '')
         ];
-
         shellHook = "test-installer";
       };
+    });
 
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter = forAllSystems (_: pkgs: pkgs.alejandra);
   };
 }
