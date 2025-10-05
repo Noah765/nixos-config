@@ -7,17 +7,16 @@
 
   config.cli.editor.settings = lib.mkIf config.cli.editor.basic.enable {
     clipboard.register = "unnamedplus";
-    clipboard.providers.wl-copy.enable = true; # TODO
+    clipboard.providers.wl-copy.enable = true;
 
     globals.mapleader = " ";
-    globals.maplocalleader = " ";
     opts = {
       breakindent = true;
       confirm = true;
       ignorecase = true;
       inccommand = "split";
       list = true;
-      listchars = "tab:» ,multispace:·,lead: ,trail:·,nbsp:␣"; # TODO extends, precedes
+      listchars = "tab:» ,multispace:·,lead: ,trail:·,extends:→,precedes:←,nbsp:␣";
       number = true;
       relativenumber = true;
       scrolloff = 9;
