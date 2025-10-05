@@ -58,7 +58,7 @@
         fidget.enable = true;
         gitsigns.enable = true;
         illuminate.enable = true;
-        illuminate.minCountToHighlight = 2;
+        illuminate.settings.min_count_to_highlight = 2;
         mini = {
           enable = true;
           mockDevIcons = true;
