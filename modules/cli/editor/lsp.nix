@@ -29,22 +29,10 @@
         options.desc = "Previous diagnostic";
       }
       {
-        key = "<leader>q";
-        mode = "n";
-        action = config.hm.lib.nixvim.mkRaw "require('telescope.builtin').quickfix";
-        options.desc = "Quickfix";
-      }
-      {
         key = "<leader>lD";
         mode = "n";
         action = config.hm.lib.nixvim.mkRaw "require('telescope.builtin').diagnostics";
         options.desc = "Diagnostics";
-      }
-      {
-        key = "<leader>lq";
-        mode = "n";
-        action = config.hm.lib.nixvim.mkRaw "require('telescope.builtin').loclist";
-        options.desc = "Quickfixs";
       }
       {
         key = "<leader>lt";

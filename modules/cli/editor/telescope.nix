@@ -20,6 +20,30 @@
         action = "live_grep";
         options.desc = "Grep";
       };
+      "<leader>ph" = {
+        action = "help_tags";
+        options.desc = "Help tags";
+      };
+      "<leader>pH" = {
+        action = "search_history";
+        options.desc = "History";
+      };
+      "<leader>pm" = {
+        action = "marks";
+        options.desc = "Marks";
+      };
+      "<leader>pq" = {
+        action = "quickfix";
+        options.desc = "Quickfix";
+      };
+      "<leader>pr" = {
+        action = "resume";
+        options.desc = "Resume";
+      };
+      "<leader>pR" = {
+        action = "registers";
+        options.desc = "Registers";
+      };
       "<leader>ps" = {
         action = "lsp_document_symbols";
         options.desc = "Document symbols";
@@ -27,26 +51,6 @@
       "<leader>pS" = {
         action = "lsp_workspace_symbols";
         options.desc = "Workspace symbols";
-      };
-      "<leader>pm" = {
-        action = "marks";
-        options.desc = "Marks";
-      };
-      "<leader>pR" = {
-        action = "registers";
-        options.desc = "Registers";
-      };
-      "<leader>pH" = {
-        action = "search_history";
-        options.desc = "History";
-      };
-      "<leader>ph" = {
-        action = "help_tags";
-        options.desc = "Help tags";
-      };
-      "<leader>pr" = {
-        action = "resume";
-        options.desc = "Resume";
       };
     };
 
