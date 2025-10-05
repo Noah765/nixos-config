@@ -11,10 +11,7 @@
 
     core.impermanence.hm.directories = [".cache/typst"];
 
-    cli.vcs.jj.fix.typst-fmt = {
-      command = "typst-fmt";
-      patterns = ["glob:**/*.typ"];
-    };
+    dev.formatters.typ = "typst-fmt";
 
     cli.editor = {
       lsp.servers.tinymist.enable = true;
@@ -39,9 +36,6 @@
       '';
 
       treesitter.grammars = [pkgs.vimPlugins.nvim-treesitter.builtGrammars.typst];
-
-      formatting.formatters.typst-fmt.command = "typst-fmt";
-      formatting.formattersByFt.typst = ["typst-fmt"];
 
       settings.plugins.typst-preview = {
         enable = true;
