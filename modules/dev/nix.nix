@@ -24,6 +24,8 @@
         args = ["fmt"];
       };
       formatting.formattersByFt.nix = ["nix-fmt"];
+
+      linting.lintersByFt.nix = ["statix" "deadnix"];
     };
   };
 }

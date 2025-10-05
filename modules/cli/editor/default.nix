@@ -11,6 +11,7 @@
     ./basic.nix
     ./formatting.nix
     ./himalaya.nix
+    ./linting.nix
     ./lsp.nix
     ./mini-ai.nix
     ./mini-files.nix
@@ -29,6 +30,7 @@
       basic.enable = lib.mkDefault true;
       formatting.enable = lib.mkDefault true;
       himalaya.enable = lib.mkDefault true;
+      linting.enable = lib.mkDefault true;
       lsp.enable = lib.mkDefault true;
       mini-ai.enable = lib.mkDefault true;
       mini-files.enable = lib.mkDefault true;
