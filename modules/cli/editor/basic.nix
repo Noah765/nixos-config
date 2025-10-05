@@ -6,12 +6,10 @@
   options.cli.editor.basic.enable = lib.mkEnableOption "basic options and keymaps";
 
   config.cli.editor.settings = lib.mkIf config.cli.editor.basic.enable {
-    clipboard.register = "unnamedplus";
-    clipboard.providers.wl-copy.enable = true;
-
     globals.mapleader = " ";
     opts = {
       breakindent = true;
+      clipboard = "unnamedplus";
       confirm = true;
       ignorecase = true;
       inccommand = "split";

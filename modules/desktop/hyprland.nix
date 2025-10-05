@@ -41,7 +41,11 @@
       };
     };
 
-    hm.home.sessionVariables.NIXOS_OZONE_WL = "1";
+    hm.home = {
+      packages = [pkgs.wl-clipboard];
+
+      sessionVariables.NIXOS_OZONE_WL = "1";
+    };
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
