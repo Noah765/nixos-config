@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: {
@@ -11,11 +12,15 @@
       patterns = ["glob:**/*.java"];
     };
 
-    editor.lsp.servers.jdtls.enable = true;
+    editor = {
+      lsp.servers.jdtls.enable = true;
 
-    editor.formatting = {
-      formatters.java-fmt.command = "java-fmt";
-      formattersByFt.java = ["java-fmt"];
+      treesitter.grammars = [pkgs.vimPlugins.nvim-treesitter.builtGrammars.java];
+
+      formatting = {
+        formatters.java-fmt.command = "java-fmt";
+        formattersByFt.java = ["java-fmt"];
+      };
     };
   };
 }

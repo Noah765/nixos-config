@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: {
@@ -36,6 +37,8 @@
           end, { desc = "Tinymist unpin", noremap = true })
         end
       '';
+
+      treesitter.grammars = [pkgs.vimPlugins.nvim-treesitter.builtGrammars.typst];
 
       formatting.formatters.typst-fmt.command = "typst-fmt";
       formatting.formattersByFt.typst = ["typst-fmt"];

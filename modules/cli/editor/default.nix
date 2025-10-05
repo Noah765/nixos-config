@@ -18,6 +18,7 @@
     ./navbuddy.nix
     ./spell-checking.nix
     ./telescope.nix
+    ./treesitter.nix
   ];
   hmImports = [inputs.nixvim.homeModules.default];
 
@@ -35,6 +36,7 @@
       navbuddy.enable = lib.mkDefault true;
       spell-checking.enable = lib.mkDefault true;
       telescope.enable = lib.mkDefault true;
+      treesitter.enable = lib.mkDefault true;
     };
 
     theme.stylix.hmTargets.nixvim.enable = false;
@@ -79,7 +81,6 @@
         };
         nvim-autopairs.enable = true; # TODO Maybe use mini.pairs instead
         sleuth.enable = true;
-        treesitter.enable = true;
         which-key.enable = true;
         which-key.settings = {
           preset = "helix";
