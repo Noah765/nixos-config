@@ -87,7 +87,10 @@
         which-key.settings = {
           preset = "helix";
           delay = 0;
-          spec = lib.singleton (config.hm.lib.nixvim.utils.listToUnkeyedAttrs ["<leader>t"] // {group = "Toggle";});
+          spec = [
+            (config.hm.lib.nixvim.utils.listToUnkeyedAttrs ["<leader>l"] // {group = "Language";})
+            (config.hm.lib.nixvim.utils.listToUnkeyedAttrs ["<leader>t"] // {group = "Toggle";})
+          ];
           plugins.spelling.enabled = false;
         };
       };

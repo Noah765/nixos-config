@@ -45,7 +45,7 @@
       settings.files."ftplugin/typst.lua" = {
         opts.textwidth = 100;
         keymaps = lib.singleton {
-          key = "<leader>d";
+          key = "<leader>lp";
           mode = "n";
           action = "<cmd>TypstPreview<CR>";
           options.desc = "Live preview";

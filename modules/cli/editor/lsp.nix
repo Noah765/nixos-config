@@ -10,10 +10,7 @@
   config = lib.mkIf config.cli.editor.lsp.enable {
     dependencies = ["cli.editor.telescope"];
 
-    cli.editor.settings.plugins = {
-      lspconfig.enable = true;
-      which-key.settings.spec = lib.singleton (config.hm.lib.nixvim.utils.listToUnkeyedAttrs ["<leader>l"] // {group = "LSP";});
-    };
+    cli.editor.settings.plugins.lspconfig.enable = true;
 
     cli.editor.settings.lsp.keymaps = [
       {
