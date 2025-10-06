@@ -20,6 +20,7 @@ in {
     enable = mkEnableOption "the default development tools";
     formatters = mkOption {
       type = attrsOf (either str (listOf str));
+      default = {};
       description = "Formatters to configure jj fix and nvim with.";
     };
   };
@@ -37,7 +38,7 @@ in {
         command = head (toList command);
         args = tail (toList command);
       });
-      formattersByFt = mapAttrs (filetype: _: filetype) config.dev.formatters;
+      formattersByFt = mapAttrs (filetype: _: [filetype]) config.dev.formatters;
     };
   };
 }
