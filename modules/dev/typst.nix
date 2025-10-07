@@ -42,14 +42,11 @@
         settings.open_cmd = "qutebrowser --target window --loglevel warning %s";
         settings.invert_colors = "auto";
       };
-      settings.files."ftplugin/typst.lua" = {
-        opts.textwidth = 100;
-        keymaps = lib.singleton {
-          key = "<leader>lp";
-          mode = "n";
-          action = "<cmd>TypstPreview<CR>";
-          options.desc = "Live preview";
-        };
+      settings.files."ftplugin/typst.lua".keymaps = lib.singleton {
+        key = "<leader>lp";
+        mode = "n";
+        action = "<cmd>TypstPreview<CR>";
+        options.desc = "Live preview";
       };
     };
   };
