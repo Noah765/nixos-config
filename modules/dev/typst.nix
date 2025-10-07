@@ -17,7 +17,7 @@
       lsp.servers.tinymist.enable = true;
       lsp.servers.tinymist.settings.on_attach = config.hm.lib.nixvim.utils.mkRaw ''
         function(client, bufnr)
-          vim.keymap.set("n", "<leader>lp", function()
+          vim.keymap.set("n", "<leader>lP", function()
             client:exec_cmd({
               title = "pin",
               command = "tinymist.pinMain",
@@ -25,7 +25,7 @@
             }, { bufnr = bufnr })
           end, { desc = "Tinymist pin", noremap = true })
 
-          vim.keymap.set("n", "<leader>lu", function()
+          vim.keymap.set("n", "<leader>lU", function()
             client:exec_cmd({
               title = "unpin",
               command = "tinymist.pinMain",
@@ -46,6 +46,7 @@
         key = "<leader>lp";
         mode = "n";
         action = "<cmd>TypstPreview<CR>";
+        options.buffer = config.hm.lib.nixvim.utils.mkRaw "vim.api.nvim_get_current_buf()";
         options.desc = "Live preview";
       };
     };
