@@ -11,7 +11,7 @@
 
     core.impermanence.hm.directories = [".cache/typst"];
 
-    dev.formatters.typ = "typst-fmt";
+    dev.formatters.typst = "typst-fmt";
 
     cli.editor = {
       lsp.servers.tinymist.enable = true;
