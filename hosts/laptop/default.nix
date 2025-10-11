@@ -15,6 +15,7 @@
   dev = {
     flutter.enable = true;
     java.enable = true;
+    nu.enable = true;
     typst.enable = true;
   };
 }

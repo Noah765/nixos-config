@@ -11,6 +11,7 @@ in {
     ./flutter.nix
     ./java.nix
     ./nix.nix
+    ./nu.nix
     ./rust.nix
     ./typst.nix
     ./unity.nix
