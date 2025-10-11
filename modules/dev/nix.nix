@@ -11,7 +11,7 @@
 
     cli.editor = {
       lsp.servers.nixd.enable = true;
-      lsp.servers.nixd.settings.settings.nixd.options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.primary.options";
+      lsp.servers.nixd.config.settings.nixd.options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.primary.options";
 
       treesitter.grammars = [pkgs.vimPlugins.nvim-treesitter.builtGrammars.nix];
 

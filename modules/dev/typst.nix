@@ -15,7 +15,7 @@
 
     cli.editor = {
       lsp.servers.tinymist.enable = true;
-      lsp.servers.tinymist.settings.on_attach = config.hm.lib.nixvim.utils.mkRaw ''
+      lsp.servers.tinymist.config.on_attach = config.hm.lib.nixvim.utils.mkRaw ''
         function(client, bufnr)
           vim.keymap.set("n", "<leader>lP", function()
             client:exec_cmd({
