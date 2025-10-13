@@ -29,7 +29,6 @@
     };
 
     diagnostic.settings.virtual_text = true;
-    diagnostic.settings.virtual_lines.current_line = true;
 
     autoCmd = lib.singleton {
       event = "TextYankPost";
