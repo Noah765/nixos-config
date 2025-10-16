@@ -25,6 +25,10 @@
           movement.edit = true;
           log-word-wrap = true;
         };
+        # TODO diff editor and merge tool
+        git.fetch = ["origin" "upstream"];
+        git.push-new-bookmarks = true;
+        fsmonitor.backend = "watchman";
         aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (lib.getExe pkgs.nushell) (pkgs.writeText "jj-${name}" script)]) {
           push = ''
             def main [--revision (-r) = '@'] {
@@ -38,7 +42,7 @@
               jj git clone $'https://github.com/Noah765/($name)'
               cd $name
               jj describe -m init
-              jj bookmark create main -r @
+              jj bookmark create main
             }
           '';
           fork = ''
@@ -58,13 +62,6 @@
             }
           '';
         };
-        # TODO diff editor and merge tool
-        git = {
-          colocate = true;
-          fetch = ["origin" "upstream"];
-          push-new-bookmarks = true;
-        };
-        fsmonitor.backend = "watchman";
       };
       git = {
         inherit (config.cli.vcs.git) enable;

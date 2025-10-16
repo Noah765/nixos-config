@@ -6,14 +6,14 @@
   options.cli.editor.navbuddy.enable = lib.mkEnableOption "nvim-navbuddy";
 
   config.cli.editor.settings = lib.mkIf config.cli.editor.navbuddy.enable {
-    plugins.navbuddy = {
-      enable = true;
+    plugins.navbuddy.enable = true;
+    plugins.navbuddy.settings = {
       mappings = {
         "<BS>" = "root";
         "<C-s>" = "vsplit";
         "<C-h>" = "hsplit";
       };
-      useDefaultMapping = false;
+      use_default_mapping = false;
       window.scrolloff = 3;
     };
     keymaps = lib.singleton {
