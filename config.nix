@@ -13,7 +13,7 @@
     inherit (nixpkgs.lib) genAttrs getExe' mapAttrs systems;
     forAllSystems = f: mapAttrs f (genAttrs systems.flakeExposed (x: nixpkgs.legacyPackages.${x}));
   in {
-    devShells = forAllSystems (system: pkgs: {
+    devShells = forAllSystems (_: pkgs: {
       default = pkgs.mkShell {buildInputs = [pkgs.statix pkgs.deadnix];};
 
       # TODO
