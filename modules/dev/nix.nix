@@ -1,21 +1,25 @@
 {
   lib,
   pkgs,
+  configName,
   config,
   ...
 }: {
   options.dev.nix.enable = lib.mkEnableOption "Nix development tools";
 
   config = lib.mkIf config.dev.nix.enable {
-    dev.formatters.nix = ["nix" "fmt"];
+    hm.home.packages = [(pkgs.writeShellScriptBin "nixc" "${lib.getExe pkgs.deadnix}; ${lib.getExe pkgs.statix} check")];
+
+    cli.vcs.jj.fix.nix = {
+      command = "nix fmt --quiet --quiet --quiet -- --quiet";
+      patterns = ["glob:**/*.nix"];
+    };
 
     cli.editor = {
-      lsp.servers.nixd.enable = true;
-      lsp.servers.nixd.config.settings.nixd.options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.primary.options";
-
-      treesitter.grammars = [pkgs.vimPlugins.nvim-treesitter.builtGrammars.nix];
-
-      linting.lintersByFt.nix = ["statix" "deadnix"];
+      packages = [pkgs.nixd];
+      languages.nix.auto-format = true;
+      languageServers.nixd.config.nixd.formatting.command = ["alejandra"];
+      languageServers.nixd.config.nixd.options.modulix.expr = "(builtins.getFlake \"/etc/nixos\").modulixConfigurations.${configName}.options";
     };
   };
 }

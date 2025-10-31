@@ -13,7 +13,7 @@
   cli.installer.enable = true;
 
   dev = {
-    flutter.enable = true;
+    dart.enable = true;
     java.enable = true;
     nu.enable = true;
     typst.enable = true;

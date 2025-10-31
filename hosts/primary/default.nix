@@ -15,7 +15,7 @@
   desktop.hyprland.settings.monitor = ["DP-1, 1920x1080@144, 0x0, 1" "HDMI-A-1, 1920x1080@75, 1920x0, 1"];
 
   dev = {
-    flutter.enable = true;
+    dart.enable = true;
     java.enable = true;
     nu.enable = true;
     rust.enable = true;

@@ -8,8 +8,7 @@
 
   config = lib.mkIf config.dev.java.enable {
     dev.formatters.java = "java-fmt";
-
-    cli.editor.lsp.servers.jdtls.enable = true;
-    cli.editor.treesitter.grammars = [pkgs.vimPlugins.nvim-treesitter.builtGrammars.java];
+    cli.editor.packages = [pkgs.jdt-language-server];
+    cli.editor.languages.java.auto-format = true;
   };
 }

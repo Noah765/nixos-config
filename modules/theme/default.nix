@@ -1,5 +1,5 @@
 {lib, ...}: {
-  imports = [(lib.mkAliasOptionModule ["theme" "editor"] ["cli" "editor" "settings" "colorschemes"]) ./everforest.nix ./stylix.nix];
+  imports = [(lib.mkAliasOptionModule ["theme" "editor"] ["cli" "editor" "settings" "theme"]) ./everforest.nix ./stylix.nix];
 
   options.theme = {
     cursor = {

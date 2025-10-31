@@ -3,12 +3,12 @@
   config,
   ...
 }: let
-  inherit (lib) flip head mapAttrs mkDefault mkEnableOption mkIf mkOption tail toList;
-  inherit (lib.types) attrsOf either listOf str;
+  inherit (lib) flip head length mapAttrs mkDefault mkEnableOption mkIf mkOption tail toList;
+  inherit (lib.types) attrsOf either listOf oneOf str submodule;
 in {
   imports = [
     ./basic.nix
-    ./flutter.nix
+    ./dart.nix
     ./java.nix
     ./nix.nix
     ./nu.nix
@@ -17,29 +17,38 @@ in {
     ./unity.nix
   ];
 
-  options.dev = {
-    enable = mkEnableOption "the default development tools";
-    formatters = mkOption {
-      type = attrsOf (either str (listOf str));
-      default = {};
-      description = "Formatters to configure jj fix and nvim with.";
-    };
+  options.dev.enable = mkEnableOption "the default development tools";
+  options.dev.formatters = mkOption {
+    type = let
+      submoduleType = submodule {
+        options.fileExtension = mkOption {
+          type = str;
+          description = "The file extension of the files to format.";
+        };
+        options.command = mkOption {
+          type = either str (listOf str);
+          description = "The formatter command to run.";
+        };
+      };
+    in
+      attrsOf (oneOf [str (listOf str) submoduleType]);
+    default = {};
+    description = "Formatters to configure jj fix and Helix with.";
   };
 
   config = mkIf config.dev.enable {
     dev.basic.enable = mkDefault true;
     dev.nix.enable = mkDefault true;
 
-    cli.vcs.jj.fix = flip mapAttrs config.dev.formatters (filetype: command: {
-      inherit command;
-      patterns = ["glob:**/*.${filetype}"];
+    cli.vcs.jj.fix = flip mapAttrs config.dev.formatters (language: x: {
+      command = x.command or x;
+      patterns = ["glob:**/*.${x.fileExtension or language}"];
     });
-    cli.editor.formatting = {
-      formatters = flip mapAttrs config.dev.formatters (_: command: {
-        command = head (toList command);
-        args = tail (toList command);
-      });
-      formattersByFt = mapAttrs (filetype: _: [filetype]) config.dev.formatters;
-    };
+    cli.editor.languages = flip mapAttrs config.dev.formatters (_: x: let
+      command = toList (x.command or x);
+    in {
+      formatter.command = head command;
+      formatter.args = mkIf (length command > 1) (tail command);
+    });
   };
 }

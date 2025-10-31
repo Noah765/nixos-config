@@ -65,10 +65,6 @@
       hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
     };
 
-    editor.everforest.enable = true;
-    editor.everforest.settings = {
-      background = "hard";
-      enable_italic = 1;
-    };
+    editor = "everforest_dark";
   };
 }
