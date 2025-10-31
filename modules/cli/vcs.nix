@@ -63,16 +63,22 @@
           '';
         };
       };
-      git = {
-        inherit (config.cli.vcs.git) enable;
-        userName = "Noah765";
-        userEmail = "noah.landgraf@gmx.de";
-        extraConfig.init.defaultBranch = "main";
-        difftastic.enable = true;
+
+      difftastic.enable = true;
+      difftastic.git.enable = true;
+
+      git.enable = config.cli.vcs.git.enable;
+      git.settings = {
+        user.name = "Noah765";
+        user.email = "noah.landgraf@gmx.de";
+        init.defaultBranch = "main";
       };
+
       gh.enable = config.cli.vcs.gh.enable;
     };
+
     hm.home.packages = [pkgs.watchman];
+
     core.impermanence.hm.files = lib.mkIf config.cli.vcs.gh.enable [".config/gh/hosts.yml"];
   };
 }
