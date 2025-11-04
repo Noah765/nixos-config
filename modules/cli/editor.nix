@@ -26,7 +26,7 @@
 
       settings.editor = {
         scrolloff = 9;
-        shell = lib.mkIf config.cli.nushell.enable [pkgs.nushell "-c"];
+        shell = lib.mkIf config.cli.nushell.enable [(lib.getExe pkgs.nushell) "-c"];
         line-number = "relative";
         completion-timeout = 5;
         completion-trigger-len = 1;
