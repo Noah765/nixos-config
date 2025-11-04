@@ -14,9 +14,14 @@
 
     cli.editor = {
       packages = [pkgs.tinymist];
+      settings.keys.normal."C-p" = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
       languages.typst.auto-format = true;
-      languageServers.tinymist.config.tinymist.preview.background.enabled = true;
-      languageServers.tinymist.config.tinymist.preview.background.args = ["--invert-colors=auto" "--ignore-system-fonts" "--open"];
+      languageServers.tinymist.config.tinymist = {
+        completion.symbol = "stepless";
+        lint.enabled = true;
+        preview.background.enabled = true;
+        preview.background.args = ["--invert-colors=auto" "--open"];
+      };
     };
   };
 }
