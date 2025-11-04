@@ -10,6 +10,7 @@ in {
     ./basic.nix
     ./dart.nix
     ./java.nix
+    ./markdown.nix
     ./nix.nix
     ./nu.nix
     ./rust.nix
@@ -37,8 +38,11 @@ in {
   };
 
   config = mkIf config.dev.enable {
-    dev.basic.enable = mkDefault true;
-    dev.nix.enable = mkDefault true;
+    dev = {
+      basic.enable = mkDefault true;
+      markdown.enable = mkDefault true;
+      nix.enable = mkDefault true;
+    };
 
     cli.vcs.jj.fix = flip mapAttrs config.dev.formatters (language: x: {
       command = x.command or x;
