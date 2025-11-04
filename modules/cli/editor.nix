@@ -24,6 +24,8 @@
       enable = true;
       defaultEditor = true;
 
+      extraPackages = [pkgs.harper];
+
       settings.editor = {
         scrolloff = 9;
         shell = lib.mkIf config.cli.nushell.enable [(lib.getExe pkgs.nushell) "-c"];
@@ -50,6 +52,13 @@
       };
 
       languages.language = lib.mapAttrsToList (name: value: {inherit name;} // value) config.cli.editor.languages;
+
+      languages.language-server.codebook = {
+        command = lib.getExe pkgs.codebook;
+        args = ["serve"];
+      };
     };
+
+    hm.xdg.configFile."codebook/codebook.toml".source = (pkgs.formats.toml {}).generate "codebook.toml" {dictionaries = ["en_us" "en_gb" "de"];};
   };
 }

@@ -8,7 +8,11 @@
 
   config = lib.mkIf config.dev.java.enable {
     dev.formatters.java = "java-fmt";
+
     cli.editor.packages = [pkgs.jdt-language-server];
-    cli.editor.languages.java.auto-format = true;
+    cli.editor.languages.java = {
+      auto-format = true;
+      language-servers = ["jdtls" "codebook"];
+    };
   };
 }

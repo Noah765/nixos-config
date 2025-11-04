@@ -16,6 +16,7 @@
       packages = [pkgs.tinymist];
       settings.keys.normal."C-p" = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
       languages.typst.auto-format = true;
+      languages.typst.language-servers = ["tinymist" "harper-ls"];
       languageServers.tinymist.config.tinymist = {
         completion.symbol = "stepless";
         lint.enabled = true;
