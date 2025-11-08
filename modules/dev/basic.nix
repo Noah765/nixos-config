@@ -11,6 +11,7 @@
     hm.programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
+      silent = true;
     };
     # TODO automatically collect garbage using direnv prune
     core.impermanence.hm.directories = [".local/share/direnv/allow"];
