@@ -13,13 +13,12 @@
   options.theme.stylix.enable = lib.mkEnableOption "Stylix";
 
   config.os.stylix = lib.mkIf config.theme.stylix.enable {
-    inherit (config.theme) cursor;
     enable = true;
+    inherit (config.theme) cursor;
     fonts = {
       inherit (config.theme.fonts) serif sansSerif monospace emoji;
       sizes = {inherit (config.theme.fontSizes) desktop applications terminal popups;};
     };
-    base16Scheme = config.theme.colors;
     polarity = "dark";
     image = config.theme.wallpaper;
   };

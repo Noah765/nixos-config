@@ -1,16 +1,40 @@
 {
   lib,
+  inputs,
   pkgs,
   config,
   ...
-}: {
+}: let
+  hyprlandVersion = "0.52.0";
+  inherit (config.theme) colors;
+in {
+  inputs = {
+    hyprland.url = "github:hyprwm/Hyprland/v${hyprlandVersion}";
+    hy3.url = "github:outfoxxed/hy3/hl${hyprlandVersion}";
+    hy3.inputs.hyprland.follows = "hyprland";
+    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v${hyprlandVersion}";
+    hypr-darkwindow.inputs.hyprland.follows = "hyprland";
+    hyprland-easymotion = {
+      url = "github:zakk4223/hyprland-easymotion";
+      inputs.nixpkgs.follows = "hyprland/nixpkgs";
+      inputs.hyprland.follows = "hyprland";
+    };
+  };
+
   imports = [(lib.mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
   options.desktop.hyprland.enable = lib.mkEnableOption "Hyprland";
 
   config = lib.mkIf config.desktop.hyprland.enable {
     os = {
-      programs.hyprland.enable = true;
+      programs.hyprland = {
+        enable = true;
+        package = inputs.hyprland.packages.${pkgs.stdenv.system}.hyprland;
+        portalPackage = inputs.hyprland.packages.${pkgs.stdenv.system}.xdg-desktop-portal-hyprland;
+      };
+
+      nix.settings.substituters = ["https://hyprland.cachix.org"];
+      nix.settings.trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
 
       console.enable = false;
 
@@ -20,7 +44,7 @@
         after = ["systemd-user-sessions.service" "plymouth-quit-wait.service"];
         serviceConfig = {
           Type = "simple";
-          ExecStart = "${lib.getExe pkgs.autologin} noah ${lib.getExe pkgs.hyprland}";
+          ExecStart = "${lib.getExe pkgs.autologin} noah ${lib.getExe inputs.hyprland.packages.${pkgs.stdenv.system}.hyprland}";
           IgnoreSIGPIPE = "no";
           SendSIGHUP = "yes";
           TimeoutStopSec = "30s";
@@ -43,120 +67,92 @@
 
     hm.home = {
       packages = [pkgs.wl-clipboard];
-
       sessionVariables.NIXOS_OZONE_WL = "1";
     };
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
+      package = null;
+      portalPackage = null;
 
-      plugins = [pkgs.hyprlandPlugins.hy3];
+      plugins =
+        [inputs.hy3.packages.${pkgs.stdenv.system}.hy3 inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.hyprland-easymotion]
+        ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.Hypr-DarkWindow;
 
       settings = {
         general = {
           gaps_in = 2;
           gaps_out = 5;
           layout = "hy3";
-          # TODO allow_tearing, snap
         };
 
-        decoration = {
-          rounding = 12;
-          active_opacity = config.theme.windowOpacity;
-          inactive_opacity = config.theme.windowOpacity;
+        decoration.rounding = 12;
+        decoration.blur.size = 3;
 
-          # TODO Style floating windows and popups (blur, dimming)
-          # TODO Style transparent windows (blur, shadows, dimming)
+        animations.animation = "global, 1, 3, default";
 
-          blur.size = 2;
-        };
-
-        # Heavily inspired by end-4's config
-        animations = {
-          bezier = [
-            "md3_decel, 0.05, 0.7, 0.1, 1"
-            "md3_accel, 0.3, 0, 0.8, 0.15"
-            "menu_decel, 0.1, 1, 0, 1"
-            "menu_accel, 0.38, 0.04, 1, 0.07"
-          ];
-
-          animation = [
-            "windows, 1, 3, md3_decel, popin 60%"
-            "windowsOut, 1, 3, md3_accel, popin 60%"
-            "fade, 1, 3, md3_decel"
-            "workspaces, 1, 7, menu_decel, slide"
-          ];
-        };
-
-        input = {
-          repeat_rate = 35;
-          repeat_delay = 200;
-          special_fallthrough = true; # TODO special workspaces (maybe change this)
-        };
+        input.repeat_rate = 35;
+        input.repeat_delay = 200;
 
         misc = {
-          disable_hyprland_logo = true;
           disable_splash_rendering = true;
-          force_default_wallpaper = 0;
-          # TODO vrr
+          vrr = 2;
+          animate_manual_resizes = true;
           disable_autoreload = true;
-          focus_on_activate = true;
           new_window_takes_over_fullscreen = 2;
-          initial_workspace_tracking = 1;
+          enable_anr_dialog = false;
         };
-
-        binds.workspace_center_on = 1;
 
         cursor = {
           hotspot_padding = 5;
           inactive_timeout = 5;
-          persistent_warps = true; # TODO Doesn't work (with hy3:changefocus?)
-          warp_on_change_workspace = true; # TODO Is this actually the same as binds.workspace_center_on?
-          # TODO warp_on_toggle_special
           hide_on_key_press = true;
         };
 
         ecosystem.no_update_news = true;
         ecosystem.no_donation_nag = true;
-        # TODO enforce_permissions
 
-        plugin.hy3.tabs = {
-          # TODO Finish styling hy3 tabs
-          padding = 2;
-          rounding = 6;
-          render_text = false;
-          # TODO Setup urgent tab color?
+        windowrule =
+          lib.mkIf (config.theme.windowOpacity != 1)
+          "plugin:shadewindow chromakey bkg=[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}] similarity=1 targetOpacity=${toString config.theme.windowOpacity}, fullscreen:0";
+
+        plugin.easymotion = {
+          textsize = 30;
+          textcolor = "rgb(${colors.base05})";
+          bgcolor = "rgb(${colors.base01})";
+          textpadding = 10;
         };
 
-        bindm = [
-          "Super, mouse:272, movewindow"
-          "Super, mouse:273, resizewindow"
-        ];
+        bindm = ["Super, mouse:272, movewindow" "Super, mouse:273, resizewindow"];
 
+        # TODO hyprpicker, hyprsunset, notification daemon, screenshot tool
         bind = [
-          "Super+Alt, R, hy3:makegroup, h, ephemeral"
-          "Super+Alt, S, hy3:makegroup, v, ephemeral"
-          "Super+Alt, T, hy3:makegroup, tab, ephemeral"
-
-          # TODO Is hy3:changegroup needed?
+          "Super_Alt, H, hy3:makegroup, h, ephemeral"
+          "Super_Alt, V, hy3:makegroup, v, ephemeral"
 
           "Super, H, hy3:movefocus, l"
           "Super, J, hy3:movefocus, d"
           "Super, K, hy3:movefocus, u"
           "Super, L, hy3:movefocus, r"
-          "Super, Plus, hy3:changefocus, raise"
-          "Super, Minus, hy3:changefocus, lower"
+          "Super, W, easymotion, action:hyprctl dispatch focuswindow address:{}"
 
-          "Super+Shift, H, hy3:movewindow, l"
-          "Super+Shift, J, hy3:movewindow, d"
-          "Super+Shift, K, hy3:movewindow, u"
-          "Super+Shift, L, hy3:movewindow, r"
+          "Super, I, resizeactive, 10% 0"
+          "Super_Alt, I, resizeactive, 0 10%"
+          "Super, D, resizeactive, -10% 0"
+          "Super_Alt, D, resizeactive, 0 -10%"
+
+          "Super_Shift, H, hy3:movewindow, l"
+          "Super_Shift, J, hy3:movewindow, d"
+          "Super_Shift, K, hy3:movewindow, u"
+          "Super_Shift, L, hy3:movewindow, r"
 
           "Super, F, fullscreen, 0"
           "Super, G, fullscreen, 1"
 
           "Super, O, togglefloating"
           "Super, P, pin"
+
+          "Super, Q, hy3:killactive"
 
           "Super, 1, focusworkspaceoncurrentmonitor, 1"
           "Super, 2, focusworkspaceoncurrentmonitor, 2"
@@ -167,22 +163,18 @@
           "Super, 7, focusworkspaceoncurrentmonitor, 7"
           "Super, 8, focusworkspaceoncurrentmonitor, 8"
           "Super, 9, focusworkspaceoncurrentmonitor, 9"
-          "Super, 0, focusworkspaceoncurrentmonitor, 10"
 
-          "Super+Shift, 1, hy3:movetoworkspace, 1"
-          "Super+Shift, 2, hy3:movetoworkspace, 2"
-          "Super+Shift, 3, hy3:movetoworkspace, 3"
-          "Super+Shift, 4, hy3:movetoworkspace, 4"
-          "Super+Shift, 5, hy3:movetoworkspace, 5"
-          "Super+Shift, 6, hy3:movetoworkspace, 6"
-          "Super+Shift, 7, hy3:movetoworkspace, 7"
-          "Super+Shift, 8, hy3:movetoworkspace, 8"
-          "Super+Shift, 9, hy3:movetoworkspace, 9"
-          "Super+Shift, 0, hy3:movetoworkspace, 0"
+          "Super_Shift, 1, hy3:movetoworkspace, 1"
+          "Super_Shift, 2, hy3:movetoworkspace, 2"
+          "Super_Shift, 3, hy3:movetoworkspace, 3"
+          "Super_Shift, 4, hy3:movetoworkspace, 4"
+          "Super_Shift, 5, hy3:movetoworkspace, 5"
+          "Super_Shift, 6, hy3:movetoworkspace, 6"
+          "Super_Shift, 7, hy3:movetoworkspace, 7"
+          "Super_Shift, 8, hy3:movetoworkspace, 8"
+          "Super_Shift, 9, hy3:movetoworkspace, 9"
 
           "Super, Space, focusmonitor, +1"
-
-          "Super, Q, hy3:killactive"
         ];
       };
     };

@@ -10,6 +10,22 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hy3 = {
+      url = "github:outfoxxed/hy3/hl0.52.0";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hypr-darkwindow = {
+      url = "github:micha4w/Hypr-DarkWindow/v0.52.0";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hyprland.url = "github:hyprwm/Hyprland/v0.52.0";
+    hyprland-easymotion = {
+      url = "github:zakk4223/hyprland-easymotion";
+      inputs = {
+        hyprland.follows = "hyprland";
+        nixpkgs.follows = "hyprland/nixpkgs";
+      };
+    };
     impermanence.url = "github:nix-community/impermanence";
     modulix = {
       url = "github:Noah765/modulix";
