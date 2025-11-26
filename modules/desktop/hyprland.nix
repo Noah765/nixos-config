@@ -65,118 +65,147 @@ in {
       };
     };
 
-    hm.home = {
-      packages = [pkgs.wl-clipboard];
-      sessionVariables.NIXOS_OZONE_WL = "1";
-    };
+    hm = {
+      home.packages = with pkgs; [hyprpicker wl-clipboard];
+      home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-    hm.wayland.windowManager.hyprland = {
-      enable = true;
-      package = null;
-      portalPackage = null;
+      wayland.windowManager.hyprland = {
+        enable = true;
+        package = null;
+        portalPackage = null;
 
-      plugins =
-        [inputs.hy3.packages.${pkgs.stdenv.system}.hy3 inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.hyprland-easymotion]
-        ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.Hypr-DarkWindow;
+        plugins =
+          [inputs.hy3.packages.${pkgs.stdenv.system}.hy3 inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.hyprland-easymotion]
+          ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.Hypr-DarkWindow;
 
-      settings = {
-        general = {
-          gaps_in = 2;
-          gaps_out = 5;
-          layout = "hy3";
+        settings = {
+          exec-once = lib.getExe pkgs.hyprnotify;
+
+          general = {
+            gaps_in = 2;
+            gaps_out = 5;
+            layout = "hy3";
+          };
+
+          decoration.rounding = 12;
+          decoration.blur.size = 3;
+
+          animations.animation = "global, 1, 3, default";
+
+          input.repeat_rate = 35;
+          input.repeat_delay = 200;
+
+          misc = {
+            disable_splash_rendering = true;
+            vrr = 2;
+            animate_manual_resizes = true;
+            disable_autoreload = true;
+            new_window_takes_over_fullscreen = 2;
+            enable_anr_dialog = false;
+          };
+
+          cursor = {
+            hotspot_padding = 5;
+            inactive_timeout = 5;
+            hide_on_key_press = true;
+          };
+
+          ecosystem.no_update_news = true;
+          ecosystem.no_donation_nag = true;
+
+          windowrule =
+            lib.mkIf (config.theme.windowOpacity != 1)
+            "plugin:shadewindow chromakey bkg=[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}] similarity=1 targetOpacity=${toString config.theme.windowOpacity}, fullscreen:0";
+
+          plugin.easymotion = {
+            textsize = 30;
+            textcolor = "rgb(${colors.base05})";
+            bgcolor = "rgb(${colors.base01})";
+            textpadding = 10;
+          };
+
+          bindm = ["Super, mouse:272, movewindow" "Super, mouse:273, resizewindow"];
+
+          bind = [
+            "Super_Alt, H, hy3:makegroup, h, ephemeral"
+            "Super_Alt, V, hy3:makegroup, v, ephemeral"
+
+            "Super, H, hy3:movefocus, l"
+            "Super, J, hy3:movefocus, d"
+            "Super, K, hy3:movefocus, u"
+            "Super, L, hy3:movefocus, r"
+            "Super, W, easymotion, action:hyprctl dispatch focuswindow address:{}"
+
+            "Super, I, resizeactive, 10% 0"
+            "Super_Alt, I, resizeactive, 0 10%"
+            "Super, D, resizeactive, -10% 0"
+            "Super_Alt, D, resizeactive, 0 -10%"
+
+            "Super_Shift, H, hy3:movewindow, l"
+            "Super_Shift, J, hy3:movewindow, d"
+            "Super_Shift, K, hy3:movewindow, u"
+            "Super_Shift, L, hy3:movewindow, r"
+
+            "Super, F, fullscreen, 0"
+            "Super, G, fullscreen, 1"
+
+            "Super, O, togglefloating"
+            "Super, P, pin"
+
+            "Super, Q, hy3:killactive"
+
+            "Super, 1, focusworkspaceoncurrentmonitor, 1"
+            "Super, 2, focusworkspaceoncurrentmonitor, 2"
+            "Super, 3, focusworkspaceoncurrentmonitor, 3"
+            "Super, 4, focusworkspaceoncurrentmonitor, 4"
+            "Super, 5, focusworkspaceoncurrentmonitor, 5"
+            "Super, 6, focusworkspaceoncurrentmonitor, 6"
+            "Super, 7, focusworkspaceoncurrentmonitor, 7"
+            "Super, 8, focusworkspaceoncurrentmonitor, 8"
+            "Super, 9, focusworkspaceoncurrentmonitor, 9"
+
+            "Super_Shift, 1, hy3:movetoworkspace, 1"
+            "Super_Shift, 2, hy3:movetoworkspace, 2"
+            "Super_Shift, 3, hy3:movetoworkspace, 3"
+            "Super_Shift, 4, hy3:movetoworkspace, 4"
+            "Super_Shift, 5, hy3:movetoworkspace, 5"
+            "Super_Shift, 6, hy3:movetoworkspace, 6"
+            "Super_Shift, 7, hy3:movetoworkspace, 7"
+            "Super_Shift, 8, hy3:movetoworkspace, 8"
+            "Super_Shift, 9, hy3:movetoworkspace, 9"
+
+            "Super, Space, focusmonitor, +1"
+
+            "Super, C, exec, ${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive"
+            "Super, R, exec, ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\""
+          ];
         };
-
-        decoration.rounding = 12;
-        decoration.blur.size = 3;
-
-        animations.animation = "global, 1, 3, default";
-
-        input.repeat_rate = 35;
-        input.repeat_delay = 200;
-
-        misc = {
-          disable_splash_rendering = true;
-          vrr = 2;
-          animate_manual_resizes = true;
-          disable_autoreload = true;
-          new_window_takes_over_fullscreen = 2;
-          enable_anr_dialog = false;
-        };
-
-        cursor = {
-          hotspot_padding = 5;
-          inactive_timeout = 5;
-          hide_on_key_press = true;
-        };
-
-        ecosystem.no_update_news = true;
-        ecosystem.no_donation_nag = true;
-
-        windowrule =
-          lib.mkIf (config.theme.windowOpacity != 1)
-          "plugin:shadewindow chromakey bkg=[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}] similarity=1 targetOpacity=${toString config.theme.windowOpacity}, fullscreen:0";
-
-        plugin.easymotion = {
-          textsize = 30;
-          textcolor = "rgb(${colors.base05})";
-          bgcolor = "rgb(${colors.base01})";
-          textpadding = 10;
-        };
-
-        bindm = ["Super, mouse:272, movewindow" "Super, mouse:273, resizewindow"];
-
-        # TODO hyprpicker, hyprsunset, notification daemon, screenshot tool
-        bind = [
-          "Super_Alt, H, hy3:makegroup, h, ephemeral"
-          "Super_Alt, V, hy3:makegroup, v, ephemeral"
-
-          "Super, H, hy3:movefocus, l"
-          "Super, J, hy3:movefocus, d"
-          "Super, K, hy3:movefocus, u"
-          "Super, L, hy3:movefocus, r"
-          "Super, W, easymotion, action:hyprctl dispatch focuswindow address:{}"
-
-          "Super, I, resizeactive, 10% 0"
-          "Super_Alt, I, resizeactive, 0 10%"
-          "Super, D, resizeactive, -10% 0"
-          "Super_Alt, D, resizeactive, 0 -10%"
-
-          "Super_Shift, H, hy3:movewindow, l"
-          "Super_Shift, J, hy3:movewindow, d"
-          "Super_Shift, K, hy3:movewindow, u"
-          "Super_Shift, L, hy3:movewindow, r"
-
-          "Super, F, fullscreen, 0"
-          "Super, G, fullscreen, 1"
-
-          "Super, O, togglefloating"
-          "Super, P, pin"
-
-          "Super, Q, hy3:killactive"
-
-          "Super, 1, focusworkspaceoncurrentmonitor, 1"
-          "Super, 2, focusworkspaceoncurrentmonitor, 2"
-          "Super, 3, focusworkspaceoncurrentmonitor, 3"
-          "Super, 4, focusworkspaceoncurrentmonitor, 4"
-          "Super, 5, focusworkspaceoncurrentmonitor, 5"
-          "Super, 6, focusworkspaceoncurrentmonitor, 6"
-          "Super, 7, focusworkspaceoncurrentmonitor, 7"
-          "Super, 8, focusworkspaceoncurrentmonitor, 8"
-          "Super, 9, focusworkspaceoncurrentmonitor, 9"
-
-          "Super_Shift, 1, hy3:movetoworkspace, 1"
-          "Super_Shift, 2, hy3:movetoworkspace, 2"
-          "Super_Shift, 3, hy3:movetoworkspace, 3"
-          "Super_Shift, 4, hy3:movetoworkspace, 4"
-          "Super_Shift, 5, hy3:movetoworkspace, 5"
-          "Super_Shift, 6, hy3:movetoworkspace, 6"
-          "Super_Shift, 7, hy3:movetoworkspace, 7"
-          "Super_Shift, 8, hy3:movetoworkspace, 8"
-          "Super_Shift, 9, hy3:movetoworkspace, 9"
-
-          "Super, Space, focusmonitor, +1"
-        ];
       };
+
+      services.hyprsunset.enable = true;
+      services.hyprsunset.settings.profile = [
+        {time = "7:30";}
+        {
+          time = "17:00";
+          temperature = 5500;
+          gamma = 0.9;
+        }
+        {
+          time = "18:00";
+          temperature = 5000;
+          gamma = 0.8;
+        }
+        {
+          time = "19:00";
+          temperature = 4500;
+          gamma = 0.7;
+        }
+        {
+          time = "20:00";
+          temperature = 4000;
+          gamma = 0.6;
+        }
+      ];
     };
   };
 }
