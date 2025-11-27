@@ -53,6 +53,7 @@ in {
     in {
       formatter.command = head command;
       formatter.args = mkIf (length command > 1) (tail command);
+      auto-format = true;
     });
   };
 }

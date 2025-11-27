@@ -10,9 +10,6 @@
     dev.formatters.java = "java-fmt";
 
     cli.editor.packages = [pkgs.jdt-language-server];
-    cli.editor.languages.java = {
-      auto-format = true;
-      language-servers = ["jdtls" "codebook"];
-    };
+    cli.editor.languages.java.language-servers = ["jdtls" "codebook"];
   };
 }
