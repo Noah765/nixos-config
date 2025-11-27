@@ -13,6 +13,7 @@ in {
     ./markdown.nix
     ./nix.nix
     ./nu.nix
+    ./qml.nix
     ./rust.nix
     ./typst.nix
     ./unity.nix

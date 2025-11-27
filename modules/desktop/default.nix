@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  imports = [./autologin.nix ./hyprland.nix ./hyprsunset.nix];
+  imports = [./autologin.nix ./hyprland.nix ./hyprsunset.nix ./quickshell];
 
   options.desktop.enable = lib.mkEnableOption "the desktop environment";
 
@@ -11,5 +11,6 @@
     autologin.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
     hyprsunset.enable = lib.mkDefault true;
+    quickshell.enable = lib.mkDefault true;
   };
 }

@@ -14,7 +14,7 @@
     forAllSystems = f: mapAttrs f (genAttrs systems.flakeExposed (x: nixpkgs.legacyPackages.${x}));
   in {
     devShells = forAllSystems (_: pkgs: {
-      default = pkgs.mkShell {packages = [pkgs.alejandra];};
+      default = pkgs.mkShell {packages = [pkgs.alejandra pkgs.kdePackages.qtdeclarative];};
 
       # TODO
       test-installer = pkgs.mkShell {
