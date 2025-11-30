@@ -34,7 +34,7 @@ Singleton {
           handleSignalChange(line.substring(5))
         } else if (line.includes('CTRL-EVENT-DISCONNECTED')) {
           root.status = Network.Status.Off
-        } else if (line.includes('CTRL-EVENT-SCAN-STARTED')) {
+        } else if (line.includes('CTRL-EVENT-SCAN-STARTED') && root.status === Network.Status.Off) {
           root.status = Network.Status.Scanning
         } else if (line.includes('CTRL-EVENT-SIGNAL-CHANGE')) {
           handleSignalChange(line.match(/signal=(\S+)/)[1])
