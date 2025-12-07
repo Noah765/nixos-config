@@ -15,12 +15,12 @@
       inputs.hyprland.follows = "hyprland";
     };
     hypr-darkwindow = {
-      url = "github:micha4w/Hypr-DarkWindow/v0.52.0";
+      url = "github:micha4w/Hypr-DarkWindow/v0.52.2";
       inputs.hyprland.follows = "hyprland";
     };
-    hyprland.url = "github:hyprwm/Hyprland/v0.52.0";
+    hyprland.url = "github:hyprwm/Hyprland/v0.52.2";
     hyprland-easymotion = {
-      url = "github:zakk4223/hyprland-easymotion";
+      url = "github:zakk4223/hyprland-easymotion/d46fa73d";
       inputs = {
         hyprland.follows = "hyprland";
         nixpkgs.follows = "hyprland/nixpkgs";

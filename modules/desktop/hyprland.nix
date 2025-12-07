@@ -5,17 +5,18 @@
   config,
   ...
 }: let
-  hyprlandVersion = "0.52.0";
   inherit (config.theme) colors;
+  hyprlandVersion = "0.52";
+  hyprlandPatch = "2";
 in {
   inputs = {
-    hyprland.url = "github:hyprwm/Hyprland/v${hyprlandVersion}";
-    hy3.url = "github:outfoxxed/hy3/hl${hyprlandVersion}";
+    hyprland.url = "github:hyprwm/Hyprland/v${hyprlandVersion}.${hyprlandPatch}";
+    hy3.url = "github:outfoxxed/hy3/hl${hyprlandVersion}.0";
     hy3.inputs.hyprland.follows = "hyprland";
-    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v${hyprlandVersion}";
+    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v${hyprlandVersion}.${hyprlandPatch}";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
     hyprland-easymotion = {
-      url = "github:zakk4223/hyprland-easymotion";
+      url = "github:zakk4223/hyprland-easymotion/d46fa73d";
       inputs.nixpkgs.follows = "hyprland/nixpkgs";
       inputs.hyprland.follows = "hyprland";
     };
