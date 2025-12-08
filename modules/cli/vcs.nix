@@ -26,8 +26,8 @@
           log-word-wrap = true;
         };
         # TODO diff editor and merge tool
-        git.fetch = ["origin" "upstream"];
-        git.push-new-bookmarks = true;
+        remotes.origin.auto-track-bookmarks = "glob:*";
+        remotes.upstream.auto-track-bookmarks = "glob:{main,master}";
         fsmonitor.backend = "watchman";
         aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (lib.getExe pkgs.nushell) (pkgs.writeText "jj-${name}" script)]) {
           push = ''
@@ -56,9 +56,8 @@
               cd $repo
               let owner = if $owner != null { $owner } else { ${lib.getExe pkgs.gh} repo view $repo --json parent --jq .parent.owner.login }
               jj git remote add upstream $'https://github.com/($owner)/($repo)'
+              jj config set --repo git.fetch '["origin", "upstream"]'
               jj git fetch
-              let default_branch = ${lib.getExe pkgs.gh} repo view $repo --json defaultBranchRef -q .defaultBranchRef.name
-              jj bookmark track $'($default_branch)@upstream'
             }
           '';
         };
