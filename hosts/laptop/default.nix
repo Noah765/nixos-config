@@ -17,6 +17,7 @@
     java.enable = true;
     nu.enable = true;
     qml.enable = true;
+    rust.enable = true;
     typst.enable = true;
   };
 }
