@@ -28,6 +28,20 @@ Variants {
       anchors {
         bottom: parent.bottom
         bottomMargin: 4
+        left: parent.left
+        leftMargin: 8
+      }
+
+      BrightnessItem {}
+      AudioItem {}
+    }
+
+    RowLayout {
+      spacing: 8
+
+      anchors {
+        bottom: parent.bottom
+        bottomMargin: 4
         right: parent.right
         rightMargin: 8
       }

@@ -1,21 +1,13 @@
-import QtQuick
 import QtQuick.Layouts
-import qs
 import qs.icons
+import qs.widgets
 
 RowLayout {
   spacing: 4
   visible: Battery.exists
 
-  Text {
-    color: Theme.text
-    text: Battery.capacity + ' %'
-
-    font {
-      family: 'monospace'
-      weight: Font.Black
-      wordSpacing: -6
-    }
+  PercentageText {
+    number: Battery.capacity
   }
 
   BatteryIcon {
