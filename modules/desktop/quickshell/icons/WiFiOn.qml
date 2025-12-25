@@ -4,8 +4,6 @@ import qs
 Icon {
   id: root
   required property int strength
-  iconWidth: 24
-  iconHeight: 24
   scale: 0.85
 
   transform: Translate {

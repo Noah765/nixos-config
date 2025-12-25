@@ -3,8 +3,8 @@ import QtQuick.Shapes
 
 Item {
   id: root
-  required property real iconWidth
-  required property real iconHeight
+  property real iconWidth: 24
+  property real iconHeight: 24
   default required property list<ShapePath> data
   implicitWidth: 32
   implicitHeight: 32
