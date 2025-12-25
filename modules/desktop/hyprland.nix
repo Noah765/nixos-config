@@ -154,6 +154,10 @@ in {
 
           "Super, C, exec, ${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive"
           "Super, R, exec, ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\""
+
+          "Super_Alt, S, exec, systemctl suspend"
+          "Super_Alt, P, exec, systemctl poweroff"
+          "Super_Alt, R, exec, systemctl reboot"
         ];
       };
     };
