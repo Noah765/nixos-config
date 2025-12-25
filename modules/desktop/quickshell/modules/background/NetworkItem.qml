@@ -1,5 +1,4 @@
 import QtQuick
-import qs
 import qs.icons
 
 Item {
