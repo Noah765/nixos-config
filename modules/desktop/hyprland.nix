@@ -112,11 +112,6 @@ in {
           "Super, L, hy3:movefocus, r"
           "Super, W, easymotion, action:hyprctl dispatch focuswindow address:{}"
 
-          "Super, I, resizeactive, 10% 0"
-          "Super_Alt, I, resizeactive, 0 10%"
-          "Super, D, resizeactive, -10% 0"
-          "Super_Alt, D, resizeactive, 0 -10%"
-
           "Super_Shift, H, hy3:movewindow, l"
           "Super_Shift, J, hy3:movewindow, d"
           "Super_Shift, K, hy3:movewindow, u"
@@ -161,6 +156,11 @@ in {
         ];
 
         binde = [
+          "Super, I, resizeactive, 10% 0"
+          "Super_Alt, I, resizeactive, 0 10%"
+          "Super, D, resizeactive, -10% 0"
+          "Super_Alt, D, resizeactive, 0 -10%"
+
           "Super_Ctrl, T, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
           "Super_Ctrl, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
           "Super_Ctrl, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
