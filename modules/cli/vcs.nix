@@ -7,8 +7,9 @@
   imports = [(lib.mkAliasOptionModule ["cli" "vcs" "jj" "fix"] ["hm" "programs" "jujutsu" "settings" "fix" "tools"])];
 
   options.cli.vcs = {
-    enable = lib.mkEnableOption "Jujutsu, Git and the GitHub CLI";
+    enable = lib.mkEnableOption "Jujutsu, Jujutsu UI, Git and the GitHub CLI";
     jj.enable = lib.mkEnableOption "Jujutsu" // {default = true;};
+    jjui.enable = lib.mkEnableOption "Jujutsu UI" // {default = true;};
     git.enable = lib.mkEnableOption "Git" // {default = true;};
     gh.enable = lib.mkEnableOption "the GitHub CLI" // {default = true;};
   };
@@ -65,6 +66,13 @@
 
       difftastic.enable = true;
       difftastic.git.enable = true;
+
+      jjui.enable = config.cli.vcs.jjui.enable;
+      jjui.settings = {
+        ui.tracer.enabled = true;
+        suggest.exec.mode = "fuzzy";
+        preview.show_at_start = true;
+      };
 
       git.enable = config.cli.vcs.git.enable;
       git.settings = {
