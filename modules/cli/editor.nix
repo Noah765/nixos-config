@@ -46,7 +46,6 @@
         lsp.display-inlay-hints = true;
         cursor-shape.insert = "bar";
         auto-save.focus-lost = true;
-        gutters.line-numbers.min-width = 1;
         soft-wrap.enable = true;
         inline-diagnostics.cursor-line = "warning";
       };
