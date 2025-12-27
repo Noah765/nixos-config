@@ -4,6 +4,8 @@
   config,
   ...
 }: {
+  imports = [(lib.mkAliasOptionModule ["cli" "nushell" "shellAliases"] ["hm" "programs" "nushell" "shellAliases"])];
+
   options.cli.nushell.enable = lib.mkEnableOption "nushell";
 
   config = lib.mkIf config.cli.nushell.enable {
