@@ -7,6 +7,7 @@ Singleton {
   id: root
   property bool ready
   property int volume
+  property bool muted
 
   Process {
     id: idProcess
@@ -36,6 +37,7 @@ Singleton {
       onStreamFinished: {
         root.ready = true
         root.volume = Math.round(text.substring(8, 12) * 100)
+        root.muted = text.includes('MUTED')
       }
     }
   }

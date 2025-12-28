@@ -11,11 +11,11 @@ RowLayout {
   }
 
   AudioOff {
-    visible: Audio.volume == 0
+    visible: Audio.muted || Audio.volume == 0
   }
 
   AudioOn {
-    visible: Audio.volume > 0
+    visible: !Audio.muted && Audio.volume > 0
     volume: Audio.volume
   }
 }
