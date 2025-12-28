@@ -9,8 +9,27 @@ Singleton {
   property int volume
 
   Process {
-    id: process
+    id: idProcess
+    property int sinkId
     running: true
+    command: ['wpctl', 'inspect', '@DEFAULT_AUDIO_SINK@']
+
+    stdout: StdioCollector {
+      onStreamFinished: {
+        if (text.startsWith('id'))
+          idProcess.sinkId = text.match(/id (\d+)/)[1]
+      }
+    }
+
+    onExited: exitCode => {
+      if (exitCode != 0)
+        idProcess.running = true
+    }
+  }
+
+  Process {
+    id: volumeProcess
+    running: idProcess.sinkId != 0
     command: ['wpctl', 'get-volume', '@DEFAULT_AUDIO_SINK@']
 
     stdout: StdioCollector {
@@ -29,8 +48,8 @@ Singleton {
 
     stdout: SplitParser {
       onRead: line => {
-        if (line.startsWith('remote 0 device'))
-          process.running = true
+        if (line.includes(`node ${idProcess.sinkId} changed`))
+          volumeProcess.running = true
       }
     }
   }
