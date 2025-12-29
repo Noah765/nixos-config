@@ -4,8 +4,9 @@
   ...
 }: {
   imports = [
-    (lib.mkAliasOptionModule ["theme" "editor"] ["cli" "editor" "settings" "theme"])
     (lib.mkAliasOptionModule ["theme" "base16"] ["os" "stylix" "base16Scheme"])
+    (lib.mkAliasOptionModule ["theme" "editor"] ["cli" "editor" "settings" "theme"])
+    (lib.mkAliasOptionModule ["theme" "fileManager"] ["cli" "fileManager" "theme"])
     ./everforest.nix
     ./stylix.nix
   ];

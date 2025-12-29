@@ -1,9 +1,13 @@
 {
   lib,
+  inputs,
   pkgs,
   config,
   ...
 }: {
+  inputs.file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+  inputs.file-manager-theme.flake = false;
+
   options.theme.everforest.enable = lib.mkEnableOption "Everforest";
 
   config.theme = lib.mkIf config.theme.everforest.enable {
@@ -66,5 +70,7 @@
     };
 
     editor = "everforest_dark";
+
+    fileManager = inputs.file-manager-theme;
   };
 }

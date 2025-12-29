@@ -6,6 +6,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    file-manager-theme = {
+      url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+      flake = false;
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
