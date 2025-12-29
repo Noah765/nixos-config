@@ -58,6 +58,6 @@
       lt = lib.mkIf config.cli.basic.eza.enable "eza --tree";
     };
 
-    core.impermanence.hm.files = lib.mkIf config.cli.basic.zoxide.enable [".local/share/zoxide/db.zo"];
+    core.impermanence.hm.directories = lib.mkIf config.cli.basic.zoxide.enable [".local/share/zoxide"];
   };
 }
