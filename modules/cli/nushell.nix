@@ -61,6 +61,9 @@
             PROMPT_INDICATOR_VI_NORMAL = lib.hm.nushell.mkNushellInline "{ if $env.LAST_EXIT_CODE == 0 { ':' } else { $'(ansi red):(ansi reset)' } }";
             PROMPT_INDICATOR_VI_INSERT = " ";
             PROMPT_MULTILINE_INDICATOR = ": ";
+
+            CARAPACE_LENIENT = 1;
+            CARAPACE_MATCH = 1;
           };
 
         extraConfig = ''
