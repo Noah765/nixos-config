@@ -9,6 +9,7 @@
     bat.enable = lib.mkEnableOption "bat" // {default = true;};
     eza.enable = lib.mkEnableOption "eza" // {default = true;};
     fd.enable = lib.mkEnableOption "fd" // {default = true;};
+    fzf.enable = lib.mkEnableOption "fd" // {default = true;};
     ripgrep.enable = lib.mkEnableOption "Ripgrep" // {default = true;};
     zoxide.enable = lib.mkEnableOption "zoxide" // {default = true;};
   };
@@ -37,6 +38,21 @@
         hidden = true;
         ignores = [".git/" ".jj/"];
       };
+
+      fzf.enable = config.cli.basic.fzf.enable;
+      fzf.defaultOptions = [
+        "--style=full"
+        "--margin=0,1"
+        "--cycle"
+        "--scroll-off=9"
+        "--jump-labels=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "--no-scrollbar"
+        "--prompt='❯ '"
+        "--preview-window=66%"
+        "--bind=ctrl-d:preview-half-page-down"
+        "--bind=ctrl-u:preview-half-page-up"
+        "--bind=ctrl-w:jump"
+      ];
 
       ripgrep.enable = config.cli.basic.ripgrep.enable;
       ripgrep.arguments = [

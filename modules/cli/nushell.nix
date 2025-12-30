@@ -9,7 +9,7 @@
   options.cli.nushell.enable = lib.mkEnableOption "nushell";
 
   config = lib.mkIf config.cli.nushell.enable {
-    dependencies = ["cli.vcs"];
+    dependencies = ["cli.basic" "cli.vcs"];
 
     os.users.defaultUserShell = pkgs.nushell;
 
@@ -66,7 +66,18 @@
             CARAPACE_MATCH = 1;
           };
 
-        extraConfig = ''
+        extraConfig = let
+          fzfIntegration = pkgs.fetchFromGitHub {
+            owner = "sim590";
+            repo = "fzf";
+            rev = "2c9234ce09718264373d23f157426ecd62ae1dcd";
+            hash = "sha256-owIC9/4cyv7cqgi451Nf1BxOppsmX+KV2CSuGwkvSWU=";
+            rootDir = "shell";
+          };
+        in ''
+          source ${fzfIntegration}/completion.nu
+          source ${fzfIntegration}/key-bindings.nu
+
           if $nu.is-interactive {
             let ellie = [
               '     __  ,'
@@ -107,7 +118,6 @@
               if (term size).columns >= 100 { $value | table --expand --expand-deep 5 } else { $value | table }
             }
           '';
-          # TODO Integrate fzf
           keybindings = lib.map (x:
             {
               modifier = "control";
@@ -159,6 +169,9 @@
           ];
         };
       };
+
+      fzf.enable = true;
+      fzf.changeDirWidgetOptions = ["--preview 'eza --tree --level 2 --color always --icons always {}'"];
 
       carapace.enable = true;
     };
