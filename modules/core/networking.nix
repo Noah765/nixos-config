@@ -20,6 +20,7 @@
       networks = {
         CHE.pskRaw = "ext:CHE";
         "Brandl DSL Home Winkler a4bb".pskRaw = "ext:winkler";
+        Doofkopp.pskRaw = "ext:landgraf";
         smartphone.pskRaw = "ext:smartphone";
         eduroam.auth = ''
           key_mgmt=WPA-EAP
