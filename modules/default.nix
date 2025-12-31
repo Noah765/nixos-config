@@ -10,7 +10,6 @@
     ./dependencies.nix
     ./desktop
     ./dev
-    ./documentation.nix
     ./theme
   ];
 
@@ -19,5 +18,4 @@
   core.enable = lib.mkDefault true;
   desktop.enable = lib.mkDefault true;
   dev.enable = lib.mkDefault true;
-  documentation.enable = lib.mkDefault true;
 }
