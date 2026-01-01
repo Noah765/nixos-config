@@ -52,9 +52,12 @@
 
       languages.language = lib.mapAttrsToList (name: value: {inherit name;} // value) config.cli.editor.languages;
 
-      languages.language-server.codebook = {
-        command = lib.getExe pkgs.codebook;
-        args = ["serve"];
+      languages.language-server = {
+        harper-ls.config.harper-ls.linters.SpellCheck = false;
+        harper-ls.config.harper-ls.isolateEnglish = true;
+
+        codebook.command = lib.getExe pkgs.codebook;
+        codebook.args = ["serve"];
       };
     };
 

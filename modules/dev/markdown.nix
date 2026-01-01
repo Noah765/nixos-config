@@ -8,6 +8,6 @@
 
   config.cli.editor = lib.mkIf config.dev.markdown.enable {
     packages = [pkgs.marksman];
-    languages.markdown.language-servers = ["marksman" "harper-ls"];
+    languages.markdown.language-servers = ["marksman" "harper-ls" "codebook"];
   };
 }
