@@ -1,14 +1,62 @@
 {
   lib,
+  inputs,
+  pkgs,
   config,
   ...
 }: {
+  inputs.qutebrowser-blocked-hosts.url = "file+https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+  inputs.qutebrowser-blocked-hosts.flake = false;
+
   options.apps.browser.enable = lib.mkEnableOption "qutebrowser";
 
   config = lib.mkIf config.apps.browser.enable {
+    dependencies = ["apps.terminal" "cli.editor" "cli.fileManager"];
+
+    desktop.hyprland.settings.bind = ["Super, B, exec, uwsm-app qutebrowser"];
+    desktop.hyprland.settings.windowrule = ["float, class:qutebrowser-editor"];
+
+    core.impermanence.hm.files = [
+      ".local/share/qutebrowser/cmd-history"
+      ".local/share/qutebrowser/history.sqlite"
+      ".local/share/qutebrowser/webengine/Cookies"
+    ];
+
+    hm.xdg.dataFile = {
+      "qutebrowser/blocked-hosts".source = inputs.qutebrowser-blocked-hosts;
+      "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.en-us.dictFileName}".source = pkgs.hunspellDictsChromium.en-us;
+      "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.de-de.dictFileName}".source = pkgs.hunspellDictsChromium.de-de;
+    };
+
     hm.programs.qutebrowser = {
       enable = true;
-      # TODO hm.programs.qutebrowser.quickmarks
+
+      greasemonkey = [
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/reddit_adblock.js";
+          hash = "sha256-KmCXL4GrZtwPLRyAvAxADpyjbdY5UFnS/XKZFKtg7tk=";
+        })
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/youtube_adblock.js";
+          hash = "sha256-AyD9VoLJbKPfqmDEwFIEBMl//EIV/FYnZ1+ona+VU9c=";
+        })
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/youtube_shorts_block.js";
+          hash = "sha256-e9qCSAuEMoNivepy7W/W5F9D1PJZrPAJoejsBi9ejiY=";
+        })
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/youtube_sponsorblock.js";
+          hash = "sha256-nwNade1oHP+w5LGUPJSgAX1+nQZli4Rhe8FFUoF5mLE=";
+        })
+      ];
+
+      keyBindings = {
+        normal."<Ctrl-o>" = "tab-focus stack-prev";
+        normal."<Ctrl-i>" = "tab-focus stack-next";
+        command."<Ctrl-p>" = "completion-item-focus --history prev";
+        command."<Ctrl-n>" = "completion-item-focus --history next";
+      };
+
       searchEngines = {
         DEFAULT = "https://www.ecosia.org/search?q={}";
         g = "https://www.google.com/search?q={}";
@@ -18,41 +66,44 @@
         w = "https://en.wikipedia.org/w/index.php?search={}";
         y = "https://www.youtube.com/results?search_query={}";
       };
+
       settings = {
-        completion.height = "30%";
-        # TODO completion.{scrollbar, use_best_match}
-        # completion.web_history.max_items = 100; # TODO does this only affect the completions?
+        completion = {
+          scrollbar.width = 0;
+          use_best_match = true;
+          web_history.max_items = 100000;
+        };
         confirm_quit = ["downloads"];
-        # TODO content.autoplay
-        # TODO Make the ABP ad blocker available if it isn't
-        # TODO content.cache.maximum_pages, content.cache.size, content.cookies.accept, content.fullscreen.overlay_timeout, content.fullscreen.window
-        content.headers.accept_language = "en-US,en;q=0.9,de-DE,de;q=0.8";
-        # TODO content.headers.user_agent, content.hyprlink_auditing, content.javascript.{can_open_tabs_automatically, legacy_touch_events, log, log_message.levels, modal_dialog, local_content_can_access_remote_urls}
-        # TODO content.notifications.presenter
-        content.pdfjs = true;
-        # TODO content.{plugins, proxy, tls.certificate_errors, unknown_url_scheme_policy, webrtc_ip_handling_policy, xss_auditing}
+        content = {
+          blocking.method = "hosts";
+          fullscreen.overlay_timeout = 0;
+          headers.accept_language = "en-US,en;q=0.9,de-DE,de;q=0.8";
+          local_content_can_access_remote_urls = true;
+          tls.certificate_errors = "block";
+        };
         downloads.location.remember = false;
-        # TODO downloads.open_dispatcher
         downloads.remove_finished = 5000;
-        # TODO editor, fileselect
-        hints.auto_follow = "always"; # TODO
-        # TODO hints.{chars, hide_unmatched_rapid_hints, leave_on_load, next_regexes, padding, prev_regexes, radius, scatter, selectors, uppercase}
-        # TODO history_gap_interval
-        # TODO input.forward_unbound_keys
-        input.insert_mode.auto_load = true;
-        # TODO input.{insert_mode.plugins, links_included_in_focus_chain, media_keys, mode_override, mouse.rocker_gestures, partial_timeout, spatial_navigation}
-        # TODO keyhint, logging, messages.timeout, new_instance_open_target, new_instance_open_target_window, prompt.{filebrowser, radius}, qt.{force_platform, force_platformtheme, force_software_rendering, highdpi}
+        editor.command = ["kitty" "--class=qutebrowser-editor" "hx" "{file}:{line}:{column}"];
+        fileselect.folder.command = [
+          "kitty"
+          "--class=termfilechooser"
+          (lib.getExe pkgs.nushell)
+          "-c"
+          (lib.join "; " [
+            "yazi --cwd-file {} --chooser-file {}"
+            "open {} | lines | first | if ($in | path type) == dir { $in } else { $in | path dirname } | save -f {}"
+          ])
+        ];
+        hints.chars = "abcdefghijklmnopqrstuvwxyz";
         scrolling.bar = "never";
-        # TODO scrolling.smooth, search.incremental, spellcheck.languages, statusbar, tabs.{close_mouse_button_on_bar, favicons.scale, focus_stack_size, indicator}
-        tabs.last_close = "default-page";
-        # TODO tabs.{max_width, min_width, mode_on_change, new_position, padding, pinned, position, select_on_remove, show, show_switching_delay, title.{alignment, format, format_pinned}, tooltips, undo_stack_size, width}
-        # TODO url.auto_search
-        url.default_page = "https://www.ecosia.org";
-        url.start_pages = "https://www.ecosia.org";
-        # TODO url.{incdec_segments, open_base_url, searchengines}, window.{hide_decoration, title_format, transparent}, zoom.mouse_divider
+        spellcheck.languages = ["en-US" "de-DE"];
+        tabs.last_close = "startpage";
+        url = {
+          default_page = "https://www.ecosia.org";
+          open_base_url = true;
+          start_pages = "https://www.ecosia.org";
+        };
       };
     };
-    core.impermanence.hm.directories = [".local/share/qutebrowser"];
-    desktop.hyprland.settings.bind = ["Super, B, exec, uwsm-app qutebrowser"];
   };
 }
