@@ -12,14 +12,18 @@
 
   options.theme.stylix.enable = lib.mkEnableOption "Stylix";
 
-  config.os.stylix = lib.mkIf config.theme.stylix.enable {
-    enable = true;
-    inherit (config.theme) cursor;
-    fonts = {
-      inherit (config.theme.fonts) serif sansSerif monospace emoji;
-      sizes = {inherit (config.theme.fontSizes) desktop applications terminal popups;};
+  config = lib.mkIf config.theme.stylix.enable {
+    os.stylix = {
+      enable = true;
+      inherit (config.theme) cursor;
+      fonts = {
+        inherit (config.theme.fonts) serif sansSerif monospace emoji;
+        sizes = {inherit (config.theme.fontSizes) desktop applications terminal popups;};
+      };
+      polarity = "dark";
+      image = config.theme.wallpaper;
     };
-    polarity = "dark";
-    image = config.theme.wallpaper;
+
+    hm.stylix.targets.qt.standardDialogs = "xdgdesktopportal";
   };
 }

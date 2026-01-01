@@ -9,6 +9,18 @@
   options.cli.fileManager.enable = lib.mkEnableOption "Yazi";
 
   config = lib.mkIf config.cli.fileManager.enable {
+    dependencies = ["apps.terminal"];
+
+    os.xdg.portal = {
+      enable = true;
+      extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
+      config.common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+    };
+    hm.xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = lib.generators.toINI {} {
+      filechooser.env = "TERMCMD=kitty --class termfilechooser";
+    };
+    desktop.hyprland.settings.windowrule = ["float, class:termfilechooser"];
+
     theme.stylix.hmTargets.yazi.enable = false;
 
     hm.programs.yazi = {

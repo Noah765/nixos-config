@@ -91,7 +91,7 @@ in {
 
         windowrule =
           lib.mkIf (config.theme.windowOpacity != 1)
-          "plugin:shadewindow chromakey bkg=[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}] similarity=1 targetOpacity=${toString config.theme.windowOpacity}, fullscreen:0";
+          ["plugin:shadewindow chromakey bkg=[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}] similarity=1 targetOpacity=${toString config.theme.windowOpacity}, fullscreen:0"];
 
         plugin.easymotion = {
           textsize = 30;
