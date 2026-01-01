@@ -11,8 +11,6 @@
   config = lib.mkIf config.cli.fileManager.enable {
     theme.stylix.hmTargets.yazi.enable = false;
 
-    hm.programs.fzf.enable = true;
-
     hm.programs.yazi = {
       enable = true;
       shellWrapperName = "y";
