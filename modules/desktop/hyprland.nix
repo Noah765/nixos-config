@@ -32,6 +32,7 @@ in {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.stdenv.system}.hyprland;
         portalPackage = inputs.hyprland.packages.${pkgs.stdenv.system}.xdg-desktop-portal-hyprland;
+        withUWSM = true;
       };
 
       nix.settings.substituters = ["https://hyprland.cachix.org"];
@@ -49,6 +50,7 @@ in {
       enable = true;
       package = null;
       portalPackage = null;
+      systemd.enable = false;
 
       plugins =
         [inputs.hy3.packages.${pkgs.stdenv.system}.hy3 inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.hyprland-easymotion]

@@ -36,5 +36,5 @@
 
   core.user.groups = ["dialout"];
 
-  desktop.hyprland.settings.bind = ["Super, M, exec, prismlauncher"];
+  desktop.hyprland.settings.bind = ["Super, M, exec, uwsm-app prismlauncher"];
 }

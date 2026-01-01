@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   pkgs,
   config,
   ...
@@ -20,7 +19,7 @@
       after = ["systemd-user-sessions.service" "plymouth-quit-wait.service"];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${lib.getExe pkgs.autologin} noah ${lib.getExe inputs.hyprland.packages.${pkgs.stdenv.system}.hyprland}";
+        ExecStart = "${lib.getExe pkgs.autologin} noah ${lib.getExe pkgs.uwsm} start ${lib.getExe config.os.programs.hyprland.package}";
         IgnoreSIGPIPE = "no";
         SendSIGHUP = "yes";
         TimeoutStopSec = "30s";

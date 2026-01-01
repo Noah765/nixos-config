@@ -49,6 +49,6 @@
         return screen.cursor.x
     '';
 
-    desktop.hyprland.settings.bind = ["Super, T, exec, kitty"];
+    desktop.hyprland.settings.bind = ["Super, T, exec, uwsm-app kitty"];
   };
 }

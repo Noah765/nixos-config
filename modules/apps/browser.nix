@@ -53,6 +53,6 @@
       };
     };
     core.impermanence.hm.directories = [".local/share/qutebrowser"];
-    desktop.hyprland.settings.bind = ["Super, B, exec, qutebrowser"];
+    desktop.hyprland.settings.bind = ["Super, B, exec, uwsm-app qutebrowser"];
   };
 }
