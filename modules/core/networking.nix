@@ -14,7 +14,7 @@
     os.networking.wireless = {
       enable = true;
       secretsFile = "/var/keys/wireless.conf";
-      userControlled.enable = true;
+      userControlled = true;
       networks = {
         CHE.pskRaw = "ext:CHE";
         "Brandl DSL Home Winkler a4bb".pskRaw = "ext:winkler";
@@ -29,6 +29,9 @@
         '';
       };
     };
+
+    core.user.groups = ["wpa_supplicant"];
+
     core.impermanence.os.files = [
       {
         file = "/var/keys/wireless.conf";

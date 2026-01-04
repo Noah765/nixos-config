@@ -15,22 +15,28 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hy3 = {
-      url = "github:outfoxxed/hy3/hl0.52.0";
+      url = "github:outfoxxed/hy3/hl0.53.0";
       inputs.hyprland.follows = "hyprland";
     };
     hypr-darkwindow = {
-      url = "github:micha4w/Hypr-DarkWindow/v0.52.2";
+      url = "github:micha4w/Hypr-DarkWindow/v0.53.1";
       inputs.hyprland.follows = "hyprland";
     };
-    hyprland.url = "github:hyprwm/Hyprland/v0.52.2";
+    hyprland.url = "github:hyprwm/Hyprland/v0.53.1";
     hyprland-easymotion = {
-      url = "github:zakk4223/hyprland-easymotion/d46fa73d";
+      url = "github:zakk4223/hyprland-easymotion";
       inputs = {
         hyprland.follows = "hyprland";
         nixpkgs.follows = "hyprland/nixpkgs";
       };
     };
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     modulix = {
       url = "github:Noah765/modulix";
       inputs = {

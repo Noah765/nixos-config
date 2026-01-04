@@ -1,7 +1,6 @@
 {
   lib,
   inputs,
-  useHm,
   config,
   ...
 }: {
@@ -9,17 +8,17 @@
     url = "github:nix-community/disko";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.impermanence.url = "github:nix-community/impermanence";
+  inputs.impermanence = {
+    url = "github:nix-community/impermanence";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.home-manager.follows = "home-manager";
+  };
 
   imports = [
-    (lib.mkAliasOptionModule ["core" "impermanence" "os"] ["os" "environment" "persistence" "/persist/system"])
-    (lib.mkAliasOptionModule ["core" "impermanence" "hm"] ["hm" "home" "persistence" "/persist/home"])
+    (lib.mkAliasOptionModule ["core" "impermanence" "os"] ["os" "environment" "persistence" "/persist"])
+    (lib.mkAliasOptionModule ["core" "impermanence" "hm"] ["os" "environment" "persistence" "/persist" "users" "noah"])
   ];
-  osImports = [
-    inputs.disko.nixosModules.default
-    inputs.impermanence.nixosModules.impermanence
-  ];
-  hmImports = [inputs.impermanence.nixosModules.home-manager.impermanence];
+  osImports = [inputs.disko.nixosModules.default inputs.impermanence.nixosModules.impermanence];
 
   options.core.impermanence.enable = lib.mkEnableOption "automatic system cleanup using impermanence";
 
@@ -110,7 +109,7 @@
         '';
 
         fileSystems."/persist".neededForBoot = true;
-        environment.persistence."/persist/system" = {
+        environment.persistence."/persist" = {
           hideMounts = true;
           directories = [
             "/var/log"
@@ -123,6 +122,15 @@
             }
           ];
           files = ["/etc/machine-id"];
+
+          users.noah.directories = [
+            "Downloads"
+            "Music"
+            "Pictures"
+            "Documents"
+            "Videos"
+            "projects"
+          ];
         };
 
         nix.settings.auto-optimise-store = true;
@@ -132,24 +140,10 @@
           clean.enable = true;
           clean.extraArgs = "-k 5 -K 30d";
         };
-
-        systemd.tmpfiles.rules = lib.mkIf useHm ["d /persist/home 0700 noah users -"];
-        programs.fuse.userAllowOther = lib.mkIf useHm true;
       };
-
-      hm.home.persistence."/persist/home".allowOther = true;
-      hm.home.persistence."/persist/home".directories = [
-        "Downloads"
-        "Music"
-        "Pictures"
-        "Documents"
-        "Videos"
-        "projects"
-      ];
     })
     (lib.mkIf (!config.core.impermanence.enable) {
-      os.environment.persistence."/persist/system".enable = false;
-      hm.home.persistence."/persist/home".enable = false;
+      os.environment.persistence."/persist".enable = false;
     })
   ];
 }

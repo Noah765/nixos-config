@@ -40,10 +40,13 @@ in {
     dependencies = ["apps.terminal" "cli.editor" "cli.fileManager"];
 
     desktop.hyprland.settings.bind = ["Super, B, exec, uwsm-app qutebrowser"];
-    desktop.hyprland.settings.windowrule = ["float, class:qutebrowser-editor"];
+    desktop.hyprland.settings.windowrule = ["match:class qutebrowser-editor, float true"];
 
     core.impermanence.hm.files = [
-      ".local/share/qutebrowser/cmd-history"
+      {
+        file = ".local/share/qutebrowser/cmd-history";
+        method = "symlink";
+      }
       ".local/share/qutebrowser/history.sqlite"
       ".local/share/qutebrowser/state"
       ".local/share/qutebrowser/webengine/Cookies"

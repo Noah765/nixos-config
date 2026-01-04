@@ -19,7 +19,7 @@
     hm.xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = lib.generators.toINI {} {
       filechooser.env = "TERMCMD=kitty --class termfilechooser";
     };
-    desktop.hyprland.settings.windowrule = ["float, class:termfilechooser"];
+    desktop.hyprland.settings.windowrule = ["match:class termfilechooser, float true"];
 
     theme.stylix.hmTargets.yazi.enable = false;
 
