@@ -86,6 +86,9 @@
 
     hm.home.packages = [pkgs.watchman];
 
+    cli.editor.languages.jjdescription.language-servers = ["harper-ls" "codebook"];
+    cli.editor.languages.git-commit.language-servers = ["harper-ls" "codebook"];
+
     core.impermanence.hm.files = lib.mkIf config.cli.vcs.gh.enable [".config/gh/hosts.yml"];
   };
 }
