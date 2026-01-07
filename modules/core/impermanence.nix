@@ -5,14 +5,11 @@
   config,
   ...
 }: {
-  inputs = {
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    impermanence.url = "github:nix-community/impermanence";
+  inputs.disko = {
+    url = "github:nix-community/disko";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.impermanence.url = "github:nix-community/impermanence";
 
   imports = [
     (lib.mkAliasOptionModule ["core" "impermanence" "os"] ["os" "environment" "persistence" "/persist/system"])
@@ -24,14 +21,12 @@
   ];
   hmImports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  options.core.impermanence = {
-    enable = lib.mkEnableOption "automatic system cleanup using impermanence";
+  options.core.impermanence.enable = lib.mkEnableOption "automatic system cleanup using impermanence";
 
-    disk = lib.mkOption {
-      type = lib.types.uniq lib.types.str;
-      example = "sda";
-      description = "The disk for disko to manager and to use for impermanence.";
-    };
+  options.core.impermanence.disk = lib.mkOption {
+    type = lib.types.uniq lib.types.str;
+    example = "sda";
+    description = "The disk for disko to manager and to use for impermanence.";
   };
 
   config = lib.mkMerge [
@@ -39,72 +34,52 @@
       assertions = [{assertion = config.core.impermanence.disk != null;}];
 
       os = {
-        disko.devices = {
-          disk.main = {
-            device = "/dev/${config.core.impermanence.disk}";
-            type = "disk";
-            content = {
-              type = "gpt";
-              partitions = {
-                boot = {
-                  name = "boot";
-                  size = "1M";
-                  type = "EF02";
-                };
-                esp = {
-                  name = "ESP";
-                  size = "500M";
-                  type = "EF00";
-                  content = {
-                    type = "filesystem";
-                    format = "vfat";
-                    mountOptions = ["umask=0077"];
-                    mountpoint = "/boot";
-                  };
-                };
-                swap = {
-                  size = "4G";
-                  content = {
-                    type = "swap";
-                    resumeDevice = true;
-                  };
-                };
-                root = {
-                  name = "root";
-                  size = "100%";
-                  content = {
-                    type = "lvm_pv";
-                    vg = "root_vg";
-                  };
-                };
+        disko.devices.disk.main = {
+          device = "/dev/${config.core.impermanence.disk}";
+          type = "disk";
+          content.type = "gpt";
+          content.partitions = {
+            boot = {
+              name = "boot";
+              size = "1M";
+              type = "EF02";
+            };
+            esp = {
+              name = "ESP";
+              size = "500M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountOptions = ["umask=0077"];
+                mountpoint = "/boot";
               };
             };
+            swap = {
+              size = "4G";
+              content.type = "swap";
+              content.resumeDevice = true;
+            };
+            root = {
+              name = "root";
+              size = "100%";
+              content.type = "lvm_pv";
+              content.vg = "root_vg";
+            };
           };
-          lvm_vg.root_vg = {
-            type = "lvm_vg";
-            lvs.root = {
-              size = "100%FREE";
-              content = {
-                type = "btrfs";
-                extraArgs = ["-f"];
-                subvolumes = {
-                  "/root".mountpoint = "/";
-                  "/persist" = {
-                    mountOptions = [
-                      "subvol=persist"
-                      "noatime"
-                    ];
-                    mountpoint = "/persist";
-                  };
-                  "/nix" = {
-                    mountOptions = [
-                      "subvol=nix"
-                      "noatime"
-                    ];
-                    mountpoint = "/nix";
-                  };
-                };
-              };
+        };
+        disko.devices.lvm_vg.root_vg = {
+          type = "lvm_vg";
+          lvs.root.size = "100%FREE";
+          lvs.root.content = {
+            type = "btrfs";
+            extraArgs = ["-f"];
+            subvolumes = {
+              "/root".mountpoint = "/";
+              "/persist".mountOptions = ["subvol=persist" "noatime"];
+              "/persist".mountpoint = "/persist";
+              "/nix".mountOptions = ["subvol=nix" "noatime"];
+              "/nix".mountpoint = "/nix";
             };
           };
         };
@@ -154,27 +129,23 @@
 
         programs.nh = {
           enable = true;
-          clean = {
-            enable = true;
-            extraArgs = "-k 5 -K 30d";
-          };
+          clean.enable = true;
+          clean.extraArgs = "-k 5 -K 30d";
         };
 
         systemd.tmpfiles.rules = lib.mkIf useHm ["d /persist/home 0700 noah users -"];
         programs.fuse.userAllowOther = lib.mkIf useHm true;
       };
 
-      hm.home.persistence."/persist/home" = {
-        allowOther = true;
-        directories = [
-          "Downloads"
-          "Music"
-          "Pictures"
-          "Documents"
-          "Videos"
-          "projects"
-        ];
-      };
+      hm.home.persistence."/persist/home".allowOther = true;
+      hm.home.persistence."/persist/home".directories = [
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Documents"
+        "Videos"
+        "projects"
+      ];
     })
     (lib.mkIf (!config.core.impermanence.enable) {
       os.environment.persistence."/persist/system".enable = false;

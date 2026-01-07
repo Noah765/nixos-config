@@ -14,19 +14,17 @@
 
   desktop.enable = false;
 
-  os = {
-    isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
+  os.isoImage.makeBiosBootable = false; # Make sure the firmware for an EFI install is available
 
-    # Make sure that the install script doesn't exceed the file descriptor limit
-    security.pam.loginLimits = [
-      {
-        domain = "*";
-        type = "soft";
-        item = "nofile";
-        value = 4096;
-      }
-    ];
-  };
+  # Make sure that the install script doesn't exceed the file descriptor limit
+  os.security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = 4096;
+    }
+  ];
 
   hm.home.packages = with pkgs; [
     (import ./wifi-script.nix pkgs)

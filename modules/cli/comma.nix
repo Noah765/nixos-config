@@ -4,10 +4,8 @@
   config,
   ...
 }: {
-  inputs.nix-index-database = {
-    url = "github:nix-community/nix-index-database";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  inputs.nix-index-database.url = "github:nix-community/nix-index-database";
+  inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
   osImports = [inputs.nix-index-database.nixosModules.nix-index];
 

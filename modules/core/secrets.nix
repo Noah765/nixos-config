@@ -9,8 +9,8 @@
   config = lib.mkIf config.core.secrets.enable {
     # See https://github.com/drduh/YubiKey-Guide
     # TODO Integrate https://github.com/maximbaz/yubikey-touch-detector into my DE
-    hm = {
-      programs.gpg = {
+    hm.programs = {
+      gpg = {
         enable = true;
         mutableKeys = false;
         mutableTrust = false;
@@ -27,17 +27,19 @@
           throw-keyids = true;
         };
       };
-      services.gpg-agent = {
-        enable = true;
-        enableSshSupport = true;
-        defaultCacheTtl = 60;
-        maxCacheTtl = 120;
-        noAllowExternalCache = true;
-        pinentry.package = pkgs.pinentry-curses;
-      };
 
-      programs.password-store.enable = true;
+      password-store.enable = true;
     };
+
+    hm.services.gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      defaultCacheTtl = 60;
+      maxCacheTtl = 120;
+      noAllowExternalCache = true;
+      pinentry.package = pkgs.pinentry-curses;
+    };
+
     core.impermanence.hm.directories = [".local/share/password-store"];
 
     # TODO
