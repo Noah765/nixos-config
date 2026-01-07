@@ -1,6 +1,4 @@
-{pkgs, ...}: {
-  # TODO Disable global flake registry?
-
+{
   osImports = [./hardware-configuration.nix];
 
   core = {
@@ -25,16 +23,4 @@
 
   apps.slack.enable = true;
   apps.steam.enable = true;
-
-  hm.home.packages = with pkgs; [
-    prismlauncher
-
-    discord
-  ];
-
-  core.impermanence.hm.directories = [".local/share/PrismLauncher" ".config/discord"];
-
-  core.user.groups = ["dialout"];
-
-  desktop.hyprland.settings.bind = ["Super, M, exec, uwsm-app prismlauncher"];
 }
