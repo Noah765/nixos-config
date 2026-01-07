@@ -65,7 +65,7 @@
     windowOpacity = 0.75;
 
     wallpaper = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/refs/heads/main/nature/mist_forest_2.png";
+      url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/main/nature/mist_forest_2.png";
       hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
     };
 
