@@ -19,6 +19,7 @@
     core.impermanence.hm.files = [
       ".local/share/qutebrowser/cmd-history"
       ".local/share/qutebrowser/history.sqlite"
+      ".local/share/qutebrowser/state"
       ".local/share/qutebrowser/webengine/Cookies"
     ];
 
