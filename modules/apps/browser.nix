@@ -23,11 +23,16 @@
   ];
   adblockListNames = map (x: "qutebrowser-" + lib.nameFromURL x ".") adblockLists;
 in {
-  inputs = lib.listToAttrs (map (x: {
-    name = x.snd;
-    value.url = "file+${x.fst}";
-    value.flake = false;
-  }) (lib.zipLists adblockLists adblockListNames));
+  inputs =
+    lib.listToAttrs (map (x: {
+      name = x.snd;
+      value.url = "file+${x.fst}";
+      value.flake = false;
+    }) (lib.zipLists adblockLists adblockListNames))
+    // {
+      qutebrowser-greasemonkey-scripts.url = "github:afreakk/greasemonkeyscripts";
+      qutebrowser-greasemonkey-scripts.flake = false;
+    };
 
   options.apps.browser.enable = lib.mkEnableOption "qutebrowser";
 
@@ -60,31 +65,14 @@ in {
       in
         pkgs.runCommand "qutebrowser-adblock-cache" {src = list;} builder;
 
+      "qutebrowser/greasemonkey".source = inputs.qutebrowser-greasemonkey-scripts;
+
       "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.en-us.dictFileName}".source = pkgs.hunspellDictsChromium.en-us;
       "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.de-de.dictFileName}".source = pkgs.hunspellDictsChromium.de-de;
     };
 
     hm.programs.qutebrowser = {
       enable = true;
-
-      greasemonkey = [
-        (pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/reddit_adblock.js";
-          hash = "sha256-KmCXL4GrZtwPLRyAvAxADpyjbdY5UFnS/XKZFKtg7tk=";
-        })
-        (pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/youtube_adblock.js";
-          hash = "sha256-AyD9VoLJbKPfqmDEwFIEBMl//EIV/FYnZ1+ona+VU9c=";
-        })
-        (pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/youtube_shorts_block.js";
-          hash = "sha256-e9qCSAuEMoNivepy7W/W5F9D1PJZrPAJoejsBi9ejiY=";
-        })
-        (pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/master/youtube_sponsorblock.js";
-          hash = "sha256-nwNade1oHP+w5LGUPJSgAX1+nQZli4Rhe8FFUoF5mLE=";
-        })
-      ];
 
       keyBindings = {
         normal."<Ctrl-o>" = "tab-focus stack-prev";

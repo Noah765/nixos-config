@@ -79,6 +79,10 @@
       url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt";
       flake = false;
     };
+    qutebrowser-greasemonkey-scripts = {
+      url = "github:afreakk/greasemonkeyscripts";
+      flake = false;
+    };
     qutebrowser-privacy = {
       url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt";
       flake = false;

@@ -910,6 +910,22 @@
         "url": "https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt"
       }
     },
+    "qutebrowser-greasemonkey-scripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748528987,
+        "narHash": "sha256-yNf024r2LVVafl3KjoPDa1ErrAKkuflBVnDOLYkSVoE=",
+        "owner": "afreakk",
+        "repo": "greasemonkeyscripts",
+        "rev": "69df2b309eae2af18bb1d1ff1790f1d92d8e6a5d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "afreakk",
+        "repo": "greasemonkeyscripts",
+        "type": "github"
+      }
+    },
     "qutebrowser-privacy": {
       "flake": false,
       "locked": {
@@ -992,6 +1008,7 @@
         "qutebrowser-experimental": "qutebrowser-experimental",
         "qutebrowser-fanboy-annoyance": "qutebrowser-fanboy-annoyance",
         "qutebrowser-filters": "qutebrowser-filters",
+        "qutebrowser-greasemonkey-scripts": "qutebrowser-greasemonkey-scripts",
         "qutebrowser-privacy": "qutebrowser-privacy",
         "qutebrowser-quick-fixes": "qutebrowser-quick-fixes",
         "qutebrowser-serverlist": "qutebrowser-serverlist",
