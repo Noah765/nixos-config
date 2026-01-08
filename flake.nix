@@ -43,8 +43,60 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    qutebrowser-blocked-hosts = {
-      url = "file+https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+    qutebrowser-abp-filters-anti-cv = {
+      url = "file+https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt";
+      flake = false;
+    };
+    qutebrowser-annoyances = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.min.txt";
+      flake = false;
+    };
+    qutebrowser-badware = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt";
+      flake = false;
+    };
+    qutebrowser-easylist = {
+      url = "file+https://easylist.to/easylist/easylist.txt";
+      flake = false;
+    };
+    qutebrowser-easylistgermany = {
+      url = "file+https://easylist.to/easylistgermany/easylistgermany.txt";
+      flake = false;
+    };
+    qutebrowser-easyprivacy = {
+      url = "file+https://easylist.to/easylist/easyprivacy.txt";
+      flake = false;
+    };
+    qutebrowser-experimental = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/experimental.min.txt";
+      flake = false;
+    };
+    qutebrowser-fanboy-annoyance = {
+      url = "file+https://secure.fanboy.co.nz/fanboy-annoyance.txt";
+      flake = false;
+    };
+    qutebrowser-filters = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt";
+      flake = false;
+    };
+    qutebrowser-privacy = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt";
+      flake = false;
+    };
+    qutebrowser-quick-fixes = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt";
+      flake = false;
+    };
+    qutebrowser-serverlist = {
+      url = "file+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&mimetype=plaintext";
+      flake = false;
+    };
+    qutebrowser-unbreak = {
+      url = "file+https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt";
+      flake = false;
+    };
+    qutebrowser-urlhaus-filter-vivaldi-online = {
+      url = "file+https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-vivaldi-online.txt";
       flake = false;
     };
     stylix = {

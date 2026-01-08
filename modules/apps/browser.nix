@@ -4,9 +4,30 @@
   pkgs,
   config,
   ...
-}: {
-  inputs.qutebrowser-blocked-hosts.url = "file+https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-  inputs.qutebrowser-blocked-hosts.flake = false;
+}: let
+  adblockLists = [
+    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
+    "https://easylist.to/easylist/easylist.txt"
+    "https://easylist.to/easylist/easyprivacy.txt"
+    "https://easylist.to/easylistgermany/easylistgermany.txt"
+    "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-vivaldi-online.txt"
+    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&mimetype=plaintext"
+    "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.min.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/experimental.min.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt"
+    "https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt"
+  ];
+  adblockListNames = map (x: "qutebrowser-" + lib.nameFromURL x ".") adblockLists;
+in {
+  inputs = lib.listToAttrs (map (x: {
+    name = x.snd;
+    value.url = "file+${x.fst}";
+    value.flake = false;
+  }) (lib.zipLists adblockLists adblockListNames));
 
   options.apps.browser.enable = lib.mkEnableOption "qutebrowser";
 
@@ -24,7 +45,21 @@
     ];
 
     hm.xdg.dataFile = {
-      "qutebrowser/blocked-hosts".source = inputs.qutebrowser-blocked-hosts;
+      "qutebrowser/adblock-cache.dat".source = let
+        list = pkgs.concatText "qutebrowser-adblock-list" (map (x: inputs.${x}) adblockListNames);
+
+        builder = pkgs.writers.writePython3 "qutebrowser-adblock-cache-builder" {libraries = [pkgs.python3Packages.adblock];} ''
+          import adblock
+          import os
+
+          filter_set = adblock.FilterSet()
+          with open(os.environ['src']) as adblock_list:
+              filter_set.add_filter_list(adblock_list.read())
+          adblock.Engine(filter_set).serialize_to_file(os.environ['out'])
+        '';
+      in
+        pkgs.runCommand "qutebrowser-adblock-cache" {src = list;} builder;
+
       "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.en-us.dictFileName}".source = pkgs.hunspellDictsChromium.en-us;
       "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.de-de.dictFileName}".source = pkgs.hunspellDictsChromium.de-de;
     };
@@ -76,7 +111,6 @@
         };
         confirm_quit = ["downloads"];
         content = {
-          blocking.method = "hosts";
           fullscreen.overlay_timeout = 0;
           headers.accept_language = "en-US,en;q=0.9,de-DE,de;q=0.8";
           local_content_can_access_remote_urls = true;
