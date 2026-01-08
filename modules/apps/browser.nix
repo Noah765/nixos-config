@@ -88,12 +88,10 @@
         fileselect.folder.command = [
           "kitty"
           "--class=termfilechooser"
-          (lib.getExe pkgs.nushell)
-          "-c"
-          (lib.join "; " [
-            "yazi --cwd-file {} --chooser-file {}"
-            "open {} | lines | first | if ($in | path type) == dir { $in } else { $in | path dirname } | save -f {}"
-          ])
+          (toString (pkgs.writers.writeNu "qutebrowser-select-folder" ''
+            yazi --cwd-file {} --chooser-file {}
+            open {} | lines | first | if ($in | path type) == dir { $in } else { $in | path dirname } | save -f {}
+          ''))
         ];
         hints.chars = "abcdefghijklmnopqrstuvwxyz";
         scrolling.bar = "never";

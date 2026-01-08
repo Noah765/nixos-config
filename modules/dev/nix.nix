@@ -8,7 +8,11 @@
   options.dev.nix.enable = lib.mkEnableOption "Nix development tools";
 
   config = lib.mkIf config.dev.nix.enable {
-    hm.home.packages = [(pkgs.writeShellScriptBin "nixc" "${lib.getExe pkgs.deadnix}; ${lib.getExe pkgs.statix} check")];
+    hm.home.packages = lib.singleton (pkgs.writers.writeNuBin "nixc" ''
+      ${lib.getExe pkgs.deadnix}
+      ${lib.getExe pkgs.statix} check
+      try { alejandra --quiet . }
+    '');
 
     cli.vcs.jj.fix.nix = {
       command = "nix fmt --quiet --quiet --quiet -- --quiet";

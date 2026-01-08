@@ -30,7 +30,7 @@
         remotes.origin.auto-track-bookmarks = "glob:*";
         remotes.upstream.auto-track-bookmarks = "glob:{main,master}";
         fsmonitor.backend = "watchman";
-        aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (lib.getExe pkgs.nushell) (pkgs.writeText "jj-${name}" script)]) {
+        aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (pkgs.writers.writeNu "jj-${name}" script)]) {
           push = ''
             def main [--revision (-r) = '@'] {
               jj bookmark move main -t $revision

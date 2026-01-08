@@ -37,8 +37,7 @@
     os.services.udev.extraRules = ''ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${lib.getExe' pkgs.coreutils "chmod"} a+w /sys/class/backlight/%k/brightness"'';
 
     desktop.hyprland.settings.binde = let
-      increase = pkgs.writeScriptBin "brightness-increase" ''
-        #! ${lib.getExe pkgs.nushell}
+      increase = pkgs.writers.writeNu "brightness-increase" ''
         if ('/sys/class/backlight/intel_backlight/brightness' | path type) != 'file' {
           hyprctl hyprsunset gamma +10
           return
@@ -48,8 +47,7 @@
         if $current == $step * 10 { return }
         (($current + 1) / $step + 1 | math floor) * $step | math floor | save -f /sys/class/backlight/intel_backlight/brightness
       '';
-      decrease = pkgs.writeScriptBin "brightness-decrease" ''
-        #! ${lib.getExe pkgs.nushell}
+      decrease = pkgs.writers.writeNu "brightness-decrease" ''
         if ('/sys/class/backlight/intel_backlight/brightness' | path type) != 'file' {
           hyprctl hyprsunset gamma -10
           return
@@ -60,10 +58,10 @@
         ($current / $step - 1 | math ceil) * $step | math floor | save -f /sys/class/backlight/intel_backlight/brightness
       '';
     in [
-      "Super_Shift, I, exec, ${lib.getExe increase}"
-      "Super_Shift, D, exec, ${lib.getExe decrease}"
-      ", XF86MonBrightnessUp, exec, ${lib.getExe increase}"
-      ", XF86MonBrightnessDown, exec, ${lib.getExe decrease}"
+      "Super_Shift, I, exec, ${increase}"
+      "Super_Shift, D, exec, ${decrease}"
+      ", XF86MonBrightnessUp, exec, ${increase}"
+      ", XF86MonBrightnessDown, exec, ${decrease}"
     ];
   };
 }
