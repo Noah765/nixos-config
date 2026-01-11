@@ -4,35 +4,15 @@
   pkgs,
   config,
   ...
-}: let
-  adblockLists = [
-    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-    "https://easylist.to/easylist/easylist.txt"
-    "https://easylist.to/easylist/easyprivacy.txt"
-    "https://easylist.to/easylistgermany/easylistgermany.txt"
-    "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-vivaldi-online.txt"
-    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&mimetype=plaintext"
-    "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.min.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/experimental.min.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt"
-    "https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt"
-  ];
-  adblockListNames = map (x: "qutebrowser-" + lib.nameFromURL x ".") adblockLists;
-in {
-  inputs =
-    lib.listToAttrs (map (x: {
-      name = x.snd;
-      value.url = "file+${x.fst}";
-      value.flake = false;
-    }) (lib.zipLists adblockLists adblockListNames))
-    // {
-      qutebrowser-greasemonkey-scripts.url = "github:afreakk/greasemonkeyscripts";
-      qutebrowser-greasemonkey-scripts.flake = false;
-    };
+}: {
+  inputs.ublock-origin-assets = {
+    url = "github:uBlockOrigin/uAssets";
+    flake = false;
+  };
+  inputs.greasemonkey-scripts = {
+    url = "github:afreakk/greasemonkeyscripts";
+    flake = false;
+  };
 
   options.apps.browser.enable = lib.mkEnableOption "qutebrowser";
 
@@ -53,22 +33,38 @@ in {
     ];
 
     hm.xdg.dataFile = {
-      "qutebrowser/adblock-cache.dat".source = let
-        list = pkgs.concatText "qutebrowser-adblock-list" (map (x: inputs.${x}) adblockListNames);
+      "qutebrowser/adblock-cache.dat".source =
+        pkgs.runCommand "qutebrowser-adblock-cache" {
+          srcs = map (x: "${inputs.ublock-origin-assets}/${x}") [
+            "filters/annoyances-cookies.txt"
+            "filters/annoyances-others.txt"
+            "filters/badware.txt"
+            "filters/filters.txt"
+            "filters/privacy.txt"
+            "filters/quick-fixes.txt"
+            "filters/unbreak.txt"
+            "thirdparties/easylist/easylist-annoyances.txt"
+            "thirdparties/easylist/easylist.txt"
+            "thirdparties/easylist/easyprivacy.txt"
+            "thirdparties/pgl.yoyo.org/as/serverlist"
+            "thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
+          ];
+        } (
+          pkgs.writers.writePython3 "qutebrowser-adblock-cache-builder" {libraries = [pkgs.python3Packages.adblock];} ''
+            import adblock
+            import os
 
-        builder = pkgs.writers.writePython3 "qutebrowser-adblock-cache-builder" {libraries = [pkgs.python3Packages.adblock];} ''
-          import adblock
-          import os
+            filter_set = adblock.FilterSet()
 
-          filter_set = adblock.FilterSet()
-          with open(os.environ['src']) as adblock_list:
-              filter_set.add_filter_list(adblock_list.read())
-          adblock.Engine(filter_set).serialize_to_file(os.environ['out'])
-        '';
-      in
-        pkgs.runCommand "qutebrowser-adblock-cache" {src = list;} builder;
+            for file in os.environ['srcs'].split(' '):
+                with open(file) as filter_list:
+                    filter_set.add_filter_list(filter_list.read())
 
-      "qutebrowser/greasemonkey".source = inputs.qutebrowser-greasemonkey-scripts;
+            adblock.Engine(filter_set).serialize_to_file(os.environ['out'])
+          ''
+        );
+
+      "qutebrowser/greasemonkey".source = inputs.greasemonkey-scripts;
 
       "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.en-us.dictFileName}".source = pkgs.hunspellDictsChromium.en-us;
       "qutebrowser/qtwebengine_dictionaries/${pkgs.hunspellDictsChromium.de-de.dictFileName}".source = pkgs.hunspellDictsChromium.de-de;

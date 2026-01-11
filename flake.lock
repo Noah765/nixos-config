@@ -247,6 +247,22 @@
         "type": "gitlab"
       }
     },
+    "greasemonkey-scripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748528987,
+        "narHash": "sha256-yNf024r2LVVafl3KjoPDa1ErrAKkuflBVnDOLYkSVoE=",
+        "owner": "afreakk",
+        "repo": "greasemonkeyscripts",
+        "rev": "69df2b309eae2af18bb1d1ff1790f1d92d8e6a5d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "afreakk",
+        "repo": "greasemonkeyscripts",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -815,194 +831,11 @@
         "type": "github"
       }
     },
-    "qutebrowser-abp-filters-anti-cv": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-K1QoCdAjbdJz9vij4FaOmLjihTzz+NwDuDE0jBNkAVc=",
-        "type": "file",
-        "url": "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-      }
-    },
-    "qutebrowser-annoyances": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-Tv6VCgJogxmfsk4swUOdv7UVqo+SwDCdUGZYydQNsBM=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.min.txt"
-      }
-    },
-    "qutebrowser-badware": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-3rHgOVaayNAdMt6x0dlcRX66MhEEudEWWocmtQ8DZE8=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt"
-      }
-    },
-    "qutebrowser-easylist": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-htj0IorJ0qWl7I+oJ0GPirv8bvsf26cN38Fi1ctCmDg=",
-        "type": "file",
-        "url": "https://easylist.to/easylist/easylist.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://easylist.to/easylist/easylist.txt"
-      }
-    },
-    "qutebrowser-easylistgermany": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-5v2ZBcwELGLvq/PCfYSdD3g5BvZpRm5H/bWeU3qYUE4=",
-        "type": "file",
-        "url": "https://easylist.to/easylistgermany/easylistgermany.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://easylist.to/easylistgermany/easylistgermany.txt"
-      }
-    },
-    "qutebrowser-easyprivacy": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-rggAtGArdk3iAbpsxEOx4AAnoBGYzq9+Fs3y2wExsEs=",
-        "type": "file",
-        "url": "https://easylist.to/easylist/easyprivacy.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://easylist.to/easylist/easyprivacy.txt"
-      }
-    },
-    "qutebrowser-experimental": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-FbhV6xNOHhY+AoFKdcD6n7HR9f220ygNB9qlK1fEb+k=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/experimental.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/experimental.min.txt"
-      }
-    },
-    "qutebrowser-fanboy-annoyance": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-QI/8PBKTljzEkNvd7AGdDbCFcRAzvu5g8zPbAHQ9/rc=",
-        "type": "file",
-        "url": "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
-      }
-    },
-    "qutebrowser-filters": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-8WaQsydsirU0mzVivxg1BKRfdlc+cCbu94TjXIb9Soc=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt"
-      }
-    },
-    "qutebrowser-greasemonkey-scripts": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1748528987,
-        "narHash": "sha256-yNf024r2LVVafl3KjoPDa1ErrAKkuflBVnDOLYkSVoE=",
-        "owner": "afreakk",
-        "repo": "greasemonkeyscripts",
-        "rev": "69df2b309eae2af18bb1d1ff1790f1d92d8e6a5d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "afreakk",
-        "repo": "greasemonkeyscripts",
-        "type": "github"
-      }
-    },
-    "qutebrowser-privacy": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-YXD/MmNm0ns/s2rnOmajN2XFladPMjU6+2jp85wz43s=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt"
-      }
-    },
-    "qutebrowser-quick-fixes": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-CCWUZx6ARXVL6LMVaAS6sruzFb/Ezy8c7xxk1i9bxXI=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt"
-      }
-    },
-    "qutebrowser-serverlist": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-oTM/zlVSjLvL2XsXSH8e8XWXirEIZy0xuTnjAeKLF3U=",
-        "type": "file",
-        "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&mimetype=plaintext"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&mimetype=plaintext"
-      }
-    },
-    "qutebrowser-unbreak": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-ELeI6kSXV6+XKyzE7S9zuY8RFaPPc9NCnXDJhzb5DK8=",
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt"
-      }
-    },
-    "qutebrowser-urlhaus-filter-vivaldi-online": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-yrffZbtu+/Y8tQC1IKb7xloObFjDzI9rMhvNlbuDAqc=",
-        "type": "file",
-        "url": "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-vivaldi-online.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-vivaldi-online.txt"
-      }
-    },
     "root": {
       "inputs": {
         "disko": "disko",
         "file-manager-theme": "file-manager-theme",
+        "greasemonkey-scripts": "greasemonkey-scripts",
         "home-manager": "home-manager",
         "hy3": "hy3",
         "hypr-darkwindow": "hypr-darkwindow",
@@ -1012,22 +845,8 @@
         "modulix": "modulix",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_2",
-        "qutebrowser-abp-filters-anti-cv": "qutebrowser-abp-filters-anti-cv",
-        "qutebrowser-annoyances": "qutebrowser-annoyances",
-        "qutebrowser-badware": "qutebrowser-badware",
-        "qutebrowser-easylist": "qutebrowser-easylist",
-        "qutebrowser-easylistgermany": "qutebrowser-easylistgermany",
-        "qutebrowser-easyprivacy": "qutebrowser-easyprivacy",
-        "qutebrowser-experimental": "qutebrowser-experimental",
-        "qutebrowser-fanboy-annoyance": "qutebrowser-fanboy-annoyance",
-        "qutebrowser-filters": "qutebrowser-filters",
-        "qutebrowser-greasemonkey-scripts": "qutebrowser-greasemonkey-scripts",
-        "qutebrowser-privacy": "qutebrowser-privacy",
-        "qutebrowser-quick-fixes": "qutebrowser-quick-fixes",
-        "qutebrowser-serverlist": "qutebrowser-serverlist",
-        "qutebrowser-unbreak": "qutebrowser-unbreak",
-        "qutebrowser-urlhaus-filter-vivaldi-online": "qutebrowser-urlhaus-filter-vivaldi-online",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "ublock-origin-assets": "ublock-origin-assets"
       }
     },
     "stylix": {
@@ -1172,6 +991,22 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "base16-zed",
+        "type": "github"
+      }
+    },
+    "ublock-origin-assets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768211914,
+        "narHash": "sha256-eTNej0WD11nNMI6zqNmgSMTUD0XZWqYxx7NxiV2RPm0=",
+        "owner": "uBlockOrigin",
+        "repo": "uAssets",
+        "rev": "e555082a1c8e27a57ba1744e09240f18d826dc23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "uBlockOrigin",
+        "repo": "uAssets",
         "type": "github"
       }
     },
