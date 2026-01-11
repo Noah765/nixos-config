@@ -20,6 +20,7 @@
         "Brandl DSL Home Winkler a4bb".pskRaw = "ext:winkler";
         Doofkopp.pskRaw = "ext:landgraf";
         smartphone.pskRaw = "ext:smartphone";
+        home.pskRaw = "ext:home";
         eduroam.auth = ''
           key_mgmt=WPA-EAP
           eap=PEAP
