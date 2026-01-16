@@ -50,7 +50,13 @@
         inline-diagnostics.cursor-line = "warning";
       };
 
-      languages.language = lib.mapAttrsToList (name: value: {inherit name;} // value) config.cli.editor.languages;
+      languages.language = lib.mapAttrsToList (name: value: {inherit name;} // value) (lib.recursiveUpdate
+        (lib.genAttrs (lib.map (x: x.name) (lib.importTOML "${pkgs.helix.src}/languages.toml").language) (_: {
+          formatter.command = "treefmt";
+          formatter.args = ["--stdin" "%{buffer_name}"];
+          auto-format = true;
+        }))
+        config.cli.editor.languages);
 
       languages.language-server = {
         harper-ls.config.harper-ls.linters.SpellCheck = false;

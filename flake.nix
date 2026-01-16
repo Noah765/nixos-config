@@ -57,6 +57,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ublock-origin-assets = {
       url = "github:uBlockOrigin/uAssets";
       flake = false;

@@ -11,9 +11,6 @@
 
     core.impermanence.hm.directories = [".cache/typst"];
 
-    dev.formatters.typst.fileExtension = "typ";
-    dev.formatters.typst.command = "typst-fmt";
-
     cli.editor = {
       packages = [pkgs.tinymist];
       settings.keys.normal."C-p" = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
