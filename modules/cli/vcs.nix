@@ -32,8 +32,8 @@
         fix.tools.treefmt.command = ["treefmt" "--quiet" "--stdin" "$path"];
         fix.tools.treefmt.patterns = ["**"];
 
-        remotes.origin.auto-track-bookmarks = "glob:*";
-        remotes.upstream.auto-track-bookmarks = "glob:{main,master}";
+        remotes.origin.auto-track-bookmarks = "*";
+        remotes.upstream.auto-track-bookmarks = "main|master";
 
         fsmonitor.backend = "watchman";
 

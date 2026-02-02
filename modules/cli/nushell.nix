@@ -25,7 +25,7 @@
           // rec {
             PROMPT_COMMAND = lib.hm.nushell.mkNushellInline ''
               {
-                let path = $env.PWD | str replace $nu.home-path '~'
+                let path = $env.PWD | str replace $nu.home-dir '~'
 
                 let in_repo = 0..<($env.PWD | path split | length) | each {|x| $env.PWD | path dirname -n $x } | any { ($in + '/.jj' | path type) == 'dir' }
                 let vcs = if not $in_repo {
@@ -33,13 +33,12 @@
                 } else {
                   ${lib.getExe pkgs.jujutsu} log --revisions '@' --no-graph --ignore-working-copy --color always --template r#'
                     separate(' ',
-                      format_short_change_id_with_hidden_and_divergent_info(self),
-                      format_short_commit_id(commit_id),
+                      format_short_change_id_with_change_offset(self),
                       bookmarks,
                       tags,
                       working_copies,
-                      if(conflict, label('conflict', 'conflict')),
-
+                      format_short_commit_id(commit_id),
+                      format_commit_labels(self),
                       if(empty, empty_commit_marker),
                       if(description,
                         description.first_line(),
@@ -54,7 +53,7 @@
                 $"\n($path)(if $in_repo { ' ' + $vcs })\n($prompt_indicator)"
               }
             '';
-            TRANSIENT_PROMPT_COMMAND = lib.hm.nushell.mkNushellInline "{ $env.PWD | str replace $nu.home-path '~' | $in + '❯' }";
+            TRANSIENT_PROMPT_COMMAND = lib.hm.nushell.mkNushellInline "{ $env.PWD | str replace $nu.home-dir '~' | $in + '❯' }";
             PROMPT_COMMAND_RIGHT = lib.hm.nushell.mkNushellInline "{ let duration = $env.CMD_DURATION_MS | into duration --unit 'ms'; if $duration > 5sec { $duration } }";
             TRANSITIVE_PROMPT_COMMAND_RIGHT = PROMPT_COMMAND_RIGHT;
 
