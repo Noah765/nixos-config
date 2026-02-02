@@ -7,6 +7,8 @@
   options.core.charachorder.enable = lib.mkEnableOption "a keyboard layout for the Charachorder";
 
   config = lib.mkIf config.core.charachorder.enable {
+    core.user.groups = ["dialout"];
+
     desktop.hyprland.settings.input.kb_layout = "cc";
 
     os.services.xserver.xkb.extraLayouts.cc = {
