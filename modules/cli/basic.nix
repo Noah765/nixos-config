@@ -21,15 +21,12 @@
 
       eza.enable = config.cli.basic.eza.enable;
       eza.extraOptions = [
-        "--icons=auto"
+        "--icons"
         "--follow-symlinks"
         "--all"
         "--group-directories-first"
         "--ignore-glob=.jj"
         "--git-ignore"
-        "--group"
-        "--smart-group"
-        "--total-size"
         "--git"
       ];
 
