@@ -25,15 +25,15 @@
           o = "u";
           p = "j";
 
-          a = "overload(alt, n)";
-          s = "overload(meta, r)";
-          d = "overload(control, t)";
-          f = "overload(shift, s)";
+          a = "overloadt(alt, n, 150)";
+          s = "overloadt(meta, r, 150)";
+          d = "overloadt(control, t, 150)";
+          f = "overloadt(shift, s, 150)";
           h = "y";
-          j = "overload(shift, h)";
-          k = "overload(control, a)";
-          l = "overload(meta, e)";
-          ";" = "overload(alt, i)";
+          j = "overloadt(shift, h, 150)";
+          k = "overloadt(control, a, 150)";
+          l = "overloadt(meta, e, 150)";
+          ";" = "overloadt(alt, i, 150)";
 
           z = "q";
           c = "m";
@@ -65,16 +65,16 @@
           o = "$";
           p = "|";
 
-          a = "overload(alt, 1)";
-          s = "overload(meta, 2)";
-          d = "overload(control, 3)";
-          f = "overload(symbolsshift, 4)";
+          a = "overloadt(alt, 1, 150)";
+          s = "overloadt(meta, 2, 150)";
+          d = "overloadt(control, 3, 150)";
+          f = "overloadt(symbolsshift, 4, 150)";
           g = "5";
           h = "6";
-          j = "overload(symbolsshift, 7)";
-          k = "overload(control, 8)";
-          l = "overload(meta, 9)";
-          ";" = "overload(alt, 0)";
+          j = "overloadt(symbolsshift, 7, 150)";
+          k = "overloadt(control, 8, 150)";
+          l = "overloadt(meta, 9, 150)";
+          ";" = "overloadt(alt, 0, 150)";
 
           z = "?";
           x = "*";
