@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./basic.nix
+    ./codex.nix
     ./dart.nix
     ./java.nix
     ./markdown.nix
