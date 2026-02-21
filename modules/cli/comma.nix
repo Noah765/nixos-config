@@ -1,15 +1,13 @@
 {
   lib,
   inputs,
-  config,
   ...
 }: {
-  inputs.nix-index-database.url = "github:nix-community/nix-index-database";
-  inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+  nixos = {config, ...}: {
+    imports = [inputs.nix-index-database.nixosModules.default];
 
-  osImports = [inputs.nix-index-database.nixosModules.nix-index];
+    options.cli.comma.enable = lib.mkEnableOption "comma";
 
-  options.cli.comma.enable = lib.mkEnableOption "comma";
-
-  config.os.programs.nix-index-database.comma.enable = lib.mkIf config.cli.comma.enable true;
+    config.programs.nix-index-database.comma.enable = lib.mkIf config.cli.comma.enable true;
+  };
 }

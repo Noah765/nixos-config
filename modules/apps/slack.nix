@@ -1,13 +1,14 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: {
-  options.apps.slack.enable = lib.mkEnableOption "Slack";
+{lib, ...}: {
+  nixos = {
+    pkgs,
+    config,
+    ...
+  }: {
+    options.apps.slack.enable = lib.mkEnableOption "Slack";
 
-  config = lib.mkIf config.apps.slack.enable {
-    hm.home.packages = [pkgs.slack];
-    core.impermanence.hm.directories = [".config/Slack"];
+    config = lib.mkIf config.apps.slack.enable {
+      hm.home.packages = [pkgs.slack];
+      core.impermanence.hm.directories = [".config/Slack"];
+    };
   };
 }

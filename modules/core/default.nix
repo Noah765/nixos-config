@@ -1,30 +1,15 @@
-{
-  lib,
-  config,
-  ...
-}: {
-  imports = [
-    ./boot.nix
-    ./charachorder.nix
-    ./impermanence.nix
-    ./keyboard.nix
-    ./networking.nix
-    ./nix.nix
-    ./nvidia.nix
-    ./secrets.nix
-    ./time-zone.nix
-    ./user.nix
-  ];
+{lib, ...}: {
+  nixos = {config, ...}: {
+    options.core.enable = lib.mkEnableOption "core programs and services needed for a working NixOS system";
 
-  options.core.enable = lib.mkEnableOption "core programs and services needed for a working NixOS system";
-
-  config.core = lib.mkIf config.core.enable {
-    boot.enable = lib.mkDefault true;
-    impermanence.enable = lib.mkDefault true;
-    networking.enable = lib.mkDefault true;
-    nix.enable = lib.mkDefault true;
-    secrets.enable = lib.mkDefault true;
-    timeZone.enable = lib.mkDefault true;
-    user.enable = lib.mkDefault true;
+    config.core = lib.mkIf config.core.enable {
+      boot.enable = lib.mkDefault true;
+      impermanence.enable = lib.mkDefault true;
+      networking.enable = lib.mkDefault true;
+      nix.enable = lib.mkDefault true;
+      secrets.enable = lib.mkDefault true;
+      timeZone.enable = lib.mkDefault true;
+      user.enable = lib.mkDefault true;
+    };
   };
 }

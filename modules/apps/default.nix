@@ -1,20 +1,10 @@
-{
-  lib,
-  config,
-  ...
-}: {
-  imports = [
-    ./browser.nix
-    ./signal.nix
-    ./slack.nix
-    ./steam.nix
-    ./terminal.nix
-  ];
+{lib, ...}: {
+  nixos = {config, ...}: {
+    options.apps.enable = lib.mkEnableOption "the default apps";
 
-  options.apps.enable = lib.mkEnableOption "the default apps";
-
-  config.apps = lib.mkIf config.apps.enable {
-    browser.enable = lib.mkDefault true;
-    terminal.enable = lib.mkDefault true;
+    config.apps = lib.mkIf config.apps.enable {
+      browser.enable = lib.mkDefault true;
+      terminal.enable = lib.mkDefault true;
+    };
   };
 }

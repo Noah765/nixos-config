@@ -1,38 +1,28 @@
 {
   lib,
   inputs,
-  config,
   ...
 }: {
-  inputs.disko = {
-    url = "github:nix-community/disko";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-  inputs.impermanence = {
-    url = "github:nix-community/impermanence";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.home-manager.follows = "home-manager";
-  };
+  nixos = {config, ...}: {
+    imports = [
+      inputs.disko.nixosModules.default
+      inputs.impermanence.nixosModules.default
+      (lib.mkAliasOptionModule ["core" "impermanence" "os"] ["environment" "persistence" "/persist"])
+      (lib.mkAliasOptionModule ["core" "impermanence" "hm"] ["environment" "persistence" "/persist" "users" "noah"])
+    ];
 
-  imports = [
-    (lib.mkAliasOptionModule ["core" "impermanence" "os"] ["os" "environment" "persistence" "/persist"])
-    (lib.mkAliasOptionModule ["core" "impermanence" "hm"] ["os" "environment" "persistence" "/persist" "users" "noah"])
-  ];
-  osImports = [inputs.disko.nixosModules.default inputs.impermanence.nixosModules.impermanence];
+    options.core.impermanence.enable = lib.mkEnableOption "automatic system cleanup using impermanence";
 
-  options.core.impermanence.enable = lib.mkEnableOption "automatic system cleanup using impermanence";
+    options.core.impermanence.disk = lib.mkOption {
+      type = lib.types.uniq lib.types.str;
+      example = "sda";
+      description = "The disk for disko to manager and to use for impermanence.";
+    };
 
-  options.core.impermanence.disk = lib.mkOption {
-    type = lib.types.uniq lib.types.str;
-    example = "sda";
-    description = "The disk for disko to manager and to use for impermanence.";
-  };
+    config = lib.mkMerge [
+      (lib.mkIf config.core.impermanence.enable {
+        assertions = [{assertion = config.core.impermanence.disk != null;}];
 
-  config = lib.mkMerge [
-    (lib.mkIf config.core.impermanence.enable {
-      assertions = [{assertion = config.core.impermanence.disk != null;}];
-
-      os = {
         disko.devices.disk.main = {
           device = "/dev/${config.core.impermanence.disk}";
           type = "disk";
@@ -54,10 +44,10 @@
                 mountpoint = "/boot";
               };
             };
-            swap = {
-              size = "4G";
-              content.type = "swap";
-              content.resumeDevice = true;
+            swap.size = "4G";
+            swap.content = {
+              type = "swap";
+              resumeDevice = true;
             };
             root = {
               name = "root";
@@ -133,17 +123,15 @@
           ];
         };
 
-        nix.settings.auto-optimise-store = true;
-
         programs.nh = {
           enable = true;
           clean.enable = true;
-          clean.extraArgs = "-k 5 -K 30d";
+          clean.extraArgs = "--keep 5 --keep-since 7d --optimise";
         };
-      };
-    })
-    (lib.mkIf (!config.core.impermanence.enable) {
-      os.environment.persistence."/persist".enable = false;
-    })
-  ];
+      })
+      (lib.mkIf (!config.core.impermanence.enable) {
+        environment.persistence."/persist".enable = false;
+      })
+    ];
+  };
 }
