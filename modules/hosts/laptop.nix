@@ -7,6 +7,7 @@
     imports = [inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490];
 
     core = {
+      bluetooth.enable = true;
       impermanence.disk = "nvme0n1";
       keyboard.enable = true;
       networking.hostName = "laptop";
