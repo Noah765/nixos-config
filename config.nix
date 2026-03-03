@@ -1,6 +1,7 @@
 {
   initialInputs.treefmt.url = "github:numtide/treefmt-nix";
   initialInputs.treefmt.inputs.nixpkgs.follows = "nixpkgs";
+  initialInputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
   defaultHmUsername = "noah";
 

@@ -1,5 +1,5 @@
-{
-  osImports = [./hardware-configuration.nix];
+{inputs, ...}: {
+  osImports = [./hardware-configuration.nix inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490];
 
   core = {
     impermanence.disk = "nvme0n1";
