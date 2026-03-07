@@ -39,7 +39,7 @@
 
         aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (pkgs.writers.writeNu "jj-${name}" script)]) {
           push = ''
-            def main [--revision (-r) = '@'] {
+            def main [revision: string = '@'] {
               jj bookmark move main -t $revision
               jj git push
             }
