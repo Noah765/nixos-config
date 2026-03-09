@@ -15,8 +15,6 @@
     apps.steam.enable = true;
     apps.signal.enable = true;
 
-    cli.installer.enable = true;
-
     dev = {
       dart.enable = true;
       java.enable = true;
