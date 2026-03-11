@@ -31,13 +31,14 @@
 
         services.hyprpaper.settings.splash = false;
 
-        wayland.windowManager.hyprland = {
+        wayland.windowManager.hyprland = let
+          plugins =
+            [inputs.hy3.packages.${pkgs.stdenv.system}.default inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.default]
+            ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.default;
+        in {
           enable = true;
           systemd.enable = false;
-
-          plugins =
-            [inputs.hy3.packages.${pkgs.stdenv.system}.hy3 inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.hyprland-easymotion]
-            ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.Hypr-DarkWindow;
+          inherit plugins;
 
           settings = {
             exec-once = lib.getExe pkgs.hyprnotify;
@@ -70,13 +71,20 @@
               hide_on_key_press = true;
             };
 
-            ecosystem.no_update_news = true;
-            ecosystem.no_donation_nag = true;
+            ecosystem = {
+              no_update_news = true;
+              no_donation_nag = true;
+              enforce_permissions = true;
+            };
 
             windowrule = lib.mkIf (config.theme.windowOpacity != 1) [
               "match:fullscreen false, darkwindow:shade opacity"
               "match:fullscreen_state_internal 1, darkwindow:shade opacity"
             ];
+
+            permission =
+              map (x: "${lib.escapeRegex x}, screencopy, allow") [(lib.getExe pkgs.hyprpicker) (lib.getExe pkgs.grim)]
+              ++ map (x: lib.escapeRegex "${x}/lib/lib${x.pname}.so" + ", plugin, allow") plugins;
 
             plugin.easymotion = {
               textsize = 30;
