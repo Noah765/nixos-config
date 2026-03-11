@@ -27,6 +27,8 @@
             log-word-wrap = true;
           };
 
+          templates.draft_commit_description = "builtin_draft_commit_description_with_diff";
+
           # TODO diff editor and merge tool
 
           fix.tools.treefmt.command = ["treefmt" "--quiet" "--stdin" "$path"];
@@ -93,11 +95,12 @@
         gh.enable = config.cli.vcs.gh.enable;
       };
 
-      hm.home.packages = [pkgs.watchman];
+      hm.home.packages = lib.mkIf config.cli.vcs.jj.enable [pkgs.watchman];
 
-      cli.editor.languages.jjdescription.language-servers = ["harper-ls" "codebook"];
-      cli.editor.languages.git-commit.language-servers = ["harper-ls" "codebook"];
+      cli.editor.languages.jjdescription.language-servers = lib.mkIf config.cli.vcs.jj.enable ["harper-ls" "codebook"];
+      cli.editor.languages.git-commit.language-servers = lib.mkIf config.cli.vcs.git.enable ["harper-ls" "codebook"];
 
+      core.impermanence.hm.directories = lib.mkIf config.cli.vcs.jj.enable [".config/jj/repos"];
       core.impermanence.hm.files = lib.mkIf config.cli.vcs.gh.enable [".config/gh/hosts.yml"];
     };
   };

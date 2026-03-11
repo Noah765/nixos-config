@@ -10,11 +10,11 @@
     greasemonkey-scripts.flake = false;
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    hy3.url = "github:outfoxxed/hy3/hl0.53.0";
+    hy3.url = "github:outfoxxed/hy3/hl0.54.2";
     hy3.inputs.hyprland.follows = "hyprland";
-    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.53.1";
+    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.54.2";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
-    hyprland.url = "github:hyprwm/Hyprland/v0.53.1";
+    hyprland.url = "github:hyprwm/Hyprland/v0.54.2";
     hyprland-easymotion.url = "github:zakk4223/hyprland-easymotion";
     hyprland-easymotion.inputs = {
       hyprland.follows = "hyprland";
