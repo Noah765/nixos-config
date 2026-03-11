@@ -18,8 +18,10 @@
 
       nixpkgs.config.allowUnfree = true;
 
-      hm.programs.nh.enable = true;
-      hm.programs.nh.flake = "/etc/nixos";
+      hm.programs.nh = {
+        enable = true;
+        flake = "/etc/nixos";
+      };
     };
   };
 }

@@ -728,6 +728,26 @@
         "type": "github"
       }
     },
+    "nestix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773302293,
+        "narHash": "sha256-9IHp7WGOHTBmrBs+tM2ziFEULKIhD89lxfhbHyzbY7Y=",
+        "owner": "Noah765",
+        "repo": "nestix",
+        "rev": "0953d468eb1cdaec54858780bd0a28bc989d597d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Noah765",
+        "repo": "nestix",
+        "type": "github"
+      }
+    },
     "nix-filter": {
       "locked": {
         "lastModified": 1731533336,
@@ -871,6 +891,7 @@
         "hyprland-easymotion": "hyprland-easymotion",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
+        "nestix": "nestix",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",

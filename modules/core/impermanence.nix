@@ -123,10 +123,10 @@
           ];
         };
 
-        programs.nh = {
+        programs.nh.enable = true;
+        programs.nh.clean = {
           enable = true;
-          clean.enable = true;
-          clean.extraArgs = "--keep 5 --keep-since 7d --optimise";
+          extraArgs = "--keep 5 --keep-since 7d --optimise";
         };
       })
       (lib.mkIf (!config.core.impermanence.enable) {
