@@ -22,6 +22,7 @@
       qml.enable = true;
       rust.enable = true;
       typst.enable = true;
+      verilog.enable = true;
     };
   };
 
