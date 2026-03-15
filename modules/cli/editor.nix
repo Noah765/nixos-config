@@ -68,6 +68,7 @@
       };
 
       hm.xdg.configFile."codebook/codebook.toml".source = (pkgs.formats.toml {}).generate "codebook.toml" {dictionaries = ["en_us" "en_gb" "de"];};
+      core.impermanence.hm.directories = [".local/share/codebook/cache"];
     };
   };
 }
