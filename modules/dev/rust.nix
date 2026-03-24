@@ -18,11 +18,8 @@
           assist.preferSelf = true;
           check.command = "clippy";
           completion.hideDeprecated = true;
-          completion.termSearch.enable = true;
-          diagnostics.styleLints.enable = true;
           gotoImplementations.filterAdjacentDerives = true;
           hover.show.traitAssocItems = 5;
-          imports.preferPrelude = true;
           references.excludeImports = true;
           references.excludeTests = true;
         };
