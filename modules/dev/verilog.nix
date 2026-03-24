@@ -10,6 +10,7 @@
       packages = [pkgs.verible];
       languages.verilog.language-servers = ["verible-verilog-ls"];
       languageServers.verible-verilog-ls.command = "verible-verilog-ls";
+      languageServers.verible-verilog-ls.args = ["--rules=-always-comb,-explicit-parameter-storage-type"];
     };
   };
 }
