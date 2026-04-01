@@ -148,6 +148,9 @@
             "Super, C, exec, ${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive"
             "Super, R, exec, ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\""
 
+            "Super_Ctrl, T, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
             "Super_Alt, S, exec, systemctl suspend"
             "Super_Alt, P, exec, systemctl poweroff"
             "Super_Alt, R, exec, systemctl reboot"
@@ -159,12 +162,10 @@
             "Super, D, resizeactive, -10% 0"
             "Super_Alt, D, resizeactive, 0 -10%"
 
-            "Super_Ctrl, T, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
             "Super_Ctrl, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
             "Super_Ctrl, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
             "Super_Ctrl_Shift, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
             "Super_Ctrl_Shift, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
-            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
             ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
             "Shift, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
