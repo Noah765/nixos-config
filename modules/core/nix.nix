@@ -7,8 +7,8 @@
     options.core.nix.enable = lib.mkEnableOption "the Nix language";
 
     config = lib.mkIf config.core.nix.enable {
-      system.stateVersion = "24.11";
-      hm.home.stateVersion = "24.11";
+      system.stateVersion = "26.05";
+      hm.home.stateVersion = "26.05";
 
       nix = {
         settings.experimental-features = ["nix-command" "flakes"];

@@ -51,7 +51,7 @@
         };
 
         languages.language = lib.mapAttrsToList (name: value: {inherit name;} // value) (lib.recursiveUpdate
-          (lib.genAttrs (lib.map (x: x.name) (lib.importTOML "${pkgs.helix.src}/languages.toml").language) (_: {
+          (lib.genAttrs (lib.map (x: x.name) (lib.importTOML "${pkgs.helix-unwrapped.src}/languages.toml").language) (_: {
             formatter.command = "treefmt";
             formatter.args = ["--stdin" "%{buffer_name}"];
             auto-format = true;
