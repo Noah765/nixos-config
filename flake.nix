@@ -15,11 +15,6 @@
     hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.54.2";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
     hyprland.url = "github:hyprwm/Hyprland/v0.54.2";
-    hyprland-easymotion.url = "github:zakk4223/hyprland-easymotion";
-    hyprland-easymotion.inputs = {
-      hyprland.follows = "hyprland";
-      nixpkgs.follows = "hyprland/nixpkgs";
-    };
     impermanence.url = "github:nix-community/impermanence";
     impermanence.inputs = {
       home-manager.follows = "home-manager";

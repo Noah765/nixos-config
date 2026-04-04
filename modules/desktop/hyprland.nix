@@ -33,7 +33,7 @@
 
         wayland.windowManager.hyprland = let
           plugins =
-            [inputs.hy3.packages.${pkgs.stdenv.system}.default inputs.hyprland-easymotion.packages.${pkgs.stdenv.system}.default]
+            [inputs.hy3.packages.${pkgs.stdenv.system}.default]
             ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.default;
         in {
           enable = true;
@@ -86,18 +86,11 @@
               map (x: "${lib.escapeRegex x}, screencopy, allow") [(lib.getExe pkgs.hyprpicker) (lib.getExe pkgs.grim)]
               ++ map (x: lib.escapeRegex "${x}/lib/lib${x.pname}.so" + ", plugin, allow") plugins;
 
-            plugin.easymotion = {
-              textsize = 30;
-              textcolor = "rgb(${colors.base05})";
-              bgcolor = "rgb(${colors.base01})";
-              textpadding = 10;
-            };
+            plugin.darkwindow.load_shaders = "chromakey";
 
-            plugin.darkwindow = {
-              load_shaders = "chromakey";
-
-              "shader[opacity]".from = "chromakey";
-              "shader[opacity]".args = lib.join " " (lib.mapAttrsToList (n: v: "${n}=${toString v}") {
+            plugin.darkwindow."shader[opacity]" = {
+              from = "chromakey";
+              args = lib.join " " (lib.mapAttrsToList (n: v: "${n}=${toString v}") {
                 bkg = "[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}]";
                 similarity = 1;
                 targetOpacity = config.theme.windowOpacity;
@@ -114,7 +107,6 @@
               "Super, J, hy3:movefocus, d"
               "Super, K, hy3:movefocus, u"
               "Super, L, hy3:movefocus, r"
-              "Super, W, easymotion, action:hyprctl dispatch focuswindow address:{}"
 
               "Super_Shift, H, hy3:movewindow, l"
               "Super_Shift, J, hy3:movewindow, d"

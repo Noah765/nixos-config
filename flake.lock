@@ -435,30 +435,6 @@
         "type": "github"
       }
     },
-    "hyprland-easymotion": {
-      "inputs": {
-        "hyprland": [
-          "hyprland"
-        ],
-        "nixpkgs": [
-          "hyprland",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772311857,
-        "narHash": "sha256-vp3/bkS4hjpSVjkh8e6rR/EfNxl4BBQxXk9m8HusCVU=",
-        "owner": "zakk4223",
-        "repo": "hyprland-easymotion",
-        "rev": "15244c5283aa40cb90625c206d15b5ac77889445",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zakk4223",
-        "repo": "hyprland-easymotion",
-        "type": "github"
-      }
-    },
     "hyprland-guiutils": {
       "inputs": {
         "aquamarine": [
@@ -888,7 +864,6 @@
         "hy3": "hy3",
         "hypr-darkwindow": "hypr-darkwindow",
         "hyprland": "hyprland",
-        "hyprland-easymotion": "hyprland-easymotion",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
         "nestix": "nestix",
