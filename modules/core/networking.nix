@@ -8,34 +8,9 @@
 
     config = lib.mkIf config.core.networking.enable {
       networking.hostName = config.core.networking.hostName;
-      networking.wireless = {
-        enable = true;
-        secretsFile = "/var/keys/wireless.conf";
-        userControlled = true;
-        networks = {
-          CHE.pskRaw = "ext:CHE";
-          "Brandl DSL Home Winkler a4bb".pskRaw = "ext:winkler";
-          Doofkopp.pskRaw = "ext:landgraf";
-          smartphone.pskRaw = "ext:smartphone";
-          home.pskRaw = "ext:home";
-          eduroam.auth = ''
-            key_mgmt=WPA-EAP
-            eap=PEAP
-            phase2="auth=MSCHAPV2"
-            identity="nlandgraf@student-net.ethz.ch"
-            password=ext:eduroam
-          '';
-        };
-      };
-
-      core.user.groups = ["wpa_supplicant"];
-
-      core.impermanence.os.files = [
-        {
-          file = "/var/keys/wireless.conf";
-          parentDirectory.mode = "u=rwx,g=,o=";
-        }
-      ];
+      networking.networkmanager.enable = true;
+      core.user.groups = ["networkmanager"];
+      core.impermanence.os.directories = ["/etc/NetworkManager/system-connections"];
     };
   };
 }
