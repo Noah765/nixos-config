@@ -21,7 +21,6 @@
           sizes = {inherit (config.theme.fontSizes) desktop applications terminal popups;};
         };
         polarity = "dark";
-        image = config.theme.wallpaper;
       };
 
       hm.stylix.targets.qt.standardDialogs = "xdgdesktopportal";

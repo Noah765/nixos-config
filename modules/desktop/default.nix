@@ -6,7 +6,7 @@
       autologin.enable = lib.mkDefault true;
       hyprland.enable = lib.mkDefault true;
       hyprsunset.enable = lib.mkDefault true;
-      quickshell.enable = lib.mkDefault true;
+      shell.enable = lib.mkDefault true;
     };
   };
 }

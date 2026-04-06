@@ -56,9 +56,10 @@
 
       windowOpacity = 0.75;
 
-      wallpaper = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/Apeiros-46B/everforest-walls/main/nature/mist_forest_2.png";
-        hash = "sha256-OESOGuDqq1BI+ESqzzMVu58xQafwxT905gSvCjMCfS0=";
+      wallpaper = {
+        background = ./wallpaper-background.png;
+        middleGround = ./wallpaper-middle-ground.png;
+        foreground = ./wallpaper-foreground.png;
       };
 
       editor = "everforest_dark";

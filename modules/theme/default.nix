@@ -59,9 +59,19 @@
         description = "The opacity of the windows.";
       };
 
-      wallpaper = lib.mkOption {
-        type = lib.types.package;
-        description = "The wallpaper to use.";
+      wallpaper = {
+        background = lib.mkOption {
+          type = lib.types.pathInStore;
+          description = "The wallpaper background to use.";
+        };
+        middleGround = lib.mkOption {
+          type = lib.types.pathInStore;
+          description = "The wallpaper middle ground to use.";
+        };
+        foreground = lib.mkOption {
+          type = lib.types.pathInStore;
+          description = "The wallpaper foreground to use.";
+        };
       };
     };
 

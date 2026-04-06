@@ -3,5 +3,5 @@
     pkgs,
     config,
     ...
-  }: {devShells.default = pkgs.mkShellNoCC {packages = [pkgs.quickshell config.treefmt.build.wrapper];};};
+  }: {devShells.default = pkgs.mkShellNoCC {packages = [config.treefmt.build.wrapper];};};
 }
