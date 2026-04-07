@@ -2,7 +2,6 @@
   nixos = {config, ...}: {
     imports = [
       (lib.mkAliasOptionModule ["theme" "base16"] ["stylix" "base16Scheme"])
-      (lib.mkAliasOptionModule ["theme" "editor"] ["cli" "editor" "settings" "theme"])
       (lib.mkAliasOptionModule ["theme" "fileManager"] ["cli" "fileManager" "theme"])
     ];
 

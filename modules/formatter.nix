@@ -9,6 +9,7 @@
     treefmt.programs = {
       alejandra.enable = true;
       deadnix.enable = true;
+      deadnix.no-lambda-pattern-names = true;
       statix.enable = true;
     };
     treefmt.settings.formatter.nestix = {

@@ -62,8 +62,6 @@
         foreground = ./wallpaper-foreground.png;
       };
 
-      editor = "everforest_dark";
-
       fileManager = inputs.file-manager-theme;
     };
   };

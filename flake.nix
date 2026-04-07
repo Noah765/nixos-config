@@ -35,6 +35,8 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     ublock-origin-assets.url = "github:uBlockOrigin/uAssets";
     ublock-origin-assets.flake = false;
+    wrappers.url = "github:Lassulus/wrappers";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);

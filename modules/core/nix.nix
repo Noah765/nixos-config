@@ -3,6 +3,8 @@
   inputs,
   ...
 }: {
+  debug = true;
+
   nixos = {
     pkgs,
     config,
