@@ -118,7 +118,7 @@
           verible-verilog-ls.args = ["--rules=-always-comb,-explicit-parameter-storage-type"];
         };
 
-        extraPackages = [pkgs.harper];
+        extraPackages = [pkgs.harper pkgs.nixd];
       }).wrapper;
   };
 
