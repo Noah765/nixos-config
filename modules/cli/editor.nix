@@ -56,10 +56,43 @@
             normal = {
               tab = "move_parent_node_end";
               S-tab = "move_parent_node_start";
+
+              H = "extend_char_left";
+              J = "extend_visual_line_down";
+              K = "extend_visual_line_up";
+              L = "extend_char_right";
+              w = "move_next_sub_word_start";
+              b = "move_prev_sub_word_start";
+              e = "move_next_sub_word_end";
+              W = "extend_next_sub_word_start";
+              B = "extend_prev_sub_word_start";
+              E = "extend_next_sub_word_end";
+              A-w = "move_next_long_word_start";
+              A-b = "move_prev_long_word_start";
+              A-e = "move_next_long_word_end";
+              A-W = "extend_next_long_word_start";
+              A-B = "extend_prev_long_word_start";
+              A-E = "extend_next_long_word_end";
+              T = "extend_till_char";
+              F = "extend_next_char";
+              A-t = "till_prev_char";
+              A-f = "find_prev_char";
+              A-T = "extend_till_prev_char";
+              A-F = "extend_prev_char";
+              M = "@vmm<esc>";
+              x = "select_line_below";
+              X = "select_line_above";
+              A-h = "extend_to_first_nonwhitespace";
+              A-l = "extend_to_line_end";
+              A-n = "extend_search_next";
+              A-N = "extend_search_prev";
+
               C-p = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
               space.o = '':lsp-workspace-command tinymist.doStartBrowsingPreview ["--invert-colors=auto"]'';
             };
+
             insert.S-tab = "move_parent_node_start";
+
             select.tab = "extend_parent_node_end";
             select.S-tab = "extend_parent_node_start";
           };

@@ -21,10 +21,10 @@
         };
 
         keybindings = {
-          "alt+t" = "launch --cwd=current --type=tab";
-          "alt+h" = "previous_tab";
-          "alt+l" = "next_tab";
-          "alt+q" = "close_window";
+          "ctrl+t" = "launch --cwd=current --type=tab";
+          "ctrl+h" = "previous_tab";
+          "ctrl+l" = "next_tab";
+          "ctrl+q" = "close_window";
         };
       };
 
