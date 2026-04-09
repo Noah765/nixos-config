@@ -11,31 +11,58 @@
 
         settings = {
           theme = "everforest_dark";
+
           editor = {
             scrolloff = 9;
             shell = [(lib.getExe pkgs.nushell) "-c"];
             line-number = "relative";
             completion-timeout = 5;
             completion-trigger-len = 1;
-            completion-replace = true;
+            bufferline = "multiple";
             color-modes = true;
             trim-final-newlines = true;
             trim-trailing-whitespace = true;
             end-of-line-diagnostics = "hint";
-            statusline.left = ["mode" "file-name" "read-only-indicator" "file-modification-indicator" "spacer" "spinner"];
-            statusline.mode = {
-              normal = "NORMAL";
-              insert = "INSERT";
-              select = "SELECT";
+            statusline = {
+              left = ["mode" "file-name" "read-only-indicator" "file-modification-indicator" "spacer" "spinner"];
+              right = ["diagnostics" "workspace-diagnostics" "selections" "register" "position" "position-percentage" "file-encoding"];
+              mode = {
+                normal = "NORMAL";
+                insert = "INSERT";
+                select = "SELECT";
+              };
+              diagnostics = ["hint" "info" "warning" "error"];
+              workspace-diagnostics = ["hint" "info" "warning" "error"];
             };
-            lsp.display-inlay-hints = true;
+            lsp = {
+              display-progress-messages = true;
+              display-inlay-hints = true;
+              goto-reference-include-declaration = false;
+            };
             cursor-shape.insert = "bar";
-            auto-save.focus-lost = true;
+            file-picker.hidden = false;
+            whitespace.render = {
+              nbsp = "all";
+              nnbsp = "all";
+              tab = "all";
+            };
+            whitespace.characters.tabpad = "·";
             soft-wrap.enable = true;
+            smart-tab.supersede-menu = true;
             inline-diagnostics.cursor-line = "warning";
           };
-          keys.normal."C-p" = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
-          keys.normal.space.o = ['':lsp-workspace-command tinymist.doStartBrowsingPreview ["--invert-colors=auto"]'' ":! qutebrowser --target window --loglevel warning http://127.0.0.1:23625"];
+
+          keys = {
+            normal = {
+              tab = "move_parent_node_end";
+              S-tab = "move_parent_node_start";
+              C-p = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
+              space.o = '':lsp-workspace-command tinymist.doStartBrowsingPreview ["--invert-colors=auto"]'';
+            };
+            insert.S-tab = "move_parent_node_start";
+            select.tab = "extend_parent_node_end";
+            select.S-tab = "extend_parent_node_start";
+          };
         };
 
         languages.language = lib.mapAttrsToList (name: value: {inherit name;} // value) (lib.recursiveUpdate
