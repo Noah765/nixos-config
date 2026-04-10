@@ -85,6 +85,8 @@
               A-l = "extend_to_line_end";
               A-n = "extend_search_next";
               A-N = "extend_search_prev";
+              A-j = "join_selections";
+              A-J = "join_selections_space";
 
               C-p = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
               space.o = '':lsp-workspace-command tinymist.doStartBrowsingPreview ["--invert-colors=auto"]'';
