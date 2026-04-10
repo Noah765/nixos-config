@@ -18,7 +18,6 @@
             line-number = "relative";
             completion-timeout = 5;
             completion-trigger-len = 1;
-            bufferline = "multiple";
             color-modes = true;
             trim-final-newlines = true;
             trim-trailing-whitespace = true;
