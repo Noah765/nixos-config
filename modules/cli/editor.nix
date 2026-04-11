@@ -14,6 +14,7 @@
 
           editor = {
             scrolloff = 9;
+            mouse = false;
             shell = [(lib.getExe pkgs.nushell) "-c"];
             line-number = "relative";
             completion-timeout = 5;
