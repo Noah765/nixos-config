@@ -40,7 +40,7 @@
         pinentry.package = pkgs.pinentry-curses;
       };
 
-      core.impermanence.hm.directories = [".local/share/password-store"];
+      core.impermanence.hm.directories = [".password-store"];
 
       # TODO
       security.pam.services = {
