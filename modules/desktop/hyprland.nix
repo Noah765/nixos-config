@@ -162,9 +162,13 @@
             "Super_Ctrl, T, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
             "Super_Ctrl, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
             "Super_Ctrl, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
+            "Super_Ctrl_Shift, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
+            "Super_Ctrl_Shift, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
             ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
             ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
+            "Shift, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
+            "Shift, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
           ];
         };
       };
