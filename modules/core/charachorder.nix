@@ -64,9 +64,9 @@
             key <AE06> { [ 6            ] };
             key <KPEQ> { [ exclam       ] };
             key <AD12> { [ bracketright ] };
-            key <FK19> { [ bar          ] };
+            key <PGUP> { [ bar          ] };
             key <AE08> { [ 8            ] };
-            key <FK24> { [ EuroSign     ] };
+            key <PGDN> { [ EuroSign     ] };
             key <I248> { [ asciitilde   ] };
           };
         '';
