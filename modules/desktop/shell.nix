@@ -12,6 +12,9 @@
 
     config.desktop.hyprland.settings = lib.mkIf config.desktop.shell.enable {
       exec-once = lib.singleton (lib.join " " [
+        "uwsm-app"
+        "-s=s"
+        "--"
         (lib.getExe inputs.shell.packages.${pkgs.stdenv.system}.default)
         "--wallpaper-background=${config.theme.wallpaper.background}"
         "--wallpaper-middle-ground=${config.theme.wallpaper.middleGround}"

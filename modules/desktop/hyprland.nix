@@ -42,7 +42,7 @@
         inherit plugins;
 
         settings = {
-          exec-once = [(lib.getExe pkgs.hyprnotify)];
+          exec-once = ["uwsm-app -s=b ${lib.getExe pkgs.hyprnotify}"];
 
           general = {
             gaps_in = 2;
