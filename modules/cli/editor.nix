@@ -150,7 +150,7 @@
           tinymist.config.tinymist.lint.enabled = true;
 
           verible-verilog-ls.command = "verible-verilog-ls";
-          verible-verilog-ls.args = ["--rules=-always-comb,-explicit-parameter-storage-type"];
+          verible-verilog-ls.args = ["--rules_config_search"];
         };
 
         extraPackages = [pkgs.harper pkgs.nixd];
