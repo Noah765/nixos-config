@@ -7,9 +7,7 @@
     pkgs,
     config,
     ...
-  }: let
-    inherit (config.theme) colors;
-  in {
+  }: {
     imports = [(lib.mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
     options.desktop.hyprland.enable = lib.mkEnableOption "Hyprland";
@@ -93,7 +91,7 @@
           plugin.darkwindow."shader[opacity]" = {
             from = "chromakey";
             args = lib.join " " (lib.mapAttrsToList (n: v: "${n}=${toString v}") {
-              bkg = "[${toString [colors.base00-dec-r colors.base00-dec-g colors.base00-dec-b]}]";
+              bkg = "[${toString (with config.theme.colors; [base00-dec-r base00-dec-g base00-dec-b])}]";
               similarity = 1;
               targetOpacity = config.theme.windowOpacity;
             });
