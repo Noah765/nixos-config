@@ -899,11 +899,11 @@
         "treefmt": "treefmt"
       },
       "locked": {
-        "lastModified": 1777188126,
-        "narHash": "sha256-4PB1PPpLhu96YJhNR6RPgV71pitvYauxRog9jsn+XgI=",
+        "lastModified": 1777214403,
+        "narHash": "sha256-6DdjHmtUg5+6Vc23jNGF+aRDzSGFcEv9orcFW1478Jk=",
         "owner": "Noah765",
         "repo": "shell",
-        "rev": "e650f14ffe8d3636cdef9b56a4153476a104b43d",
+        "rev": "085aedc28d3aa9efb2dd32cda39b25b254b1b28b",
         "type": "github"
       },
       "original": {

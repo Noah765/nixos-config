@@ -34,6 +34,8 @@
       layerrule = lib.mkIf (config.theme.windowOpacity != 1) [
         "match:namespace shell-bar, blur on"
         "match:namespace shell-bar, ignore_alpha 0"
+        "match:namespace shell-calculator, blur on"
+        "match:namespace shell-calculator, ignore_alpha 0"
       ];
     };
   };
