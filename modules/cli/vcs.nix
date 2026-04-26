@@ -79,11 +79,7 @@
         difftastic.git.enable = true;
 
         jjui.enable = config.cli.vcs.jjui.enable;
-        jjui.settings = {
-          ui.tracer.enabled = true;
-          suggest.exec.mode = "fuzzy";
-          preview.show_at_start = true;
-        };
+        jjui.settings.preview.show_at_start = true;
 
         git.enable = config.cli.vcs.git.enable;
         git.settings = {

@@ -21,7 +21,13 @@
         "--wallpaper-foreground=${config.theme.wallpaper.foreground}"
         "--background-color=${config.theme.colors.base00}"
         "--text-color=${config.theme.colors.base05}"
-        "--primary-color=${config.theme.colors.base0B}"
+        "--primary-color=${config.theme.colors.green}"
+        "--red=${config.theme.colors.red}"
+        "--green=${config.theme.colors.green}"
+        "--yellow=${config.theme.colors.yellow}"
+        "--blue=${config.theme.colors.blue}"
+        "--magenta=${config.theme.colors.magenta}"
+        "--cyan=${config.theme.colors.cyan}"
         "--bar-opacity=${lib.toString config.theme.windowOpacity}"
       ]);
 

@@ -96,13 +96,13 @@
 
           settings = {
             history.file_format = "sqlite";
-            history.isolation = true;
             show_banner = false;
+            auto_cd_implicit = true;
             edit_mode = "vi";
             cursor_shape.vi_insert = "line";
             cursor_shape.vi_normal = "block";
             completions.algorithm = "fuzzy";
-            use_kitty_protocol = config.apps.terminal.enable;
+            use_kitty_protocol = true;
             display_errors.termination_signal = false;
             footer_mode = "auto";
             table.footer_inheritance = true;

@@ -119,7 +119,6 @@
             "Super, G, fullscreen, 1"
 
             "Super, O, togglefloating"
-            "Super, P, pin"
 
             "Super, Q, hy3:killactive"
 
@@ -145,8 +144,9 @@
 
             "Super, Space, focusmonitor, +1"
 
-            "Super, C, exec, ${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive"
-            "Super, R, exec, ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\""
+            "Super, S, exec, ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\""
+            "Super, P, exec, ${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive"
+            "Super, C, global, shell:toggleCalculator"
 
             "Super_Ctrl, T, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
             ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"

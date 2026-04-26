@@ -9,7 +9,6 @@
     config = lib.mkIf config.apps.signal.enable {
       hm.home.packages = [pkgs.signal-desktop];
       core.impermanence.hm.directories = [".config/Signal"];
-      desktop.hyprland.settings.bind = ["Super, S, exec, uwsm-app signal-desktop"];
     };
   };
 }
