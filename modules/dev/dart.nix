@@ -2,8 +2,6 @@
   nixos = {config, ...}: {
     options.dev.dart.enable = lib.mkEnableOption "Dart";
 
-    config = lib.mkIf config.dev.dart.enable {
-      core.impermanence.hm.directories = [".pub-cache"];
-    };
+    config.core.impermanence.hm.directories = lib.mkIf config.dev.dart.enable [".pub-cache"];
   };
 }
