@@ -94,6 +94,7 @@
             };
 
             insert.S-tab = "move_parent_node_start";
+            insert.A-tab = "insert_tab";
 
             select.tab = "extend_parent_node_end";
             select.S-tab = "extend_parent_node_start";
