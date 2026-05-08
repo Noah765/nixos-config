@@ -46,7 +46,7 @@
           return screen.cursor.x
       '';
 
-      desktop.hyprland.settings.bind = ["Super, T, exec, uwsm-app kitty"];
+      desktop.hyprland.bind = [["SUPER + T" "hl.dsp.exec_raw('uwsm-app kitty')"]];
     };
   };
 }

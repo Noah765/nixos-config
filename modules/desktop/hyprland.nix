@@ -11,6 +11,11 @@
     imports = [(lib.mkAliasOptionModule ["desktop" "hyprland" "settings"] ["hm" "wayland" "windowManager" "hyprland" "settings"])];
 
     options.desktop.hyprland.enable = lib.mkEnableOption "Hyprland";
+    options.desktop.hyprland.bind = lib.mkOption {
+      type = with lib.types; listOf (listOf (either str (attrsOf bool)));
+      default = [];
+      description = "Hyprland keybindings.";
+    };
 
     config = lib.mkIf config.desktop.hyprland.enable {
       nix.settings.substituters = ["https://hyprland.cachix.org"];
@@ -25,150 +30,186 @@
 
       console.enable = false;
 
-      hm.home = {
-        packages = with pkgs; [hyprpicker wl-clipboard];
-        sessionVariables.NIXOS_OZONE_WL = "1";
-      };
+      hm = {
+        home.packages = with pkgs; [hyprpicker wl-clipboard];
+        home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-      hm.wayland.windowManager.hyprland = let
-        plugins =
-          [inputs.hy3.packages.${pkgs.stdenv.system}.default]
-          ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.default;
-      in {
-        enable = true;
-        systemd.enable = false;
-        inherit plugins;
+        systemd.user.services.hyprnotify = {
+          Unit.Description = "hyprnotify";
+          Unit.After = ["graphical-session.target"];
+          Service.ExecStart = lib.getExe pkgs.hyprnotify;
+          Service.Restart = "on-failure";
+          Install.WantedBy = ["graphical-session.target"];
+        };
 
-        settings = {
-          exec-once = ["uwsm-app -s=b ${lib.getExe pkgs.hyprnotify}"];
+        wayland.windowManager.hyprland = let
+          plugins =
+            [inputs.hy3.packages.${pkgs.stdenv.system}.default]
+            ++ lib.optional (config.theme.windowOpacity != 1) inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.default;
+        in {
+          enable = true;
+          systemd.enable = false;
+          inherit plugins;
 
-          general = {
-            gaps_in = 2;
-            gaps_out = 5;
-            layout = "hy3";
+          settings = {
+            config = {
+              general = {
+                gaps_in = 2;
+                gaps_out = 5;
+                layout = "hy3";
+              };
+
+              decoration.rounding = 12;
+              decoration.blur.size = 3;
+
+              input.repeat_rate = 35;
+              input.repeat_delay = 200;
+
+              misc = {
+                disable_hyprland_logo = true;
+                disable_splash_rendering = true;
+                vrr = 2;
+                animate_manual_resizes = true;
+                disable_autoreload = true;
+                enable_anr_dialog = false;
+              };
+
+              cursor = {
+                hotspot_padding = 5;
+                inactive_timeout = 5;
+                hide_on_key_press = true;
+              };
+
+              ecosystem = {
+                no_update_news = true;
+                no_donation_nag = true;
+                enforce_permissions = true;
+              };
+            };
+
+            animation = {
+              leaf = "global";
+              enabled = true;
+              speed = 3;
+              bezier = "default";
+            };
+
+            permission = [
+              {
+                binary = "${lib.escapeRegex (lib.getExe pkgs.hyprpicker)}|${lib.escapeRegex (lib.getExe pkgs.grim)}";
+                type = "screencopy";
+                mode = "allow";
+              }
+              {
+                binary = lib.join "|" (map (x: lib.escapeRegex "${x}/lib/lib${x.pname}.so") plugins);
+                type = "plugin";
+                mode = "allow";
+              }
+            ];
+
+            bind = map (x: {_args = [(lib.head x) (lib.mkLuaInline (lib.elemAt x 1))] ++ (lib.drop 2 x);}) ([
+                ["SUPER + mouse:272" "hl.dsp.window.drag()" {mouse = true;}]
+
+                ["SUPER + I" "hl.dsp.window.resize({ x = 10, y = 0, relative = true })" {repeating = true;}]
+                ["SUPER + ALT + I" "hl.dsp.window.resize({ x = 0, y = 10, relative = true })" {repeating = true;}]
+                ["SUPER + D" "hl.dsp.window.resize({ x = -10, y = 0, relative = true })" {repeating = true;}]
+                ["SUPER + ALT + D" "hl.dsp.window.resize({ x = 0, y = -10, relative = true })" {repeating = true;}]
+                ["SUPER + F" "hl.dsp.window.fullscreen()"]
+                ["SUPER + G" "hl.dsp.window.fullscreen({ mode = 'maximized' })"]
+                ["SUPER + mouse:273" "hl.dsp.window.resize()" {mouse = true;}]
+
+                ["SUPER + O" "hl.dsp.window.float()"]
+
+                ["SUPER + 1" "hl.dsp.focus({ workspace = 1, on_current_monitor = true })"]
+                ["SUPER + 2" "hl.dsp.focus({ workspace = 2, on_current_monitor = true })"]
+                ["SUPER + 3" "hl.dsp.focus({ workspace = 3, on_current_monitor = true })"]
+                ["SUPER + 4" "hl.dsp.focus({ workspace = 4, on_current_monitor = true })"]
+                ["SUPER + 5" "hl.dsp.focus({ workspace = 5, on_current_monitor = true })"]
+                ["SUPER + 6" "hl.dsp.focus({ workspace = 6, on_current_monitor = true })"]
+                ["SUPER + 7" "hl.dsp.focus({ workspace = 7, on_current_monitor = true })"]
+                ["SUPER + 8" "hl.dsp.focus({ workspace = 8, on_current_monitor = true })"]
+                ["SUPER + 9" "hl.dsp.focus({ workspace = 9, on_current_monitor = true })"]
+
+                ["SUPER + Space" "hl.dsp.focus({ monitor = '+1' })"]
+
+                ["SUPER + S" "hl.dsp.exec_cmd('${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\"')"]
+                ["SUPER + P" "hl.dsp.exec_raw('${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive')"]
+                ["SUPER + C" "hl.dsp.global('shell:toggleCalculator')"]
+
+                ["SUPER + CTRL + T" "hl.dsp.exec_raw('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle')"]
+                ["XF86AudioMute" "hl.dsp.exec_raw('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle')"]
+                ["SUPER + CTRL + I" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+')" {repeating = true;}]
+                ["XF86AudioRaiseVolume" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+')" {repeating = true;}]
+                ["SUPER + CTRL + D" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-')" {repeating = true;}]
+                ["XF86AudioLowerVolume" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-')" {repeating = true;}]
+                ["SUPER + CTRL + SHIFT + I" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+')" {repeating = true;}]
+                ["SHIFT + XF86AudioRaiseVolume" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+')" {repeating = true;}]
+                ["SUPER + CTRL + SHIFT + D" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-')" {repeating = true;}]
+                ["SHIFT + XF86AudioLowerVolume" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-')" {repeating = true;}]
+
+                ["SUPER + ALT + S" ''hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl sleep'")'']
+                ["SUPER + ALT + P" ''hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl poweroff'")'']
+                ["SUPER + ALT + R" ''hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl reboot'")'']
+              ]
+              ++ config.desktop.hyprland.bind);
           };
 
-          decoration.rounding = 12;
-          decoration.blur.size = 3;
+          extraConfig = let
+            hy3Binds = [
+              ["SUPER + H" "hl.plugin.hy3.move_focus('left')"]
+              ["SUPER + J" "hl.plugin.hy3.move_focus('down')"]
+              ["SUPER + K" "hl.plugin.hy3.move_focus('up')"]
+              ["SUPER + L" "hl.plugin.hy3.move_focus('right')"]
 
-          animations.animation = "global, 1, 3, default";
+              ["SUPER + SHIFT + H" "hl.plugin.hy3.move_window('left')"]
+              ["SUPER + SHIFT + J" "hl.plugin.hy3.move_window('down')"]
+              ["SUPER + SHIFT + K" "hl.plugin.hy3.move_window('up')"]
+              ["SUPER + SHIFT + L" "hl.plugin.hy3.move_window('right')"]
 
-          input.repeat_rate = 35;
-          input.repeat_delay = 200;
+              ["SUPER + Q" "hl.plugin.hy3.kill_active()"]
 
-          misc = {
-            disable_hyprland_logo = true;
-            disable_splash_rendering = true;
-            vrr = 2;
-            animate_manual_resizes = true;
-            disable_autoreload = true;
-            enable_anr_dialog = false;
-          };
+              ["SUPER + ALT + H" "hl.plugin.hy3.make_group('h', { ephemeral = true })"]
+              ["SUPER + ALT + V" "hl.plugin.hy3.make_group('v', { ephemeral = true })"]
 
-          cursor = {
-            hotspot_padding = 5;
-            inactive_timeout = 5;
-            hide_on_key_press = true;
-          };
+              ["SUPER + SHIFT + 1" "hl.plugin.hy3.move_to_workspace(1)"]
+              ["SUPER + SHIFT + 2" "hl.plugin.hy3.move_to_workspace(2)"]
+              ["SUPER + SHIFT + 3" "hl.plugin.hy3.move_to_workspace(3)"]
+              ["SUPER + SHIFT + 4" "hl.plugin.hy3.move_to_workspace(4)"]
+              ["SUPER + SHIFT + 5" "hl.plugin.hy3.move_to_workspace(5)"]
+              ["SUPER + SHIFT + 6" "hl.plugin.hy3.move_to_workspace(6)"]
+              ["SUPER + SHIFT + 7" "hl.plugin.hy3.move_to_workspace(7)"]
+              ["SUPER + SHIFT + 8" "hl.plugin.hy3.move_to_workspace(8)"]
+              ["SUPER + SHIFT + 9" "hl.plugin.hy3.move_to_workspace(9)"]
+            ];
+          in ''
+            if hl.plugin.hy3 ~= nil then
+              ${lib.join "\n  " (map (x: "hl.bind('${lib.head x}', ${lib.elemAt x 1})") hy3Binds)}
+            end
 
-          ecosystem = {
-            no_update_news = true;
-            no_donation_nag = true;
-            enforce_permissions = true;
-          };
+            if hl.plugin.darkwindow ~= nil then
+              hl.config({
+                plugin = {
+                  darkwindow = {
+                    load_shaders = "chromakey",
+                  }
+                }
+              })
 
-          windowrule = lib.mkIf (config.theme.windowOpacity != 1) [
-            "match:fullscreen false, darkwindow:shade opacity"
-            "match:fullscreen_state_internal 1, darkwindow:shade opacity"
-          ];
+              hl.plugin.darkwindow.load_shader("opacity", {
+                from = "chromakey",
+                args = "bkg=[${toString (with config.theme.colors; [base00-dec-r base00-dec-g base00-dec-b])}] similarity=1 targetOpacity=${toString config.theme.windowOpacity}",
+              })
 
-          permission =
-            map (x: "${lib.escapeRegex x}, screencopy, allow") [(lib.getExe pkgs.hyprpicker) (lib.getExe pkgs.grim)]
-            ++ map (x: lib.escapeRegex "${x}/lib/lib${x.pname}.so" + ", plugin, allow") plugins;
-
-          plugin.darkwindow.load_shaders = "chromakey";
-
-          plugin.darkwindow."shader[opacity]" = {
-            from = "chromakey";
-            args = lib.join " " (lib.mapAttrsToList (n: v: "${n}=${toString v}") {
-              bkg = "[${toString (with config.theme.colors; [base00-dec-r base00-dec-g base00-dec-b])}]";
-              similarity = 1;
-              targetOpacity = config.theme.windowOpacity;
-            });
-          };
-
-          bindm = ["Super, mouse:272, movewindow" "Super, mouse:273, resizewindow"];
-
-          bind = [
-            "Super_Alt, H, hy3:makegroup, h, ephemeral"
-            "Super_Alt, V, hy3:makegroup, v, ephemeral"
-
-            "Super, H, hy3:movefocus, l"
-            "Super, J, hy3:movefocus, d"
-            "Super, K, hy3:movefocus, u"
-            "Super, L, hy3:movefocus, r"
-
-            "Super_Shift, H, hy3:movewindow, l"
-            "Super_Shift, J, hy3:movewindow, d"
-            "Super_Shift, K, hy3:movewindow, u"
-            "Super_Shift, L, hy3:movewindow, r"
-
-            "Super, F, fullscreen, 0"
-            "Super, G, fullscreen, 1"
-
-            "Super, O, togglefloating"
-
-            "Super, Q, hy3:killactive"
-
-            "Super, 1, focusworkspaceoncurrentmonitor, 1"
-            "Super, 2, focusworkspaceoncurrentmonitor, 2"
-            "Super, 3, focusworkspaceoncurrentmonitor, 3"
-            "Super, 4, focusworkspaceoncurrentmonitor, 4"
-            "Super, 5, focusworkspaceoncurrentmonitor, 5"
-            "Super, 6, focusworkspaceoncurrentmonitor, 6"
-            "Super, 7, focusworkspaceoncurrentmonitor, 7"
-            "Super, 8, focusworkspaceoncurrentmonitor, 8"
-            "Super, 9, focusworkspaceoncurrentmonitor, 9"
-
-            "Super_Shift, 1, hy3:movetoworkspace, 1"
-            "Super_Shift, 2, hy3:movetoworkspace, 2"
-            "Super_Shift, 3, hy3:movetoworkspace, 3"
-            "Super_Shift, 4, hy3:movetoworkspace, 4"
-            "Super_Shift, 5, hy3:movetoworkspace, 5"
-            "Super_Shift, 6, hy3:movetoworkspace, 6"
-            "Super_Shift, 7, hy3:movetoworkspace, 7"
-            "Super_Shift, 8, hy3:movetoworkspace, 8"
-            "Super_Shift, 9, hy3:movetoworkspace, 9"
-
-            "Super, Space, focusmonitor, +1"
-
-            "Super, S, exec, ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})\""
-            "Super, P, exec, ${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive"
-            "Super, C, global, shell:toggleCalculator"
-
-            "Super_Ctrl, T, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-
-            "Super_Alt, S, exec, systemctl suspend"
-            "Super_Alt, P, exec, systemctl poweroff"
-            "Super_Alt, R, exec, systemctl reboot"
-          ];
-
-          binde = [
-            "Super, I, resizeactive, 10% 0"
-            "Super_Alt, I, resizeactive, 0 10%"
-            "Super, D, resizeactive, -10% 0"
-            "Super_Alt, D, resizeactive, 0 -10%"
-
-            "Super_Ctrl, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
-            "Super_Ctrl, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
-            "Super_Ctrl_Shift, I, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
-            "Super_Ctrl_Shift, D, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
-            ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
-            ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
-            "Shift, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
-            "Shift, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
-          ];
+              hl.window_rule({
+                match = { fullscreen = false },
+                ["darkwindow:shade"] = "opacity",
+              })
+              hl.window_rule({
+                match = { fullscreen_state_internal = 1 },
+                ["darkwindow:shade"] = "opacity",
+              })
+            end
+          '';
         };
       };
     };

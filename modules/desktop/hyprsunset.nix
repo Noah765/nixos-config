@@ -39,7 +39,7 @@
 
       services.udev.extraRules = ''ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${lib.getExe' pkgs.coreutils "chmod"} a+w /sys/class/backlight/%k/brightness"'';
 
-      desktop.hyprland.settings.binde = let
+      desktop.hyprland.bind = let
         increase = pkgs.writers.writeNu "brightness-increase" ''
           if ('/sys/class/backlight/intel_backlight/brightness' | path type) != 'file' {
             hyprctl hyprsunset gamma +10
@@ -61,10 +61,10 @@
           ($current / $step - 1 | math ceil) * $step | math floor | save -f /sys/class/backlight/intel_backlight/brightness
         '';
       in [
-        "Super_Shift, I, exec, ${increase}"
-        "Super_Shift, D, exec, ${decrease}"
-        ", XF86MonBrightnessUp, exec, ${increase}"
-        ", XF86MonBrightnessDown, exec, ${decrease}"
+        ["SUPER + SHIFT + I" "hl.dsp.exec_raw('${increase}')" {repeating = true;}]
+        ["SUPER + SHIFT + D" "hl.dsp.exec_raw('${decrease}')" {repeating = true;}]
+        ["XF86MonBrightnessUp" "hl.dsp.exec_raw('${increase}')" {repeating = true;}]
+        ["XF86MonBrightnessDown" "hl.dsp.exec_raw('${decrease}')" {repeating = true;}]
       ];
     };
   };

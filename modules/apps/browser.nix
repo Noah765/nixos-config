@@ -13,8 +13,11 @@
     config = lib.mkIf config.apps.browser.enable {
       dependencies = ["apps.terminal" "cli.editor" "cli.fileManager"];
 
-      desktop.hyprland.settings.bind = ["Super, B, exec, uwsm-app qutebrowser"];
-      desktop.hyprland.settings.windowrule = ["match:class qutebrowser-editor, float true"];
+      desktop.hyprland.bind = [["SUPER + B" "hl.dsp.exec_raw('uwsm-app qutebrowser')"]];
+      desktop.hyprland.settings.window_rule = lib.singleton {
+        match.class = "qutebrowser-editor";
+        float = true;
+      };
 
       core.impermanence.hm.files = [
         {

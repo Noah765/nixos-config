@@ -10,7 +10,7 @@
       hm.home.packages = [pkgs.unityhub];
       services.gnome.gnome-keyring.enable = true;
       core.impermanence.hm.directories = ["Unity" ".config/unityhub" ".config/unity3d" ".plastic4" ".local/share/keyrings"];
-      desktop.hyprland.settings.bind = ["Super, U, exec, uwsm-app unityhub"];
+      desktop.hyprland.bind = [["SUPER + U" "hl.dsp.exec_raw('uwsm-app unityhub')"]];
     };
   };
 }

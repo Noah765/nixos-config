@@ -32,7 +32,7 @@
                   let vcs = if not $in_repo {
                     ""
                   } else {
-                    ${lib.getExe pkgs.jujutsu} log --revisions '@' --no-graph --ignore-working-copy --color always --template r#'
+                    ${lib.getExe pkgs.jujutsu} log --ignore-working-copy --revisions '@' --no-graph --color always --template r#'
                       separate(' ',
                         format_short_change_id_with_change_offset(self),
                         bookmarks,
@@ -70,8 +70,8 @@
             fzfIntegration = pkgs.fetchFromGitHub {
               owner = "sim590";
               repo = "fzf";
-              rev = "2c9234ce09718264373d23f157426ecd62ae1dcd";
-              hash = "sha256-owIC9/4cyv7cqgi451Nf1BxOppsmX+KV2CSuGwkvSWU=";
+              rev = "d25f3da43a325633ee2ccebdb3a667bd152b3ed5";
+              hash = "sha256-s47+1ZHa80PsrqvyH7WeEc+O7mpuek1N32wcSN9VdoQ=";
               rootDir = "shell";
             };
           in ''
@@ -118,7 +118,7 @@
                 if (term size).columns >= 100 { $value | table --expand --expand-deep 5 } else { $value | table }
               }
             '';
-            keybindings = lib.map (x:
+            keybindings = map (x:
               {
                 modifier = "control";
                 mode = ["vi_normal" "vi_insert"];
