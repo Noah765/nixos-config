@@ -11,26 +11,29 @@
 
       hm.services.hyprsunset.enable = true;
       hm.services.hyprsunset.settings.profile = [
-        {time = "7:30";}
-        {
-          time = "17:00";
-          temperature = 5500;
-          gamma = 0.9;
-        }
         {
           time = "18:00";
-          temperature = 5000;
-          gamma = 0.8;
+          temperature = 5500;
         }
         {
           time = "19:00";
-          temperature = 4500;
-          gamma = 0.7;
+          temperature = 5000;
         }
         {
           time = "20:00";
+          temperature = 4500;
+        }
+        {
+          time = "21:00";
           temperature = 4000;
-          gamma = 0.6;
+        }
+        {
+          time = "7:00";
+          temperature = 5000;
+        }
+        {
+          time = "8:00";
+          temperature = 6000;
         }
       ];
 
