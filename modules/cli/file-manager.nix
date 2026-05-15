@@ -54,8 +54,8 @@
 
         initLua = ''
           require("bookmarks"):setup({
-          	last_directory = { enable = true, mode = "jump" },
-          	show_keys = true,
+            last_directory = { enable = true, mode = "jump" },
+            show_keys = true,
           })
         '';
 
@@ -69,6 +69,11 @@
             on = "d";
             run = "remove --permanently";
             desc = "Permanently delete selected files";
+          }
+          {
+            on = "u";
+            run = ''shell -- FILE="$(readlink --canonicalize "%h")"; rm "%h"; cp --no-preserve=all "$FILE" "%h"'';
+            desc = "Unlink";
           }
           {
             on = ["g" "r"];
