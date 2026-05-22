@@ -147,7 +147,7 @@
                 ["SUPER + CTRL + SHIFT + D" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-')" {repeating = true;}]
                 ["SHIFT + XF86AudioLowerVolume" "hl.dsp.exec_raw('wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-')" {repeating = true;}]
 
-                ["SUPER + ALT + S" ''hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl sleep'")'']
+                ["SUPER + ALT + S" "hl.dsp.exec_raw('systemctl sleep')"]
                 ["SUPER + ALT + P" ''hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl poweroff'")'']
                 ["SUPER + ALT + R" ''hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl reboot'")'']
               ]
