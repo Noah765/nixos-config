@@ -35,7 +35,7 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     ublock-origin-assets.url = "github:uBlockOrigin/uAssets";
     ublock-origin-assets.flake = false;
-    wrappers.url = "github:Lassulus/wrappers";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
   };
 
