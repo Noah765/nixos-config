@@ -1,42 +1,55 @@
 {
   inputs = {
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-    file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
-    file-manager-theme.flake = false;
+    # Core
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    greasemonkey-scripts.url = "github:afreakk/greasemonkeyscripts";
-    greasemonkey-scripts.flake = false;
+    import-tree.url = "github:vic/import-tree";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    hy3.url = "github:outfoxxed/hy3/hl0.55.0";
-    hy3.inputs.hyprland.follows = "hyprland";
-    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/b714988aa02985a7d22402dfc491980326ffc5aa";
-    hypr-darkwindow.inputs.hyprland.follows = "hyprland";
-    hyprland.url = "github:hyprwm/Hyprland/v0.55.2";
+
+    # Formatting
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+    nestix.url = "github:Noah765/nestix";
+    nestix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Impermanence
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
     impermanence.inputs = {
       home-manager.follows = "home-manager";
       nixpkgs.follows = "nixpkgs";
     };
-    import-tree.url = "github:vic/import-tree";
-    nestix.url = "github:Noah765/nestix";
-    nestix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland/v0.55.2";
+    hy3.url = "github:outfoxxed/hy3/hl0.55.0";
+    hy3.inputs.hyprland.follows = "hyprland";
+    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/b714988aa02985a7d22402dfc491980326ffc5aa";
+    hypr-darkwindow.inputs.hyprland.follows = "hyprland";
+
+    # Browser
+    ublock-origin-assets.url = "github:uBlockOrigin/uAssets";
+    ublock-origin-assets.flake = false;
+    greasemonkey-scripts.url = "github:afreakk/greasemonkeyscripts";
+    greasemonkey-scripts.flake = false;
+
+    # Theming
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+    file-manager-theme.flake = false;
+
+    # Misc
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     shell.url = "github:Noah765/shell";
     shell.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.url = "github:nix-community/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
-    ublock-origin-assets.url = "github:uBlockOrigin/uAssets";
-    ublock-origin-assets.flake = false;
-    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
-    wrappers.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
