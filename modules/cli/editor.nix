@@ -1,10 +1,10 @@
 {
   lib,
-  inputs,
+  wlib,
   ...
 }: {
   flake.wrappers.editor = {pkgs, ...}: {
-    imports = [inputs.wrappers.lib.wrapperModules.helix];
+    imports = [wlib.wrapperModules.helix];
 
     runtimePkgs = [pkgs.harper pkgs.nixd];
 
