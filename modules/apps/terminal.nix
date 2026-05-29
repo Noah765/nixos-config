@@ -1,52 +1,70 @@
-{lib, ...}: {
+{
+  lib,
+  wlib,
+  ...
+}: {
   nixos = {config, ...}: {
-    options.apps.terminal.enable = lib.mkEnableOption "Kitty";
+    options.apps.terminal.enable = lib.mkEnableOption "Ghostty";
 
     config = lib.mkIf config.apps.terminal.enable {
-      hm.programs.kitty = {
-        enable = true;
-
-        settings = {
-          # TODO reevaluate these
-          url_style = "straight";
-          enable_audio_bell = "no";
-          visual_bell_duration = 0.2; # TODO Test different durations and easing functions
-          remember_window_size = "no";
-          initial_window_width = "70c";
-          initial_window_height = "30c";
-          enabled_layouts = "splits";
-          tab_bar_edge = "top";
-          tab_bar_style = "custom";
-          active_tab_font_style = "normal";
-        };
-
-        keybindings = {
-          "ctrl+shift+t" = "launch --cwd=current --type=tab";
-          "ctrl+shift+h" = "previous_tab";
-          "ctrl+shift+l" = "next_tab";
-          "ctrl+shift+q" = "close_window";
-        };
-      };
-
-      # TODO Improve / clean up
-      hm.xdg.configFile."kitty/tab_bar.py".text = ''
-        from kitty.fast_data_types import Screen
-        from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
-
-        def draw_tab(
-          draw_data: DrawData, screen: Screen, tab: TabBarData,
-          before: int, max_tab_length: int, index: int, is_last: bool,
-          extra_data: ExtraData
-        ) -> int:
-          screen.draw(' ')
-          draw_title(draw_data, screen, tab, index, max_tab_length)
-          screen.draw(' ')
-          if is_last:
-            screen.draw(' ' * (screen.columns - screen.cursor.x))
-          return screen.cursor.x
-      '';
-
-      desktop.hyprland.bind = [["SUPER + T" "hl.dsp.exec_raw('uwsm-app kitty')"]];
+      wrappers.terminal.enable = true;
+      desktop.hyprland.bind = [["SUPER + T" "hl.dsp.exec_raw('ghostty +new-window')"]]; # Ghostty natively sets up systemd services
     };
+  };
+
+  flake.wrappers.terminal = {
+    pkgs,
+    config,
+    ...
+  }: {
+    imports = [wlib.modules.default];
+
+    package = pkgs.ghostty;
+
+    filesToPatch = [
+      "share/dbus-1/services/com.mitchellh.ghostty.service"
+      "share/systemd/user/app-com.mitchellh.ghostty.service"
+    ];
+
+    flagSeparator = "=";
+    flags."--config-default-files" = "false";
+    flags."--config-file" = config.constructFiles.config.path;
+
+    constructFiles.config.relPath = "${config.binName}-config";
+    constructFiles.config.content = ''
+      font-family = JetBrainsMono Nerd Font Mono
+      font-family = DejaVu Sans Mono
+      font-family = Unifont
+      font-size = 10.5
+      mouse-scroll-multiplier = 0.75
+      window-padding-x = 0
+      window-padding-y = 0
+      window-padding-balance = true
+      confirm-close-surface = false
+      app-notifications = no-clipboard-copy
+
+      background = 2d353b
+      foreground = d3c6aa
+      cursor-color = d3c6aa
+      selection-background = 475258
+      selection-foreground = d3c6aa
+
+      palette = 0=2d353b
+      palette = 1=e67e80
+      palette = 2=a7c080
+      palette = 3=dbbc7f
+      palette = 4=7fbbb3
+      palette = 5=d699b6
+      palette = 6=83c092
+      palette = 7=d3c6aa
+      palette = 8=859289
+      palette = 9=e67e80
+      palette = 10=a7c080
+      palette = 11=dbbc7f
+      palette = 12=7fbbb3
+      palette = 13=d699b6
+      palette = 14=83c092
+      palette = 15=fdf6e3
+    '';
   };
 }
