@@ -65,6 +65,13 @@
       palette = 13=d699b6
       palette = 14=83c092
       palette = 15=fdf6e3
+
+      keybind = clear
+      keybind = ctrl+shift+c=copy_to_clipboard
+      keybind = ctrl+shift+v=paste_from_clipboard
+      keybind = ctrl+0=reset_font_size
+      keybind = ctrl++=increase_font_size:1
+      keybind = ctrl+-=decrease_font_size:1
     '';
   };
 }

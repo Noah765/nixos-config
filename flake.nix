@@ -32,6 +32,22 @@
     hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/b714988aa02985a7d22402dfc491980326ffc5aa";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
 
+    # Terminal multiplexer
+    zellij-sessionizer.url = "github:victor-falcon/zellij-sessionizer";
+    zellij-sessionizer.flake = false;
+    zellij-switch.url = "github:mostafaqanbaryan/zellij-switch";
+    zellij-switch.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      rust-overlay.follows = "rust-overlay";
+    };
+    zjstatus.url = "github:dj95/zjstatus";
+    zjstatus.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      rust-overlay.follows = "rust-overlay";
+    };
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+
     # Browser
     ublock-origin-assets.url = "github:uBlockOrigin/uAssets";
     ublock-origin-assets.flake = false;

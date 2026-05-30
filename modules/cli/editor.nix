@@ -159,7 +159,7 @@
 
     config = lib.mkIf config.cli.editor.enable {
       wrappers.editor.enable = true;
-      hm.home.sessionVariables.EDITOR = "hx";
+      environment.variables.EDITOR = "hx";
       core.impermanence.hm.directories = [".local/share/codebook/cache"];
     };
   };

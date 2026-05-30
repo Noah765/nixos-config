@@ -5,7 +5,10 @@
     config,
     ...
   }: {
-    imports = [(lib.mkAliasOptionModule ["cli" "nushell" "shellAliases"] ["hm" "programs" "nushell" "shellAliases"])];
+    imports = [
+      (lib.mkAliasOptionModule ["cli" "nushell" "shellAliases"] ["hm" "programs" "nushell" "shellAliases"])
+      (lib.mkAliasOptionModule ["cli" "nushell" "keybindings"] ["hm" "programs" "nushell" "settings" "keybindings"])
+    ];
 
     options.cli.nushell.enable = lib.mkEnableOption "nushell";
 
