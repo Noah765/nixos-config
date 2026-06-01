@@ -12,13 +12,11 @@
     options.apps.browser.enable = lib.mkEnableOption "qutebrowser";
 
     config = lib.mkIf config.apps.browser.enable {
-      dependencies = ["apps.terminal" "cli.editor" "cli.fileManager"];
-
       wrappers.browser.enable = true;
 
       desktop.hyprland.bind = [["SUPER + B" "hl.dsp.exec_raw('uwsm-app qutebrowser')"]];
       desktop.hyprland.settings.window_rule = lib.singleton {
-        match.class = "qutebrowser-editor";
+        match.class = "com.qutebrowser-editor";
         float = true;
       };
 
@@ -199,8 +197,8 @@
       c.content.tls.certificate_errors = 'block'
       c.downloads.location.remember = False
       c.downloads.remove_finished = 5000
-      c.editor.command = ['kitty', '--class=qutebrowser-editor', 'hx', '{file}:{line}:{column}']
-      c.fileselect.folder.command = ['kitty', '--class=termfilechooser', '${select-folder}', '{}']
+      c.editor.command = ['ghostty', '--class=com.qutebrowser-editor', '-e', 'hx', '{file}:{line}:{column}']
+      c.fileselect.folder.command = ['ghostty', '--class=com.termfilechooser', '-e', '${select-folder}', '{}']
       c.fonts.default_family = 'DejaVu Sans'
       c.fonts.default_size = '10pt'
       c.fonts.web.family.cursive = 'DejaVu Serif'
