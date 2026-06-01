@@ -84,6 +84,16 @@
             desc = "Go to git root";
           }
           {
+            on = ["g" "p"];
+            run = "cd ~/projects";
+            desc = "Go to ~/projects";
+          }
+          {
+            on = ["g" "n"];
+            run = "cd /etc/nixos";
+            desc = "Go to /etc/nixos";
+          }
+          {
             on = "m";
             run = "plugin bookmarks save";
             desc = "Save current position as a bookmark";
