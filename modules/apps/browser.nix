@@ -22,6 +22,7 @@
         float = true;
       };
 
+      core.impermanence.hm.directories = [".local/share/qutebrowser/sesions"];
       core.impermanence.hm.files = [
         {
           file = ".local/share/qutebrowser/cmd-history";
