@@ -1,8 +1,4 @@
-{
-  lib,
-  inputs,
-  ...
-}: {
+{lib, ...}: {
   nixos = {
     pkgs,
     config,
@@ -61,8 +57,6 @@
         middleGround = ./wallpaper-middle-ground.png;
         foreground = ./wallpaper-foreground.png;
       };
-
-      fileManager = inputs.file-manager-theme;
     };
   };
 }

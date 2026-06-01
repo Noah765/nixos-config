@@ -1,9 +1,6 @@
 {lib, ...}: {
   nixos = {config, ...}: {
-    imports = [
-      (lib.mkAliasOptionModule ["theme" "base16"] ["stylix" "base16Scheme"])
-      (lib.mkAliasOptionModule ["theme" "fileManager"] ["cli" "fileManager" "theme"])
-    ];
+    imports = [(lib.mkAliasOptionModule ["theme" "base16"] ["stylix" "base16Scheme"])];
 
     options.theme = {
       cursor = {
