@@ -3,6 +3,16 @@
   wlib,
   ...
 }: {
+  nixos = {config, ...}: {
+    options.cli.editor.enable = lib.mkEnableOption "Helix";
+
+    config = lib.mkIf config.cli.editor.enable {
+      wrappers.editor.enable = true;
+      environment.variables.EDITOR = "hx";
+      core.impermanence.hm.directories = [".local/share/codebook/cache"];
+    };
+  };
+
   flake.wrappers.editor = {pkgs, ...}: {
     imports = [wlib.wrapperModules.helix];
 
@@ -151,16 +161,6 @@
 
       verible-verilog-ls.command = "verible-verilog-ls";
       verible-verilog-ls.args = ["--rules_config_search"];
-    };
-  };
-
-  nixos = {config, ...}: {
-    options.cli.editor.enable = lib.mkEnableOption "Helix";
-
-    config = lib.mkIf config.cli.editor.enable {
-      wrappers.editor.enable = true;
-      environment.variables.EDITOR = "hx";
-      core.impermanence.hm.directories = [".local/share/codebook/cache"];
     };
   };
 }
