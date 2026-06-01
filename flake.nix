@@ -11,8 +11,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Formatting
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt.url = "github:numtide/treefmt-nix";
+    treefmt.inputs.nixpkgs.follows = "nixpkgs";
     nestix.url = "github:Noah765/nestix";
     nestix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -65,7 +65,10 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     shell.url = "github:Noah765/shell";
-    shell.inputs.nixpkgs.follows = "nixpkgs";
+    shell.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      treefmt.follows = "treefmt";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
