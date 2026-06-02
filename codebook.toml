@@ -139,6 +139,7 @@ words = [
     "readlink",
     "renamepane",
     "renametab",
+    "revsets",
     "rightalt",
     "ripgrep",
     "rtsx",
