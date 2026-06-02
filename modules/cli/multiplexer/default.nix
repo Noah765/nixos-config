@@ -63,6 +63,7 @@ in {
 
     constructFiles.config.relPath = "${config.binName}-config.kdl";
     constructFiles.config.content = ''
+      default_shell "nu"
       pane_frames false
       theme "everforest-dark"
       copy_on_select false
