@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   wlib,
   ...
@@ -50,8 +51,16 @@
         show-cryptographic-signatures = true;
       };
 
-      merge-tools.inline.program = lib.getExe pkgs.difftastic;
-      merge-tools.inline.diff-args = ["--display=inline" "--color=always" "$left" "$right"];
+      merge-tools.inline = {
+        program = lib.getExe pkgs.difftastic;
+        diff-args = ["--display=inline" "--color=always" "$left" "$right"];
+      };
+
+      merge-tools.delta = {
+        program = lib.getExe (self.wrappers.delta.wrap {inherit pkgs;});
+        diff-args = ["--width=$width" "$left" "$right"];
+        diff-expected-exit-codes = [0 1];
+      };
 
       templates.draft_commit_description = "builtin_draft_commit_description_with_diff";
       template-aliases."format_timestamp(timestamp)" = "timestamp.ago()";

@@ -5,6 +5,7 @@
     config.cli = lib.mkIf config.cli.enable {
       basic.enable = lib.mkDefault true;
       comma.enable = lib.mkDefault true;
+      delta.enable = lib.mkDefault true;
       editor.enable = lib.mkDefault true;
       fileManager.enable = lib.mkDefault true;
       multiplexer.enable = lib.mkDefault true;

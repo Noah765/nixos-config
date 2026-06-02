@@ -54,6 +54,8 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
     file-manager-theme.flake = false;
+    bat-theme.url = "github:mhanberg/everforest-textmate";
+    bat-theme.flake = false;
 
     # Misc
     nix-index-database.url = "github:nix-community/nix-index-database";

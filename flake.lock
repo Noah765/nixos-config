@@ -101,6 +101,22 @@
         "type": "github"
       }
     },
+    "bat-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1675451747,
+        "narHash": "sha256-4GexSj/T+FKsa98kmKfninJMdFKHgQyZFQGVNBFYIuc=",
+        "owner": "mhanberg",
+        "repo": "everforest-textmate",
+        "rev": "aa1850676e2c2908e7c5cf5ea7863b130fd65016",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mhanberg",
+        "repo": "everforest-textmate",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -859,6 +875,7 @@
     },
     "root": {
       "inputs": {
+        "bat-theme": "bat-theme",
         "disko": "disko",
         "file-manager-theme": "file-manager-theme",
         "flake-parts": "flake-parts",
