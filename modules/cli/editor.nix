@@ -122,6 +122,7 @@
         java.language-servers = ["jdtls" "codebook"];
         jjdescription.language-servers = ["harper-ls" "codebook"];
         markdown.language-servers = ["harper-ls" "codebook"];
+        nix.language-servers = ["nixd" "codebook"];
         nu.language-servers = ["nu-lsp" "codebook"];
         qml.language-servers = ["qmlls" "codebook"];
         rust.language-servers = ["rust-analyzer" "codebook"];
