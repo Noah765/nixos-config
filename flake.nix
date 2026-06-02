@@ -40,11 +40,6 @@
       nixpkgs.follows = "nixpkgs";
       rust-overlay.follows = "rust-overlay";
     };
-    zjstatus.url = "github:dj95/zjstatus";
-    zjstatus.inputs = {
-      nixpkgs.follows = "nixpkgs";
-      rust-overlay.follows = "rust-overlay";
-    };
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -64,6 +59,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
     shell.url = "github:Noah765/shell";
     shell.inputs = {
       nixpkgs.follows = "nixpkgs";

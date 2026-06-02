@@ -21,8 +21,6 @@
         ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${lib.getExe' inputs.zellij-switch.packages.${pkgs.stdenv.system}.default "zellij-switch.wasm"}";
       };
     });
-
-  zjstatus = pkgs: lib.getExe' inputs.zjstatus.packages.${pkgs.stdenv.system}.default "zjstatus.wasm";
 in {
   nixos = {
     pkgs,
@@ -44,7 +42,7 @@ in {
         event.cmd = sessionizer pkgs;
       };
 
-      hm.home.file.".cache/zellij/permissions.kdl".text = "\"${zjstatus pkgs}\" { ReadApplicationState; ChangeApplicationState; RunCommands; }";
+      hm.home.file.".cache/zellij/permissions.kdl".text = "\"${pkgs.zellijPlugins.zjstatus}\" { ReadApplicationState; ChangeApplicationState; RunCommands; }";
 
       core.impermanence.hm.directories = [".cache/zellij/contract_version_1/session_info"];
     };
@@ -74,7 +72,7 @@ in {
 
       ui { pane_frames { rounded_corners true; }; }
 
-      plugins { zjstatus location="file:${zjstatus pkgs}"; }
+      plugins { zjstatus location="file:${pkgs.zellijPlugins.zjstatus}"; }
 
       keybinds clear-defaults=true {
         shared_except "locked" {
