@@ -32,7 +32,7 @@
                 {
                   let path = $env.PWD | str replace $nu.home-dir '~'
 
-                  let in_repo = 0..<($env.PWD | path split | length) | each {|x| $env.PWD | path dirname -n $x } | any { ($in + '/.jj' | path type) == 'dir' }
+                  let in_repo = pwd --physical | path split | generate {|x acc=[]| {out: ($acc | path join $x) next: ($acc ++ [$x])}} | any { ($in + '/.jj' | path type) == 'dir' }
                   let vcs = if not $in_repo {
                     ""
                   } else {
