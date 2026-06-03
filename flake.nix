@@ -56,6 +56,8 @@
     file-manager-theme.flake = false;
     bat-theme.url = "github:mhanberg/everforest-textmate";
     bat-theme.flake = false;
+    vcs-tui-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
+    vcs-tui-theme.flake = false;
 
     # Misc
     nix-index-database.url = "github:nix-community/nix-index-database";

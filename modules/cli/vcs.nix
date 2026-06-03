@@ -6,8 +6,7 @@
 }: {
   nixos = {config, ...}: {
     options.cli.vcs = {
-      enable = lib.mkEnableOption "Jujutsu, Jujutsu UI, Git and the GitHub CLI";
-      jjui.enable = lib.mkEnableOption "Jujutsu UI" // {default = true;};
+      enable = lib.mkEnableOption "Jujutsu, Git and the GitHub CLI";
       git.enable = lib.mkEnableOption "Git" // {default = true;};
       gh.enable = lib.mkEnableOption "the GitHub CLI" // {default = true;};
     };
@@ -15,19 +14,16 @@
     config = lib.mkIf config.cli.vcs.enable {
       wrappers.vcs.enable = true;
 
-      hm.programs = {
-        jjui.enable = config.cli.vcs.jjui.enable;
-        jjui.settings.preview.show_at_start = true;
-
-        git.enable = config.cli.vcs.git.enable;
-        git.settings = {
-          user.name = "Noah765";
-          user.email = "noah.landgraf@gmx.de";
-          init.defaultBranch = "main";
+      hm.programs.git = {
+        enable = config.cli.vcs.git.enable;
+        settings.user = {
+          name = "Noah765";
+          email = "noah.landgraf@gmx.de";
         };
-
-        gh.enable = config.cli.vcs.gh.enable;
+        settings.init.defaultBranch = "main";
       };
+
+      hm.programs.gh.enable = config.cli.vcs.gh.enable;
 
       core.impermanence.hm.directories = [".config/jj/repos"];
       core.impermanence.hm.files = lib.mkIf config.cli.vcs.gh.enable [".config/gh/hosts.yml"];

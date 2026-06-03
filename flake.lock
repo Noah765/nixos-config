@@ -895,6 +895,7 @@
         "stylix": "stylix",
         "treefmt": "treefmt",
         "ublock-origin-assets": "ublock-origin-assets",
+        "vcs-tui-theme": "vcs-tui-theme",
         "wrappers": "wrappers",
         "zellij-sessionizer": "zellij-sessionizer",
         "zellij-switch": "zellij-switch"
@@ -1119,6 +1120,18 @@
         "owner": "uBlockOrigin",
         "repo": "uAssets",
         "type": "github"
+      }
+    },
+    "vcs-tui-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-mcuadfDa3rFXuxhV6tMq13Tse2KdhTgVy7GZaRsM7sQ=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
       }
     },
     "wrappers": {

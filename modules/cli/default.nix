@@ -12,6 +12,7 @@
       numbat.enable = lib.mkDefault true;
       nushell.enable = lib.mkDefault true;
       vcs.enable = lib.mkDefault true;
+      vcsTui.enable = lib.mkDefault true;
     };
   };
 }
