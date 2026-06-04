@@ -4,16 +4,11 @@
   wlib,
   ...
 }: {
-  nixos = {
-    config,
-    pkgs,
-    ...
-  }: {
-    options.cli.vcs.enable = lib.mkEnableOption "Jujutsu and Git";
+  nixos = {config, ...}: {
+    options.cli.vcs.enable = lib.mkEnableOption "Jujutsu";
 
     config = lib.mkIf config.cli.vcs.enable {
       wrappers.vcs.enable = true;
-      environment.systemPackages = [pkgs.git];
       core.impermanence.hm.directories = [".config/jj/repos"];
     };
   };
@@ -57,8 +52,6 @@
 
       remotes.origin.auto-track-bookmarks = "*";
       remotes.upstream.auto-track-bookmarks = "main|master";
-
-      git.executable-path = lib.getExe pkgs.git;
 
       fsmonitor.backend = "watchman";
 
