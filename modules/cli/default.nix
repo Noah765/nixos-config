@@ -10,6 +10,7 @@
       editor.enable = lib.mkDefault true;
       fileManager.enable = lib.mkDefault true;
       gh.enable = lib.mkDefault true;
+      man.enable = lib.mkDefault true;
       multiplexer.enable = lib.mkDefault true;
       nushell.enable = lib.mkDefault true;
       vcs.enable = lib.mkDefault true;
