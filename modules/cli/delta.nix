@@ -1,7 +1,7 @@
 {
+  self,
   lib,
   wlib,
-  inputs,
   ...
 }: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "delta" "enable"] ["wrappers" "delta" "enable"])];
@@ -17,16 +17,7 @@
 
     flags."--config" = config.constructFiles.config.path;
 
-    env.XDG_CACHE_HOME = "${placeholder config.outputName}/cache";
-
-    buildCommand.makeBatCache = let
-      batConfig = "${placeholder config.outputName}/bat-config";
-    in ''
-      mkdir -p ${batConfig}/themes
-      ln -s ${lib.escapeShellArg "${inputs.bat-theme}/Everforest Dark/Everforest Dark.tmTheme"} ${batConfig}/themes/theme.tmTheme
-      BAT_CONFIG_DIR=${batConfig} BAT_CACHE_PATH=${config.env.XDG_CACHE_HOME.data}/bat ${lib.getExe pkgs.bat} cache --build
-      rm -r ${batConfig}
-    '';
+    env.XDG_CACHE_HOME = self.packages.${pkgs.stdenv.system}.bat-cache;
 
     constructFiles.config.relPath = "${config.binName}-config";
     constructFiles.config.content = lib.generators.toGitINI {

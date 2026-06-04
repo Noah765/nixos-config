@@ -1,12 +1,7 @@
 {lib, ...}: {
-  nixos = {
-    pkgs,
-    config,
-    ...
-  }: {
+  nixos = {config, ...}: {
     options.cli.basic = {
       enable = lib.mkEnableOption "basic cli programs";
-      bat.enable = lib.mkEnableOption "bat" // {default = true;};
       eza.enable = lib.mkEnableOption "eza" // {default = true;};
       fd.enable = lib.mkEnableOption "fd" // {default = true;};
       fzf.enable = lib.mkEnableOption "fd" // {default = true;};
@@ -16,9 +11,6 @@
 
     config = lib.mkIf config.cli.basic.enable {
       hm.programs = {
-        bat.enable = config.cli.basic.bat.enable;
-        bat.extraPackages = [pkgs.bat-extras.batman];
-
         eza.enable = config.cli.basic.eza.enable;
         eza.extraOptions = [
           "--icons"
@@ -65,7 +57,6 @@
       };
 
       cli.nushell.shellAliases = {
-        man = lib.mkIf config.cli.basic.bat.enable "batman";
         l = lib.mkIf config.cli.basic.eza.enable "eza";
         ll = lib.mkIf config.cli.basic.eza.enable "eza --long";
         lt = lib.mkIf config.cli.basic.eza.enable "eza --tree";
