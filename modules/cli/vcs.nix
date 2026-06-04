@@ -9,18 +9,12 @@
     pkgs,
     ...
   }: {
-    options.cli.vcs.enable = lib.mkEnableOption "Jujutsu, Git and the GitHub CLI";
-    options.cli.vcs.gh.enable = lib.mkEnableOption "the GitHub CLI" // {default = true;};
+    options.cli.vcs.enable = lib.mkEnableOption "Jujutsu and Git";
 
     config = lib.mkIf config.cli.vcs.enable {
       wrappers.vcs.enable = true;
-
       environment.systemPackages = [pkgs.git];
-
-      hm.programs.gh.enable = config.cli.vcs.gh.enable;
-
       core.impermanence.hm.directories = [".config/jj/repos"];
-      core.impermanence.hm.files = lib.mkIf config.cli.vcs.gh.enable [".config/gh/hosts.yml"];
     };
   };
 
