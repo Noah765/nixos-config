@@ -4,24 +4,18 @@
   wlib,
   ...
 }: {
-  nixos = {config, ...}: {
-    options.cli.vcs = {
-      enable = lib.mkEnableOption "Jujutsu, Git and the GitHub CLI";
-      git.enable = lib.mkEnableOption "Git" // {default = true;};
-      gh.enable = lib.mkEnableOption "the GitHub CLI" // {default = true;};
-    };
+  nixos = {
+    config,
+    pkgs,
+    ...
+  }: {
+    options.cli.vcs.enable = lib.mkEnableOption "Jujutsu, Git and the GitHub CLI";
+    options.cli.vcs.gh.enable = lib.mkEnableOption "the GitHub CLI" // {default = true;};
 
     config = lib.mkIf config.cli.vcs.enable {
       wrappers.vcs.enable = true;
 
-      hm.programs.git = {
-        enable = config.cli.vcs.git.enable;
-        settings.user = {
-          name = "Noah765";
-          email = "noah.landgraf@gmx.de";
-        };
-        settings.init.defaultBranch = "main";
-      };
+      environment.systemPackages = [pkgs.git];
 
       hm.programs.gh.enable = config.cli.vcs.gh.enable;
 
