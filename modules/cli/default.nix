@@ -9,6 +9,7 @@
       delta.enable = lib.mkDefault true;
       editor.enable = lib.mkDefault true;
       eza.enable = lib.mkDefault true;
+      fd.enable = lib.mkDefault true;
       fileManager.enable = lib.mkDefault true;
       gh.enable = lib.mkDefault true;
       git.enable = lib.mkDefault true;

@@ -2,20 +2,13 @@
   nixos = {config, ...}: {
     options.cli.basic = {
       enable = lib.mkEnableOption "basic cli programs";
-      fd.enable = lib.mkEnableOption "fd" // {default = true;};
-      fzf.enable = lib.mkEnableOption "fd" // {default = true;};
+      fzf.enable = lib.mkEnableOption "fzf" // {default = true;};
       ripgrep.enable = lib.mkEnableOption "Ripgrep" // {default = true;};
       zoxide.enable = lib.mkEnableOption "zoxide" // {default = true;};
     };
 
     config = lib.mkIf config.cli.basic.enable {
       hm.programs = {
-        fd = {
-          inherit (config.cli.basic.fd) enable;
-          hidden = true;
-          ignores = [".git/" ".jj/"];
-        };
-
         fzf.enable = config.cli.basic.fzf.enable;
         fzf.defaultOptions = [
           "--style=full"
