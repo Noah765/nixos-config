@@ -2,7 +2,6 @@
   nixos = {config, ...}: {
     options.cli.basic = {
       enable = lib.mkEnableOption "basic cli programs";
-      eza.enable = lib.mkEnableOption "eza" // {default = true;};
       fd.enable = lib.mkEnableOption "fd" // {default = true;};
       fzf.enable = lib.mkEnableOption "fd" // {default = true;};
       ripgrep.enable = lib.mkEnableOption "Ripgrep" // {default = true;};
@@ -11,17 +10,6 @@
 
     config = lib.mkIf config.cli.basic.enable {
       hm.programs = {
-        eza.enable = config.cli.basic.eza.enable;
-        eza.extraOptions = [
-          "--icons"
-          "--follow-symlinks"
-          "--all"
-          "--group-directories-first"
-          "--ignore-glob=.jj"
-          "--git-ignore"
-          "--git"
-        ];
-
         fd = {
           inherit (config.cli.basic.fd) enable;
           hidden = true;
@@ -54,12 +42,6 @@
 
         zoxide.enable = config.cli.basic.zoxide.enable;
         zoxide.options = ["--cmd=cd"];
-      };
-
-      cli.nushell.shellAliases = {
-        l = lib.mkIf config.cli.basic.eza.enable "eza";
-        ll = lib.mkIf config.cli.basic.eza.enable "eza --long";
-        lt = lib.mkIf config.cli.basic.eza.enable "eza --tree";
       };
 
       core.impermanence.hm.directories = lib.mkIf config.cli.basic.zoxide.enable [".local/share/zoxide"];
