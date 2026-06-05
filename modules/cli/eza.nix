@@ -10,9 +10,9 @@
       wrappers.eza.enable = true;
 
       cli.nushell.shellAliases = {
-        l = lib.mkIf config.cli.basic.eza.enable "eza";
-        ll = lib.mkIf config.cli.basic.eza.enable "eza --long";
-        lt = lib.mkIf config.cli.basic.eza.enable "eza --tree";
+        l = lib.mkIf config.cli.eza.enable "eza";
+        ll = lib.mkIf config.cli.eza.enable "eza --long";
+        lt = lib.mkIf config.cli.eza.enable "eza --tree";
       };
     };
   };
