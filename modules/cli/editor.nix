@@ -143,6 +143,7 @@
       nixd.config.nixd.options = {
         flake-parts.expr = "(builtins.getFlake \"/etc/nixos\").debug.options";
         flake-parts-per-system.expr = "(builtins.getFlake \"/etc/nixos\").currentSystem.options";
+        wrappers.expr = "let wlib = (builtins.getFlake \"/etc/nixos\").inputs.wrappers.lib; in (wlib.evalModule {imports = [wlib.modules.default];}).options";
         nixos.expr = "(builtins.getFlake \"/etc/nixos\").nixosConfigurations.primary.options";
         home-manager.expr = "(builtins.getFlake \"/etc/nixos\").nixosConfigurations.primary.options.home-manager.users.type.getSubOptions []";
       };
