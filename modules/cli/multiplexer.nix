@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   wlib,
   inputs,
@@ -12,15 +13,16 @@
       exePath = "zellij-sessionizer";
       binName = "zellij-sessionizer";
 
-      runtimePkgs = [pkgs.fzf];
+      runtimePkgs = [(self.wrappers.fzf.wrap {inherit pkgs;})];
 
       env = {
         ZELLIJ_SESSIONIZER_SEARCH_PATHS.data = "$HOME/projects";
         ZELLIJ_SESSIONIZER_SEARCH_PATHS.esc-fn = x: "\"${x}\"";
         ZELLIJ_SESSIONIZER_SPECIFIC_PATHS = "/etc/nixos";
-        ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${lib.getExe' inputs.zellij-switch.packages.${pkgs.stdenv.system}.default "zellij-switch.wasm"}";
+        ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${switch pkgs}";
       };
     });
+  switch = pkgs: lib.getExe' inputs.zellij-switch.packages.${pkgs.stdenv.system}.default "zellij-switch.wasm";
 in {
   nixos = {
     pkgs,
@@ -42,7 +44,10 @@ in {
         event.cmd = sessionizer pkgs;
       };
 
-      hm.home.file.".cache/zellij/permissions.kdl".text = "\"${pkgs.zellijPlugins.zjstatus}\" { ReadApplicationState; ChangeApplicationState; RunCommands; }";
+      hm.home.file.".cache/zellij/permissions.kdl".text = ''
+        "${pkgs.zellijPlugins.zjstatus}" { ReadApplicationState; ChangeApplicationState; RunCommands; }
+        "${switch pkgs}" { ReadApplicationState; ChangeApplicationState; }
+      '';
 
       core.impermanence.hm.directories = [".cache/zellij/contract_version_1/session_info"];
     };
@@ -62,7 +67,6 @@ in {
     constructFiles.config = {
       relPath = "${config.binName}-config.kdl";
       content = ''
-        default_shell "nu"
         pane_frames false
         theme "everforest-dark"
         copy_on_select false
@@ -111,10 +115,10 @@ in {
             bind "Ctrl Alt w" {
               Run "${sessionizer pkgs}" {
                 floating true
-                name "Sessionizer"
                 close_on_exit true
-                width "50%"
-                height "80%"
+                width 0
+                height 0
+                borderless true
               }
             }
             bind "Ctrl Alt z" {
