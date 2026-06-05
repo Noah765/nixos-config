@@ -15,18 +15,12 @@
   };
 
   perSystem = {pkgs, ...}: {
-    packages.bat-cache = pkgs.stdenvNoCC.mkDerivation {
-      name = "bat-cache";
-      src = "${inputs.bat-theme}/Everforest Dark/Everforest Dark.tmTheme";
-      unpackPhase = ''
-        mkdir -p config/themes
-        cp "$src" config/themes/theme.tmTheme
-      '';
-      buildPhase = "BAT_CONFIG_DIR=config BAT_CACHE_PATH=cache ${lib.getExe pkgs.bat} cache --build";
-      installPhase = ''
-        mkdir -p "$out/bat"
-        cp -r cache/* "$out/bat"
-      '';
-    };
+    packages.bat-cache = pkgs.runCommand "bat-cache" {} ''
+      mkdir -p config/themes
+      cp '${inputs.bat-theme}/Everforest Dark/Everforest Dark.tmTheme' config/themes/theme.tmTheme
+      BAT_CONFIG_DIR=config BAT_CACHE_PATH=cache ${lib.getExe pkgs.bat} cache --build
+      mkdir -p "$out/bat"
+      cp -r cache/* "$out/bat"
+    '';
   };
 }
