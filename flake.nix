@@ -54,8 +54,6 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
     file-manager-theme.flake = false;
-    bat-theme.url = "github:mhanberg/everforest-textmate";
-    bat-theme.flake = false;
     vcs-tui-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
     vcs-tui-theme.flake = false;
 

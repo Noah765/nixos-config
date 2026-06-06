@@ -1,5 +1,4 @@
 {
-  self,
   lib,
   wlib,
   ...
@@ -16,8 +15,6 @@
     package = pkgs.delta;
 
     flags."--config" = config.constructFiles.config.path;
-
-    env.XDG_CACHE_HOME = self.packages.${pkgs.stdenv.system}.bat-cache;
 
     constructFiles.config.relPath = "${config.binName}-config";
     constructFiles.config.content = lib.generators.toGitINI {
@@ -40,7 +37,7 @@
         plus-emph-style = "green bold ul";
         plus-style = "green";
         side-by-side = true;
-        syntax-theme = "theme";
+        syntax-theme = "base16";
         tabs = 4;
         wrap-right-percent = 99;
         wrap-right-prefix-symbol = "↪";
