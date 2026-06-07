@@ -30,9 +30,10 @@
 
       console.enable = false;
 
+      environment.variables.NIXOS_OZONE_WL = "1";
+
       hm = {
         home.packages = with pkgs; [hyprpicker wl-clipboard];
-        home.sessionVariables.NIXOS_OZONE_WL = "1";
 
         systemd.user.services.hyprnotify = {
           Unit.Description = "hyprnotify";

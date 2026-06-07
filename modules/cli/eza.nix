@@ -3,19 +3,7 @@
   wlib,
   ...
 }: {
-  nixos = {config, ...}: {
-    options.cli.eza.enable = lib.mkEnableOption "eza";
-
-    config = lib.mkIf config.cli.eza.enable {
-      wrappers.eza.enable = true;
-
-      cli.nushell.shellAliases = {
-        l = lib.mkIf config.cli.eza.enable "eza";
-        ll = lib.mkIf config.cli.eza.enable "eza --long";
-        lt = lib.mkIf config.cli.eza.enable "eza --tree";
-      };
-    };
-  };
+  nixos.imports = [(lib.mkAliasOptionModule ["cli" "eza" "enable"] ["wrappers" "eza" "enable"])];
 
   flake.wrappers.eza = {pkgs, ...}: {
     imports = [wlib.modules.default];

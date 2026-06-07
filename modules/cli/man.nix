@@ -13,7 +13,6 @@
     config = lib.mkIf config.cli.man.enable {
       environment.systemPackages = [self.packages.${pkgs.stdenv.system}.batman];
       documentation.man.cache.enable = true;
-      cli.nushell.shellAliases.man = "batman";
     };
   };
 

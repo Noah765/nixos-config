@@ -16,8 +16,8 @@
       git.enable = lib.mkDefault true;
       man.enable = lib.mkDefault true;
       multiplexer.enable = lib.mkDefault true;
-      nushell.enable = lib.mkDefault true;
       rg.enable = lib.mkDefault true;
+      shell.enable = lib.mkDefault true;
       vcs.enable = lib.mkDefault true;
       vcsTui.enable = lib.mkDefault true;
     };

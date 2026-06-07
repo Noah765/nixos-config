@@ -5,23 +5,6 @@
   inputs,
   ...
 }: let
-  sessionizer = pkgs:
-    lib.getExe (wlib.wrapPackage {
-      inherit pkgs;
-
-      package = inputs.zellij-sessionizer;
-      exePath = "zellij-sessionizer";
-      binName = "zellij-sessionizer";
-
-      runtimePkgs = [(self.wrappers.fzf.wrap {inherit pkgs;})];
-
-      env = {
-        ZELLIJ_SESSIONIZER_SEARCH_PATHS.data = "$HOME/projects";
-        ZELLIJ_SESSIONIZER_SEARCH_PATHS.esc-fn = x: "\"${x}\"";
-        ZELLIJ_SESSIONIZER_SPECIFIC_PATHS = "/etc/nixos";
-        ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${switch pkgs}";
-      };
-    });
   switch = pkgs: lib.getExe' inputs.zellij-switch.packages.${pkgs.stdenv.system}.default "zellij-switch.wasm";
 in {
   nixos = {
@@ -33,16 +16,7 @@ in {
 
     config = lib.mkIf config.cli.multiplexer.enable {
       wrappers.multiplexer.enable = true;
-
-      cli.nushell.shellAliases.z = "zellij";
-      cli.nushell.keybindings = lib.singleton {
-        name = "zellij_sessionizer";
-        modifier = "control";
-        keycode = "char_s";
-        mode = ["vi_normal" "vi_insert"];
-        event.send = "executehostcommand";
-        event.cmd = sessionizer pkgs;
-      };
+      wrappers.multiplexerSessionizer.enable = true;
 
       hm.home.file.".cache/zellij/permissions.kdl".text = ''
         "${pkgs.zellijPlugins.zjstatus}" { ReadApplicationState; ChangeApplicationState; RunCommands; }
@@ -50,6 +24,23 @@ in {
       '';
 
       core.impermanence.hm.directories = [".cache/zellij/contract_version_1/session_info"];
+    };
+  };
+
+  flake.wrappers.multiplexerSessionizer = {pkgs, ...}: {
+    imports = [wlib.modules.default];
+
+    package = inputs.zellij-sessionizer;
+    exePath = "zellij-sessionizer";
+    binName = "zellij-sessionizer";
+
+    runtimePkgs = [(self.wrappers.fzf.wrap {inherit pkgs;})];
+
+    env = {
+      ZELLIJ_SESSIONIZER_SEARCH_PATHS.data = "$HOME/projects";
+      ZELLIJ_SESSIONIZER_SEARCH_PATHS.esc-fn = x: "\"${x}\"";
+      ZELLIJ_SESSIONIZER_SPECIFIC_PATHS = "/etc/nixos";
+      ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${switch pkgs}";
     };
   };
 
@@ -113,7 +104,7 @@ in {
             bind "Ctrl Alt e" { TogglePaneInGroup; }
 
             bind "Ctrl Alt w" {
-              Run "${sessionizer pkgs}" {
+              Run "${self.wrappers.multiplexerSessionizer.wrap {inherit pkgs;}}" {
                 floating true
                 close_on_exit true
                 width 0
