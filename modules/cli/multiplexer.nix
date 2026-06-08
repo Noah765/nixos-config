@@ -104,7 +104,7 @@ in {
             bind "Ctrl Alt e" { TogglePaneInGroup; }
 
             bind "Ctrl Alt w" {
-              Run "${self.wrappers.multiplexerSessionizer.wrap {inherit pkgs;}}" {
+              Run "${lib.getExe (self.wrappers.multiplexerSessionizer.wrap {inherit pkgs;})}" {
                 floating true
                 close_on_exit true
                 width 0
