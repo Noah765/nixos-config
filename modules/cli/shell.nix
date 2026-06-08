@@ -1,5 +1,4 @@
 {
-  self,
   lib,
   wlib,
   ...
@@ -13,7 +12,7 @@
 
     config = lib.mkIf config.cli.shell.enable {
       wrappers.shell.enable = true;
-      users.defaultUserShell = self.wrappers.shell.wrap {inherit pkgs;};
+      users.defaultUserShell = pkgs.nushell;
 
       environment.systemPackages = [pkgs.carapace];
 
