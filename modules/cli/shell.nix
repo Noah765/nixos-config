@@ -62,12 +62,6 @@
       $env.config.table.missing_value_symbol = ''
       $env.config.color_config.search_result = 'blue'
 
-      # Aliases
-      alias man = if (which batman | is-empty) { man } else { batman }
-      alias l = if (which eza | is-empty) { ls --all } else { eza }
-      alias ll = if (which eza | is-empty) { ls --all --long } else { eza --long }
-      alias lt = if (which eza | is-not-empty) { eza --tree }
-
       # Hooks
       $env.config.hooks.env_change.PWD = [{||
         if (which direnv | is-empty) { return }
@@ -184,12 +178,12 @@
           })
         }
       }
-      def --env --wrapped z [...rest: string@"nu-complete zoxide path"] { if (which zoxide | is-empty) { cd ($rest | first) } else { __zoxide_z ...$rest } }
+      def --env --wrapped z [...args: string@"nu-complete zoxide path"] { if (which zoxide | is-empty) { cd ($args | first) } else { __zoxide_z ...$args } }
       alias cd = z
       alias cdi = __zoxide_zi
 
-      # File manager
-      def --env y [...args] {
+      # file manager
+      def --env y --wrapped [...args] {
         let tmp = mktemp --tmpdir yazi-cwd.XXXXXX
         yazi ...$args --cwd-file $tmp
         let cwd = open $tmp
@@ -206,6 +200,14 @@
       $env.FZF_ALT_C_COMMAND = "fd --type directory";
       $env.FZF_ALT_C_OPTS = $"($display) --preview '($dir_preview)'";
       source ${pkgs.runCommandLocal "fzf.nu" {} "${lib.getExe pkgs.fzf} --nushell > \"$out\""}
+
+      # ls
+      def --wrapped l [...args] { if (which eza | is-empty) { ls --all ...$args } else { eza ...$args } }
+      def --wrapped ll [...args] { if (which eza | is-empty) { ls --all --long ...$args } else { eza --long ...$args } }
+      def --wrapped lt [...args] { eza --tree ...$args }
+
+      # man
+      def --wrapped man [...args] { if (which batman | is-empty) { man ...$args } else { batman ...$args } }
     '';
   };
 }
