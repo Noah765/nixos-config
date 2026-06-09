@@ -25,6 +25,7 @@
     nushell = self.wrappers.shell.wrap {pkgs = prev;};
     qutebrowser = self.wrappers.browser.wrap {pkgs = prev;};
     ripgrep-wrapped = self.wrappers.rg.wrap {pkgs = prev;};
+    xdg-desktop-portal-termfilechooser = self.wrappers.termfilechooser.wrap {pkgs = prev;};
     yazi = self.wrappers.fileManager.wrap {pkgs = prev;};
     zellij = self.wrappers.multiplexer.wrap {pkgs = prev;};
     zellij-sessionizer = self.wrappers.multiplexerSessionizer.wrap {pkgs = prev;};

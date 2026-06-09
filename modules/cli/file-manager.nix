@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   wlib,
   inputs,
@@ -17,16 +18,19 @@
       xdg.portal = {
         enable = true;
         extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
-        config.common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
-      };
-      hm.xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = lib.generators.toINI {} {
-        filechooser.env = "TERMCMD=ghostty --class=com.termfilechooser -e";
+        config.common."org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
       };
       desktop.hyprland.settings.window_rule = lib.singleton {
         match.class = "com.termfilechooser";
         float = true;
       };
     };
+  };
+
+  flake.wrappers.termfilechooser = {pkgs, ...}: {
+    imports = [wlib.modules.default];
+    package = pkgs.xdg-desktop-portal-termfilechooser;
+    env.TERMCMD = "${lib.getExe (self.wrappers.terminal.wrap {inherit pkgs;})} --class=com.termfilechooser -e";
   };
 
   flake.wrappers.fileManager = {
