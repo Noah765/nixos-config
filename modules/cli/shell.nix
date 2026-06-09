@@ -14,8 +14,6 @@
       wrappers.shell.enable = true;
       users.defaultUserShell = pkgs.nushell;
 
-      environment.systemPackages = [pkgs.carapace];
-
       core.impermanence.hm.files = [
         ".local/share/nushell/history.sqlite3"
         ".local/share/nushell/history.sqlite3-shm"
@@ -26,6 +24,8 @@
 
   flake.wrappers.shell = {pkgs, ...}: {
     imports = [wlib.wrapperModules.nushell];
+
+    runtimePkgs = [pkgs.carapace];
 
     "config.nu".content = ''
       # Banner
