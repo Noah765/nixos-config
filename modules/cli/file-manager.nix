@@ -10,10 +10,10 @@
     config,
     ...
   }: {
-    options.cli.fileManager.enable = lib.mkEnableOption "Yazi";
+    options.cli.file-manager.enable = lib.mkEnableOption "Yazi";
 
-    config = lib.mkIf config.cli.fileManager.enable {
-      wrappers.fileManager.enable = true;
+    config = lib.mkIf config.cli.file-manager.enable {
+      wrappers.file-manager.enable = true;
 
       xdg.portal = {
         enable = true;
@@ -33,7 +33,7 @@
     env.TERMCMD = "${lib.getExe (self.wrappers.terminal.wrap {inherit pkgs;})} --class=com.termfilechooser -e";
   };
 
-  flake.wrappers.fileManager = {
+  flake.wrappers.file-manager = {
     pkgs,
     config,
     ...

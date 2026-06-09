@@ -16,7 +16,7 @@ in {
 
     config = lib.mkIf config.cli.multiplexer.enable {
       wrappers.multiplexer.enable = true;
-      wrappers.multiplexerSessionizer.enable = true;
+      wrappers.multiplexer-sessionizer.enable = true;
 
       hm.home.file.".cache/zellij/permissions.kdl".text = ''
         "${pkgs.zellijPlugins.zjstatus}" { ReadApplicationState; ChangeApplicationState; RunCommands; }
@@ -27,7 +27,7 @@ in {
     };
   };
 
-  flake.wrappers.multiplexerSessionizer = {pkgs, ...}: {
+  flake.wrappers.multiplexer-sessionizer = {pkgs, ...}: {
     imports = [wlib.modules.default];
 
     package = inputs.zellij-sessionizer;
@@ -104,7 +104,7 @@ in {
             bind "Ctrl Alt e" { TogglePaneInGroup; }
 
             bind "Ctrl Alt w" {
-              Run "${lib.getExe (self.wrappers.multiplexerSessionizer.wrap {inherit pkgs;})}" {
+              Run "${lib.getExe (self.wrappers.multiplexer-sessionizer.wrap {inherit pkgs;})}" {
                 floating true
                 close_on_exit true
                 width 0

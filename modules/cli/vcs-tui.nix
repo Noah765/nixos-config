@@ -4,9 +4,9 @@
   inputs,
   ...
 }: {
-  nixos.imports = [(lib.mkAliasOptionModule ["cli" "vcsTui" "enable"] ["wrappers" "vcsTui" "enable"])];
+  nixos.imports = [(lib.mkAliasOptionModule ["cli" "vcs-tui" "enable"] ["wrappers" "vcs-tui" "enable"])];
 
-  flake.wrappers.vcsTui = {
+  flake.wrappers.vcs-tui = {
     pkgs,
     config,
     ...

@@ -14,22 +14,22 @@
     lib.mapAttrs (_: v: self.wrappers.${v}.wrap {pkgs = prev;}) {
       bat = "bat";
       delta = "delta";
-      desktop-shell = "desktopShell";
+      desktop-shell = "desktop-shell";
       eza-wrapped = "eza";
       fd = "fd";
       fzf = "fzf";
       ghostty = "terminal";
       git-wrapped = "git";
       helix = "editor";
-      jjui = "vcsTui";
+      jjui = "vcs-tui";
       jujutsu = "vcs";
       nushell = "shell";
       qutebrowser = "browser";
       ripgrep-wrapped = "rg";
       xdg-desktop-portal-termfilechooser = "termfilechooser";
-      yazi = "fileManager";
+      yazi = "file-manager";
       zellij = "multiplexer";
-      zellij-sessionizer = "multiplexerSessionizer";
+      zellij-sessionizer = "multiplexer-sessionizer";
       zoxide = "cd";
     });
 }

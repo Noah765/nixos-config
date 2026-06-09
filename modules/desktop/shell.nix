@@ -28,7 +28,7 @@
     };
   };
 
-  flake.wrappers.desktopShell = {pkgs, ...}: {
+  flake.wrappers.desktop-shell = {pkgs, ...}: {
     imports = [wlib.modules.default];
 
     package = inputs.shell.packages.${pkgs.stdenv.system}.default;

@@ -10,7 +10,7 @@
       editor.enable = lib.mkDefault true;
       eza.enable = lib.mkDefault true;
       fd.enable = lib.mkDefault true;
-      fileManager.enable = lib.mkDefault true;
+      file-manager.enable = lib.mkDefault true;
       fzf.enable = lib.mkDefault true;
       gh.enable = lib.mkDefault true;
       git.enable = lib.mkDefault true;
@@ -18,8 +18,8 @@
       multiplexer.enable = lib.mkDefault true;
       rg.enable = lib.mkDefault true;
       shell.enable = lib.mkDefault true;
+      vcs-tui.enable = lib.mkDefault true;
       vcs.enable = lib.mkDefault true;
-      vcsTui.enable = lib.mkDefault true;
     };
   };
 }
