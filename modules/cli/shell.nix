@@ -196,6 +196,7 @@
       let dir_preview = if (which eza | is-empty) { 'ls {}' } else { 'eza --tree --color always --level 2 {}' }
       $env.FZF_CTRL_T_COMMAND = 'fd';
       $env.FZF_CTRL_T_OPTS = $"($display) --preview='if \({} | path type\) == dir { ($dir_preview) } else { ($file_preview) }'";
+      $env.FZF_CTRL_R_OPTS = $display
       $env.FZF_ALT_C_COMMAND = "fd --type directory";
       $env.FZF_ALT_C_OPTS = $"($display) --preview '($dir_preview)'";
       source ${pkgs.runCommandLocal "fzf.nu" {} "${lib.getExe pkgs.fzf} --nushell > \"$out\""}
