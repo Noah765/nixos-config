@@ -1,4 +1,5 @@
 {
+  wlib,
   lib,
   inputs,
   ...
@@ -14,31 +15,38 @@
       hm.systemd.user.services.app-shell = {
         Unit.Description = "shell";
         Unit.After = ["graphical-session.target"];
-        Service.ExecStart = lib.join " " [
-          (lib.getExe inputs.shell.packages.${pkgs.stdenv.system}.default)
-          "--wallpaper-background=${config.theme.wallpaper.background}"
-          "--wallpaper-middle-ground=${config.theme.wallpaper.middleGround}"
-          "--wallpaper-foreground=${config.theme.wallpaper.foreground}"
-          "--background-color=${config.theme.colors.base00}"
-          "--text-color=${config.theme.colors.base05}"
-          "--primary-color=${config.theme.colors.green}"
-          "--red=${config.theme.colors.red}"
-          "--green=${config.theme.colors.green}"
-          "--yellow=${config.theme.colors.yellow}"
-          "--blue=${config.theme.colors.blue}"
-          "--magenta=${config.theme.colors.magenta}"
-          "--cyan=${config.theme.colors.cyan}"
-          "--bar-opacity=${lib.toString config.theme.windowOpacity}"
-        ];
+        Service.ExecStart = lib.getExe pkgs.desktop-shell;
         Service.Restart = "on-failure";
         Install.WantedBy = ["graphical-session.target"];
       };
 
-      desktop.hyprland.settings.layer_rule = lib.mkIf (config.theme.windowOpacity != 1) (lib.singleton {
+      desktop.hyprland.settings.layer_rule = lib.singleton {
         match.namespace = "shell-(bar|calculator)";
         blur = true;
         ignore_alpha = 0;
-      });
+      };
+    };
+  };
+
+  flake.wrappers.desktopShell = {pkgs, ...}: {
+    imports = [wlib.modules.default];
+
+    package = inputs.shell.packages.${pkgs.stdenv.system}.default;
+
+    flags = {
+      "--wallpaper-background" = ../theme/everforest/wallpaper-background.png;
+      "--wallpaper-middle-ground" = ../theme/everforest/wallpaper-middle-ground.png;
+      "--wallpaper-foreground" = ../theme/everforest/wallpaper-foreground.png;
+      "--background-color" = "#2d353b";
+      "--text-color" = "#d3c6aa";
+      "--primary-color" = "#a7c080";
+      "--red" = "#e67e80";
+      "--green" = "#a7c080";
+      "--yellow" = "#dbbc7f";
+      "--blue" = "#7fbbb3";
+      "--magenta" = "#d699b6";
+      "--cyan" = "#83c092";
+      "--bar-opacity" = "0.75";
     };
   };
 }

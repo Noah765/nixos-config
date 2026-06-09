@@ -13,6 +13,7 @@
   nixos.config.nixpkgs.overlays = lib.singleton (_: prev: {
     bat = self.wrappers.bat.wrap {pkgs = prev;};
     delta = self.wrappers.delta.wrap {pkgs = prev;};
+    desktop-shell = self.wrappers.desktopShell.wrap {pkgs = prev;};
     eza-wrapped = self.wrappers.eza.wrap {pkgs = prev;};
     fd = self.wrappers.fd.wrap {pkgs = prev;};
     fzf = self.wrappers.fzf.wrap {pkgs = prev;};
