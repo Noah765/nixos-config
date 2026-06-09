@@ -7,8 +7,6 @@
     options.desktop.autologin.enable = lib.mkEnableOption "Autologin";
 
     config = lib.mkIf config.desktop.autologin.enable {
-      dependencies = ["desktop.hyprland"];
-
       security.pam.services.autologin.name = "autologin";
       security.pam.services.autologin.startSession = true;
       systemd.services.autologin = {

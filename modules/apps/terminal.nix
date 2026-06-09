@@ -3,14 +3,7 @@
   wlib,
   ...
 }: {
-  nixos = {config, ...}: {
-    options.apps.terminal.enable = lib.mkEnableOption "Ghostty";
-
-    config = lib.mkIf config.apps.terminal.enable {
-      wrappers.terminal.enable = true;
-      desktop.hyprland.bind = [["SUPER + T" "hl.dsp.exec_raw('ghostty +new-window')"]]; # Ghostty natively sets up systemd services
-    };
-  };
+  nixos.imports = [(lib.mkAliasOptionModule ["apps" "terminal" "enable"] ["wrappers" "terminal" "enable"])];
 
   flake.wrappers.terminal = {
     pkgs,

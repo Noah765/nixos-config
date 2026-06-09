@@ -20,10 +20,6 @@
         extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
         config.common."org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
       };
-      desktop.hyprland.settings.window_rule = lib.singleton {
-        match.class = "com.termfilechooser";
-        float = true;
-      };
     };
   };
 

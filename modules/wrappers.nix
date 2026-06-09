@@ -21,6 +21,7 @@
       ghostty = "terminal";
       git-wrapped = "git";
       helix = "editor";
+      hyprland = "compositor";
       jjui = "vcs-tui";
       jujutsu = "vcs";
       nushell = "shell";

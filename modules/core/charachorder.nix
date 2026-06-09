@@ -9,8 +9,6 @@
     config = lib.mkIf config.core.charachorder.enable {
       core.user.groups = ["dialout"];
 
-      desktop.hyprland.settings.config.input.kb_layout = "cc";
-
       services.xserver.xkb.extraLayouts.cc = {
         description = "CC layout";
         languages = ["eng"];

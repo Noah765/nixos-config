@@ -14,12 +14,6 @@
     config = lib.mkIf config.apps.browser.enable {
       wrappers.browser.enable = true;
 
-      desktop.hyprland.bind = [["SUPER + B" "hl.dsp.exec_raw('uwsm-app qutebrowser')"]];
-      desktop.hyprland.settings.window_rule = lib.singleton {
-        match.class = "com.qutebrowser-editor";
-        float = true;
-      };
-
       core.impermanence.hm.directories = [".local/share/qutebrowser/sessions"];
       core.impermanence.hm.files = [
         {
