@@ -234,6 +234,8 @@ in {
                 format_center "{tabs}"
                 format_right "{swap_layout}"
                 format_space "#[bg=$bg]"
+                format_hide_on_overlength "true"
+                format_precedence "lcr"
 
                 mode_normal "#[fg=#2d353b,bg=#a7c080,bold] NORMAL "
                 mode_locked "#[fg=#2d353b,bg=#d3c6aa,bold] LOCKED "
