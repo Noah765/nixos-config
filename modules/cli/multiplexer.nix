@@ -4,26 +4,15 @@
   wlib,
   inputs,
   ...
-}: let
-  switch = pkgs: lib.getExe' inputs.zellij-switch.packages.${pkgs.stdenv.system}.default "zellij-switch.wasm";
-in {
-  nixos = {
-    pkgs,
-    config,
-    ...
-  }: {
+}: {
+  nixos = {config, ...}: {
     options.cli.multiplexer.enable = lib.mkEnableOption "Zellij";
 
     config = lib.mkIf config.cli.multiplexer.enable {
       wrappers.multiplexer.enable = true;
       wrappers.multiplexer-sessionizer.enable = true;
 
-      hm.home.file.".cache/zellij/permissions.kdl".text = ''
-        "${pkgs.zellijPlugins.zjstatus}" { ReadApplicationState; ChangeApplicationState; RunCommands; }
-        "${switch pkgs}" { ReadApplicationState; ChangeApplicationState; }
-      '';
-
-      core.impermanence.hm.directories = [".cache/zellij/contract_version_1/session_info"];
+      core.impermanence.hm.directories = [".cache/zellij"];
     };
   };
 
@@ -40,7 +29,7 @@ in {
       ZELLIJ_SESSIONIZER_SEARCH_PATHS.data = "$HOME/projects";
       ZELLIJ_SESSIONIZER_SEARCH_PATHS.esc-fn = x: "\"${x}\"";
       ZELLIJ_SESSIONIZER_SPECIFIC_PATHS = "/etc/nixos";
-      ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${switch pkgs}";
+      ZELLIJ_SESSIONIZER_SWITCH_PLUGIN = "file:${lib.getExe' inputs.zellij-switch.packages.${pkgs.stdenv.system}.default "zellij-switch.wasm"}";
     };
   };
 
