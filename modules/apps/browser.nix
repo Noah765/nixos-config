@@ -76,6 +76,8 @@
 
     flags."--config-py" = config.constructFiles.config.path;
 
+    env.QTWEBENGINE_FORCE_USE_GBM = "0"; # TODO Remove once qutebrowser uses at least Qt version 6.11.2
+
     constructFiles.config.relPath = "${config.binName}-config.py";
     constructFiles.config.content = let
       select-folder = pkgs.writers.writeNu "qutebrowser-select-folder" ''
