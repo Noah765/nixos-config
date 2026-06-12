@@ -57,6 +57,7 @@ words = [
     "filechooser",
     "fileselect",
     "findutils",
+    "fontconfig",
     "freedesktop",
     "fsmonitor",
     "fzf",
