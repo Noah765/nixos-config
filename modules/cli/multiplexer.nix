@@ -1,5 +1,4 @@
 {
-  self,
   lib,
   wlib,
   inputs,
@@ -23,7 +22,7 @@
     exePath = "zellij-sessionizer";
     binName = "zellij-sessionizer";
 
-    runtimePkgs = [(self.wrappers.fzf.wrap {inherit pkgs;})];
+    runtimePkgs = [pkgs.fzf];
 
     env = {
       ZELLIJ_SESSIONIZER_SEARCH_PATHS.data = "$HOME/projects";
@@ -93,7 +92,7 @@
             bind "Ctrl Alt e" { TogglePaneInGroup; }
 
             bind "Ctrl Alt w" {
-              Run "${lib.getExe (self.wrappers.multiplexer-sessionizer.wrap {inherit pkgs;})}" {
+              Run "${lib.getExe pkgs.zellij-sessionizer}" {
                 floating true
                 close_on_exit true
                 width 0

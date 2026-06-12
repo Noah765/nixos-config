@@ -1,5 +1,4 @@
 {
-  self,
   lib,
   wlib,
   ...
@@ -16,7 +15,7 @@
   flake.wrappers.cd = {pkgs, ...}: {
     imports = [wlib.modules.default];
 
-    package = pkgs.zoxide.override {fzf = self.wrappers.fzf.wrap {inherit pkgs;};};
+    package = pkgs.zoxide;
 
     env.SHELL = "sh";
     env._ZO_FZF_OPTS = lib.join " " [

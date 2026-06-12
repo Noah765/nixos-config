@@ -1,5 +1,4 @@
 {
-  self,
   lib,
   wlib,
   inputs,
@@ -26,7 +25,7 @@
   flake.wrappers.termfilechooser = {pkgs, ...}: {
     imports = [wlib.modules.default];
     package = pkgs.xdg-desktop-portal-termfilechooser;
-    env.TERMCMD = "${lib.getExe (self.wrappers.terminal.wrap {inherit pkgs;})} --class=com.termfilechooser -e";
+    env.TERMCMD = "${lib.getExe pkgs.ghostty} --class=com.termfilechooser -e";
   };
 
   flake.wrappers.file-manager = {

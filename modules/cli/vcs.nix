@@ -1,5 +1,4 @@
 {
-  self,
   lib,
   wlib,
   ...
@@ -36,7 +35,7 @@
       };
 
       merge-tools.delta = {
-        program = lib.getExe (self.wrappers.delta.wrap {inherit pkgs;});
+        program = lib.getExe pkgs.delta;
         diff-args = ["--width=$width" "$left" "$right"];
         diff-expected-exit-codes = [0 1];
       };

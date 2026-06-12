@@ -3,19 +3,13 @@
   lib,
   inputs,
   ...
-}: {
-  imports = [inputs.wrappers.flakeModules.default];
-
-  _module.args.wlib = inputs.wrappers.lib;
-
-  nixos.imports = lib.mapAttrsToList (_: v: v.install) self.wrappers;
-
-  nixos.config.nixpkgs.overlays = lib.singleton (_: prev:
-    lib.mapAttrs (_: v: self.wrappers.${v}.wrap {pkgs = prev;}) {
+}: let
+  overlay = lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${v}.wrap {pkgs = prev;}) x) [
+    {
       bat = "bat";
       delta = "delta";
       desktop-shell = "desktop-shell";
-      eza-wrapped = "eza";
+      eza = "eza";
       fd = "fd";
       fzf = "fzf";
       ghostty = "terminal";
@@ -23,14 +17,72 @@
       helix = "editor";
       hyprland = "compositor";
       jjui = "vcs-tui";
-      jujutsu = "vcs";
       nushell = "shell";
       qutebrowser = "browser";
       ripgrep-wrapped = "rg";
-      xdg-desktop-portal-termfilechooser = "termfilechooser";
       yazi = "file-manager";
-      zellij = "multiplexer";
+    }
+    {
+      jujutsu = "vcs";
+      xdg-desktop-portal-termfilechooser = "termfilechooser";
       zellij-sessionizer = "multiplexer-sessionizer";
       zoxide = "cd";
-    });
+    }
+    {
+      zellij = "multiplexer";
+    }
+  ]);
+
+  wrapperPackages = {
+    bat = "bat";
+    browser = "qutebrowser";
+    cd = "zoxide";
+    compositor = "hyprland";
+    delta = "delta";
+    desktop-shell = "desktop-shell";
+    editor = "helix";
+    eza = "eza";
+    fd = "fd";
+    file-manager = "yazi";
+    fzf = "fzf";
+    git = "git-wrapped";
+    multiplexer = "zellij";
+    multiplexer-sessionizer = "zellij-sessionizer";
+    rg = "ripgrep-wrapped";
+    shell = "nushell";
+    termfilechooser = "xdg-desktop-portal-termfilechooser";
+    terminal = "ghostty";
+    vcs = "jujutsu";
+    vcs-tui = "jjui";
+  };
+in {
+  imports = [inputs.wrappers.flakeModules.default];
+
+  _module.args.wlib = inputs.wrappers.lib;
+
+  nixos = {
+    pkgs,
+    config,
+    ...
+  }: {
+    options.wrappers = lib.mapAttrs (_: v: {enable = lib.mkEnableOption "the ${v} wrapper";}) self.wrappers;
+
+    config.nixpkgs.overlays = [overlay];
+    config.environment.systemPackages = lib.mapAttrsToList (n: _: pkgs.${wrapperPackages.${n}}) (lib.filterAttrs (_: v: v.enable) config.wrappers);
+  };
+
+  perSystem = {
+    system,
+    pkgs,
+    ...
+  }: {
+    _module.args.pkgs = import inputs.nixpkgs {
+      inherit system;
+      overlays = [overlay];
+    };
+
+    wrappers.control_type = "build";
+
+    packages = lib.mapAttrs (_: v: pkgs.${v}) wrapperPackages;
+  };
 }
