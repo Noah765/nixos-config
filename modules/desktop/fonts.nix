@@ -6,9 +6,9 @@
   }: {
     options.desktop.fonts.enable = lib.mkEnableOption "configuring fonts";
 
-    config = lib.mkIf config.desktop.fonts.enable {
-      fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
-      fonts.fontconfig.defaultFonts.monospace = ["JetBrainsMono Nerd Font Mono"];
+    config.fonts = lib.mkIf config.desktop.fonts.enable {
+      packages = [pkgs.nerd-fonts.jetbrains-mono];
+      fontconfig.defaultFonts.monospace = ["JetBrainsMono Nerd Font Mono"];
     };
   };
 }
