@@ -24,7 +24,16 @@
 
   flake.wrappers.termfilechooser = {pkgs, ...}: {
     imports = [wlib.modules.default];
+
     package = pkgs.xdg-desktop-portal-termfilechooser;
+    exePath = "libexec/xdg-desktop-portal-termfilechooser";
+    binDir = "libexec";
+
+    filesToPatch = [
+      "share/dbus-1/services/org.freedesktop.impl.portal.desktop.termfilechooser.service"
+      "share/systemd/user/xdg-desktop-portal-termfilechooser.service"
+    ];
+
     env.TERMCMD = "${lib.getExe pkgs.ghostty} --class=com.termfilechooser -e";
   };
 
