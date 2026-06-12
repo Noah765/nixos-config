@@ -26,9 +26,9 @@
     package = inputs.shell.packages.${pkgs.stdenv.system}.default;
 
     flags = {
-      "--wallpaper-background" = ../theme/everforest/wallpaper-background.png;
-      "--wallpaper-middle-ground" = ../theme/everforest/wallpaper-middle-ground.png;
-      "--wallpaper-foreground" = ../theme/everforest/wallpaper-foreground.png;
+      "--wallpaper-background" = ../../wallpapers/everforest/background.png;
+      "--wallpaper-middle-ground" = ../../wallpapers/everforest/middle-ground.png;
+      "--wallpaper-foreground" = ../../wallpapers/everforest/foreground.png;
       "--background-color" = "#2d353b";
       "--text-color" = "#d3c6aa";
       "--primary-color" = "#a7c080";

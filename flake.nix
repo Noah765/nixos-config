@@ -50,8 +50,6 @@
     greasemonkey-scripts.flake = false;
 
     # Theming
-    stylix.url = "github:nix-community/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
     file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
     file-manager-theme.flake = false;
     vcs-tui-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";

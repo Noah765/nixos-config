@@ -20,8 +20,6 @@
       programs.hyprland.enable = true;
       programs.hyprland.withUWSM = true;
 
-      theme.stylix.hmTargets.hyprland.hyprpaper.enable = false;
-
       console.enable = false;
 
       environment.variables.NIXOS_OZONE_WL = "1";
