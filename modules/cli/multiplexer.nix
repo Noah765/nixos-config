@@ -50,6 +50,7 @@
         theme "everforest-dark"
         copy_on_select false
         layout_dir "${placeholder config.outputName}/layouts"
+        serialization_interval 10
         show_startup_tips false
         show_release_notes false
         mouse_hover_effects false
