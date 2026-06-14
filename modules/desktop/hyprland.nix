@@ -1,7 +1,8 @@
 {
-  wlib,
   lib,
+  wlib,
   inputs,
+  config,
   ...
 }: {
   nixos = {
@@ -68,6 +69,22 @@
     };
   };
 
+  theme."hyprland.lua" = theme: ''
+    hl.config({
+      general = {
+        col = {
+          inactive_border = '${theme.inactiveBorder}',
+          active_border = '${theme.activeBorder}',
+        },
+      },
+      decoration = {
+        shadow = { color = '${theme.bg}' },
+        glow = { color = '${theme.activeBorder}' },
+      },
+      misc = { background_color = '${theme.bg}' },
+    })
+  '';
+
   flake.wrappers.compositor = {
     pkgs,
     config,
@@ -108,10 +125,6 @@
         general = {
           gaps_in = 2,
           gaps_out = 5,
-          col = {
-            inactive_border = '#859289',
-            active_border = '#a7c080',
-          },
           layout = 'hy3',
         },
         decoration = {
@@ -121,11 +134,9 @@
             brightness = 0.75,
             popups = true,
           },
-          shadow = { color = '#2d353b' },
           glow = {
             enabled = true,
             range = 3,
-            color = '#a7c080',
           },
         },
         input = {
@@ -150,6 +161,7 @@
           enforce_permissions = true,
         },
       })
+      ${config.defaultTheme."hyprland.lua"}
 
       hl.animation({
         leaf = 'global',
@@ -286,6 +298,12 @@
           match = { fullscreen_state_internal = 1 },
           ['darkwindow:shade'] = 'opacity',
         })
+      end
+
+      local file = io.open('/home/noah/.theme-config/hyprland.lua')
+      if file then
+        file:close()
+        dofile('/home/noah/.theme-config/hyprland.lua')
       end
     '';
   };
