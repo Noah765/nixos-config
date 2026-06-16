@@ -2,8 +2,42 @@
   lib,
   wlib,
   ...
-}: {
+} @ flake: let
+  configGenerator = lib.generators.toKeyValue {
+    mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
+    listsAsDuplicateKeys = true;
+  };
+in {
   nixos.imports = [(lib.mkAliasOptionModule ["apps" "terminal" "enable"] ["wrappers" "terminal" "enable"])];
+
+  theme."config.ghostty" = theme:
+    configGenerator {
+      background = theme.bg;
+      foreground = theme.fg;
+      cursor-color = theme.cursor;
+      cursor-text = theme.cursorText;
+      selection-background = theme.selectionBg;
+      selection-foreground = "cell-foreground";
+
+      palette = [
+        "0=${theme.black}"
+        "1=${theme.red}"
+        "2=${theme.green}"
+        "3=${theme.yellow}"
+        "4=${theme.blue}"
+        "5=${theme.magenta}"
+        "6=${theme.cyan}"
+        "7=${theme.white}"
+        "8=${theme.brightBlack}"
+        "9=${theme.brightRed}"
+        "10=${theme.brightGreen}"
+        "11=${theme.brightYellow}"
+        "12=${theme.brightBlue}"
+        "13=${theme.brightMagenta}"
+        "14=${theme.brightCyan}"
+        "15=${theme.brightWhite}"
+      ];
+    };
 
   flake.wrappers.terminal = {
     pkgs,
@@ -25,10 +59,9 @@
 
     constructFiles.config.relPath = "${config.binName}-config";
     constructFiles.config.content =
-      lib.generators.toKeyValue {
-        mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
-        listsAsDuplicateKeys = true;
-      } {
+      configGenerator {
+        config-file = "?~/.theme-config/config.ghostty";
+
         font-family = [
           "JetBrainsMono Nerd Font Mono"
           "DejaVu Sans Mono"
@@ -40,32 +73,7 @@
         window-padding-y = 0;
         window-padding-balance = true;
         confirm-close-surface = false;
-        app-notifications = "no-clipboard-copy";
-
-        background = "#2d353b";
-        foreground = "#d3c6aa";
-        cursor-color = "#d3c6aa";
-        selection-background = "#475258";
-        selection-foreground = "#d3c6aa";
-
-        palette = [
-          "0=#2d353b"
-          "1=#e67e80"
-          "2=#a7c080"
-          "3=#dbbc7f"
-          "4=#7fbbb3"
-          "5=#d699b6"
-          "6=#83c092"
-          "7=#d3c6aa"
-          "8=#859289"
-          "9=#e67e80"
-          "10=#a7c080"
-          "11=#dbbc7f"
-          "12=#7fbbb3"
-          "13=#d699b6"
-          "14=#83c092"
-          "15=#fdf6e3"
-        ];
+        app-notifications = false;
 
         keybind = [
           "clear"
@@ -74,7 +82,9 @@
           "ctrl+0=reset_font_size"
           "ctrl++=increase_font_size:1"
           "ctrl+-=decrease_font_size:1"
+          "ctrl+,=reload_config"
         ];
-      };
+      }
+      + flake.config.defaultTheme."config.ghostty";
   };
 }
