@@ -2,9 +2,8 @@
   lib,
   wlib,
   inputs,
-  config,
   ...
-}: {
+} @ flake: {
   nixos = {
     pkgs,
     config,
@@ -161,7 +160,7 @@
           enforce_permissions = true,
         },
       })
-      ${config.defaultTheme."hyprland.lua"}
+      ${flake.config.defaultTheme."hyprland.lua"}
 
       hl.animation({
         leaf = 'global',
