@@ -12,7 +12,7 @@
   options.defaultTheme = lib.mkOption {
     type = lib.types.attrsOf lib.types.str;
     readOnly = true;
-    default = lib.mapAttrs (_: v: v themes.everforest) config.theme;
+    default = lib.mapAttrs (_: v: v themes.default) config.theme;
     description = "Attribute set of the contents of the files in ~/.theme-config when using the default theme.";
   };
 
@@ -48,7 +48,8 @@
       '';
   };
 
-  config._module.args.themes = {
+  config._module.args.themes = rec {
+    default = everforest;
     catppuccin = {
       fg = "#cdd6f4";
       cursor = "#f5e0dc";
@@ -73,6 +74,7 @@
       brightMagenta = "#f2aede";
       brightCyan = "#6bd7ca";
       brightWhite = "#bac2de";
+      bat = "Catppuccin Mocha";
     };
     everforest = rec {
       fg = "#d3c6aa";
@@ -98,6 +100,7 @@
       brightMagenta = magenta;
       brightCyan = cyan;
       brightWhite = fg;
+      bat = "base16";
     };
     gruvbox = rec {
       fg = "#ebdbb2";
@@ -123,6 +126,7 @@
       brightMagenta = "#d3869b";
       brightCyan = "#8ec07c";
       brightWhite = fg;
+      bat = "gruvbox-dark";
     };
   };
 }
