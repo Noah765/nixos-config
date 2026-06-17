@@ -54,6 +54,8 @@
       fg = "#cdd6f4";
       cursor = "#f5e0dc";
       cursorText = "#11111b";
+      lineNumber = "#7f849c";
+      inlineHint = "#7f849c";
       bg = "#1e1e2e";
       selectionBg = "#353749";
       inactiveBorder = "#6c7086";
@@ -80,6 +82,8 @@
       fg = "#d3c6aa";
       cursor = fg;
       cursorText = bg;
+      lineNumber = black;
+      inlineHint = black;
       bg = "#2d353b";
       selectionBg = "#543a48";
       inactiveBorder = brightBlack;
@@ -106,6 +110,8 @@
       fg = "#ebdbb2";
       cursor = fg;
       cursorText = bg;
+      lineNumber = "#7c6f64";
+      inlineHint = "#7c6f64";
       bg = "#282828";
       selectionBg = "#665c54";
       inactiveBorder = brightBlack;
