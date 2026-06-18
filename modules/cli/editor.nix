@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
   nixos = {config, ...}: {
     options.cli.editor.enable = lib.mkEnableOption "Helix";
 
@@ -7,6 +11,14 @@
       environment.variables.EDITOR = "hx";
       core.impermanence.hm.directories = [".local/share/codebook/cache"];
     };
+  };
+
+  theme."helix.toml" = theme: lib.generators.toToml {} (self.wrappers.editor.settings // {theme = theme.editor;});
+
+  flake.wrappers.themed-editor = {
+    imports = [self.wrapperModules.editor];
+    flags."--config" = "/home/noah/.theme-config/helix.toml";
+    settings = lib.mkForce {};
   };
 
   flake.wrappers.editor = {pkgs, ...}: {

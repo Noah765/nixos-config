@@ -4,34 +4,38 @@
   inputs,
   ...
 }: let
-  overlay = lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${v}.wrap {pkgs = prev;}) x) [
-    {
-      bat = "bat";
-      delta = "delta";
-      desktop-shell = "desktop-shell";
-      eza = "eza";
-      fd = "fd";
-      fzf = "fzf";
-      ghostty = "terminal";
-      git-wrapped = "git";
-      helix = "editor";
-      hyprland = "compositor";
-      jjui = "vcs-tui";
-      nushell = "shell";
-      qutebrowser = "browser";
-      ripgrep-wrapped = "rg";
-      yazi = "file-manager";
-    }
-    {
-      jujutsu = "vcs";
-      xdg-desktop-portal-termfilechooser = "termfilechooser";
-      zellij-sessionizer = "multiplexer-sessionizer";
-      zoxide = "cd";
-    }
-    {
-      zellij = "multiplexer";
-    }
-  ]);
+  overlay = isThemed:
+    lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${v}.wrap {pkgs = prev;}) x) [
+      {
+        bat = "bat";
+        delta = "delta";
+        desktop-shell = "desktop-shell";
+        eza = "eza";
+        fd = "fd";
+        fzf = "fzf";
+        ghostty = "terminal";
+        git-wrapped = "git";
+        helix =
+          if isThemed
+          then "themed-editor"
+          else "editor";
+        hyprland = "compositor";
+        jjui = "vcs-tui";
+        nushell = "shell";
+        qutebrowser = "browser";
+        ripgrep-wrapped = "rg";
+        yazi = "file-manager";
+      }
+      {
+        jujutsu = "vcs";
+        xdg-desktop-portal-termfilechooser = "termfilechooser";
+        zellij-sessionizer = "multiplexer-sessionizer";
+        zoxide = "cd";
+      }
+      {
+        zellij = "multiplexer";
+      }
+    ]);
 
   wrapperPackages = {
     bat = "bat";
@@ -65,7 +69,7 @@ in {
   }: {
     options.wrappers = lib.mapAttrs (_: v: {enable = lib.mkEnableOption "the ${v} wrapper";}) self.wrappers;
 
-    config.nixpkgs.overlays = [overlay];
+    config.nixpkgs.overlays = [(overlay true)];
     config.environment.systemPackages = lib.mapAttrsToList (n: _: pkgs.${wrapperPackages.${n}}) (lib.filterAttrs (_: v: v.enable) config.wrappers);
   };
 
@@ -76,7 +80,7 @@ in {
   }: {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
-      overlays = [overlay];
+      overlays = [(overlay false)];
     };
 
     wrappers.control_type = "build";

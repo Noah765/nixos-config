@@ -27,6 +27,7 @@ rec {
     brightCyan = "#6bd7ca";
     brightWhite = "#bac2de";
     bat = "Catppuccin Mocha";
+    editor = "catppuccin_mocha";
   };
   everforest = rec {
     fg = "#d3c6aa";
@@ -55,6 +56,7 @@ rec {
     brightCyan = cyan;
     brightWhite = fg;
     bat = "base16";
+    editor = "everforest_dark";
   };
   gruvbox = rec {
     fg = "#ebdbb2";
@@ -83,5 +85,6 @@ rec {
     brightCyan = "#8ec07c";
     brightWhite = fg;
     bat = "gruvbox-dark";
+    editor = "gruvbox";
   };
 }

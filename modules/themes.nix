@@ -43,6 +43,7 @@
           ln -s ${themeDir}/($theme) ~/.theme-config
 
           if (which hyprctl | is-not-empty) { hyprctl reload }
+          pkill -USR1 hx
         }
       '';
   };
