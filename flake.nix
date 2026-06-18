@@ -1,8 +1,14 @@
 {
   inputs = {
     # Core
+    lib.url = "./lib";
+    lib.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      wrappers.follows = "wrappers";
+      home-manager.follows = "home-manager";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    flake-parts.inputs.nixpkgs-lib.follows = "lib";
     import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
@@ -21,8 +27,8 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
     impermanence.inputs = {
-      home-manager.follows = "home-manager";
       nixpkgs.follows = "nixpkgs";
+      home-manager.follows = "home-manager";
     };
 
     # Hyprland

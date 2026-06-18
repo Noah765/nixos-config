@@ -1,12 +1,8 @@
-{
-  lib,
-  wlib,
-  ...
-}: {
+{lib, ...}: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "fzf" "enable"] ["wrappers" "fzf" "enable"])];
 
   flake.wrappers.fzf = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.fzf;
 

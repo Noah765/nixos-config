@@ -1,6 +1,5 @@
 {
   lib,
-  wlib,
   inputs,
   ...
 }: let
@@ -27,7 +26,7 @@ in {
   };
 
   flake.wrappers.multiplexer-sessionizer = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = inputs.zellij-sessionizer;
     exePath = "zellij-sessionizer";
@@ -48,7 +47,7 @@ in {
     config,
     ...
   }: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.zellij;
 

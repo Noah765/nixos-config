@@ -1,6 +1,5 @@
 {
   lib,
-  wlib,
   inputs,
   ...
 } @ flake: {
@@ -89,7 +88,7 @@
     config,
     ...
   }: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = inputs.hyprland.packages.${pkgs.stdenv.system}.hyprland;
 

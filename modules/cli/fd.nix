@@ -1,12 +1,8 @@
-{
-  lib,
-  wlib,
-  ...
-}: {
+{lib, ...}: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "fd" "enable"] ["wrappers" "fd" "enable"])];
 
   flake.wrappers.fd = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
     package = pkgs.fd;
     addFlag = ["--hidden" "--exclude=.git" "--exclude=.jj"];
   };

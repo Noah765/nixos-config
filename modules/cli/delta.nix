@@ -1,8 +1,4 @@
-{
-  lib,
-  wlib,
-  ...
-} @ flake: {
+{lib, ...} @ flake: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "delta" "enable"] ["wrappers" "delta" "enable"])];
 
   theme."delta.gitconfig" = theme: let
@@ -35,7 +31,7 @@
     config,
     ...
   }: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.delta;
 

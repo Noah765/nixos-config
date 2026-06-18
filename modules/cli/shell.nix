@@ -1,8 +1,4 @@
-{
-  lib,
-  wlib,
-  ...
-}: {
+{lib, ...}: {
   nixos = {
     pkgs,
     config,
@@ -23,7 +19,7 @@
   };
 
   flake.wrappers.shell = {pkgs, ...}: {
-    imports = [wlib.wrapperModules.nushell];
+    imports = [lib.w.wrapperModules.nushell];
 
     runtimePkgs = [pkgs.carapace];
 

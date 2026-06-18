@@ -88,7 +88,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs"
+          "lib"
         ]
       },
       "locked": {
@@ -564,6 +564,28 @@
         "type": "github"
       }
     },
+    "lib": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "wrappers": [
+          "wrappers"
+        ]
+      },
+      "locked": {
+        "path": "./lib",
+        "type": "path"
+      },
+      "original": {
+        "path": "./lib",
+        "type": "path"
+      },
+      "parent": []
+    },
     "nestix": {
       "inputs": {
         "nixpkgs": [
@@ -706,6 +728,7 @@
         "hyprland": "hyprland",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
+        "lib": "lib",
         "nestix": "nestix",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",

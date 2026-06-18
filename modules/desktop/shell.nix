@@ -1,5 +1,4 @@
 {
-  wlib,
   lib,
   inputs,
   ...
@@ -21,7 +20,7 @@
   };
 
   flake.wrappers.desktop-shell = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = inputs.shell.packages.${pkgs.stdenv.system}.default;
 

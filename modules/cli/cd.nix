@@ -1,8 +1,4 @@
-{
-  lib,
-  wlib,
-  ...
-}: {
+{lib, ...}: {
   nixos = {config, ...}: {
     options.cli.cd.enable = lib.mkEnableOption "zoxide";
 
@@ -13,7 +9,7 @@
   };
 
   flake.wrappers.cd = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.zoxide;
 

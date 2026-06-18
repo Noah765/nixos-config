@@ -1,8 +1,4 @@
-{
-  lib,
-  wlib,
-  ...
-}: {
+{lib, ...}: {
   nixos = {config, ...}: {
     options.cli.vcs.enable = lib.mkEnableOption "Jujutsu";
 
@@ -13,7 +9,7 @@
   };
 
   flake.wrappers.vcs = {pkgs, ...}: {
-    imports = [wlib.wrapperModules.jujutsu];
+    imports = [lib.w.wrapperModules.jujutsu];
 
     runtimePkgs = [pkgs.watchman];
 

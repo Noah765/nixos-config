@@ -58,8 +58,6 @@
 in {
   imports = [inputs.wrappers.flakeModules.default];
 
-  _module.args.wlib = inputs.wrappers.lib;
-
   nixos = {
     pkgs,
     config,

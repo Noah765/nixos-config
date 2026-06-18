@@ -1,6 +1,5 @@
 {
   lib,
-  wlib,
   inputs,
   ...
 }: {
@@ -23,7 +22,7 @@
   };
 
   flake.wrappers.termfilechooser = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.xdg-desktop-portal-termfilechooser;
     exePath = "libexec/xdg-desktop-portal-termfilechooser";
@@ -42,7 +41,7 @@
     config,
     ...
   }: {
-    imports = [wlib.wrapperModules.yazi];
+    imports = [lib.w.wrapperModules.yazi];
 
     runtimePkgs = [pkgs.ouch];
 

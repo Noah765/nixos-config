@@ -1,6 +1,5 @@
 {
   lib,
-  wlib,
   inputs,
   ...
 }: {
@@ -70,7 +69,7 @@
     config,
     ...
   }: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.qutebrowser;
 

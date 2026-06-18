@@ -1,8 +1,4 @@
-{
-  lib,
-  wlib,
-  ...
-} @ flake: let
+{lib, ...} @ flake: let
   configGenerator = lib.generators.toKeyValue {
     mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
     listsAsDuplicateKeys = true;
@@ -44,7 +40,7 @@ in {
     config,
     ...
   }: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.ghostty;
 

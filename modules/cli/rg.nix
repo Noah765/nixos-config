@@ -1,12 +1,8 @@
-{
-  lib,
-  wlib,
-  ...
-}: {
+{lib, ...}: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "rg" "enable"] ["wrappers" "rg" "enable"])];
 
   flake.wrappers.rg = {pkgs, ...}: {
-    imports = [wlib.modules.default];
+    imports = [lib.w.modules.default];
 
     package = pkgs.ripgrep;
 
