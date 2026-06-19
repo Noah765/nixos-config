@@ -56,8 +56,12 @@
     greasemonkey-scripts.flake = false;
 
     # Theming
-    file-manager-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
-    file-manager-theme.flake = false;
+    file-manager-catppuccin-theme.url = "github:yazi-rs/flavors?dir=catppuccin-mocha.yazi";
+    file-manager-catppuccin-theme.flake = false;
+    file-manager-everforest-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+    file-manager-everforest-theme.flake = false;
+    file-manager-gruvbox-theme.url = "github:bennyyip/gruvbox-dark.yazi";
+    file-manager-gruvbox-theme.flake = false;
     vcs-tui-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
     vcs-tui-theme.flake = false;
 

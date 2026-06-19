@@ -1,7 +1,7 @@
 {lib, ...}: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "bat" "enable"] ["wrappers" "bat" "enable"])];
 
-  theme.bat = theme: "--theme='${theme.bat}'";
+  theme.bat.text = theme: _: "--theme='${theme.bat}'";
 
   flake.wrappers.bat = {pkgs, ...}: {
     imports = [lib.w.modules.default];

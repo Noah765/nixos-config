@@ -53,7 +53,25 @@
         "type": "github"
       }
     },
-    "file-manager-theme": {
+    "file-manager-catppuccin-theme": {
+      "flake": false,
+      "locked": {
+        "dir": "catppuccin-mocha.yazi",
+        "lastModified": 1780204176,
+        "narHash": "sha256-qWNArjWuxWL+rOjLzyIniW5hJgWiAWTCgXmMXJpaWZE=",
+        "owner": "yazi-rs",
+        "repo": "flavors",
+        "rev": "0f9204bc948c8313963f5c9d571a82edc201f8aa",
+        "type": "github"
+      },
+      "original": {
+        "dir": "catppuccin-mocha.yazi",
+        "owner": "yazi-rs",
+        "repo": "flavors",
+        "type": "github"
+      }
+    },
+    "file-manager-everforest-theme": {
       "flake": false,
       "locked": {
         "lastModified": 1779665896,
@@ -66,6 +84,22 @@
       "original": {
         "owner": "Chromium-3-Oxide",
         "repo": "everforest-medium.yazi",
+        "type": "github"
+      }
+    },
+    "file-manager-gruvbox-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767640078,
+        "narHash": "sha256-Y/i+eS04T2+Sg/Z7/CGbuQHo5jxewXIgORTQm25uQb4=",
+        "owner": "bennyyip",
+        "repo": "gruvbox-dark.yazi",
+        "rev": "619fdc5844db0c04f6115a62cf218e707de2821e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bennyyip",
+        "repo": "gruvbox-dark.yazi",
         "type": "github"
       }
     },
@@ -720,7 +754,9 @@
     "root": {
       "inputs": {
         "disko": "disko",
-        "file-manager-theme": "file-manager-theme",
+        "file-manager-catppuccin-theme": "file-manager-catppuccin-theme",
+        "file-manager-everforest-theme": "file-manager-everforest-theme",
+        "file-manager-gruvbox-theme": "file-manager-gruvbox-theme",
         "flake-parts": "flake-parts",
         "greasemonkey-scripts": "greasemonkey-scripts",
         "home-manager": "home-manager",

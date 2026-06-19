@@ -24,7 +24,10 @@
         nushell = "shell";
         qutebrowser = "browser";
         ripgrep-wrapped = "rg";
-        yazi = "file-manager";
+        yazi =
+          if isThemed
+          then "themed-file-manager"
+          else "file-manager";
       }
       {
         jujutsu = "vcs";

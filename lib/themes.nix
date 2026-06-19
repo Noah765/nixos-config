@@ -28,6 +28,7 @@ rec {
     brightWhite = "#bac2de";
     bat = "Catppuccin Mocha";
     editor = "catppuccin_mocha";
+    fileManager = "file-manager-catppuccin-theme";
   };
   everforest = rec {
     fg = "#d3c6aa";
@@ -57,6 +58,7 @@ rec {
     brightWhite = fg;
     bat = "base16";
     editor = "everforest_dark";
+    fileManager = "file-manager-everforest-theme";
   };
   gruvbox = rec {
     fg = "#ebdbb2";
@@ -86,5 +88,6 @@ rec {
     brightWhite = fg;
     bat = "gruvbox-dark";
     editor = "gruvbox";
+    fileManager = "file-manager-gruvbox-theme";
   };
 }

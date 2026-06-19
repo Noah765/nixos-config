@@ -1,8 +1,9 @@
 {
   lib,
+  getDefaultTheme,
   inputs,
   ...
-} @ flake: {
+}: {
   nixos = {
     pkgs,
     config,
@@ -67,7 +68,7 @@
     };
   };
 
-  theme."hyprland.lua" = theme: ''
+  theme."hyprland.lua".text = theme: _: ''
     hl.config({
       general = {
         col = {
@@ -159,7 +160,7 @@
           enforce_permissions = true,
         },
       })
-      ${flake.config.defaultTheme."hyprland.lua"}
+      ${(getDefaultTheme pkgs)."hyprland.lua"}
 
       hl.animation({
         leaf = 'global',

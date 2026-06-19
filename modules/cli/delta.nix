@@ -1,7 +1,11 @@
-{lib, ...} @ flake: {
+{
+  lib,
+  getDefaultTheme,
+  ...
+}: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "delta" "enable"] ["wrappers" "delta" "enable"])];
 
-  theme."delta.gitconfig" = theme: let
+  theme."delta.gitconfig".text = theme: _: let
     toParts = x: map lib.fromHexString (lib.match "#(..)(..)(..)" x);
     round = x:
       if x - lib.floor x < 0.5
@@ -56,6 +60,6 @@
           wrap-right-symbol = " ";
         };
       }
-      + flake.config.defaultTheme."delta.gitconfig";
+      + (getDefaultTheme pkgs)."delta.gitconfig";
   };
 }

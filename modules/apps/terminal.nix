@@ -1,4 +1,8 @@
-{lib, ...} @ flake: let
+{
+  lib,
+  getDefaultTheme,
+  ...
+}: let
   configGenerator = lib.generators.toKeyValue {
     mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
     listsAsDuplicateKeys = true;
@@ -6,7 +10,7 @@
 in {
   nixos.imports = [(lib.mkAliasOptionModule ["apps" "terminal" "enable"] ["wrappers" "terminal" "enable"])];
 
-  theme."config.ghostty" = theme:
+  theme."config.ghostty".text = theme: _:
     configGenerator {
       background = theme.bg;
       foreground = theme.fg;
@@ -81,6 +85,6 @@ in {
           "ctrl+,=reload_config"
         ];
       }
-      + flake.config.defaultTheme."config.ghostty";
+      + (getDefaultTheme pkgs)."config.ghostty";
   };
 }
