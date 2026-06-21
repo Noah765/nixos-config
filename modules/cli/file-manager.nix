@@ -26,7 +26,8 @@ in {
   };
 
   theme =
-    lib.mapAttrs' (n: v: lib.nameValuePair "yazi/${n}.toml" {text = _: _: lib.generators.toToml {} v;}) self.wrappers.file-manager.settings
+    lib.flip lib.mapAttrs' self.wrappers.file-manager.settings (n: v:
+      lib.nameValuePair "yazi/${n}.toml" {source = _: pkgs: (pkgs.formats.toml {}).generate "yazi-${n}.toml" v;})
     // {
       "yazi/init.lua".text = _: _: self.wrappers.file-manager.constructFiles.init.content;
       "yazi/flavors/theme.yazi".source = theme: _: inputs.${theme.fileManager};

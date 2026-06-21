@@ -39,20 +39,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "to-toml": "to-toml",
         "wrappers": "wrappers"
-      }
-    },
-    "to-toml": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-w6tNW2H3Vxoc60Gbcaxro8HQaij9QSi5aSBictplK4U=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/flibrary/sails/refs/heads/main/to-toml.nix"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/flibrary/sails/refs/heads/main/to-toml.nix"
       }
     },
     "wrappers": {

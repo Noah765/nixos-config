@@ -13,7 +13,8 @@
     };
   };
 
-  theme."helix.toml".text = theme: _: lib.generators.toToml {} (self.wrappers.editor.settings // {theme = theme.editor;});
+  theme."helix.toml".source = theme: pkgs:
+    (pkgs.formats.toml {}).generate "helix.toml" self.wrappers.editor.settings // {theme = theme.editor;};
 
   flake.wrappers.themed-editor = {
     imports = [self.wrapperModules.editor];
