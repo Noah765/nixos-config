@@ -29,6 +29,7 @@ rec {
     brightWhite = "#bac2de";
     bat = "Catppuccin Mocha";
     editor = "catppuccin_mocha";
+    multiplexer = "catppuccin-mocha";
   };
   everforest = rec {
     name = "everforest";
@@ -59,6 +60,7 @@ rec {
     brightWhite = fg;
     bat = "base16";
     editor = "everforest_dark";
+    multiplexer = "everforest-dark";
   };
   gruvbox = rec {
     name = "gruvbox";
@@ -89,5 +91,6 @@ rec {
     brightWhite = fg;
     bat = "gruvbox-dark";
     editor = "gruvbox";
+    multiplexer = "gruvbox-dark";
   };
 }

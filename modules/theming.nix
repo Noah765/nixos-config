@@ -37,7 +37,7 @@
 
       config.hm.home.file.".theme-config" = lib.mkIf config.theming.enable {
         force = true;
-        source = "${self.packages.${pkgs.stdenv.system}.themes}/default";
+        source = "${self.packages.${pkgs.stdenv.system}.themes}/${lib.themes.default.name}";
       };
     };
 
@@ -47,18 +47,20 @@
       ...
     }: {
       packages.themes = let
-        variables = lib.flip lib.concatMapAttrs lib.themes (themeName: theme:
+        themes = lib.removeAttrs lib.themes ["default"];
+
+        variables = lib.flip lib.concatMapAttrs themes (_: theme:
           lib.mapAttrs'
-          (path: builder: lib.nameValuePair "${themeName}/${path}" (builder.text theme pkgs))
+          (path: builder: lib.nameValuePair "${theme.name}/${path}" (builder.text theme pkgs))
           (lib.filterAttrs (_: builder: builder ? "text") config.theme));
 
-        writeCommands = lib.flatten (lib.flip lib.mapAttrsToList lib.themes (themeName: theme:
+        writeCommands = lib.flatten (lib.flip lib.mapAttrsToList themes (_: theme:
           lib.flip lib.mapAttrsToList config.theme (path: builder: ''
-            mkdir -p ${lib.escapeShellArg (lib.dirOf "${themeName}/${path}")}
+            mkdir -p ${lib.escapeShellArg (lib.dirOf "${theme.name}/${path}")}
             ${
               if builder ? "text"
-              then "printenv ${lib.escapeShellArg "${themeName}/${path}"} > ${lib.escapeShellArg "${themeName}/${path}"}"
-              else "ln -s ${lib.escapeShellArg (builder.source theme pkgs)} ${lib.escapeShellArg "${themeName}/${path}"}"
+              then "printenv ${lib.escapeShellArg "${theme.name}/${path}"} > ${lib.escapeShellArg "${theme.name}/${path}"}"
+              else "ln -s ${lib.escapeShellArg (builder.source theme pkgs)} ${lib.escapeShellArg "${theme.name}/${path}"}"
             }
           '')));
       in

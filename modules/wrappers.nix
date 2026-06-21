@@ -39,7 +39,10 @@
         zoxide = "cd";
       }
       {
-        zellij = "multiplexer";
+        zellij =
+          if isThemed
+          then "themed-multiplexer"
+          else "multiplexer";
       }
     ]);
 
