@@ -1,9 +1,19 @@
 {
+  self,
   lib,
   inputs,
   ...
 }: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "vcs-tui" "enable"] ["wrappers" "vcs-tui" "enable"])];
+
+  theme."jjui/config.toml".source = _: pkgs: (pkgs.formats.toml {}).generate "jjui-config.toml" self.wrappers.vcs-tui.settings;
+  theme."jjui/themes/theme.toml".source = theme: _: inputs."vcs-tui-${theme.name}-theme";
+
+  flake.wrappers.themed-vcs-tui = {
+    imports = [self.wrapperModules.vcs-tui];
+    env.JJUI_CONFIG_DIR = lib.mkForce "/home/noah/.theme-config/jjui";
+    constructFiles = lib.mkForce {};
+  };
 
   flake.wrappers.vcs-tui = {
     pkgs,
@@ -12,19 +22,32 @@
   }: {
     imports = [lib.w.modules.default];
 
-    package = pkgs.jjui;
-
-    env.JJUI_CONFIG_DIR = "${placeholder config.outputName}/${config.binName}-config";
-
-    constructFiles.theme = {
-      relPath = "${config.binName}-config/themes/theme.toml";
-      content = lib.readFile inputs.vcs-tui-theme;
+    options.settings = lib.mkOption {
+      type = lib.w.types.structuredValueWith {
+        nullable = false;
+        typeName = "TOML";
+      };
+      default = {};
+      description = "Configuration written to config.toml.";
     };
 
-    constructFiles.config = {
-      relPath = "${config.binName}-config/config.toml";
-      builder = ''${lib.getExe' pkgs.remarshal "json2toml"} "$1" "$2"'';
-      content = lib.toJSON {
+    config = {
+      package = pkgs.jjui;
+
+      env.JJUI_CONFIG_DIR = "${placeholder config.outputName}/${config.binName}-config";
+
+      constructFiles.theme = {
+        relPath = "${config.binName}-config/themes/theme.toml";
+        content = lib.readFile inputs."vcs-tui-${lib.themes.default.name}-theme";
+      };
+
+      constructFiles.config = {
+        relPath = "${config.binName}-config/config.toml";
+        builder = ''${lib.getExe' pkgs.remarshal "json2toml"} "$1" "$2"'';
+        content = lib.toJSON config.settings;
+      };
+
+      settings = {
         preview = {
           show_at_start = true;
           revision_command = ["show" "--color=always" "-r=$change_id" "--tool=inline"];

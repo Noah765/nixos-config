@@ -20,7 +20,10 @@
           then "themed-editor"
           else "editor";
         hyprland = "compositor";
-        jjui = "vcs-tui";
+        jjui =
+          if isThemed
+          then "themed-vcs-tui"
+          else "vcs-tui";
         nushell = "shell";
         qutebrowser = "browser";
         ripgrep-wrapped = "rg";

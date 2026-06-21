@@ -1,6 +1,7 @@
 rec {
   default = everforest;
   catppuccin = {
+    name = "catppuccin";
     fg = "#cdd6f4";
     cursor = "#f5e0dc";
     cursorText = "#11111b";
@@ -28,9 +29,9 @@ rec {
     brightWhite = "#bac2de";
     bat = "Catppuccin Mocha";
     editor = "catppuccin_mocha";
-    fileManager = "file-manager-catppuccin-theme";
   };
   everforest = rec {
+    name = "everforest";
     fg = "#d3c6aa";
     cursor = fg;
     cursorText = bg;
@@ -58,9 +59,9 @@ rec {
     brightWhite = fg;
     bat = "base16";
     editor = "everforest_dark";
-    fileManager = "file-manager-everforest-theme";
   };
   gruvbox = rec {
+    name = "gruvbox";
     fg = "#ebdbb2";
     cursor = fg;
     cursorText = bg;
@@ -88,6 +89,5 @@ rec {
     brightWhite = fg;
     bat = "gruvbox-dark";
     editor = "gruvbox";
-    fileManager = "file-manager-gruvbox-theme";
   };
 }

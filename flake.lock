@@ -773,7 +773,9 @@
         "shell": "shell",
         "treefmt": "treefmt",
         "ublock-origin-assets": "ublock-origin-assets",
-        "vcs-tui-theme": "vcs-tui-theme",
+        "vcs-tui-catppuccin-theme": "vcs-tui-catppuccin-theme",
+        "vcs-tui-everforest-theme": "vcs-tui-everforest-theme",
+        "vcs-tui-gruvbox-theme": "vcs-tui-gruvbox-theme",
         "wrappers": "wrappers",
         "zellij-sessionizer": "zellij-sessionizer",
         "zellij-switch": "zellij-switch"
@@ -888,7 +890,19 @@
         "type": "github"
       }
     },
-    "vcs-tui-theme": {
+    "vcs-tui-catppuccin-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-zf7is4XFPw3eWpKvJlqJsaE/KBYxb4iaFK52n59NEUo=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml"
+      }
+    },
+    "vcs-tui-everforest-theme": {
       "flake": false,
       "locked": {
         "narHash": "sha256-mcuadfDa3rFXuxhV6tMq13Tse2KdhTgVy7GZaRsM7sQ=",
@@ -898,6 +912,18 @@
       "original": {
         "type": "file",
         "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
+      }
+    },
+    "vcs-tui-gruvbox-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-fogN03Rnt70ioYsMzt6nFTtbPBJCRptiZICAKwRYSqE=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml"
       }
     },
     "wrappers": {

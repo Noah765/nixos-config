@@ -62,8 +62,12 @@
     file-manager-everforest-theme.flake = false;
     file-manager-gruvbox-theme.url = "github:bennyyip/gruvbox-dark.yazi";
     file-manager-gruvbox-theme.flake = false;
-    vcs-tui-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
-    vcs-tui-theme.flake = false;
+    vcs-tui-catppuccin-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml";
+    vcs-tui-catppuccin-theme.flake = false;
+    vcs-tui-everforest-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
+    vcs-tui-everforest-theme.flake = false;
+    vcs-tui-gruvbox-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml";
+    vcs-tui-gruvbox-theme.flake = false;
 
     # Misc
     nix-index-database.url = "github:nix-community/nix-index-database";

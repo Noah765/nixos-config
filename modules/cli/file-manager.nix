@@ -30,7 +30,7 @@ in {
       lib.nameValuePair "yazi/${n}.toml" {source = _: pkgs: (pkgs.formats.toml {}).generate "yazi-${n}.toml" v;})
     // {
       "yazi/init.lua".text = _: _: self.wrappers.file-manager.constructFiles.init.content;
-      "yazi/flavors/theme.yazi".source = theme: _: inputs.${theme.fileManager};
+      "yazi/flavors/theme.yazi".source = theme: _: inputs."file-manager-${theme.name}-theme";
       "yazi/plugins".source = _: pkgs:
         pkgs.linkFarm "yazi-plugins" (lib.mapAttrsToList (name: path: {
           name = "${name}.yazi";
