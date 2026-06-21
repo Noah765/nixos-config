@@ -27,7 +27,7 @@
     runtimePkgs = [pkgs.harper pkgs.nixd];
 
     settings = {
-      theme = "everforest_dark";
+      theme = lib.themes.default.editor;
 
       editor = {
         scrolloff = 9;
