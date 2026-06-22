@@ -14,7 +14,7 @@
   };
 
   theme."helix.toml".source = theme: pkgs:
-    (pkgs.formats.toml {}).generate "helix.toml" self.wrappers.editor.settings // {theme = theme.editor;};
+    (pkgs.formats.toml {}).generate "helix.toml" (self.wrappers.editor.settings // {theme = theme.editor;});
 
   flake.wrappers.themed-editor = {
     imports = [self.wrapperModules.editor];
