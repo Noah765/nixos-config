@@ -29,7 +29,29 @@ in {
   theme."zellij/config.kdl".text = theme: pkgs:
     lib.hm.generators.toKDL {}
     ((self.wrappers.multiplexer.apply {inherit pkgs;}).settings // {theme = theme.multiplexer;});
-  theme."zellij/layouts/default.kdl".text = _: _: self.wrappers.multiplexer.constructFiles.layout.content;
+  theme."zellij/layouts/default.kdl".text = theme: _:
+    lib.hm.generators.toKDL {} {
+      layout._children = let
+        layout = self.wrappers.multiplexer.layout.layout._children;
+        defaultTabTemplate = (lib.head layout).default_tab_template._children;
+      in
+        lib.replaceElemAt layout 0 {
+          default_tab_template._children = lib.replaceElemAt defaultTabTemplate 0 (lib.recursiveUpdate (lib.head defaultTabTemplate) {
+            pane.plugin = {
+              color_bg = theme.tabLineBg;
+              color_mode_fg = theme.modeFg;
+              color_normal = theme.normalMode;
+              color_locked = theme.lockedMode;
+              color_scroll = theme.scrollMode;
+              color_key_bg = theme.keyBg;
+              color_inactive_fg = theme.inactiveFg;
+              color_inactive_bg = theme.inactiveBg;
+              color_active_fg = theme.activeFg;
+              color_active_bg = theme.activeBg;
+            };
+          });
+        };
+    };
 
   flake.wrappers = {
     multiplexer-sessionizer = {pkgs, ...}: {
@@ -303,36 +325,41 @@ in {
               pane.plugin = {
                 _props.location = "zjstatus";
 
-                color_bg = "#343f44";
-                color_short_fg = "#2d353b";
-                color_short_bg = "#9da9a0";
-                color_label_fg = "#9da9a0";
-                color_label_bg = "#475258";
+                color_bg = lib.themes.default.tabLineBg;
+                color_mode_fg = lib.themes.default.modeFg;
+                color_normal = lib.themes.default.normalMode;
+                color_locked = lib.themes.default.lockedMode;
+                color_scroll = lib.themes.default.scrollMode;
+                color_key_bg = lib.themes.default.keyBg;
+                color_inactive_fg = lib.themes.default.inactiveFg;
+                color_inactive_bg = lib.themes.default.inactiveBg;
+                color_active_fg = lib.themes.default.activeFg;
+                color_active_bg = lib.themes.default.activeBg;
 
-                format_left = "{mode}#[fg=#9da9a0,bg=$bg,bold] {session}";
+                format_left = "{mode}#[fg=$inactive_fg,bg=$bg,bold] {session}";
                 format_center = "{tabs}";
                 format_right = "{swap_layout}";
                 format_space = "#[bg=$bg]";
                 format_hide_on_overlength = "true";
                 format_precedence = "lcr";
 
-                mode_normal = "#[fg=#2d353b,bg=#a7c080,bold] NORMAL ";
-                mode_locked = "#[fg=#2d353b,bg=#d3c6aa,bold] LOCKED ";
-                mode_resize = "#[fg=#2d353b,bg=#a7c080,bold] NORMAL #[bg=$bg] #[fg=$short_fg,bg=$short_bg,bold] +/- #[fg=$label_fg,bg=$label_bg] Resize #[fg=$short_fg,bg=$short_bg,bold] h/j/k/l #[fg=$label_fg,bg=$label_bg] Increase #[fg=$short_fg,bg=$short_bg,bold] H/J/K/L #[fg=$label_fg,bg=$label_bg] Decrease ";
-                mode_pane = "#[fg=#2d353b,bg=#a7c080,bold] NORMAL #[bg=$bg] #[fg=$short_fg,bg=$short_bg,bold] r #[fg=$label_fg,bg=$label_bg] Rename #[fg=$short_fg,bg=$short_bg,bold] f #[fg=$label_fg,bg=$label_bg] Fullscreen #[fg=$short_fg,bg=$short_bg,bold] t #[fg=$label_fg,bg=$label_bg] Float #[fg=$short_fg,bg=$short_bg,bold] p #[fg=$label_fg,bg=$label_bg] Pin #[fg=$short_fg,bg=$short_bg,bold] z #[fg=$label_fg,bg=$label_bg] Frames ";
-                mode_rename_pane = "#[fg=#2d353b,bg=#a7c080,bold] NORMAL #[bg=$bg] #[fg=$label_fg,bg=$label_bg] Type... ";
-                mode_tab = "#[fg=#2d353b,bg=#a7c080,bold] NORMAL #[bg=$bg] #[fg=$short_fg,bg=$short_bg,bold] 1-9 #[fg=$label_fg,bg=$label_bg] Jump #[fg=$short_fg,bg=$short_bg,bold] r #[fg=$label_fg,bg=$label_bg] Rename #[fg=$short_fg,bg=$short_bg,bold] s #[fg=$label_fg,bg=$label_bg] Sync #[fg=$short_fg,bg=$short_bg,bold] b #[fg=$label_fg,bg=$label_bg] Break #[fg=$short_fg,bg=$short_bg,bold] h/l #[fg=$label_fg,bg=$label_bg] Move pane #[fg=$short_fg,bg=$short_bg,bold] q #[fg=$label_fg,bg=$label_bg] Close ";
-                mode_rename_tab = "#[fg=#2d353b,bg=#a7c080,bold] NORMAL #[bg=$bg] #[fg=$label_fg,bg=$label_bg] Type... ";
-                mode_scroll = "#[fg=#2d353b,bg=#7fbbb3,bold] SCROLL #[bg=$bg] #[fg=$short_fg,bg=$short_bg,bold] j/k/d/u/t/b #[fg=$label_fg,bg=$label_bg] Scroll #[fg=$short_fg,bg=$short_bg,bold] e #[fg=$label_fg,bg=$label_bg] Edit #[fg=$short_fg,bg=$short_bg,bold] / #[fg=$label_fg,bg=$label_bg] Search #[fg=$short_fg,bg=$short_bg,bold] n/N #[fg=$label_fg,bg=$label_bg] Cycle #[fg=$short_fg,bg=$short_bg,bold] c/w/o #[fg=$label_fg,bg=$label_bg] Options ";
-                mode_enter_search = "#[fg=#2d353b,bg=#7fbbb3,bold] SCROLL #[bg=$bg] #[fg=$label_fg,bg=$label_bg] Type... ";
+                mode_normal = "#[fg=$mode_fg,bg=$normal,bold] NORMAL ";
+                mode_locked = "#[fg=$mode_fg,bg=$locked,bold] LOCKED ";
+                mode_resize = "#[fg=$mode_fg,bg=$normal,bold] NORMAL #[bg=$bg] #[fg=$mode_fg,bg=$key_bg,bold] +/- #[fg=$inactive_fg,bg=$inactive_bg] Resize #[fg=$mode_fg,bg=$key_bg,bold] h/j/k/l #[fg=$inactive_fg,bg=$inactive_bg] Increase #[fg=$mode_fg,bg=$key_bg,bold] H/J/K/L #[fg=$inactive_fg,bg=$inactive_bg] Decrease ";
+                mode_pane = "#[fg=$mode_fg,bg=$normal,bold] NORMAL #[bg=$bg] #[fg=$mode_fg,bg=$key_bg,bold] r #[fg=$inactive_fg,bg=$inactive_bg] Rename #[fg=$mode_fg,bg=$key_bg,bold] f #[fg=$inactive_fg,bg=$inactive_bg] Fullscreen #[fg=$mode_fg,bg=$key_bg,bold] t #[fg=$inactive_fg,bg=$inactive_bg] Float #[fg=$mode_fg,bg=$key_bg,bold] p #[fg=$inactive_fg,bg=$inactive_bg] Pin #[fg=$mode_fg,bg=$key_bg,bold] z #[fg=$inactive_fg,bg=$inactive_bg] Frames ";
+                mode_rename_pane = "#[fg=$mode_fg,bg=$normal,bold] NORMAL #[bg=$bg] #[fg=$inactive_fg,bg=$inactive_bg] Type... ";
+                mode_tab = "#[fg=$mode_fg,bg=$normal,bold] NORMAL #[bg=$bg] #[fg=$mode_fg,bg=$key_bg,bold] 1-9 #[fg=$inactive_fg,bg=$inactive_bg] Jump #[fg=$mode_fg,bg=$key_bg,bold] r #[fg=$inactive_fg,bg=$inactive_bg] Rename #[fg=$mode_fg,bg=$key_bg,bold] s #[fg=$inactive_fg,bg=$inactive_bg] Sync #[fg=$mode_fg,bg=$key_bg,bold] b #[fg=$inactive_fg,bg=$inactive_bg] Break #[fg=$mode_fg,bg=$key_bg,bold] h/l #[fg=$inactive_fg,bg=$inactive_bg] Move pane #[fg=$mode_fg,bg=$key_bg,bold] q #[fg=$inactive_fg,bg=$inactive_bg] Close ";
+                mode_rename_tab = "#[fg=$mode_fg,bg=$normal,bold] NORMAL #[bg=$bg] #[fg=$inactive_fg,bg=$inactive_bg] Type... ";
+                mode_scroll = "#[fg=$mode_fg,bg=$scroll,bold] SCROLL #[bg=$bg] #[fg=$mode_fg,bg=$key_bg,bold] j/k/d/u/t/b #[fg=$inactive_fg,bg=$inactive_bg] Scroll #[fg=$mode_fg,bg=$key_bg,bold] e #[fg=$inactive_fg,bg=$inactive_bg] Edit #[fg=$mode_fg,bg=$key_bg,bold] / #[fg=$inactive_fg,bg=$inactive_bg] Search #[fg=$mode_fg,bg=$key_bg,bold] n/N #[fg=$inactive_fg,bg=$inactive_bg] Cycle #[fg=$mode_fg,bg=$key_bg,bold] c/w/o #[fg=$inactive_fg,bg=$inactive_bg] Options ";
+                mode_enter_search = "#[fg=$mode_fg,bg=$scroll,bold] SCROLL #[bg=$bg] #[fg=$inactive_fg,bg=$inactive_bg] Type... ";
 
-                tab_normal = "#[fg=#9da9a0,bg=#475258] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}";
-                tab_active = "#[fg=#2d353b,bg=#a7c080,bold] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}";
+                tab_normal = "#[fg=$inactive_fg,bg=$inactive_bg] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}";
+                tab_active = "#[fg=$active_fg,bg=$active_bg,bold] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}";
                 tab_fullscreen_indicator = "󰊓 ";
                 tab_sync_indicator = " ";
                 tab_floating_indicator = "󰉈 ";
 
-                swap_layout_format = "#[fg=#9da9a0,bg=#475258] {name} ";
+                swap_layout_format = "#[fg=$inactive_fg,bg=$inactive_bg] {name} ";
                 swap_layout_hide_if_empty = "true";
               };
             }
