@@ -27,8 +27,11 @@ in {
   };
 
   theme."zellij/config.kdl".text = theme: pkgs:
-    lib.hm.generators.toKDL {}
-    ((self.wrappers.multiplexer.apply {inherit pkgs;}).settings // {theme = theme.multiplexer;});
+    lib.hm.generators.toKDL {} ((self.wrappers.multiplexer.apply {inherit pkgs;}).settings
+      // {
+        theme = theme.multiplexer;
+        layout_dir = "${placeholder "out"}/${theme.name}/zellij/layouts";
+      });
   theme."zellij/layouts/default.kdl".text = theme: _:
     lib.hm.generators.toKDL {} {
       layout._children = let
