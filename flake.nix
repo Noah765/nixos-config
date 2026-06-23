@@ -56,6 +56,12 @@
     greasemonkey-scripts.flake = false;
 
     # Theming
+    browser-catppuccin-theme.url = "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py";
+    browser-catppuccin-theme.flake = false;
+    browser-everforest-theme.url = "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py";
+    browser-everforest-theme.flake = false;
+    browser-gruvbox-theme.url = "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py";
+    browser-gruvbox-theme.flake = false;
     file-manager-catppuccin-theme.url = "github:yazi-rs/flavors?dir=catppuccin-mocha.yazi";
     file-manager-catppuccin-theme.flake = false;
     file-manager-everforest-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";

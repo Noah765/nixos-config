@@ -38,6 +38,7 @@ rec {
     brightCyan = "#6bd7ca";
     brightWhite = "#bac2de";
     bat = "Catppuccin Mocha";
+    browser = "setup(c, 'mocha')";
     editor = "catppuccin_mocha";
     multiplexer = "catppuccin-mocha";
   };
