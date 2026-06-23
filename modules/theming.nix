@@ -35,9 +35,10 @@
     }: {
       options.theming.enable = lib.mkEnableOption "theming";
 
-      config.hm.home.file.".theme-config" = lib.mkIf config.theming.enable {
-        force = true;
-        source = "${self.packages.${pkgs.stdenv.system}.themes}/${lib.themes.default.name}";
+      config = lib.mkIf config.theming.enable {
+        environment.systemPackages = [self.packages.${pkgs.stdenv.system}.switch-theme];
+        hm.home.file.".theme-config".force = true;
+        hm.home.file.".theme-config".source = "${self.packages.${pkgs.stdenv.system}.themes}/${lib.themes.default.name}";
       };
     };
 
