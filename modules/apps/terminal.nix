@@ -81,6 +81,7 @@ in {
           "ctrl+shift+v=paste_from_clipboard"
           "ctrl+0=reset_font_size"
           "ctrl++=increase_font_size:1"
+          "ctrl+==increase_font_size:1"
           "ctrl+-=decrease_font_size:1"
           "ctrl+,=reload_config"
         ];
