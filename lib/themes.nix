@@ -19,6 +19,7 @@ rec {
     tabLineBg = "#181825";
     inactiveBg = "#11111b";
     activeBg = bg;
+    selectedLine = "#313244";
     inactiveBorder = "#6c7086";
     activeBorder = "#b4befe";
     black = "#45475a";
@@ -61,6 +62,7 @@ rec {
     tabLineBg = "#343f44";
     inactiveBg = "#475258";
     activeBg = green;
+    selectedLine = "#343f44";
     inactiveBorder = brightBlack;
     activeBorder = green;
     black = "#7a8478";
@@ -102,6 +104,7 @@ rec {
     tabLineBg = "#3c3836";
     inactiveBg = "#3c3836";
     activeBg = "#3c3836";
+    selectedLine = "#3c3836";
     inactiveBorder = brightBlack;
     activeBorder = "#d65d0e";
     black = bg;

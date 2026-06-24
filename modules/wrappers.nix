@@ -12,7 +12,10 @@
         desktop-shell = "desktop-shell";
         eza = "eza";
         fd = "fd";
-        fzf = "fzf";
+        fzf =
+          if isThemed
+          then "themed-fzf"
+          else "fzf";
         ghostty = "terminal";
         git-wrapped = "git";
         helix =
