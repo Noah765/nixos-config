@@ -203,6 +203,7 @@
 
       hl.bind('SUPER + S', hl.dsp.exec_cmd('${lib.getExe pkgs.grim} -g "$(${lib.getExe pkgs.slurp})"'))
       hl.bind('SUPER + P', hl.dsp.exec_raw('${lib.getExe pkgs.hyprpicker} --autocopy --render-inactive'))
+      hl.bind('SUPER + E', hl.dsp.exec_raw('ghostty --class=com.theme-switcher -e theme-switcher'))
       hl.bind('SUPER + C', hl.dsp.global('shell:toggleCalculator'))
 
       hl.bind('SUPER + CTRL + T', hl.dsp.exec_raw('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'))
@@ -227,11 +228,7 @@
 
       -- Window / layer rules
       hl.window_rule({
-        match = { class = 'com.qutebrowser-editor' },
-        float = true,
-      })
-      hl.window_rule({
-        match = { class = 'com.termfilechooser' },
+        match = { class = 'com.(qutebrowser-editor|termfilechooser|theme-switcher)' },
         float = true,
       })
 
