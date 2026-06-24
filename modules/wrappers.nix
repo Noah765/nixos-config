@@ -4,36 +4,29 @@
   inputs,
   ...
 }: let
+  getName = isThemed: x:
+    if isThemed
+    then x
+    else lib.removePrefix "themed-" x;
+
   overlay = isThemed:
-    lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${v}.wrap {pkgs = prev;}) x) [
+    lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${getName isThemed v}.wrap {pkgs = prev;}) x) [
       {
         bat = "bat";
         delta = "delta";
         desktop-shell = "desktop-shell";
         eza = "eza";
         fd = "fd";
-        fzf =
-          if isThemed
-          then "themed-fzf"
-          else "fzf";
+        fzf = "themed-fzf";
         ghostty = "terminal";
         git-wrapped = "git";
-        helix =
-          if isThemed
-          then "themed-editor"
-          else "editor";
+        helix = "themed-editor";
         hyprland = "compositor";
-        jjui =
-          if isThemed
-          then "themed-vcs-tui"
-          else "vcs-tui";
+        jjui = "themed-vcs-tui";
         nushell = "shell";
         qutebrowser = "browser";
         ripgrep-wrapped = "rg";
-        yazi =
-          if isThemed
-          then "themed-file-manager"
-          else "file-manager";
+        yazi = "themed-file-manager";
       }
       {
         jujutsu = "vcs";
@@ -42,10 +35,7 @@
         zoxide = "cd";
       }
       {
-        zellij =
-          if isThemed
-          then "themed-multiplexer"
-          else "multiplexer";
+        zellij = "themed-multiplexer";
       }
     ]);
 
