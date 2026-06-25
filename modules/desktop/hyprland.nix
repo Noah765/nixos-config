@@ -283,7 +283,7 @@
 
         hl.plugin.darkwindow.load_shader('opacity', {
           from = 'chromakey',
-          args = 'bkg=[0.175781 0.207031 0.230469] similarity=1 targetOpacity=0.750000',
+          args = 'bkg=[0.175781 0.207031 0.230469] similarity=1 targetOpacity=0.75',
         })
 
         hl.window_rule({
