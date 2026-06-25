@@ -1,5 +1,6 @@
 {
   lib,
+  getDefaultTheme,
   inputs,
   ...
 }: {
@@ -19,25 +20,25 @@
     };
   };
 
+  theme.shell.text = theme: _:
+    lib.join "\n" (lib.mapAttrsToList (n: v: "${n}=${v}") {
+      "--wallpapers" = ../../wallpapers/${theme.name};
+      "--background-color" = theme.bg;
+      "--text-color" = theme.fg;
+      "--primary-color" = theme.primary;
+      "--red" = theme.red;
+      "--green" = theme.green;
+      "--yellow" = theme.yellow;
+      "--blue" = theme.blue;
+      "--magenta" = theme.magenta;
+      "--cyan" = theme.cyan;
+      "--bar-opacity" = "0.75";
+    });
+
   flake.wrappers.desktop-shell = {pkgs, ...}: {
     imports = [lib.w.modules.default];
-
     package = inputs.shell.packages.${pkgs.stdenv.system}.default;
-
-    flags = {
-      "--wallpaper-background" = ../../wallpapers/everforest/background.png;
-      "--wallpaper-middle-ground" = ../../wallpapers/everforest/middle-ground.png;
-      "--wallpaper-foreground" = ../../wallpapers/everforest/foreground.png;
-      "--background-color" = "#2d353b";
-      "--text-color" = "#d3c6aa";
-      "--primary-color" = "#a7c080";
-      "--red" = "#e67e80";
-      "--green" = "#a7c080";
-      "--yellow" = "#dbbc7f";
-      "--blue" = "#7fbbb3";
-      "--magenta" = "#d699b6";
-      "--cyan" = "#83c092";
-      "--bar-opacity" = "0.75";
-    };
+    env.SHELL_DEFAULT_OPTS = (getDefaultTheme pkgs).shell;
+    env.SHELL_CONFIG_PATH = "~/.theme-config/shell";
   };
 }

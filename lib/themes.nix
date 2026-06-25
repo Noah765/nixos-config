@@ -11,6 +11,7 @@ rec {
     inactiveFg = "#6c7086";
     activeFg = fg;
     bg = "#1e1e2e";
+    primary = "#b4befe";
     selectionBg = "#353749";
     normalMode = "#f5e0dc";
     lockedMode = green;
@@ -54,6 +55,7 @@ rec {
     inactiveFg = "#9da9a0";
     activeFg = bg;
     bg = "#2d353b";
+    primary = green;
     selectionBg = "#543a48";
     normalMode = green;
     lockedMode = fg;
@@ -96,6 +98,7 @@ rec {
     inactiveFg = "#7c6f64";
     activeFg = brightGreen;
     bg = "#282828";
+    primary = "#d65d0e";
     selectionBg = "#665c54";
     normalMode = "#bdae93";
     lockedMode = brightBlue;
