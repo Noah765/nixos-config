@@ -32,10 +32,10 @@
     };
 
     # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland/v0.55.2";
+    hyprland.url = "github:hyprwm/Hyprland/v0.55.4";
     hy3.url = "github:outfoxxed/hy3/hl0.55.0";
     hy3.inputs.hyprland.follows = "hyprland";
-    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/b714988aa02985a7d22402dfc491980326ffc5aa";
+    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/1ca9cdbf551fe8401e1685e9ede8265bc2069699";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
 
     # Terminal multiplexer
