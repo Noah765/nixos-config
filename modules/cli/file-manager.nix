@@ -118,7 +118,13 @@ in {
           }
           {
             on = "u";
-            run = ''shell -- FILE="$(readlink --canonicalize "%h")"; rm "%h"; cp --no-preserve=all "$FILE" "%h"'';
+            run = ''
+              shell --
+              set -e
+              if [ ! -L %h ]; then exit; fi
+              FILE=$(readlink --canonicalize-existing %h)
+              cp --no-preserve=all --remove-destination "$FILE" %h
+            '';
             desc = "Unlink";
           }
           {
