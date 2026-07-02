@@ -850,11 +850,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782400953,
-        "narHash": "sha256-XoL4VlWZOFeHB39/azHbxIrzpa4KTnGMPQqpeYQHSn0=",
+        "lastModified": 1783007180,
+        "narHash": "sha256-+pgcGc3u8F1sxd5bJCZLjjbHmYo1+O/lXZMvdPqsJjA=",
         "owner": "Noah765",
         "repo": "shell",
-        "rev": "c448521bfdbfacc42f229c388d11d5acd0d4b480",
+        "rev": "9e28536dd63189a43733ed28de8c973afe4dcb32",
         "type": "github"
       },
       "original": {
