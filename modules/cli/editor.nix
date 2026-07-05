@@ -22,7 +22,11 @@
     settings = lib.mkForce {};
   };
 
-  flake.wrappers.editor = {pkgs, ...}: {
+  flake.wrappers.editor = {
+    config,
+    pkgs,
+    ...
+  }: {
     imports = [lib.w.wrapperModules.helix];
 
     runtimePkgs = [pkgs.harper pkgs.nixd];
@@ -132,11 +136,28 @@
         jjdescription.language-servers = ["harper-ls" "codebook"];
         markdown.language-servers = ["harper-ls" "codebook"];
         nix.language-servers = ["nixd" "codebook"];
+        nu.file-types = ["nu"];
         nu.language-servers = ["nu-lsp" "codebook"];
+        nuon = {
+          scope = "source.nuon";
+          file-types = ["nuon"];
+          comment-token = "#";
+          indent.tab-width = 2;
+          indent.unit = "  ";
+          language-servers = ["nu-lsp"];
+          grammar = "nu";
+        };
         qml.language-servers = ["qmlls" "codebook"];
         rust.language-servers = ["rust-analyzer" "codebook"];
         typst.language-servers = ["tinymist" "harper-ls" "codebook"];
         verilog.language-servers = ["verible-verilog-ls"];
+      });
+
+    constructFiles = lib.flip lib.mapAttrs' (lib.readDir "${pkgs.helix-unwrapped.src}/runtime/queries/nu") (x: _:
+      lib.nameValuePair (lib.toCamelCase "nuon-queries-${lib.removeSuffix ".scm" x}") {
+        relPath = "${config.binName}-config/helix/runtime/queries/nuon/${x}";
+        output = config.generatedConfig.output;
+        content = lib.readFile "${pkgs.helix-unwrapped.src}/runtime/queries/nu/${x}";
       });
 
     languages.language-server = {

@@ -35,6 +35,7 @@ words = [
     "chmod",
     "chown",
     "chromakey",
+    "cli",
     "clippy",
     "conv",
     "coreutils",
