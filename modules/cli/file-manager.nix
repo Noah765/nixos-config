@@ -70,7 +70,7 @@ in {
 
       runtimePkgs = runtimePkgs pkgs;
 
-      flavors.theme = inputs.${lib.themes.default.fileManager};
+      flavors.theme = inputs."file-manager-${lib.themes.default.name}-theme";
 
       plugins = plugins pkgs;
 
