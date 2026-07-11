@@ -11,6 +11,7 @@
 
   overlay = isThemed:
     lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${getName isThemed v}.wrap {pkgs = prev;}) x) [
+      {nushell = "shell";}
       {
         bat = "bat";
         delta = "delta";
@@ -23,7 +24,6 @@
         helix = "themed-editor";
         hyprland = "compositor";
         jjui = "themed-vcs-tui";
-        nushell = "shell";
         qutebrowser = "browser";
         ripgrep-wrapped = "rg";
         yazi = "themed-file-manager";
