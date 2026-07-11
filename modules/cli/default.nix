@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
   nixos = {config, ...}: {
     options.cli.enable = lib.mkEnableOption "the default CLI configuration and programs";
 
@@ -22,5 +26,33 @@
       vcs-tui.enable = lib.mkDefault true;
       vcs.enable = lib.mkDefault true;
     };
+  };
+
+  flake.wrappers.cli = {pkgs, ...}: {
+    imports = [self.wrapperModules.shell];
+
+    runtimePkgs =
+      map (x: {
+        data = x;
+        prefix = true;
+      }) (with pkgs; [
+        bat
+        zoxide
+        comma
+        delta
+        helix
+        eza
+        fd
+        yazi
+        fzf
+        gh
+        git-wrapped
+        bat-extras.batman
+        zellij
+        nix-index
+        ripgrep-wrapped
+        jujutsu
+        jjui
+      ]);
   };
 }

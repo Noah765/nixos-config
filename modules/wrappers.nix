@@ -34,15 +34,15 @@
         zellij-sessionizer = "multiplexer-sessionizer";
         zoxide = "cd";
       }
-      {
-        zellij = "themed-multiplexer";
-      }
+      {zellij = "themed-multiplexer";}
+      {cli = "cli";}
     ]);
 
   wrapperPackages = {
     bat = "bat";
     browser = "qutebrowser";
     cd = "zoxide";
+    cli = "cli";
     compositor = "hyprland";
     delta = "delta";
     desktop-shell = "desktop-shell";
