@@ -75,15 +75,8 @@ in {
     config.environment.systemPackages = lib.mapAttrsToList (n: _: pkgs.${wrapperPackages.${n}}) (lib.filterAttrs (_: v: v.enable) config.wrappers);
   };
 
-  perSystem = {
-    system,
-    pkgs,
-    ...
-  }: {
-    _module.args.pkgs = import inputs.nixpkgs {
-      inherit system;
-      overlays = [(overlay false)];
-    };
+  perSystem = {pkgs, ...}: {
+    nixpkgs.overlays = [(overlay false)];
 
     wrappers.control_type = "build";
 
