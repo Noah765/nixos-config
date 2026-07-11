@@ -2,12 +2,19 @@
   lib,
   inputs,
   ...
-}: {
-  nixos = {config, ...}: {
-    imports = [inputs.nix-index-database.nixosModules.default];
-
+}: let
+  overlay = final: _: {comma = inputs.nix-index-database.packages.${final.stdenv.system}.comma-with-db;};
+in {
+  nixos = {
+    pkgs,
+    config,
+    ...
+  }: {
     options.cli.comma.enable = lib.mkEnableOption "comma";
 
-    config.programs.nix-index-database.comma.enable = lib.mkIf config.cli.comma.enable true;
+    config.nixpkgs.overlays = [overlay];
+    config.environment.systemPackages = lib.mkIf config.cli.comma.enable [pkgs.comma];
   };
+
+  perSystem.nixpkgs.overlays = [overlay];
 }

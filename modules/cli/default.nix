@@ -16,6 +16,7 @@
       git.enable = lib.mkDefault true;
       man.enable = lib.mkDefault true;
       multiplexer.enable = lib.mkDefault true;
+      nix-index.enable = lib.mkDefault true;
       rg.enable = lib.mkDefault true;
       shell.enable = lib.mkDefault true;
       vcs-tui.enable = lib.mkDefault true;
