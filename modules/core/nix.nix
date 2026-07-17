@@ -23,6 +23,7 @@
       hm.home.packages = lib.mkIf config.core.nix.nom.enable [pkgs.nix-output-monitor];
 
       nix = {
+        settings.auto-optimise-store = true;
         settings.experimental-features = ["nix-command" "flakes"];
         channel.enable = false;
         nixPath = ["nixpkgs=${inputs.nixpkgs}"];
