@@ -51,13 +51,6 @@
       fsmonitor.backend = "watchman";
 
       aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (pkgs.writers.writeNu "jj-${name}" script)]) {
-        push = ''
-          def main [revision: string = '@-'] {
-            jj bookmark move main --to $revision
-            jj git push
-          }
-        '';
-
         gh = ''
           def main [name: string --private (-p)] {
             ${lib.getExe pkgs.gh} repo create $name (if $private { '--private' } else { '--public' })
@@ -81,6 +74,15 @@
             jj git remote add upstream $'https://github.com/($owner)/($repo)'
             jj config set --repo git.fetch '["origin", "upstream"]'
             jj git fetch
+          }
+        '';
+
+        clone = "def main [name: string] { jj git clone $'https://github.com/Noah765/($name)' }";
+
+        push = ''
+          def main [revision: string = '@-'] {
+            jj bookmark move main --to $revision
+            jj git push
           }
         '';
       };
