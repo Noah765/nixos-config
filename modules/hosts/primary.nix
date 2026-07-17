@@ -2,7 +2,7 @@
   hosts.primary.settings = {
     core = {
       charachorder.enable = true;
-      impermanence.disk = "nvme0n1";
+      impermanence.disk = "nvme-CT1000P1SSD8_2026292B60BD";
       networking.hostName = "primary";
       nvidia.enable = true;
     };

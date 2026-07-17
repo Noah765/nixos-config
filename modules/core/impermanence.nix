@@ -16,11 +16,10 @@
     ];
 
     options.core.impermanence.enable = lib.mkEnableOption "automatic system cleanup using impermanence";
-
     options.core.impermanence.disk = lib.mkOption {
-      type = lib.types.uniq lib.types.str;
-      example = "sda";
-      description = "The disk for disko to manager and to use for impermanence.";
+      type = lib.types.str;
+      example = "nvme-CT1000P1SSD8_2026292B60BD";
+      description = "The disk for disko to manage and to use for impermanence.";
     };
 
     config = lib.mkMerge [
@@ -28,51 +27,40 @@
         assertions = [{assertion = config.core.impermanence.disk != null;}];
 
         disko.devices.disk.main = {
-          device = "/dev/${config.core.impermanence.disk}";
           type = "disk";
+          device = "/dev/disk/by-id/${config.core.impermanence.disk}";
           content.type = "gpt";
           content.partitions = {
-            boot = {
-              name = "boot";
-              size = "1M";
-              type = "EF02";
-            };
             esp = {
+              priority = 1;
               name = "ESP";
-              size = "500M";
+              start = "1M";
+              end = "128M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
-                mountOptions = ["umask=0077"];
                 mountpoint = "/boot";
+                mountOptions = ["umask=0077"];
               };
             };
-            swap.size = "4G";
+            swap.size = "8G";
             swap.content = {
               type = "swap";
               resumeDevice = true;
             };
-            root = {
-              name = "root";
-              size = "100%";
-              content.type = "lvm_pv";
-              content.vg = "root_vg";
-            };
-          };
-        };
-        disko.devices.lvm_vg.root_vg = {
-          type = "lvm_vg";
-          lvs.root.size = "100%FREE";
-          lvs.root.content = {
-            type = "btrfs";
-            extraArgs = ["-f"];
-            subvolumes = {
-              "/root".mountpoint = "/";
-              "/persist".mountOptions = ["subvol=persist" "noatime"];
-              "/persist".mountpoint = "/persist";
-              "/nix".mountOptions = ["subvol=nix" "noatime"];
-              "/nix".mountpoint = "/nix";
+            root.size = "100%";
+            root.content = {
+              type = "btrfs";
+              extraArgs = ["-f"];
+              subvolumes = {
+                "/root".mountOptions = ["noatime" "compress=zstd"];
+                "/root".mountpoint = "/";
+                "/persist".mountOptions = ["noatime" "compress=zstd"];
+                "/persist".mountpoint = "/persist";
+                "/nix".mountOptions = ["noatime" "compression=zstd"];
+                "/nix".mountpoint = "/nix";
+              };
             };
           };
         };
@@ -91,7 +79,7 @@
           after = ["initrd-root-device.target" "local-fs-pre.target"];
           script = ''
             mkdir /btrfs_tmp
-            mount /dev/root_vg/root /btrfs_tmp
+            mount /dev/root /btrfs_tmp
             if [[ -e /btrfs_tmp/root ]]; then
               mkdir -p /btrfs_tmp/old_roots
               timestamp=$(date --date="@$(stat -c %X /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")

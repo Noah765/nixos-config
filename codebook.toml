@@ -1,6 +1,8 @@
 words = [
     "GBM",
     "QTWEBENGINE",
+    "SDBQNTY",
+    "WDC",
     "XCURSOR",
     "adblock",
     "adiaeresis",
@@ -100,8 +102,6 @@ words = [
     "linters",
     "lsblk",
     "lsgt",
-    "lvm",
-    "lvs",
     "micha",
     "mkdir",
     "mktemp",
@@ -158,7 +158,6 @@ words = [
     "sclk",
     "screencopy",
     "scrolloff",
-    "sda",
     "sdmmc",
     "searchengines",
     "secmem",
@@ -212,4 +211,5 @@ words = [
     "zellij",
     "zjstatus",
     "zoxide",
+    "zstd",
 ]
