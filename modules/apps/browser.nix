@@ -18,7 +18,7 @@
       core.impermanence.hm.files = [
         {
           file = ".local/share/qutebrowser/cmd-history";
-          method = "symlink";
+          how = "symlink";
         }
         ".local/share/qutebrowser/history.sqlite"
         ".local/share/qutebrowser/state"

@@ -25,11 +25,7 @@
     # Impermanence
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    impermanence.url = "github:nix-community/impermanence";
-    impermanence.inputs = {
-      nixpkgs.follows = "nixpkgs";
-      home-manager.follows = "home-manager";
-    };
+    preservation.url = "github:nix-community/preservation";
 
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland/v0.55.4";
