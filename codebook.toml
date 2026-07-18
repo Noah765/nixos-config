@@ -165,6 +165,7 @@ words = [
     "searchengines",
     "secmem",
     "sessionizer",
+    "sgdisk",
     "shader",
     "shaders",
     "sigpipe",

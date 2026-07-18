@@ -15,11 +15,18 @@
       (lib.mkAliasOptionModule ["core" "impermanence" "hm"] ["preservation" "preserveAt" "/persist" "users" "noah"])
     ];
 
-    options.core.impermanence.enable = lib.mkEnableOption "automatic system cleanup using impermanence";
-    options.core.impermanence.disk = lib.mkOption {
-      type = lib.types.str;
-      example = "nvme-CT1000P1SSD8_2026292B60BD";
-      description = "The disk for disko to manage and to use for impermanence.";
+    options.core.impermanence = {
+      enable = lib.mkEnableOption "automatic system cleanup using impermanence";
+      disk = lib.mkOption {
+        type = lib.types.str;
+        example = "nvme-CT1000P1SSD8_2026292B60BD";
+        description = "The disk for disko to manage and to use for impermanence.";
+      };
+      start = lib.mkOption {
+        type = lib.types.str;
+        default = "0";
+        description = "Start of the NixOS partitions in sgdisk format.";
+      };
     };
 
     config = lib.mkIf config.core.impermanence.enable {
@@ -30,12 +37,9 @@
         device = "/dev/disk/by-id/${config.core.impermanence.disk}";
         content.type = "gpt";
         content.partitions = {
-          esp = {
-            priority = 1;
-            name = "ESP";
-            start = "1M";
-            end = "128M";
+          ESP = {
             type = "EF00";
+            size = "128M";
             content = {
               type = "filesystem";
               format = "vfat";
@@ -43,10 +47,11 @@
               mountOptions = ["umask=0077"];
             };
           };
-          swap.size = "8G";
-          swap.content = {
-            type = "swap";
-            resumeDevice = true;
+          swap = {
+            size = "8G";
+            start = config.core.impermanence.start;
+            content.type = "swap";
+            content.resumeDevice = true;
           };
           root.size = "100%";
           root.content = {
