@@ -1,12 +1,11 @@
-{
+{lib, ...}: {
   hosts.installer.settings = {pkgs, ...}: {
-    core = {
-      impermanence.enable = false;
-      networking.hostName = "installer";
-      user.enable = false;
-    };
-
+    core.impermanence.enable = false;
+    core.networking.hostName = "installer";
     desktop.enable = false;
+
+    users.users.nixos.enable = false;
+    services.getty.autologinUser = lib.mkForce "noah";
 
     hm.home.packages = [pkgs.disko];
   };
