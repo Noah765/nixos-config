@@ -159,7 +159,7 @@
       # cd
       source ${pkgs.runCommandLocal "zoxide.nu" {} "${lib.getExe pkgs.zoxide} init --no-cmd nushell > \"$out\""}
       def "nu-complete zoxide path" [context: string] {
-        let parts = $context | str trim --left | split row ' ' | skip | str downcase
+        let parts = $context | str trim --left | split row ' ' | skip | str lowercase
         {
           options: {
             sort: false
@@ -168,7 +168,7 @@
           }
           completions: (zoxide query --list --exclude $env.PWD -- ...$parts | lines | each {|result|
             if ($parts | length) <= 1 { return $result }
-            let suffix_length = $parts | drop | reduce --fold ($result | str downcase) {|x| split row --number 2 $x | get 1 } | str length
+            let suffix_length = $parts | drop | reduce --fold ($result | str lowercase) {|x| split row --number 2 $x | get 1 } | str length
             { value: ($result | str substring (0 - $suffix_length)..) description: $result }
           })
         }

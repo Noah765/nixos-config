@@ -17,8 +17,8 @@
     };
 
     config = lib.mkIf config.core.nix.enable {
-      system.stateVersion = "26.05";
-      hm.home.stateVersion = "26.05";
+      system.stateVersion = "26.11";
+      hm.home.stateVersion = "26.11";
 
       hm.home.packages = lib.mkIf config.core.nix.nom.enable [pkgs.nix-output-monitor];
 
