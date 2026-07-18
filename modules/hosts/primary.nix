@@ -7,8 +7,6 @@
       nvidia.enable = true;
     };
 
-    cli.installer.enable = true;
-
     dev = {
       codex.enable = true;
       dart.enable = true;
