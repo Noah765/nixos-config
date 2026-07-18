@@ -1,8 +1,8 @@
 {
-  hosts.iso.settings = {pkgs, ...}: {
+  hosts.installer.settings = {pkgs, ...}: {
     core = {
       impermanence.enable = false;
-      networking.hostName = "nixos";
+      networking.hostName = "installer";
       user.enable = false;
     };
 
@@ -11,7 +11,7 @@
     hm.home.packages = [pkgs.disko];
   };
 
-  hosts.iso.hardware = {modulesPath, ...}: {
+  hosts.installer.hardware = {modulesPath, ...}: {
     imports = ["${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"];
     nixpkgs.hostPlatform = "x86_64-linux";
   };
