@@ -1,8 +1,4 @@
-{
-  lib,
-  inputs,
-  ...
-}: {
+{lib, ...}: {
   debug = true;
 
   nixos = {
@@ -22,11 +18,15 @@
 
       hm.home.packages = lib.mkIf config.core.nix.nom.enable [pkgs.nix-output-monitor];
 
-      nix = {
-        settings.auto-optimise-store = true;
-        settings.experimental-features = ["nix-command" "flakes"];
-        channel.enable = false;
-        nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+      nix.channel.enable = false;
+
+      nix.settings = {
+        auto-optimise-store = true;
+        experimental-features = ["flakes" "nix-command"];
+        flake-registry = "";
+        substituters = ["https://hyprland.cachix.org"];
+        trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+        warn-dirty = false;
       };
 
       nixpkgs.config.allowUnfree = true;
