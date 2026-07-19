@@ -62,7 +62,7 @@
               "/root".mountpoint = "/";
               "/persist".mountOptions = ["noatime" "compress=zstd"];
               "/persist".mountpoint = "/persist";
-              "/nix".mountOptions = ["noatime" "compression=zstd"];
+              "/nix".mountOptions = ["noatime" "compress=zstd"];
               "/nix".mountpoint = "/nix";
             };
           };
