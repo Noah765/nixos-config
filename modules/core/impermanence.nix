@@ -120,9 +120,9 @@
             StandardError = "journal+console";
           };
           script = ''
-            mkdir /mnt
-            mount -t btrfs /dev/root /mnt
-            mkdir /mnt/persist/old-roots
+            mkdir -p /mnt
+            mount -t btrfs /dev/disk/by-partlabel/disk-main-root /mnt
+            mkdir -p /mnt/persist/old-roots
 
             for x in $(find /mnt/persist/old-roots -mindepth 1 -maxdepth 1 -mtime +7); do
               btrfs subvolume delete --recursive "$x"
