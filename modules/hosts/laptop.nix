@@ -9,7 +9,7 @@
     core = {
       bluetooth.enable = true;
       impermanence.disk = "nvme-WDC_PC_SN730_SDBQNTY-256G-1001_194232806415";
-      impermanence.start = "106G";
+      impermanence.start = "92772696K";
       keyboard.enable = true;
       networking.hostName = "laptop";
     };
