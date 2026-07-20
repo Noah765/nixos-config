@@ -72,8 +72,8 @@
       fileSystems."/persist".neededForBoot = true;
 
       preservation.enable = true;
-      preservation.preserveAt."/persist" = {
-        files = [
+      core.impermanence = {
+        os.files = [
           {
             file = "/etc/machine-id";
             inInitrd = true;
@@ -88,7 +88,7 @@
             inInitrd = true;
           }
         ];
-        directories = [
+        os.directories = [
           {
             directory = "/etc/nixos";
             user = "noah";
@@ -99,7 +99,7 @@
           "/var/log"
         ];
 
-        users.noah.directories = ["Documents" "Downloads" "Music" "Pictures" "Videos" "projects"];
+        hm.directories = ["Documents" "Downloads" "Music" "Pictures" "Videos" "projects"];
       };
 
       systemd.services.systemd-machine-id-commit.unitConfig.ConditionFirstBoot = true;
@@ -124,7 +124,7 @@
             mount -t btrfs /dev/disk/by-partlabel/disk-main-root /mnt
             mkdir -p /mnt/persist/old-roots
 
-            for x in $(find /mnt/persist/old-roots -mindepth 1 -maxdepth 1 -mtime +7); do
+            for x in $(find /mnt/persist/old-roots -mindepth 1 -maxdepth 1 -mtime +6); do
               btrfs subvolume delete --recursive "$x"
             done
 
@@ -140,8 +140,33 @@
         };
       };
 
-      programs.nh.clean.enable = true;
-      programs.nh.clean.extraArgs = "--keep 3 --keep-since 7d";
+      core.cleanup.script = let
+        validPaths =
+          map (x: "." + x.file) (config.core.impermanence.os.files ++ config.core.impermanence.hm.files)
+          ++ map (x: "." + x.directory) (config.core.impermanence.os.directories ++ config.core.impermanence.hm.directories)
+          ++ ["./old-data" "./old-roots"];
+
+        ancestors = x:
+          if x == "."
+          then []
+          else [(lib.dirOf x)] ++ ancestors (lib.dirOf x);
+        ancestorPaths = lib.uniqueStrings (lib.flatten (map ancestors validPaths));
+
+        findExpression = paths: lib.join " -o " (map (x: "-path " + lib.escapeShellArg x) paths);
+      in ''
+        cd /persist
+        mkdir -p old-data
+
+        for x in $(find old-data -mindepth 1 -maxdepth 1 -mtime +6); do
+          rm -r "$x"
+        done
+
+        timestamp=$(date '+%F_%T')
+        for x in $(find '(' ${findExpression validPaths} ')' -prune -o ${findExpression ancestorPaths} -o -prune -print); do
+          mkdir -p "old-data/$timestamp/''${x%/*}"
+          mv "$x" "old-data/$timestamp/$x"
+        done
+      '';
     };
   };
 }

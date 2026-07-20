@@ -4,6 +4,7 @@
 
     config.core = lib.mkIf config.core.enable {
       boot.enable = lib.mkDefault true;
+      cleanup.enable = lib.mkDefault true;
       impermanence.enable = lib.mkDefault true;
       networking.enable = lib.mkDefault true;
       nix.enable = lib.mkDefault true;
