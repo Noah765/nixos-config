@@ -77,7 +77,7 @@
           }
         '';
 
-        clone = "def main [name: string] { jj git clone $'https://github.com/Noah765/($name)' }";
+        clone = "def --wrapped main [name: string ...rest] { jj git clone $'https://github.com/Noah765/($name)' ...$rest }";
 
         push = ''
           def main [revision: string = '@-'] {
