@@ -23,6 +23,7 @@
       nh.enable = lib.mkDefault true;
       nix-index.enable = lib.mkDefault true;
       nom.enable = lib.mkDefault true;
+      pass.enable = lib.mkDefault true;
       rg.enable = lib.mkDefault true;
       shell.enable = lib.mkDefault true;
       vcs-tui.enable = lib.mkDefault true;

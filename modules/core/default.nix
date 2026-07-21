@@ -8,7 +8,6 @@
       impermanence.enable = lib.mkDefault true;
       networking.enable = lib.mkDefault true;
       nix.enable = lib.mkDefault true;
-      secrets.enable = lib.mkDefault true;
       timeZone.enable = lib.mkDefault true;
       user.enable = lib.mkDefault true;
     };
