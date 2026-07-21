@@ -7,9 +7,6 @@
     options.core.nix.enable = lib.mkEnableOption "the Nix language";
 
     config = lib.mkIf config.core.nix.enable {
-      system.stateVersion = "26.11";
-      hm.home.stateVersion = "26.11";
-
       nix.channel.enable = false;
 
       nix.settings = {

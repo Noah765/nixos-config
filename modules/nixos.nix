@@ -11,6 +11,9 @@
       (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "noah"])
     ];
 
+    system.stateVersion = "26.11";
+    hm.home.stateVersion = "26.11";
+
     home-manager.useUserPackages = true;
     home-manager.useGlobalPkgs = true;
 
