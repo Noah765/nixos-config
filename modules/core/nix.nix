@@ -21,8 +21,6 @@
         warn-dirty = false;
       };
 
-      nixpkgs.config.allowUnfree = true;
-
       core.cleanup.script = "${lib.getExe pkgs.nh} clean all --keep 3 --keep-since 7d --keep-one";
     };
   };

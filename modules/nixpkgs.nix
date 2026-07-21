@@ -3,6 +3,8 @@
   inputs,
   ...
 }: {
+  nixos.nixpkgs.config.allowUnfree = true;
+
   perSystem = {
     system,
     config,
@@ -20,7 +22,8 @@
     };
 
     config._module.args.pkgs = import inputs.nixpkgs {
-      inherit system;
+      localSystem = system;
+      config.allowUnfree = true;
       inherit (config.nixpkgs) overlays;
     };
   };
