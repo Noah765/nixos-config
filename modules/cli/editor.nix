@@ -3,6 +3,8 @@
   lib,
   ...
 }: {
+  debug = true;
+
   nixos = {config, ...}: {
     options.cli.editor.enable = lib.mkEnableOption "Helix";
 

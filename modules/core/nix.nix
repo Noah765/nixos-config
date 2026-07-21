@@ -1,6 +1,4 @@
 {lib, ...}: {
-  debug = true;
-
   nixos = {
     pkgs,
     config,
