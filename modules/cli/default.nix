@@ -20,6 +20,7 @@
       git.enable = lib.mkDefault true;
       man.enable = lib.mkDefault true;
       multiplexer.enable = lib.mkDefault true;
+      nh.enable = lib.mkDefault true;
       nix-index.enable = lib.mkDefault true;
       nom.enable = lib.mkDefault true;
       rg.enable = lib.mkDefault true;
@@ -50,6 +51,7 @@
         git-wrapped
         bat-extras.batman
         zellij
+        nh
         nix-index
         nix-output-monitor
         ripgrep-wrapped

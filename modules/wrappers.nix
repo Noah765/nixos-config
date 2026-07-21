@@ -11,30 +11,35 @@
 
   overlay = isThemed:
     lib.composeManyExtensions (map (x: _: prev: lib.mapAttrs (_: v: self.wrappers.${getName isThemed v}.wrap {pkgs = prev;}) x) [
-      {nushell = "shell";}
       {
         bat = "bat";
         delta = "delta";
         desktop-shell = "desktop-shell";
         eza = "eza";
         fd = "fd";
-        fzf = "themed-fzf";
         ghostty = "terminal";
         git-wrapped = "git";
         helix = "themed-editor";
-        hyprland = "compositor";
         jjui = "themed-vcs-tui";
-        qutebrowser = "browser";
+        nh = "nh";
+        nushell = "shell";
         ripgrep-wrapped = "rg";
-        yazi = "themed-file-manager";
       }
       {
+        fzf = "themed-fzf";
+        hyprland = "compositor";
         jujutsu = "vcs";
+        qutebrowser = "browser";
         xdg-desktop-portal-termfilechooser = "termfilechooser";
+      }
+      {
         zellij-sessionizer = "multiplexer-sessionizer";
         zoxide = "cd";
       }
-      {zellij = "themed-multiplexer";}
+      {
+        yazi = "themed-file-manager";
+        zellij = "themed-multiplexer";
+      }
       {cli = "cli";}
     ]);
 
@@ -54,6 +59,7 @@
     git = "git-wrapped";
     multiplexer = "zellij";
     multiplexer-sessionizer = "zellij-sessionizer";
+    nh = "nh";
     rg = "ripgrep-wrapped";
     shell = "nushell";
     termfilechooser = "xdg-desktop-portal-termfilechooser";

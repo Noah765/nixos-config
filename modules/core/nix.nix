@@ -5,7 +5,6 @@
     ...
   }: {
     options.core.nix.enable = lib.mkEnableOption "the Nix language";
-    options.core.nix.nh.enable = lib.mkEnableOption "nh" // {default = true;};
 
     config = lib.mkIf config.core.nix.enable {
       system.stateVersion = "26.11";
@@ -25,11 +24,6 @@
       nixpkgs.config.allowUnfree = true;
 
       core.cleanup.script = "${lib.getExe pkgs.nh} clean all --keep 3 --keep-since 7d --keep-one";
-
-      programs.nh = {
-        inherit (config.core.nix.nh) enable;
-        flake = "/etc/nixos";
-      };
     };
   };
 }
