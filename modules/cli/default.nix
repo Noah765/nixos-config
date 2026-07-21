@@ -21,6 +21,7 @@
       man.enable = lib.mkDefault true;
       multiplexer.enable = lib.mkDefault true;
       nix-index.enable = lib.mkDefault true;
+      nom.enable = lib.mkDefault true;
       rg.enable = lib.mkDefault true;
       shell.enable = lib.mkDefault true;
       vcs-tui.enable = lib.mkDefault true;
@@ -50,9 +51,10 @@
         bat-extras.batman
         zellij
         nix-index
+        nix-output-monitor
         ripgrep-wrapped
-        jujutsu
         jjui
+        jujutsu
       ]);
   };
 }
