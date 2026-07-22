@@ -19,7 +19,7 @@
 
   overlay = isThemed:
     lib.composeManyExtensions (map (x: _: prev: lib.listToAttrs (map (x: lib.nameValuePair (getPackageName x) (self.wrappers.${getWrapperName isThemed x}.wrap {pkgs = prev;})) x)) [
-      ["bat" "delta" "eza" "fd" "ghostty" "git" "helix" "jjui" "nh" "nushell" "ripgrep" "shell"]
+      ["bat" "delta" "desktop-shell" "eza" "fd" "ghostty" "git" "helix" "jjui" "nh" "nushell" "ripgrep"]
       ["fzf" "hyprland" "jujutsu" "qutebrowser" "xdg-desktop-portal-termfilechooser"]
       ["zellij-sessionizer" "zoxide"]
       ["yazi" "zellij"]

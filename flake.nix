@@ -76,8 +76,8 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
-    shell.url = "github:Noah765/shell";
-    shell.inputs = {
+    desktop-shell.url = "github:Noah765/shell";
+    desktop-shell.inputs = {
       nixpkgs.follows = "nixpkgs";
       treefmt.follows = "treefmt";
     };

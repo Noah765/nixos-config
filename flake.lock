@@ -33,6 +33,29 @@
         "type": "github"
       }
     },
+    "desktop-shell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt": [
+          "treefmt"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783090436,
+        "narHash": "sha256-QwI+J9k3v+T6J6SuiuD9bmRfcuVKf55PyVJjNSbR2EM=",
+        "owner": "Noah765",
+        "repo": "shell",
+        "rev": "e8a8d674fea33139cd4f062035548ec451b44104",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Noah765",
+        "repo": "shell",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -766,6 +789,7 @@
     },
     "root": {
       "inputs": {
+        "desktop-shell": "desktop-shell",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "greasemonkey-scripts": "greasemonkey-scripts",
@@ -787,7 +811,6 @@
         "qutebrowser-everforest-theme": "qutebrowser-everforest-theme",
         "qutebrowser-gruvbox-theme": "qutebrowser-gruvbox-theme",
         "rust-overlay": "rust-overlay",
-        "shell": "shell",
         "treefmt": "treefmt",
         "ublock-origin-assets": "ublock-origin-assets",
         "wrappers": "wrappers",
@@ -815,29 +838,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "shell": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt": [
-          "treefmt"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783090436,
-        "narHash": "sha256-QwI+J9k3v+T6J6SuiuD9bmRfcuVKf55PyVJjNSbR2EM=",
-        "owner": "Noah765",
-        "repo": "shell",
-        "rev": "e8a8d674fea33139cd4f062035548ec451b44104",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Noah765",
-        "repo": "shell",
         "type": "github"
       }
     },
