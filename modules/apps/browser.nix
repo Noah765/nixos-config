@@ -68,6 +68,7 @@
   theme."qutebrowser.py".text = theme: _: ''
     ${lib.readFile inputs."browser-${theme.name}-theme"}
     ${theme.browser or ""}
+    c.colors.webpage.bg = None
   '';
 
   flake.wrappers.browser = {
