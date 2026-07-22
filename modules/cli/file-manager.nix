@@ -76,10 +76,16 @@ in {
 
       constructFiles.init.relPath = "${config.binName}-config/init.lua";
       constructFiles.init.content = ''
-        require("bookmarks"):setup({
-          last_directory = { enable = true, mode = "jump" },
+        require('bookmarks'):setup({
+          last_directory = { enable = true, mode = 'jump' },
           show_keys = true,
         })
+
+        Status:children_add(function()
+          local hovered = cx.active.current.hovered
+          if not hovered then return "" end
+          return ui.Span((ya.user_name(hovered.cha.uid) or tostring(hovered.cha.uid)) .. ':' .. (ya.group_name(hovered.cha.gid) or tostring(hovered.cha.gid)) .. ' '):fg('yellow')
+        end, 500, Status.RIGHT)
       '';
 
       settings = {
