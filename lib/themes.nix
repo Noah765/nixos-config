@@ -40,9 +40,9 @@ rec {
     brightCyan = "#6bd7ca";
     brightWhite = "#bac2de";
     bat = "Catppuccin Mocha";
-    browser = "setup(c, 'mocha')";
-    editor = "catppuccin_mocha";
-    multiplexer = "catppuccin-mocha";
+    helix = "catppuccin_mocha";
+    qutebrowser = "setup(c, 'mocha')";
+    zellij = "catppuccin-mocha";
   };
   everforest = rec {
     name = "everforest";
@@ -84,8 +84,8 @@ rec {
     brightCyan = cyan;
     brightWhite = fg;
     bat = "base16";
-    editor = "everforest_dark";
-    multiplexer = "everforest-dark";
+    helix = "everforest_dark";
+    zellij = "everforest-dark";
   };
   gruvbox = rec {
     name = "gruvbox";
@@ -127,7 +127,7 @@ rec {
     brightCyan = "#8ec07c";
     brightWhite = fg;
     bat = "gruvbox-dark";
-    editor = "gruvbox";
-    multiplexer = "gruvbox-dark";
+    helix = "gruvbox";
+    zellij = "gruvbox-dark";
   };
 }

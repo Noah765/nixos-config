@@ -1,14 +1,14 @@
 {lib, ...}: {
   nixos = {config, ...}: {
-    options.cli.cd.enable = lib.mkEnableOption "zoxide";
+    options.cli.zoxide.enable = lib.mkEnableOption "zoxide";
 
-    config = lib.mkIf config.cli.cd.enable {
-      wrappers.cd.enable = true;
+    config = lib.mkIf config.cli.zoxide.enable {
+      wrappers.zoxide.enable = true;
       core.impermanence.hm.directories = [".local/share/zoxide"];
     };
   };
 
-  flake.wrappers.cd = {pkgs, ...}: {
+  flake.wrappers.zoxide = {pkgs, ...}: {
     imports = [lib.w.modules.default];
 
     package = pkgs.zoxide;

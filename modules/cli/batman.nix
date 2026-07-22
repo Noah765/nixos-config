@@ -4,9 +4,9 @@
     config,
     ...
   }: {
-    options.cli.man.enable = lib.mkEnableOption "batman";
+    options.cli.batman.enable = lib.mkEnableOption "batman";
 
-    config = lib.mkIf config.cli.man.enable {
+    config = lib.mkIf config.cli.batman.enable {
       environment.systemPackages = [pkgs.bat-extras.batman];
       documentation.man.cache.enable = true;
     };

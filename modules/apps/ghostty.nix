@@ -8,7 +8,7 @@
     listsAsDuplicateKeys = true;
   };
 in {
-  nixos.imports = [(lib.mkAliasOptionModule ["apps" "terminal" "enable"] ["wrappers" "terminal" "enable"])];
+  nixos.imports = [(lib.mkAliasOptionModule ["apps" "ghostty" "enable"] ["wrappers" "ghostty" "enable"])];
 
   theme."config.ghostty".text = theme: _:
     configGenerator {
@@ -39,7 +39,7 @@ in {
       ];
     };
 
-  flake.wrappers.terminal = {
+  flake.wrappers.ghostty = {
     pkgs,
     config,
     ...

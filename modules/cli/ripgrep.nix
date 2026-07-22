@@ -1,7 +1,7 @@
 {lib, ...}: {
-  nixos.imports = [(lib.mkAliasOptionModule ["cli" "rg" "enable"] ["wrappers" "rg" "enable"])];
+  nixos.imports = [(lib.mkAliasOptionModule ["cli" "ripgrep" "enable"] ["wrappers" "ripgrep" "enable"])];
 
-  flake.wrappers.rg = {pkgs, ...}: {
+  flake.wrappers.ripgrep = {pkgs, ...}: {
     imports = [lib.w.modules.default];
 
     package = pkgs.ripgrep;

@@ -6,25 +6,25 @@
   debug = true;
 
   nixos = {config, ...}: {
-    options.cli.editor.enable = lib.mkEnableOption "Helix";
+    options.cli.helix.enable = lib.mkEnableOption "Helix";
 
-    config = lib.mkIf config.cli.editor.enable {
-      wrappers.editor.enable = true;
+    config = lib.mkIf config.cli.helix.enable {
+      wrappers.helix.enable = true;
       environment.variables.EDITOR = "hx";
       core.impermanence.hm.directories = [".local/share/codebook/cache"];
     };
   };
 
   theme."helix.toml".source = theme: pkgs:
-    (pkgs.formats.toml {}).generate "helix.toml" (self.wrappers.editor.settings // {theme = theme.editor;});
+    (pkgs.formats.toml {}).generate "helix.toml" (self.wrappers.helix.settings // {theme = theme.helix;});
 
-  flake.wrappers.themed-editor = {
-    imports = [self.wrapperModules.editor];
+  flake.wrappers.themed-helix = {
+    imports = [self.wrapperModules.helix];
     flags."--config" = "/home/noah/.theme-config/helix.toml";
     settings = lib.mkForce {};
   };
 
-  flake.wrappers.editor = {
+  flake.wrappers.helix = {
     config,
     pkgs,
     ...
@@ -34,7 +34,7 @@
     runtimePkgs = [pkgs.harper pkgs.nixd];
 
     settings = {
-      theme = lib.themes.default.editor;
+      theme = lib.themes.default.helix;
 
       editor = {
         scrolloff = 9;

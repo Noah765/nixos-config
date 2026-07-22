@@ -1,14 +1,14 @@
 {lib, ...}: {
   nixos = {config, ...}: {
-    options.cli.vcs.enable = lib.mkEnableOption "Jujutsu";
+    options.cli.jujutsu.enable = lib.mkEnableOption "Jujutsu";
 
-    config = lib.mkIf config.cli.vcs.enable {
-      wrappers.vcs.enable = true;
+    config = lib.mkIf config.cli.jujutsu.enable {
+      wrappers.jujutsu.enable = true;
       core.impermanence.hm.directories = [".config/jj/repos"];
     };
   };
 
-  flake.wrappers.vcs = {pkgs, ...}: {
+  flake.wrappers.jujutsu = {pkgs, ...}: {
     imports = [lib.w.wrapperModules.jujutsu];
 
     runtimePkgs = [pkgs.watchman];

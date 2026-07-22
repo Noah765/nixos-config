@@ -4,18 +4,18 @@
   inputs,
   ...
 }: {
-  nixos.imports = [(lib.mkAliasOptionModule ["cli" "vcs-tui" "enable"] ["wrappers" "vcs-tui" "enable"])];
+  nixos.imports = [(lib.mkAliasOptionModule ["cli" "jjui" "enable"] ["wrappers" "jjui" "enable"])];
 
-  theme."jjui/config.toml".source = _: pkgs: (pkgs.formats.toml {}).generate "jjui-config.toml" self.wrappers.vcs-tui.settings;
-  theme."jjui/themes/theme.toml".source = theme: _: inputs."vcs-tui-${theme.name}-theme";
+  theme."jjui/config.toml".source = _: pkgs: (pkgs.formats.toml {}).generate "jjui-config.toml" self.wrappers.jjui.settings;
+  theme."jjui/themes/theme.toml".source = theme: _: inputs."jjui-${theme.name}-theme";
 
-  flake.wrappers.themed-vcs-tui = {
-    imports = [self.wrapperModules.vcs-tui];
+  flake.wrappers.themed-jjui = {
+    imports = [self.wrapperModules.jjui];
     env.JJUI_CONFIG_DIR = lib.mkForce "/home/noah/.theme-config/jjui";
     constructFiles = lib.mkForce {};
   };
 
-  flake.wrappers.vcs-tui = {
+  flake.wrappers.jjui = {
     pkgs,
     config,
     ...
@@ -38,7 +38,7 @@
 
       constructFiles.theme = {
         relPath = "${config.binName}-config/themes/theme.toml";
-        content = lib.readFile inputs."vcs-tui-${lib.themes.default.name}-theme";
+        content = lib.readFile inputs."jjui-${lib.themes.default.name}-theme";
       };
 
       constructFiles.config = {

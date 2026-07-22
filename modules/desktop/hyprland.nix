@@ -81,7 +81,7 @@
     })
   '';
 
-  flake.wrappers.compositor = {
+  flake.wrappers.hyprland = {
     pkgs,
     config,
     ...

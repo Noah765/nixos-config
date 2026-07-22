@@ -11,11 +11,11 @@ in {
     config,
     ...
   }: {
-    options.cli.multiplexer.enable = lib.mkEnableOption "Zellij";
+    options.cli.zellij.enable = lib.mkEnableOption "Zellij";
 
-    config = lib.mkIf config.cli.multiplexer.enable {
-      wrappers.multiplexer.enable = true;
-      wrappers.multiplexer-sessionizer.enable = true;
+    config = lib.mkIf config.cli.zellij.enable {
+      wrappers.zellij.enable = true;
+      wrappers.zellij-sessionizer.enable = true;
 
       hm.home.file.".cache/zellij/permissions.kdl".text = ''
         "${pkgs.zellijPlugins.zjstatus}" { ReadApplicationState; ChangeApplicationState; RunCommands; }
@@ -27,15 +27,15 @@ in {
   };
 
   theme."zellij/config.kdl".text = theme: pkgs:
-    lib.hm.generators.toKDL {} ((self.wrappers.multiplexer.apply {inherit pkgs;}).settings
+    lib.hm.generators.toKDL {} ((self.wrappers.zellij.apply {inherit pkgs;}).settings
       // {
-        theme = theme.multiplexer;
+        theme = theme.zellij;
         layout_dir = "${placeholder "out"}/${theme.name}/zellij/layouts";
       });
   theme."zellij/layouts/default.kdl".text = theme: _:
     lib.hm.generators.toKDL {} {
       layout._children = let
-        layout = self.wrappers.multiplexer.layout.layout._children;
+        layout = self.wrappers.zellij.layout.layout._children;
         defaultTabTemplate = (lib.head layout).default_tab_template._children;
       in
         lib.replaceElemAt layout 0 {
@@ -57,7 +57,7 @@ in {
     };
 
   flake.wrappers = {
-    multiplexer-sessionizer = {pkgs, ...}: {
+    zellij-sessionizer = {pkgs, ...}: {
       imports = [lib.w.modules.default];
 
       package = inputs.zellij-sessionizer;
@@ -74,13 +74,13 @@ in {
       };
     };
 
-    themed-multiplexer = {
-      imports = [self.wrapperModules.multiplexer];
+    themed-zellij = {
+      imports = [self.wrapperModules.zellij];
       flags."--config" = lib.mkForce "/home/noah/.theme-config/zellij/config.kdl";
       constructFiles = lib.mkForce {};
     };
 
-    multiplexer = {
+    zellij = {
       pkgs,
       config,
       ...
@@ -112,7 +112,7 @@ in {
 
         settings = {
           pane_frames = false;
-          theme = lib.themes.default.multiplexer;
+          theme = lib.themes.default.zellij;
           copy_on_select = false;
           layout_dir = "${placeholder config.outputName}/layouts";
           serialization_interval = 10;

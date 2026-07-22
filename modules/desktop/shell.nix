@@ -14,7 +14,7 @@
     config.hm.systemd.user.services.app-shell = lib.mkIf config.desktop.shell.enable {
       Unit.Description = "shell";
       Unit.After = ["graphical-session.target"];
-      Service.ExecStart = lib.getExe pkgs.desktop-shell;
+      Service.ExecStart = lib.getExe pkgs.shell;
       Service.Restart = "on-failure";
       Install.WantedBy = ["graphical-session.target"];
     };
@@ -35,7 +35,7 @@
       "--bar-opacity" = "0.75";
     });
 
-  flake.wrappers.desktop-shell = {pkgs, ...}: {
+  flake.wrappers.shell = {pkgs, ...}: {
     imports = [lib.w.modules.default];
     package = inputs.shell.packages.${pkgs.stdenv.system}.default;
     env.SHELL_DEFAULT_OPTS = (getDefaultTheme pkgs).shell;

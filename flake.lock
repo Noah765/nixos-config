@@ -33,42 +33,6 @@
         "type": "github"
       }
     },
-    "browser-catppuccin-theme": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-K9VYLXT+dFTGwysnxHLT6271aYPzLuRGLT01s6y54Ao=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py"
-      }
-    },
-    "browser-everforest-theme": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-EEmeJ9as0A4d0zrOyW54IBc6cyF6NYUHUHpPfUvtKkw=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py"
-      }
-    },
-    "browser-gruvbox-theme": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-Yhc17OVFZi+Q1qGzoY5FsjZ9aGbqisXQWF3MxoYDi+E=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -86,56 +50,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "disko",
-        "type": "github"
-      }
-    },
-    "file-manager-catppuccin-theme": {
-      "flake": false,
-      "locked": {
-        "dir": "catppuccin-mocha.yazi",
-        "lastModified": 1782552321,
-        "narHash": "sha256-erZI0H5TxqFu2P917juL5PIB3LC0oJGKPcB1VibJDqo=",
-        "owner": "yazi-rs",
-        "repo": "flavors",
-        "rev": "4770a3467169bfdb0a3b11601921aaf27c100630",
-        "type": "github"
-      },
-      "original": {
-        "dir": "catppuccin-mocha.yazi",
-        "owner": "yazi-rs",
-        "repo": "flavors",
-        "type": "github"
-      }
-    },
-    "file-manager-everforest-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779665896,
-        "narHash": "sha256-2Fx7+xnSsc+aVHBZUtLtVUDEzb1y8BcPBASciKk8x7o=",
-        "owner": "Chromium-3-Oxide",
-        "repo": "everforest-medium.yazi",
-        "rev": "e1ead7b5a3bfc8eb572fd269a369775842752705",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Chromium-3-Oxide",
-        "repo": "everforest-medium.yazi",
-        "type": "github"
-      }
-    },
-    "file-manager-gruvbox-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767640078,
-        "narHash": "sha256-Y/i+eS04T2+Sg/Z7/CGbuQHo5jxewXIgORTQm25uQb4=",
-        "owner": "bennyyip",
-        "repo": "gruvbox-dark.yazi",
-        "rev": "619fdc5844db0c04f6115a62cf218e707de2821e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "bennyyip",
-        "repo": "gruvbox-dark.yazi",
         "type": "github"
       }
     },
@@ -611,6 +525,42 @@
         "type": "github"
       }
     },
+    "jjui-catppuccin-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-zf7is4XFPw3eWpKvJlqJsaE/KBYxb4iaFK52n59NEUo=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml"
+      }
+    },
+    "jjui-everforest-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-mcuadfDa3rFXuxhV6tMq13Tse2KdhTgVy7GZaRsM7sQ=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
+      }
+    },
+    "jjui-gruvbox-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-fogN03Rnt70ioYsMzt6nFTtbPBJCRptiZICAKwRYSqE=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml"
+      }
+    },
     "lib": {
       "inputs": {
         "home-manager": [
@@ -778,15 +728,45 @@
         "type": "github"
       }
     },
+    "qutebrowser-catppuccin-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-K9VYLXT+dFTGwysnxHLT6271aYPzLuRGLT01s6y54Ao=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py"
+      }
+    },
+    "qutebrowser-everforest-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-EEmeJ9as0A4d0zrOyW54IBc6cyF6NYUHUHpPfUvtKkw=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py"
+      }
+    },
+    "qutebrowser-gruvbox-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-Yhc17OVFZi+Q1qGzoY5FsjZ9aGbqisXQWF3MxoYDi+E=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py"
+      }
+    },
     "root": {
       "inputs": {
-        "browser-catppuccin-theme": "browser-catppuccin-theme",
-        "browser-everforest-theme": "browser-everforest-theme",
-        "browser-gruvbox-theme": "browser-gruvbox-theme",
         "disko": "disko",
-        "file-manager-catppuccin-theme": "file-manager-catppuccin-theme",
-        "file-manager-everforest-theme": "file-manager-everforest-theme",
-        "file-manager-gruvbox-theme": "file-manager-gruvbox-theme",
         "flake-parts": "flake-parts",
         "greasemonkey-scripts": "greasemonkey-scripts",
         "home-manager": "home-manager",
@@ -794,20 +774,26 @@
         "hypr-darkwindow": "hypr-darkwindow",
         "hyprland": "hyprland",
         "import-tree": "import-tree",
+        "jjui-catppuccin-theme": "jjui-catppuccin-theme",
+        "jjui-everforest-theme": "jjui-everforest-theme",
+        "jjui-gruvbox-theme": "jjui-gruvbox-theme",
         "lib": "lib",
         "nestix": "nestix",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "preservation": "preservation",
+        "qutebrowser-catppuccin-theme": "qutebrowser-catppuccin-theme",
+        "qutebrowser-everforest-theme": "qutebrowser-everforest-theme",
+        "qutebrowser-gruvbox-theme": "qutebrowser-gruvbox-theme",
         "rust-overlay": "rust-overlay",
         "shell": "shell",
         "treefmt": "treefmt",
         "ublock-origin-assets": "ublock-origin-assets",
-        "vcs-tui-catppuccin-theme": "vcs-tui-catppuccin-theme",
-        "vcs-tui-everforest-theme": "vcs-tui-everforest-theme",
-        "vcs-tui-gruvbox-theme": "vcs-tui-gruvbox-theme",
         "wrappers": "wrappers",
+        "yazi-catppuccin-theme": "yazi-catppuccin-theme",
+        "yazi-everforest-theme": "yazi-everforest-theme",
+        "yazi-gruvbox-theme": "yazi-gruvbox-theme",
         "zellij-sessionizer": "zellij-sessionizer",
         "zellij-switch": "zellij-switch"
       }
@@ -921,42 +907,6 @@
         "type": "github"
       }
     },
-    "vcs-tui-catppuccin-theme": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-zf7is4XFPw3eWpKvJlqJsaE/KBYxb4iaFK52n59NEUo=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml"
-      }
-    },
-    "vcs-tui-everforest-theme": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-mcuadfDa3rFXuxhV6tMq13Tse2KdhTgVy7GZaRsM7sQ=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml"
-      }
-    },
-    "vcs-tui-gruvbox-theme": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-fogN03Rnt70ioYsMzt6nFTtbPBJCRptiZICAKwRYSqE=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml"
-      }
-    },
     "wrappers": {
       "inputs": {
         "nixpkgs": [
@@ -1015,6 +965,56 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "yazi-catppuccin-theme": {
+      "flake": false,
+      "locked": {
+        "dir": "catppuccin-mocha.yazi",
+        "lastModified": 1782552321,
+        "narHash": "sha256-erZI0H5TxqFu2P917juL5PIB3LC0oJGKPcB1VibJDqo=",
+        "owner": "yazi-rs",
+        "repo": "flavors",
+        "rev": "4770a3467169bfdb0a3b11601921aaf27c100630",
+        "type": "github"
+      },
+      "original": {
+        "dir": "catppuccin-mocha.yazi",
+        "owner": "yazi-rs",
+        "repo": "flavors",
+        "type": "github"
+      }
+    },
+    "yazi-everforest-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779665896,
+        "narHash": "sha256-2Fx7+xnSsc+aVHBZUtLtVUDEzb1y8BcPBASciKk8x7o=",
+        "owner": "Chromium-3-Oxide",
+        "repo": "everforest-medium.yazi",
+        "rev": "e1ead7b5a3bfc8eb572fd269a369775842752705",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Chromium-3-Oxide",
+        "repo": "everforest-medium.yazi",
+        "type": "github"
+      }
+    },
+    "yazi-gruvbox-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767640078,
+        "narHash": "sha256-Y/i+eS04T2+Sg/Z7/CGbuQHo5jxewXIgORTQm25uQb4=",
+        "owner": "bennyyip",
+        "repo": "gruvbox-dark.yazi",
+        "rev": "619fdc5844db0c04f6115a62cf218e707de2821e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bennyyip",
+        "repo": "gruvbox-dark.yazi",
         "type": "github"
       }
     },

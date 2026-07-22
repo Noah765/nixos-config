@@ -4,10 +4,10 @@
     config,
     ...
   }: {
-    options.cli.shell.enable = lib.mkEnableOption "nushell";
+    options.cli.nushell.enable = lib.mkEnableOption "Nushell";
 
-    config = lib.mkIf config.cli.shell.enable {
-      wrappers.shell.enable = true;
+    config = lib.mkIf config.cli.nushell.enable {
+      wrappers.nushell.enable = true;
       users.defaultUserShell = pkgs.nushell;
 
       core.impermanence.hm.files = [
@@ -18,7 +18,7 @@
     };
   };
 
-  flake.wrappers.shell = {pkgs, ...}: {
+  flake.wrappers.nushell = {pkgs, ...}: {
     imports = [lib.w.wrapperModules.nushell];
 
     runtimePkgs = [pkgs.carapace];

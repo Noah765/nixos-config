@@ -9,10 +9,10 @@
     config,
     ...
   }: {
-    options.apps.browser.enable = lib.mkEnableOption "qutebrowser";
+    options.apps.qutebrowser.enable = lib.mkEnableOption "qutebrowser";
 
-    config = lib.mkIf config.apps.browser.enable {
-      wrappers.browser.enable = true;
+    config = lib.mkIf config.apps.qutebrowser.enable {
+      wrappers.qutebrowser.enable = true;
 
       core.impermanence.hm.directories = [".local/share/qutebrowser/sessions"];
       core.impermanence.hm.files = [
@@ -66,12 +66,12 @@
   };
 
   theme."qutebrowser.py".text = theme: _: ''
-    ${lib.readFile inputs."browser-${theme.name}-theme"}
-    ${theme.browser or ""}
+    ${lib.readFile inputs."qutebrowser-${theme.name}-theme"}
+    ${theme.qutebrowser or ""}
     c.colors.webpage.bg = None
   '';
 
-  flake.wrappers.browser = {
+  flake.wrappers.qutebrowser = {
     pkgs,
     config,
     ...

@@ -12,10 +12,10 @@ in {
     config,
     ...
   }: {
-    options.cli.file-manager.enable = lib.mkEnableOption "Yazi";
+    options.cli.yazi.enable = lib.mkEnableOption "Yazi";
 
-    config = lib.mkIf config.cli.file-manager.enable {
-      wrappers.file-manager.enable = true;
+    config = lib.mkIf config.cli.yazi.enable {
+      wrappers.yazi.enable = true;
 
       xdg.portal = {
         enable = true;
@@ -26,11 +26,11 @@ in {
   };
 
   theme =
-    lib.flip lib.mapAttrs' self.wrappers.file-manager.settings (n: v:
+    lib.flip lib.mapAttrs' self.wrappers.yazi.settings (n: v:
       lib.nameValuePair "yazi/${n}.toml" {source = _: pkgs: (pkgs.formats.toml {}).generate "yazi-${n}.toml" v;})
     // {
-      "yazi/init.lua".text = _: _: self.wrappers.file-manager.constructFiles.init.content;
-      "yazi/flavors/theme.yazi".source = theme: _: inputs."file-manager-${theme.name}-theme";
+      "yazi/init.lua".text = _: _: self.wrappers.yazi.constructFiles.init.content;
+      "yazi/flavors/theme.yazi".source = theme: _: inputs."yazi-${theme.name}-theme";
       "yazi/plugins".source = _: pkgs:
         pkgs.linkFarm "yazi-plugins" (lib.mapAttrsToList (name: path: {
           name = "${name}.yazi";
@@ -39,7 +39,7 @@ in {
     };
 
   flake.wrappers = {
-    termfilechooser = {pkgs, ...}: {
+    xdg-desktop-portal-termfilechooser = {pkgs, ...}: {
       imports = [lib.w.modules.default];
 
       package = pkgs.xdg-desktop-portal-termfilechooser;
@@ -54,14 +54,14 @@ in {
       env.TERMCMD = "${lib.getExe pkgs.ghostty} --class=com.termfilechooser -e";
     };
 
-    themed-file-manager = {pkgs, ...}: {
+    themed-yazi = {pkgs, ...}: {
       imports = [lib.w.modules.default];
       package = pkgs.yazi;
       runtimePkgs = runtimePkgs pkgs;
       env.YAZI_CONFIG_HOME = "/home/noah/.theme-config/yazi";
     };
 
-    file-manager = {
+    yazi = {
       pkgs,
       config,
       ...
@@ -70,7 +70,7 @@ in {
 
       runtimePkgs = runtimePkgs pkgs;
 
-      flavors.theme = inputs."file-manager-${lib.themes.default.name}-theme";
+      flavors.theme = inputs."yazi-${lib.themes.default.name}-theme";
 
       plugins = plugins pkgs;
 

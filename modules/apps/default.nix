@@ -3,8 +3,8 @@
     options.apps.enable = lib.mkEnableOption "the default apps";
 
     config.apps = lib.mkIf config.apps.enable {
-      browser.enable = lib.mkDefault true;
-      terminal.enable = lib.mkDefault true;
+      ghostty.enable = lib.mkDefault true;
+      qutebrowser.enable = lib.mkDefault true;
     };
   };
 }

@@ -52,24 +52,24 @@
     greasemonkey-scripts.flake = false;
 
     # Theming
-    browser-catppuccin-theme.url = "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py";
-    browser-catppuccin-theme.flake = false;
-    browser-everforest-theme.url = "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py";
-    browser-everforest-theme.flake = false;
-    browser-gruvbox-theme.url = "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py";
-    browser-gruvbox-theme.flake = false;
-    file-manager-catppuccin-theme.url = "github:yazi-rs/flavors?dir=catppuccin-mocha.yazi";
-    file-manager-catppuccin-theme.flake = false;
-    file-manager-everforest-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
-    file-manager-everforest-theme.flake = false;
-    file-manager-gruvbox-theme.url = "github:bennyyip/gruvbox-dark.yazi";
-    file-manager-gruvbox-theme.flake = false;
-    vcs-tui-catppuccin-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml";
-    vcs-tui-catppuccin-theme.flake = false;
-    vcs-tui-everforest-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
-    vcs-tui-everforest-theme.flake = false;
-    vcs-tui-gruvbox-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml";
-    vcs-tui-gruvbox-theme.flake = false;
+    jjui-catppuccin-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml";
+    jjui-catppuccin-theme.flake = false;
+    jjui-everforest-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base16-everforest.toml";
+    jjui-everforest-theme.flake = false;
+    jjui-gruvbox-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-gruvbox-dark.toml";
+    jjui-gruvbox-theme.flake = false;
+    qutebrowser-catppuccin-theme.url = "https://raw.githubusercontent.com/catppuccin/qutebrowser/refs/heads/main/setup.py";
+    qutebrowser-catppuccin-theme.flake = false;
+    qutebrowser-everforest-theme.url = "https://raw.githubusercontent.com/tinted-theming/base16-qutebrowser/refs/heads/main/themes/minimal/base16-everforest.config.py";
+    qutebrowser-everforest-theme.flake = false;
+    qutebrowser-gruvbox-theme.url = "https://raw.githubusercontent.com/The-Compiler/dotfiles/refs/heads/master/qutebrowser/gruvbox.py";
+    qutebrowser-gruvbox-theme.flake = false;
+    yazi-catppuccin-theme.url = "github:yazi-rs/flavors?dir=catppuccin-mocha.yazi";
+    yazi-catppuccin-theme.flake = false;
+    yazi-everforest-theme.url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+    yazi-everforest-theme.flake = false;
+    yazi-gruvbox-theme.url = "github:bennyyip/gruvbox-dark.yazi";
+    yazi-gruvbox-theme.flake = false;
 
     # Misc
     nix-index-database.url = "github:nix-community/nix-index-database";
