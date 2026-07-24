@@ -21,7 +21,6 @@
     cli.enable = lib.mkDefault true;
     core.enable = lib.mkDefault true;
     desktop.enable = lib.mkDefault true;
-    dev.enable = lib.mkDefault true;
     theming.enable = lib.mkDefault true;
   };
 }
