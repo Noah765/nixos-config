@@ -32,6 +32,7 @@
           strict_env = true;
           warn_timeout = 0;
           log_format = "-";
+          log_filter = "^$";
         };
       };
     };
