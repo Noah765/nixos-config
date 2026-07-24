@@ -92,7 +92,7 @@
         in
           pkgs.writers.writeNuBin "theme-switcher" ''
             "${lib.join "\\n" themes}"
-            | fzf --height 0 --margin 0,1 --preview='
+            | ${lib.getExe pkgs.fzf} --height 0 --margin 0,1 --preview='
               let path = ls '${../wallpapers}/{r}' | shuffle | get 0.name
               ${lib.getExe pkgs.chafa} --size=($env.FZF_PREVIEW_COLUMNS)x($env.FZF_PREVIEW_LINES) $path'
             | ${lib.getExe self'.packages.switch-theme} $in
