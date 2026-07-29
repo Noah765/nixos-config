@@ -24,6 +24,12 @@
     runtimePkgs = [pkgs.carapace];
 
     "config.nu".content = ''
+      # Login
+      if $nu.is-login and (try { uwsm check may-start; true } catch { false }) {
+        exec uwsm start hyprland.desktop
+        return
+      }
+
       # Banner
       if $nu.is-interactive {
         let ellie = [
