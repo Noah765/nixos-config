@@ -221,8 +221,8 @@
       hl.bind('XF86MonBrightnessDown', hl.dsp.exec_raw('${decrease}'), { repeating = true })
 
       hl.bind('SUPER + ALT + S', hl.dsp.exec_raw('systemctl suspend'))
-      hl.bind('SUPER + ALT + P', hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl poweroff'"))
-      hl.bind('SUPER + ALT + R', hl.dsp.exec_raw("${lib.getExe pkgs.hyprshutdown} --post-cmd 'systemctl reboot'"))
+      hl.bind('SUPER + ALT + P', hl.dsp.exec_raw('systemctl poweroff'))
+      hl.bind('SUPER + ALT + R', hl.dsp.exec_raw('systemctl reboot'))
 
       -- Window / layer rules
       hl.window_rule({
