@@ -97,5 +97,230 @@
       bind -n C-M-k select-pane -U
       bind -n C-M-l select-pane -R
       bind -n C-M-x kill-pane
+
+      # Copy mode keybindings
+      set-hook -ga after-copy-mode { send -X begin-selection; set -p @select 0 }
+
+      bind -T copy-mode-vi v { if -F '#{@select}' { set -p @select 0 } { set -p @select 1 } }
+      bind -T copy-mode-vi Escape { set -p @select 0 }
+      bind -T copy-mode-vi ';' { send -X clear-selection; send -X begin-selection }
+      bind -T copy-mode-vi 'M-;' { send -X other-end }
+
+      # TODO select mode indicator
+
+      bind -T copy-mode-vi h { send -X cursor-left; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi j { send -X cursor-down; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi k { send -X cursor-up; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi l { send -X cursor-right; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi H { send -X cursor-left }
+      bind -T copy-mode-vi J { send -X cursor-down }
+      bind -T copy-mode-vi K { send -X cursor-up }
+      bind -T copy-mode-vi L { send -X cursor-right }
+      bind -T copy-mode-vi M-h { send -X back-to-indentation; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi M-l { send -X end-of-line; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi M-H { send -X back-to-indentation }
+      bind -T copy-mode-vi M-L { send -X end-of-line }
+
+      %hidden VARS="w=#{q:word-separators}$' \t'; s=#{q:word-separators}; l=#{q:copy_cursor_line}; x=#{copy_cursor_x};"
+      bind -T copy-mode-vi w {
+        if '#{E:VARS} [[ $x -eq ''${#l}-1 || ''${l:$x:2} != @(+([^"$w"])|+(["$s"])|?[_[:blank:]]) ]]' { send -X cursor-right }
+        if -F '#{n:copy_cursor_line}' {} { send -X next-space; send -X start-of-line }
+        if -F '#{@select}' {} { send -X begin-selection }
+        if '#{E:VARS} [[ ''${l:$x} = @(*([^"$w"])|+(["$s"])) ]]' {
+          send -X end-of-line
+        } {
+          send -X next-word
+          if '#{E:VARS} [[ ''${l:$x} = _*(["$s"]) ]]' {
+            send -X end-of-line
+          } {
+            if '#{E:VARS} [[ ''${l:$x:1} = _ ]]' { send -X next-word }
+            send -X cursor-left
+          }
+        }
+      }
+      bind -T copy-mode-vi b {
+        if '#{E:VARS} [[ $x -eq 0 || ''${l:$x-1:2} != @(+([^"$w"])|+(["$s"])|?[_[:blank:]]) ]]' { send -X cursor-left }
+        if -F '#{n:copy_cursor_line}' {} { send -X previous-space; send -X end-of-line }
+        if -F '#{@select}' {} { send -X begin-selection }
+        if '#{E:VARS} [[ $x -eq 0 || ''${l:0:$x+1} = +([[:blank:]]) ]]' {
+          send -X start-of-line
+        } {
+          if '#{E:VARS} [[ ''${l:$x-1:2} = @(+([^"$w"])|+(["$s"])|?[[:blank:]]) ]]' { send -X previous-word }
+          if '#{E:VARS} [[ ''${l:$x:1} = _ ]]' { if '#{E:VARS} [[ ''${l:0:$x} = *([[:blank:]]) ]]' { send -X start-of-line } { send -X previous-word } }
+        }
+      }
+      bind -T copy-mode-vi e {
+        if '#{E:VARS} [[ $x -eq ''${#l}-1 || ''${l:$x:2} != @(+([^"$w"])|+(["$s"])|[_[:blank:]]?) ]]' { send -X cursor-right }
+        if -F '#{n:copy_cursor_line}' {} { send -X next-space; send -X start-of-line }
+        if -F '#{@select}' {} { send -X begin-selection }
+        if '#{E:VARS} [[ ''${l:$x:2} = @(+([^"$w"])|+(["$s"])|[[:blank:]]?) ]]' { send -X next-word-end }
+        if '#{E:VARS} [[ ''${l:$x:1} = _ ]]' { send -X next-word-end }
+      }
+      bind -T copy-mode-vi W { if -F '#{@select}' { send w } { set -p @select 1; send w; set -p @select 0 } }
+      bind -T copy-mode-vi B { if -F '#{@select}' { send b } { set -p @select 1; send b; set -p @select 0 } }
+      bind -T copy-mode-vi E { if -F '#{@select}' { send e } { set -p @select 1; send e; set -p @select 0 } }
+      bind -T copy-mode-vi M-w {
+        if '#{E:VARS} [[ $x -eq ''${#l}-1 || ''${l:$x:2} = [[:blank:]][^[:blank:]] ]]' { send -X cursor-right }
+        if -F '#{n:copy_cursor_line}' {} { send -X next-space; send -X start-of-line }
+        if -F '#{@select}' {} { send -X begin-selection }
+        if '#{E:VARS} [[ ''${l:$x} = *([^[:blank:]]) ]]' { send -X end-of-line } { send -X next-space; send -X cursor-left }
+      }
+      bind -T copy-mode-vi M-b {
+        if '#{E:VARS} [[ $x -eq 0 || ''${l:$x-1:2} = [[:blank:]][^[:blank:]] ]]' { send -X cursor-left }
+        if -F '#{n:copy_cursor_line}' {} { send -X previous-space; send -X end-of-line }
+        if -F '#{@select}' {} { send -X begin-selection }
+        if '#{E:VARS} [[ $x -eq 0 || ''${l:0:$x+1} = +([[:blank:]]) ]]' {
+          send -X start-of-line
+        } { if '#{E:VARS} [[ ''${l:$x-1:2} != [[:blank:]][^[:blank:]] ]]' {
+          send -X previous-space
+        } }
+      }
+      bind -T copy-mode-vi M-e {
+        if '#{E:VARS} [[ $x -eq ''${#l}-1 || ''${l:$x:2} = [^[:blank:]][[:blank:]] ]]' { send -X cursor-right }
+        if -F '#{n:copy_cursor_line}' {} { send -X next-space; send -X start-of-line }
+        if -F '#{@select}' {} { send -X begin-selection }
+        if '#{E:VARS} [[ ''${l:$x:2} != [^[:blank:]][[:blank:]] ]]' { send -X next-space-end }
+      }
+      bind -T copy-mode-vi M-W { if -F '#{@select}' { send M-w } { set -p @select 1; send M-w; set -p @select 0 } }
+      bind -T copy-mode-vi M-B { if -F '#{@select}' { send M-b } { set -p @select 1; send M-b; set -p @select 0 } }
+      bind -T copy-mode-vi M-E { if -F '#{@select}' { send M-e } { set -p @select 1; send M-e; set -p @select 0 } }
+
+      bind -T copy-mode-vi t { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump to forward)' { send -X jump-to-forward '%%' } }
+      bind -T copy-mode-vi f { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump forward)' { send -X jump-forward '%%' } }
+      bind -T copy-mode-vi T { command-prompt -1 -p '(extend to forward)' { send -X jump-to-forward '%%' } }
+      bind -T copy-mode-vi F { command-prompt -1 -p '(extend forward)' { send -X jump-forward '%%' } }
+      bind -T copy-mode-vi M-t { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump to backward)' { send -X jump-to-backward '%%' } }
+      bind -T copy-mode-vi M-f { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump backward)' { send -X jump-backward '%%' } }
+      bind -T copy-mode-vi M-T { command-prompt -1 -p '(extend to backward)' { send -X jump-to-backward '%%' } }
+      bind -T copy-mode-vi M-F { command-prompt -1 -p '(extend backward)' { send -X jump-backward '%%' } }
+
+      bind -T copy-mode-vi x {
+        set -pF @left '#{||:#{e/<:#{copy_cursor_y},#{selection_start_y}},#{e/<:#{copy_cursor_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{||:#{e/<:#{copy_cursor_x},#{selection_start_x}},#{e/<:#{copy_cursor_x},#{selection_end_x}}}}}'
+        if -F '#{@left}' { send -X other-end }
+        if -F '#{?#{||:#{e/<:#{selection_start_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{e/<:#{selection_start_x},#{selection_end_x}}}},#{&&:#{e/==:#{selection_start_x},0},#{e/>=:#{selection_end_x},#{e/-:#{w:copy_cursor_line},1}}},#{&&:#{e/==:#{selection_end_x},0},#{e/>=:#{selection_start_x},#{e/-:#{w:copy_cursor_line},1}}}}' {
+          if -F '#{&&:#{@left},#{e/!=:#{selection_start_y},#{selection_end_y}}}' {
+            send -X other-end
+            send -X cursor-down
+            if -F '#{e/==:#{selection_start_y},#{selection_end_y}}' { send -X other-end }
+          } {
+            send -X cursor-down
+            send -X end-of-line
+          }
+        } {
+          send -X end-of-line
+          send -X other-end
+          send -X start-of-line
+          if -F '#{||:#{!:#{@left}},#{e/==:#{selection_start_y},#{selection_end_y}}}' { send -X other-end }
+        }
+      }
+      bind -T copy-mode-vi X {
+        set -pF @left '#{||:#{e/<:#{copy_cursor_y},#{selection_start_y}},#{e/<:#{copy_cursor_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{||:#{e/<:#{copy_cursor_x},#{selection_start_x}},#{e/<:#{copy_cursor_x},#{selection_end_x}}}}}'
+        if -F '#{@left}' { send -X other-end }
+        if -F '#{?#{||:#{e/<:#{selection_start_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{e/<:#{selection_start_x},#{selection_end_x}}}},#{&&:#{e/==:#{selection_start_x},0},#{e/>=:#{selection_end_x},#{e/-:#{w:copy_cursor_line},1}}},#{&&:#{e/==:#{selection_end_x},0},#{e/>=:#{selection_start_x},#{e/-:#{w:copy_cursor_line},1}}}}' {
+          if -F '#{||:#{@left},#{e/==:#{selection_start_y},#{selection_end_y}}}' {
+            send -X other-end
+            send -X cursor-up
+          } {
+            send -X cursor-up
+            send -X end-of-line
+            if -F '#{e/==:#{selection_start_y},#{selection_end_y}}' { send -X other-end }
+          }
+        } {
+          send -X end-of-line
+          send -X other-end
+          send -X start-of-line
+          if -F '#{&&:#{!:#{@left}},#{e/!=:#{selection_start_y},#{selection_end_y}}}' { send -X other-end }
+        }
+      }
+
+      bind -T copy-mode-vi m { send -X next-matching-bracket; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi M { send -X next-matching-bracket }
+
+      bind -T copy-mode-vi C-u { send -X halfpage-up; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi C-d { send -X halfpage-down; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi C-U { send -X halfpage-up }
+      bind -T copy-mode-vi C-D { send -X halfpage-down }
+
+      bind -T copy-mode-vi / { command-prompt -T search -p '(search down)' { send -X search-forward '%%' }; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi ? { command-prompt -T search -p '(search up)' { send -X search-backward-incremental '%%' }; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi n { send -X search-again; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi N { send -X search-reverse; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi M-n { send -X search-again }
+      bind -T copy-mode-vi M-N { send -X search-reverse }
+
+      bind -T copy-mode-vi p { send -X next-prompt; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi P { send -X next-prompt }
+      bind -T copy-mode-vi M-p { send -X previous-prompt -o; if -F '#{@select}' {} { send -X begin-selection } }
+      bind -T copy-mode-vi M-P { send -X previous-prompt -o }
+
+      bind -T copy-mode-vi y { send -X copy-selection-no-clear -P }
+      bind -T copy-mode-vi Enter { send -X copy-selection-and-cancel -P }
+    '';
+
+    /*
+    Differences to Helix motions:
+    - w,e: selects '?_?' completely
+    - w: selects 'a_?' completely
+    - w,b: does not select 't _ _' completely
+    - e: does not select '_ _ _' completely
+    - b: selects 'x_?.' completely
+    - b: selects '_?_.' completely
+    - x,X: does not select trailing newline
+    */
+
+    /*
+    | Motion |  Start  | Select | Base | Single | Line break | Underscore | Document start / end |
+    | ------ | ------- | ------ | ---- | ------ | ---------- | ---------- | -------------------- |
+    |   w    | 12 / 12 |   X    |  X   | 3 / 3  |   7 / 7    |   7 / 7    |          X           |
+    |   b    | 12 / 12 |   X    |  X   | 3 / 3  |   7 / 7    |   7 / 7    |          X           |
+    |   e    | 12 / 12 |   X    |  X   | 3 / 3  |   7 / 7    |   7 / 7    |          X           |
+    |  M-w   | 12 / 12 |   X    |  X   | 3 / 3  |   7 / 7    |   7 / 7    |          X           |
+    |  M-b   | 12 / 12 |   X    |  X   | 3 / 3  |   7 / 7    |   7 / 7    |          X           |
+    |  M-e   | 12 / 12 |   X    |  X   | 3 / 3  |   7 / 7    |   7 / 7    |          X           |
+
+    Start: At every boundary, empty lines
+    Select: Beginn selection when not inn select mode
+    Base: Base motion
+    Single: Already at correct position
+    Line break: Extend to linebreak
+    Underscore: Extend to include single and multiple underscores / words
+
+    Start:
+     x?x .
+     ?x? .
+     _x_ .
+    x ? x
+    x?x
+    x_x
+    ? x ?
+    ?x?
+    _ ? _
+    _x?x_
+    \n\n  x\n\n
+    x\n\n  x\n\nx
+
+    Single:
+     x x
+    ?x?
+    x?x
+
+    Line break:
+      .\n
+    xx\n
+    ??\n
+     .\n
+    ?x?\n
+    x?x\n
+    .\nx x
+
+    Underscore:
+    ?x_x
+    ?x__x
+    ?x _ x
+    _x_\n
+    __x__\n
+     _x_\n
+    ?_x_?\n
+    */
   };
 }
