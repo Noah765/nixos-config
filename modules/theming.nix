@@ -84,6 +84,7 @@
 
             if (which hyprctl | is-not-empty) { hyprctl reload }
             pkill -USR1 'hx|^shell$'
+            if (which tmux | is-not-empty) { tmux source-file ~/.theme-config/tmux.conf }
           }
         '';
 

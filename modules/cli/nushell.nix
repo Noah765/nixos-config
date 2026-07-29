@@ -106,16 +106,6 @@
             ] | str join ' ')
           }
         }
-        {
-          name: zellij_sessionizer
-          modifier: control
-          keycode: char_s
-          mode: [vi_normal vi_insert]
-          event: {
-            send: executehostcommand
-            cmd: zellij-sessionizer
-          }
-        }
       ]
 
       # Menus

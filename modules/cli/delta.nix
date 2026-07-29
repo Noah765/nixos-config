@@ -21,7 +21,7 @@
         inline-hint-style = theme.inlineHint;
         line-numbers-minus-style = "red bold";
         line-numbers-plus-style = "green bold";
-        line-numbers-zero-style = theme.lineNumber;
+        line-numbers-zero-style = theme.inactiveLineNumber;
         minus-emph-style = "bold syntax ${interpolate theme.bg theme.red 0.35}";
         minus-style = "syntax ${interpolate theme.bg theme.red 0.2}";
         plus-emph-style = "bold syntax ${interpolate theme.bg theme.green 0.35}";

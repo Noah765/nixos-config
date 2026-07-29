@@ -34,18 +34,7 @@
     hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/1ca9cdbf551fe8401e1685e9ede8265bc2069699";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
 
-    # Terminal multiplexer
-    zellij-sessionizer.url = "github:victor-falcon/zellij-sessionizer";
-    zellij-sessionizer.flake = false;
-    zellij-switch.url = "github:mostafaqanbaryan/zellij-switch";
-    zellij-switch.inputs = {
-      nixpkgs.follows = "nixpkgs";
-      rust-overlay.follows = "rust-overlay";
-    };
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Browser
+    # Qutebrowser
     ublock-origin-assets.url = "github:uBlockOrigin/uAssets";
     ublock-origin-assets.flake = false;
     greasemonkey-scripts.url = "github:afreakk/greasemonkeyscripts";

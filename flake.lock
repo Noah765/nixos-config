@@ -810,35 +810,12 @@
         "qutebrowser-catppuccin-theme": "qutebrowser-catppuccin-theme",
         "qutebrowser-everforest-theme": "qutebrowser-everforest-theme",
         "qutebrowser-gruvbox-theme": "qutebrowser-gruvbox-theme",
-        "rust-overlay": "rust-overlay",
         "treefmt": "treefmt",
         "ublock-origin-assets": "ublock-origin-assets",
         "wrappers": "wrappers",
         "yazi-catppuccin-theme": "yazi-catppuccin-theme",
         "yazi-everforest-theme": "yazi-everforest-theme",
-        "yazi-gruvbox-theme": "yazi-gruvbox-theme",
-        "zellij-sessionizer": "zellij-sessionizer",
-        "zellij-switch": "zellij-switch"
-      }
-    },
-    "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784526465,
-        "narHash": "sha256-L37teKC6oINWG4PGZLIqbphMWvSQ0PEz+aWxAk+rIDw=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "58c6334db52d51fc5dd8877c90b01f00cf8a696b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
+        "yazi-gruvbox-theme": "yazi-gruvbox-theme"
       }
     },
     "systems": {
@@ -853,21 +830,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "systems_2": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
         "type": "github"
       }
     },
@@ -1015,46 +977,6 @@
       "original": {
         "owner": "bennyyip",
         "repo": "gruvbox-dark.yazi",
-        "type": "github"
-      }
-    },
-    "zellij-sessionizer": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1763534101,
-        "narHash": "sha256-9R4+OpQqDMIhEF1UwIJPkljtvFtqEz2unGC6LupkoqU=",
-        "owner": "victor-falcon",
-        "repo": "zellij-sessionizer",
-        "rev": "275df9e96c4d5adf2d49da7b95adfbf3e128c23f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "victor-falcon",
-        "repo": "zellij-sessionizer",
-        "type": "github"
-      }
-    },
-    "zellij-switch": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": [
-          "rust-overlay"
-        ],
-        "systems": "systems_2"
-      },
-      "locked": {
-        "lastModified": 1781873766,
-        "narHash": "sha256-V8baEgRBa2SqtCLbQ4EaphIMKsnAogY2oMdttWYhkEs=",
-        "owner": "mostafaqanbaryan",
-        "repo": "zellij-switch",
-        "rev": "ced3c681afe40785b2853e3a976908466786ee79",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mostafaqanbaryan",
-        "repo": "zellij-switch",
         "type": "github"
       }
     }
