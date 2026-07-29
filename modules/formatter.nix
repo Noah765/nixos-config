@@ -26,7 +26,7 @@
 
           for x in $files {
             let input = open $x | get words
-            let output = $input | where {|x| idx search $x | where path != codebook.toml | is-not-empty }
+            let output = $input | where {|x| idx search $x | where relative_path != codebook.toml | is-not-empty }
             if ($input | length) != ($output | length) { {words: $output} | save -f $x }
           }
         }
