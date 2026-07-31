@@ -253,30 +253,32 @@
         ${lib.join "\n  " (map (x: "hl.exec_cmd('${lib.getExe' config.package "hyprctl"} plugin load ${x}/lib/lib${x.pname}.so')") plugins)}
       end)
 
-      if hl.plugin.hy3 ~= nil then
-        hl.bind('SUPER + H', hl.plugin.hy3.move_focus('left'))
-        hl.bind('SUPER + J', hl.plugin.hy3.move_focus('down'))
-        hl.bind('SUPER + K', hl.plugin.hy3.move_focus('up'))
-        hl.bind('SUPER + L', hl.plugin.hy3.move_focus('right'))
-        hl.bind('SUPER + SHIFT + H', hl.plugin.hy3.move_window('left'))
-        hl.bind('SUPER + SHIFT + J', hl.plugin.hy3.move_window('down'))
-        hl.bind('SUPER + SHIFT + K', hl.plugin.hy3.move_window('up'))
-        hl.bind('SUPER + SHIFT + L', hl.plugin.hy3.move_window('right'))
-        hl.bind('SUPER + Q', hl.plugin.hy3.kill_active())
-        hl.bind('SUPER + ALT + H', hl.plugin.hy3.make_group('h', { ephemeral = true }))
-        hl.bind('SUPER + ALT + V', hl.plugin.hy3.make_group('v', { ephemeral = true }))
-        hl.bind('SUPER + SHIFT + 1', hl.plugin.hy3.move_to_workspace(1))
-        hl.bind('SUPER + SHIFT + 2', hl.plugin.hy3.move_to_workspace(2))
-        hl.bind('SUPER + SHIFT + 3', hl.plugin.hy3.move_to_workspace(3))
-        hl.bind('SUPER + SHIFT + 4', hl.plugin.hy3.move_to_workspace(4))
-        hl.bind('SUPER + SHIFT + 5', hl.plugin.hy3.move_to_workspace(5))
-        hl.bind('SUPER + SHIFT + 6', hl.plugin.hy3.move_to_workspace(6))
-        hl.bind('SUPER + SHIFT + 7', hl.plugin.hy3.move_to_workspace(7))
-        hl.bind('SUPER + SHIFT + 8', hl.plugin.hy3.move_to_workspace(8))
-        hl.bind('SUPER + SHIFT + 9', hl.plugin.hy3.move_to_workspace(9))
+      if hl.plugin.hy3 then
+        local hy3 = hl.plugin.hy3
+
+        hl.bind('SUPER + H', hy3.move_focus('left'))
+        hl.bind('SUPER + J', hy3.move_focus('down'))
+        hl.bind('SUPER + K', hy3.move_focus('up'))
+        hl.bind('SUPER + L', hy3.move_focus('right'))
+        hl.bind('SUPER + SHIFT + H', hy3.move_window('left'))
+        hl.bind('SUPER + SHIFT + J', hy3.move_window('down'))
+        hl.bind('SUPER + SHIFT + K', hy3.move_window('up'))
+        hl.bind('SUPER + SHIFT + L', hy3.move_window('right'))
+        hl.bind('SUPER + Q', hy3.kill_active())
+        hl.bind('SUPER + ALT + H', hy3.make_group('h', { ephemeral = true }))
+        hl.bind('SUPER + ALT + V', hy3.make_group('v', { ephemeral = true }))
+        hl.bind('SUPER + SHIFT + 1', hy3.move_to_workspace(1))
+        hl.bind('SUPER + SHIFT + 2', hy3.move_to_workspace(2))
+        hl.bind('SUPER + SHIFT + 3', hy3.move_to_workspace(3))
+        hl.bind('SUPER + SHIFT + 4', hy3.move_to_workspace(4))
+        hl.bind('SUPER + SHIFT + 5', hy3.move_to_workspace(5))
+        hl.bind('SUPER + SHIFT + 6', hy3.move_to_workspace(6))
+        hl.bind('SUPER + SHIFT + 7', hy3.move_to_workspace(7))
+        hl.bind('SUPER + SHIFT + 8', hy3.move_to_workspace(8))
+        hl.bind('SUPER + SHIFT + 9', hy3.move_to_workspace(9))
       end
 
-      if hl.plugin.darkwindow ~= nil then
+      if hl.plugin.darkwindow then
         hl.config({ plugin = { darkwindow = { load_shaders = 'chromakey' } } })
 
         hl.plugin.darkwindow.load_shader('opacity', {
@@ -294,6 +296,7 @@
         })
       end
 
+      -- Theme
       local file = io.open('/home/noah/.theme-config/hyprland.lua')
       if file then
         file:close()
