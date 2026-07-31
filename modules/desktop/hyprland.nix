@@ -79,6 +79,13 @@
       },
       misc = { background_color = '${theme.bg}' },
     })
+
+    if hl.plugin.darkwindow then
+      hl.plugin.darkwindow.load_shader('opacity', {
+        from = 'chromakey',
+        args = 'bkg=[${toString (map (x: lib.fromHexString (lib.substring x 2 theme.bg) / 255.0) [1 3 5])}] similarity=1 targetOpacity=0.75',
+      })
+    end
   '';
 
   flake.wrappers.hyprland = {
@@ -280,11 +287,6 @@
 
       if hl.plugin.darkwindow then
         hl.config({ plugin = { darkwindow = { load_shaders = 'chromakey' } } })
-
-        hl.plugin.darkwindow.load_shader('opacity', {
-          from = 'chromakey',
-          args = 'bkg=[0.175781 0.207031 0.230469] similarity=1 targetOpacity=0.75',
-        })
 
         hl.window_rule({
           match = { fullscreen = false },
