@@ -101,7 +101,28 @@
 
     constructFiles.config.relPath = "${config.binName}-config.lua";
     constructFiles.config.content = let
-      plugins = [inputs.hy3.packages.${pkgs.stdenv.system}.default inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.default];
+      hyprglass = pkgs.stdenv.mkDerivation {
+        pname = "hyprglass";
+        inherit (config.package) version;
+        src = inputs.hyprglass;
+
+        nativeBuildInputs = [pkgs.pkg-config];
+        buildInputs = [config.package.dev] ++ config.package.buildInputs;
+
+        enableParallelBuilding = true;
+
+        installPhase = ''
+          mkdir -p "$out/lib"
+          install hyprglass.so "$out/lib/libhyprglass.so"
+        '';
+      };
+
+      plugins = [
+        inputs.hy3.packages.${pkgs.stdenv.system}.default
+        inputs.hypr-darkwindow.packages.${pkgs.stdenv.system}.default
+        hyprglass
+      ];
+
       increase = pkgs.writers.writeNu "brightness-increase" ''
         if ('/sys/class/backlight/intel_backlight/brightness' | path type) != 'file' {
           hyprctl hyprsunset gamma +10
@@ -132,11 +153,7 @@
         },
         decoration = {
           rounding = 8,
-          blur = {
-            size = 2,
-            brightness = 0.75,
-            popups = true,
-          },
+          blur = { enabled = false },
           glow = {
             enabled = true,
             range = 3,
@@ -237,12 +254,6 @@
         float = true,
       })
 
-      hl.layer_rule({
-        match = { namespace = 'shell-(bar|calculator)' },
-        blur = true,
-        ignore_alpha = 0,
-      })
-
       -- Permissions
       hl.permission({
         binary = '${lib.replaceString "\\" "\\\\" "${lib.escapeRegex (lib.getExe pkgs.hyprpicker)}|${lib.escapeRegex (lib.getExe pkgs.grim)}"}',
@@ -295,6 +306,25 @@
         hl.window_rule({
           match = { fullscreen_state_internal = 1 },
           ['darkwindow:shade'] = 'opacity',
+        })
+      end
+
+      if hl.plugin.hyprglass then
+        local hg = hl.plugin.hyprglass
+
+        hg.config({
+          default_preset = 'subtle',
+          glass_opacity = 0.85,
+          tint_color = 0,
+          brightness = 0.6,
+          layers = { enabled = true },
+        })
+
+        hg.layer('shell-background', { exclude = true })
+
+        hl.window_rule({
+          match = { fullscreen_state_internal = 2 },
+          tag = 'hyprglass_disabled',
         })
       end
 
