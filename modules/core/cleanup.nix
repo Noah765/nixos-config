@@ -17,7 +17,7 @@
       services.cleanup = {
         description = "System cleanup";
         startAt = "weekly";
-        after = ["multi-user.target"];
+        after = ["multi-user.target" "time-sync.target"];
         serviceConfig.Type = "oneshot";
         path = [pkgs.nix];
         script = config.core.cleanup.script;
