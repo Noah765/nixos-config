@@ -24,7 +24,7 @@
             key <AE12> { [ equal        ] };
             key <PAUS> { [ parenright   ] };
             key <AC11> { [ apostrophe   ] };
-            key <INS>  { type = "ALPHABETIC", [ odiaeresis, Odiaeresis ] };
+            key <HKTG>  { type = "ALPHABETIC", [ odiaeresis, Odiaeresis ] };
             key <NMLK> { [ underscore   ] };
             key <KPDV> { type = "ALPHABETIC", [ adiaeresis, Adiaeresis ] };
             key <AB09> { [ period       ] };
@@ -34,7 +34,7 @@
             key <KPSU> { [ plus         ] };
             key <KPAD> { [ degree       ] };
             key <AE09> { [ 9            ] };
-            key <KPEN> { [ asciicircum  ] };
+            key <AE13> { [ asciicircum  ] };
             key <KP1>  { [ numbersign   ] };
             key <KP2>  { [ percent      ] };
             key <AE07> { [ 7            ] };
@@ -62,9 +62,9 @@
             key <AE06> { [ 6            ] };
             key <KPEQ> { [ exclam       ] };
             key <AD12> { [ bracketright ] };
-            key <PGUP> { [ bar          ] };
+            key <HENK> { [ bar          ] };
             key <AE08> { [ 8            ] };
-            key <PGDN> { [ EuroSign     ] };
+            key <MUHE> { [ EuroSign     ] };
             key <I248> { [ asciitilde   ] };
           };
         '';
