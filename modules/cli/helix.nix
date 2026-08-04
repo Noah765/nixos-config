@@ -85,6 +85,10 @@
           J = "extend_visual_line_down";
           K = "extend_visual_line_up";
           L = "extend_char_right";
+          A-h = "goto_first_nonwhitespace";
+          A-l = "goto_line_end";
+          A-H = "extend_to_first_nonwhitespace";
+          A-L = "extend_to_line_end";
           w = "move_next_sub_word_start";
           b = "move_prev_sub_word_start";
           e = "move_next_sub_word_end";
@@ -103,11 +107,12 @@
           A-f = "find_prev_char";
           A-T = "extend_till_prev_char";
           A-F = "extend_prev_char";
-          M = "@vmm<esc>";
           x = "select_line_below";
           X = "select_line_above";
-          A-h = "extend_to_first_nonwhitespace";
-          A-l = "extend_to_line_end";
+          M = "@vmm<esc>";
+          C-U = "@v<C-u><esc>";
+          C-D = "@v<C-d><esc>";
+
           A-n = "extend_search_next";
           A-N = "extend_search_prev";
           A-j = "join_selections";
@@ -120,8 +125,47 @@
         insert.S-tab = "move_parent_node_start";
         insert.A-tab = "insert_tab";
 
-        select.tab = "extend_parent_node_end";
-        select.S-tab = "extend_parent_node_start";
+        select = {
+          tab = "extend_parent_node_end";
+          S-tab = "extend_parent_node_start";
+
+          H = "extend_char_left";
+          J = "extend_visual_line_down";
+          K = "extend_visual_line_up";
+          L = "extend_char_right";
+          A-h = "extend_to_first_nonwhitespace";
+          A-l = "extend_to_line_end";
+          A-H = "extend_to_first_nonwhitespace";
+          A-L = "extend_to_line_end";
+          w = "extend_next_sub_word_start";
+          b = "extend_prev_sub_word_start";
+          e = "extend_next_sub_word_end";
+          W = "extend_next_sub_word_start";
+          B = "extend_prev_sub_word_start";
+          E = "extend_next_sub_word_end";
+          A-w = "extend_next_long_word_start";
+          A-b = "extend_prev_long_word_start";
+          A-e = "extend_next_long_word_end";
+          A-W = "extend_next_long_word_start";
+          A-B = "extend_prev_long_word_start";
+          A-E = "extend_next_long_word_end";
+          T = "extend_till_char";
+          F = "extend_next_char";
+          A-t = "extend_till_prev_char";
+          A-f = "extend_prev_char";
+          A-T = "extend_till_prev_char";
+          A-F = "extend_prev_char";
+          x = "select_line_below";
+          X = "select_line_above";
+          M = "match_brackets";
+          C-U = "page_cursor_half_up";
+          C-D = "page_cursor_half_down";
+
+          A-n = "extend_search_next";
+          A-N = "extend_search_prev";
+          A-j = "join_selections";
+          A-J = "join_selections_space";
+        };
       };
     };
 
