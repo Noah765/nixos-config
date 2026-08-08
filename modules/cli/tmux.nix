@@ -101,7 +101,14 @@
       # Copy mode keybindings
       set-hook -ga after-copy-mode { send -X begin-selection; set -p @select 0 }
 
-      bind -T copy-mode-vi v { if -F '#{@select}' { set -p @select 0 } { set -p @select 1 } }
+      bind -T copy-mode-vi v {
+        if -F '#{@select}' {
+          set -p @select 0
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        }
+      }
       bind -T copy-mode-vi Escape { set -p @select 0 }
       bind -T copy-mode-vi ';' { send -X clear-selection; send -X begin-selection }
       bind -T copy-mode-vi 'M-;' { send -X other-end }
@@ -110,14 +117,32 @@
       bind -T copy-mode-vi j { send -X cursor-down; if -F '#{@select}' {} { send -X begin-selection } }
       bind -T copy-mode-vi k { send -X cursor-up; if -F '#{@select}' {} { send -X begin-selection } }
       bind -T copy-mode-vi l { send -X cursor-right; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi H { send -X cursor-left }
-      bind -T copy-mode-vi J { send -X cursor-down }
-      bind -T copy-mode-vi K { send -X cursor-up }
-      bind -T copy-mode-vi L { send -X cursor-right }
+      bind -T copy-mode-vi H {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X cursor-left
+      }
+      bind -T copy-mode-vi J {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X cursor-down
+      }
+      bind -T copy-mode-vi K {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X cursor-up
+      }
+      bind -T copy-mode-vi L {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X cursor-right
+      }
       bind -T copy-mode-vi M-h { send -X back-to-indentation; if -F '#{@select}' {} { send -X begin-selection } }
       bind -T copy-mode-vi M-l { send -X end-of-line; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi M-H { send -X back-to-indentation }
-      bind -T copy-mode-vi M-L { send -X end-of-line }
+      bind -T copy-mode-vi M-H {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X back-to-indentation
+      }
+      bind -T copy-mode-vi M-L {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X end-of-line
+      }
 
       %hidden VARS="w=#{q:word-separators}$' \t'; s=#{q:word-separators}; l=#{q:copy_cursor_line}; x=#{copy_cursor_x};"
       bind -T copy-mode-vi w {
@@ -154,9 +179,36 @@
         if '#{E:VARS} [[ ''${l:$x:2} = @(+([^"$w"])|+(["$s"])|[[:blank:]]?) ]]' { send -X next-word-end }
         if '#{E:VARS} [[ ''${l:$x:1} = _ ]]' { send -X next-word-end }
       }
-      bind -T copy-mode-vi W { if -F '#{@select}' { send w } { set -p @select 1; send w; set -p @select 0 } }
-      bind -T copy-mode-vi B { if -F '#{@select}' { send b } { set -p @select 1; send b; set -p @select 0 } }
-      bind -T copy-mode-vi E { if -F '#{@select}' { send e } { set -p @select 1; send e; set -p @select 0 } }
+      bind -T copy-mode-vi W {
+        if -F '#{@select}' {
+          send w
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+          send w
+          set -p @select 0
+        }
+      }
+      bind -T copy-mode-vi B {
+        if -F '#{@select}' {
+          send b
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+          send b
+          set -p @select 0
+        }
+      }
+      bind -T copy-mode-vi E {
+        if -F '#{@select}' {
+          send e
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+          send e
+          set -p @select 0
+        }
+      }
       bind -T copy-mode-vi M-w {
         if '#{E:VARS} [[ $x -eq ''${#l}-1 || ''${l:$x:2} = [[:blank:]][^[:blank:]] ]]' { send -X cursor-right }
         if -F '#{n:copy_cursor_line}' {} { send -X next-space; send -X start-of-line }
@@ -179,20 +231,60 @@
         if -F '#{@select}' {} { send -X begin-selection }
         if '#{E:VARS} [[ ''${l:$x:2} != [^[:blank:]][[:blank:]] ]]' { send -X next-space-end }
       }
-      bind -T copy-mode-vi M-W { if -F '#{@select}' { send M-w } { set -p @select 1; send M-w; set -p @select 0 } }
-      bind -T copy-mode-vi M-B { if -F '#{@select}' { send M-b } { set -p @select 1; send M-b; set -p @select 0 } }
-      bind -T copy-mode-vi M-E { if -F '#{@select}' { send M-e } { set -p @select 1; send M-e; set -p @select 0 } }
+      bind -T copy-mode-vi M-W {
+        if -F '#{@select}' {
+          send M-w
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+          send M-w
+          set -p @select 0
+        }
+      }
+      bind -T copy-mode-vi M-B {
+        if -F '#{@select}' {
+          send M-b
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+          send M-b
+          set -p @select 0
+        }
+      }
+      bind -T copy-mode-vi M-E {
+        if -F '#{@select}' {
+          send M-e
+        } {
+          set -p @select 1
+          if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+          send M-e
+          set -p @select 0
+        }
+      }
 
       bind -T copy-mode-vi t { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump to forward)' { send -X jump-to-forward '%%' } }
       bind -T copy-mode-vi f { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump forward)' { send -X jump-forward '%%' } }
-      bind -T copy-mode-vi T { command-prompt -1 -p '(extend to forward)' { send -X jump-to-forward '%%' } }
-      bind -T copy-mode-vi F { command-prompt -1 -p '(extend forward)' { send -X jump-forward '%%' } }
+      bind -T copy-mode-vi T {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        command-prompt -1 -p '(extend to forward)' { send -X jump-to-forward '%%' }
+      }
+      bind -T copy-mode-vi F {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        command-prompt -1 -p '(extend forward)' { send -X jump-forward '%%' }
+      }
       bind -T copy-mode-vi M-t { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump to backward)' { send -X jump-to-backward '%%' } }
       bind -T copy-mode-vi M-f { if -F '#{@select}' {} { send -X begin-selection }; command-prompt -1 -p '(jump backward)' { send -X jump-backward '%%' } }
-      bind -T copy-mode-vi M-T { command-prompt -1 -p '(extend to backward)' { send -X jump-to-backward '%%' } }
-      bind -T copy-mode-vi M-F { command-prompt -1 -p '(extend backward)' { send -X jump-backward '%%' } }
+      bind -T copy-mode-vi M-T {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        command-prompt -1 -p '(extend to backward)' { send -X jump-to-backward '%%' }
+      }
+      bind -T copy-mode-vi M-F {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        command-prompt -1 -p '(extend backward)' { send -X jump-backward '%%' }
+      }
 
       bind -T copy-mode-vi x {
+        if -F '#{selection_active}' {} { send -X begin-selection }
         set -pF @left '#{||:#{e/<:#{copy_cursor_y},#{selection_start_y}},#{e/<:#{copy_cursor_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{||:#{e/<:#{copy_cursor_x},#{selection_start_x}},#{e/<:#{copy_cursor_x},#{selection_end_x}}}}}'
         if -F '#{@left}' { send -X other-end }
         if -F '#{?#{||:#{e/<:#{selection_start_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{e/<:#{selection_start_x},#{selection_end_x}}}},#{&&:#{e/==:#{selection_start_x},0},#{e/>=:#{selection_end_x},#{e/-:#{w:copy_cursor_line},1}}},#{&&:#{e/==:#{selection_end_x},0},#{e/>=:#{selection_start_x},#{e/-:#{w:copy_cursor_line},1}}}}' {
@@ -212,6 +304,7 @@
         }
       }
       bind -T copy-mode-vi X {
+        if -F '#{selection_active}' {} { send -X begin-selection }
         set -pF @left '#{||:#{e/<:#{copy_cursor_y},#{selection_start_y}},#{e/<:#{copy_cursor_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{||:#{e/<:#{copy_cursor_x},#{selection_start_x}},#{e/<:#{copy_cursor_x},#{selection_end_x}}}}}'
         if -F '#{@left}' { send -X other-end }
         if -F '#{?#{||:#{e/<:#{selection_start_y},#{selection_end_y}},#{&&:#{e/==:#{selection_start_y},#{selection_end_y}},#{e/<:#{selection_start_x},#{selection_end_x}}}},#{&&:#{e/==:#{selection_start_x},0},#{e/>=:#{selection_end_x},#{e/-:#{w:copy_cursor_line},1}}},#{&&:#{e/==:#{selection_end_x},0},#{e/>=:#{selection_start_x},#{e/-:#{w:copy_cursor_line},1}}}}' {
@@ -232,24 +325,45 @@
       }
 
       bind -T copy-mode-vi m { send -X next-matching-bracket; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi M { send -X next-matching-bracket }
+      bind -T copy-mode-vi M {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X next-matching-bracket
+      }
 
       bind -T copy-mode-vi C-u { send -X halfpage-up; if -F '#{@select}' {} { send -X begin-selection } }
       bind -T copy-mode-vi C-d { send -X halfpage-down; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi C-U { send -X halfpage-up }
-      bind -T copy-mode-vi C-D { send -X halfpage-down }
+      bind -T copy-mode-vi C-U {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X halfpage-up
+      }
+      bind -T copy-mode-vi C-D {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X halfpage-down
+      }
 
-      bind -T copy-mode-vi / { command-prompt -T search -p '(search down)' { send -X search-forward '%%' }; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi ? { command-prompt -T search -p '(search up)' { send -X search-backward-incremental '%%' }; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi n { send -X search-again; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi N { send -X search-reverse; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi M-n { send -X search-again }
-      bind -T copy-mode-vi M-N { send -X search-reverse }
+      bind -T copy-mode-vi / { if -F '#{@select}' {} { send -X clear-selection }; command-prompt -T search -p '(search down)' -i { send -X search-forward-incremental '%%' } }
+      bind -T copy-mode-vi ? { if -F '#{@select}' {} { send -X clear-selection }; command-prompt -T search -p '(search up)' -i { send -X search-backward-incremental '%%' } }
+      bind -T copy-mode-vi n { if -F '#{@select}' {} { send -X clear-selection }; send -X search-again }
+      bind -T copy-mode-vi N { if -F '#{@select}' {} { send -X clear-selection }; send -X search-reverse }
+      bind -T copy-mode-vi M-n {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X search-again
+      }
+      bind -T copy-mode-vi M-N {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X search-reverse
+      }
 
       bind -T copy-mode-vi p { send -X next-prompt; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi P { send -X next-prompt }
+      bind -T copy-mode-vi P {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X next-prompt
+      }
       bind -T copy-mode-vi M-p { send -X previous-prompt -o; if -F '#{@select}' {} { send -X begin-selection } }
-      bind -T copy-mode-vi M-P { send -X previous-prompt -o }
+      bind -T copy-mode-vi M-P {
+        if -F '#{selection_active}' {} { set -pF @offset '#{e/-:#{w:search_match},1}'; send -X -FN '#{@offset}' cursor-right; send -X begin-selection; send -X -FN '#{@offset}' cursor-left }
+        send -X previous-prompt -o
+      }
 
       bind -T copy-mode-vi y { send -X copy-selection-no-clear -P }
       bind -T copy-mode-vi Enter { send -X copy-selection-and-cancel -P }
