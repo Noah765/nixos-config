@@ -52,7 +52,7 @@
       set -g base-index 1
       set -g buffer-limit 1
       set -g copy-mode-line-numbers hybrid
-      set -g copy-mode-position-format '#[align=right]#{?search_timed_out,(timed out) ,search_present,(#{search_count}#{?search_count_partial,+} results) }#{e/+:#{copy_cursor_y},#{?#{==:#{pane_mode},view-mode},#{e/+:1,#{e/-:#{copy_position_limit},#{copy_position}}},#{copy_position}}}:#{e/+:1,#{copy_cursor_x}} #{e|/:#{e/*:100,#{e/+:#{copy_cursor_y},#{?#{==:#{pane_mode},view-mode},#{e/+:1,#{e/-:#{copy_position_limit},#{copy_position}}},#{copy_position}}}},#{e/+:#{copy_position_limit},#{?#{==:#{pane_mode},view-mode},#{pane_height},0}}}%' # Works in copy and view mode
+      set -g copy-mode-position-format '#[align=right]#{?search_timed_out,(timed out) ,#{n:search_count},(#{search_count}#{?search_count_partial,+} result#{?#{e/!=:#{search_count},1},s}) }#{e/+:#{copy_cursor_y},#{?#{==:#{pane_mode},view-mode},#{e/+:1,#{e/-:#{copy_position_limit},#{copy_position}}},#{copy_position}}}:#{e/+:1,#{copy_cursor_x}} #{e|/:#{e/*:100,#{e/+:#{copy_cursor_y},#{?#{==:#{pane_mode},view-mode},#{e/+:1,#{e/-:#{copy_position_limit},#{copy_position}}},#{copy_position}}}},#{e/+:#{copy_position_limit},#{?#{==:#{pane_mode},view-mode},#{pane_height},0}}}%' # Works in copy and view mode
       set -gF default-command 'exec #{default-shell}'
       set -g default-terminal tmux-256color
       set -g display-time 4000
