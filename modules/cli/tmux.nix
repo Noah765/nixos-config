@@ -25,7 +25,7 @@
 
     # Status
     set -g status-style bg=${theme.tabLineBg}
-    set -g status-left '#[bold,fg=${theme.activeFg},bg=${theme.activeBg}] #{session_name} #[default,fg=${theme.inactiveFg}] #{s|#{HOME}|~:session_path}'
+    set -g status-left '#[bold,fg=${theme.activeFg},bg=${theme.activeBg}] #{session_name} #{?#{&&:#{==:#{pane_mode},copy-mode},#{@select}},#[bg=default] #[bg=blue] SELECT }#[default,fg=${theme.inactiveFg}] #{s|#{HOME}|~:session_path}'
     set -g message-style width=30%,fill=${theme.tabLineBg},bg=${theme.tabLineBg}
     set -g window-status-style fg=${theme.inactiveFg},bg=${theme.inactiveBg}
     set -g window-status-current-style bold,fg=${theme.activeFg},bg=${theme.activeBg}
@@ -105,8 +105,6 @@
       bind -T copy-mode-vi Escape { set -p @select 0 }
       bind -T copy-mode-vi ';' { send -X clear-selection; send -X begin-selection }
       bind -T copy-mode-vi 'M-;' { send -X other-end }
-
-      # TODO select mode indicator
 
       bind -T copy-mode-vi h { send -X cursor-left; if -F '#{@select}' {} { send -X begin-selection } }
       bind -T copy-mode-vi j { send -X cursor-down; if -F '#{@select}' {} { send -X begin-selection } }
