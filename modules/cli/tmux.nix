@@ -1,6 +1,7 @@
 {
   lib,
   getDefaultTheme,
+  inputs,
   ...
 }: {
   nixos.imports = [(lib.mkAliasOptionModule ["cli" "tmux" "enable"] ["wrappers" "tmux" "enable"])];
@@ -30,6 +31,12 @@
     set -g window-status-style fg=${theme.inactiveFg},bg=${theme.inactiveBg}
     set -g window-status-current-style bold,fg=${theme.activeFg},bg=${theme.activeBg}
     set -g window-status-bell-style default
+
+    # Plugins
+    set -g @floax-border-color '${theme.activeBorder}'
+    set -g @floax-text-color default
+    run ${inputs.tmux-floax}/floax.tmux
+    if 'tmux has-session -t scratch' { detach -s scratch }
   '';
 
   flake.wrappers.tmux = {
@@ -82,6 +89,10 @@
       set -g window-status-separator ""
       set -g status-right ""
 
+      # Plugins
+      set -g @floax-bind '-n C-M-o'
+      set-hook -ga client-attached { if -F '#{==:#{session_name},scratch}' { set -u message-style; set -F message-style '#{message-style},width=100%' } }
+
       # Theme
       ${(getDefaultTheme pkgs)."tmux.conf"}
       source-file -q ~/.theme-config/tmux.conf
@@ -90,8 +101,6 @@
       bind -n C-M-c new-window
       bind -n C-M-p previous-window
       bind -n C-M-n next-window
-      bind -n C-M-s split-window
-      bind -n C-M-v split-window -h
       bind -n C-M-h select-pane -L
       bind -n C-M-j select-pane -D
       bind -n C-M-k select-pane -U

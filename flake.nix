@@ -40,6 +40,10 @@
     greasemonkey-scripts.url = "github:afreakk/greasemonkeyscripts";
     greasemonkey-scripts.flake = false;
 
+    # Tmux
+    tmux-floax.url = "github:omerxx/tmux-floax";
+    tmux-floax.flake = false;
+
     # Theming
     jjui-catppuccin-theme.url = "https://raw.githubusercontent.com/vic/tinted-jjui/refs/heads/main/themes/base24-catppuccin-mocha.toml";
     jjui-catppuccin-theme.flake = false;

@@ -810,6 +810,7 @@
         "qutebrowser-catppuccin-theme": "qutebrowser-catppuccin-theme",
         "qutebrowser-everforest-theme": "qutebrowser-everforest-theme",
         "qutebrowser-gruvbox-theme": "qutebrowser-gruvbox-theme",
+        "tmux-floax": "tmux-floax",
         "treefmt": "treefmt",
         "ublock-origin-assets": "ublock-origin-assets",
         "wrappers": "wrappers",
@@ -830,6 +831,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "tmux-floax": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771948640,
+        "narHash": "sha256-9Hb9dn2qHF6KcIhtogvycX3Z0MoQrLPLCzZXtjGlPHw=",
+        "owner": "omerxx",
+        "repo": "tmux-floax",
+        "rev": "133f526793d90d2caa323c47687dd5544a2c704b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "omerxx",
+        "repo": "tmux-floax",
         "type": "github"
       }
     },

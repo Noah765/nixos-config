@@ -60,6 +60,7 @@ words = [
     "filechooser",
     "fileselect",
     "findutils",
+    "floax",
     "fontconfig",
     "freedesktop",
     "fsmonitor",
