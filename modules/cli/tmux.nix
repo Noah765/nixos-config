@@ -98,14 +98,14 @@
       source-file -q ~/.theme-config/tmux.conf
 
       # General keybindings
-      bind -n C-M-c new-window
-      bind -n C-M-p previous-window
-      bind -n C-M-n next-window
-      bind -n C-M-h select-pane -L
-      bind -n C-M-j select-pane -D
-      bind -n C-M-k select-pane -U
-      bind -n C-M-l select-pane -R
-      bind -n C-M-x kill-pane
+      bind -n C-M-c { new-window }
+      bind -n C-M-p { previous-window }
+      bind -n C-M-n { next-window }
+      bind -n C-M-h { select-pane -L }
+      bind -n C-M-j { select-pane -D }
+      bind -n C-M-k { select-pane -U }
+      bind -n C-M-l { select-pane -R }
+      bind -n C-M-x { kill-pane }
 
       # Copy mode keybindings
       set-hook -ga after-copy-mode { send -X begin-selection; set -p @select 0 }
