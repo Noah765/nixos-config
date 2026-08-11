@@ -1,10 +1,22 @@
 {
+  self,
   lib,
   getDefaultTheme,
   inputs,
   ...
 }: {
-  nixos.imports = [(lib.mkAliasOptionModule ["cli" "tmux" "enable"] ["wrappers" "tmux" "enable"])];
+  nixos = {
+    pkgs,
+    config,
+    ...
+  }: {
+    options.cli.tmux.enable = lib.mkEnableOption "tmux";
+
+    config = lib.mkIf config.cli.tmux.enable {
+      wrappers.tmux.enable = true;
+      environment.systemPackages = [pkgs.sesh self.packages.${pkgs.stdenv.system}.sesh-fzf];
+    };
+  };
 
   theme."tmux.conf".text = theme: _: ''
     # General
@@ -38,6 +50,48 @@
     run ${inputs.tmux-floax}/floax.tmux
     if 'tmux has-session -t scratch' { detach -s scratch }
   '';
+
+  flake.wrappers.sesh = {
+    pkgs,
+    config,
+    ...
+  }: {
+    imports = [lib.w.modules.default];
+
+    package = pkgs.sesh;
+
+    flags."--config" = config.constructFiles.config.path;
+
+    constructFiles.config = {
+      relPath = "${config.binName}-config.toml";
+      builder = ''${lib.getExe' pkgs.remarshal "json2toml"} "$1" "$2"'';
+      content = lib.toJSON {
+        blacklist = ["scratch"];
+        default_session.preview_command = "${lib.getExe pkgs.eza} --tree --color always --level 2 {}";
+        session = lib.singleton {
+          name = "NixOS";
+          path = "/etc/nixos";
+          startup_command = "hx";
+        };
+        wildcard = lib.singleton {
+          pattern = "~/projects/*";
+          startup_command = "hx";
+        };
+      };
+    };
+  };
+
+  perSystem = {pkgs, ...}: {
+    packages.sesh-fzf = pkgs.writers.writeNuBin "sesh-fzf" ''
+      ${lib.getExe pkgs.sesh} list --hide-duplicates --icons
+      | try {
+        (${lib.getExe pkgs.fzf} --ansi --no-sort --popup 75%
+          --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(${lib.getExe pkgs.sesh} list --hide-duplicates --icons)'
+          --preview '${lib.getExe pkgs.sesh} preview {}')
+        | exec ${lib.getExe pkgs.sesh} connect $in
+      }
+    '';
+  };
 
   flake.wrappers.tmux = {
     pkgs,
@@ -92,6 +146,8 @@
       # Plugins
       set -g @floax-bind '-n C-M-o'
       set-hook -ga client-attached { if -F '#{==:#{session_name},scratch}' { set -u message-style; set -F message-style '#{message-style},width=100%' } }
+
+      bind -n C-M-z { run ${lib.getExe self.packages.${pkgs.stdenv.system}.sesh-fzf} }
 
       # Theme
       ${(getDefaultTheme pkgs)."tmux.conf"}

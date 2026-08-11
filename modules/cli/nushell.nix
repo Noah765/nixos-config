@@ -106,6 +106,16 @@
             ] | str join ' ')
           }
         }
+        {
+          name: sesh
+          modifier: control
+          keycode: char_z
+          mode: [vi_normal vi_insert]
+          event: {
+            send: executehostcommand
+            cmd: sesh-fzf
+          }
+        }
       ]
 
       # Menus

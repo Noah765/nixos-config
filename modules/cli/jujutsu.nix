@@ -52,12 +52,13 @@
 
       aliases = lib.mapAttrs (name: script: ["util" "exec" "--" (pkgs.writers.writeNu "jj-${name}" script)]) {
         gh = ''
-          def main [name: string --private (-p)] {
-            ${lib.getExe pkgs.gh} repo create $name (if $private { '--private' } else { '--public' })
-            jj git clone $'https://github.com/Noah765/($name)'
-            cd $name
+          def main [repo: string --private (-p)] {
+            ${lib.getExe pkgs.gh} repo create $repo (if $private { '--private' } else { '--public' })
+            jj git clone $'https://github.com/Noah765/($repo)'
+            cd $repo
             jj describe --message init
             jj bookmark create main
+            if (which sesh | is-not-empty) { exec sesh connect ($'./$repo' | path expand) }
           }
         '';
 
@@ -74,10 +75,16 @@
             jj git remote add upstream $'https://github.com/($owner)/($repo)'
             jj config set --repo git.fetch '["origin", "upstream"]'
             jj git fetch
+            if (which sesh | is-not-empty) { exec sesh connect ($'./$repo' | path expand) }
           }
         '';
 
-        clone = "def --wrapped main [name: string ...rest] { jj git clone $'https://github.com/Noah765/($name)' ...$rest }";
+        clone = ''
+          def main [repo: string] {
+            jj git clone $'https://github.com/Noah765/($repo)'
+            if (which sesh | is-not-empty) { exec sesh connect ($'./$repo' | path expand) }
+          }
+        '';
 
         push = ''
           def main [revision: string = '@-'] {
