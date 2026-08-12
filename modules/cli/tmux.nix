@@ -145,6 +145,7 @@
 
       # Plugins
       set -g @floax-bind '-n C-M-o'
+      set-hook -ga session-created { if -F '#{==:#{session_name},scratch}' { send jjui Enter } }
       set-hook -ga client-attached { if -F '#{==:#{session_name},scratch}' { set -u message-style; set -F message-style '#{message-style},width=100%' } }
 
       bind -n C-M-z { run ${lib.getExe self.packages.${pkgs.stdenv.system}.sesh-fzf} }
