@@ -145,6 +145,7 @@
 
       # Plugins
       set -g @floax-bind '-n C-M-o'
+      set -g @floax-change-path false
       set-hook -ga session-created { if -F '#{==:#{session_name},scratch}' { send jjui Enter } }
       set-hook -ga client-attached { if -F '#{==:#{session_name},scratch}' { set -u message-style; set -F message-style '#{message-style},width=100%' } }
 
