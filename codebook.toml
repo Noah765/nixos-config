@@ -180,6 +180,7 @@ words = [
     "tmpfiles",
     "tmux",
     "treefmt",
+    "treewide",
     "ublock",
     "udiaeresis",
     "umask",

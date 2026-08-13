@@ -11,12 +11,16 @@
   }: {
     options.desktop.desktop-shell.enable = lib.mkEnableOption "the desktop shell";
 
-    config.hm.systemd.user.services.app-desktop-shell = lib.mkIf config.desktop.desktop-shell.enable {
-      Unit.Description = "desktop-shell";
-      Unit.After = ["graphical-session.target"];
-      Service.ExecStart = lib.getExe pkgs.desktop-shell;
-      Service.Restart = "on-failure";
-      Install.WantedBy = ["graphical-session.target"];
+    config = lib.mkIf config.desktop.desktop-shell.enable {
+      environment.systemPackages = [pkgs.desktop-shell]; # Install the desktop entry
+
+      hm.systemd.user.services.app-desktop-shell = {
+        Unit.Description = "desktop-shell";
+        Unit.After = ["graphical-session.target"];
+        Service.ExecStart = lib.getExe pkgs.desktop-shell;
+        Service.Restart = "on-failure";
+        Install.WantedBy = ["graphical-session.target"];
+      };
     };
   };
 
