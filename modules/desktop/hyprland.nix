@@ -181,18 +181,102 @@
           enforce_permissions = true,
         },
       })
-      ${(getDefaultTheme pkgs)."hyprland.lua"}
 
-      hl.animation({
-        leaf = 'global',
-        enabled = true,
-        speed = 3,
-        bezier = 'default',
-      })
-
+      -- Devices
       hl.device({
         name = 'charachorder-charachorder-two-s3-keyboard',
         kb_layout = 'cc',
+      })
+
+      -- Animations (taken from github:end-4/dots-hyprland)
+      hl.curve('emphasizedDecel', {
+          type = 'bezier',
+          points = {{0.05, 0.7}, {0.1, 1}}
+      })
+      hl.curve('menuDecel', {
+          type = 'bezier',
+          points = {{0.1, 1}, {0, 1}}
+      })
+      hl.curve('menuAccel', {
+          type = 'bezier',
+          points = {{0.52, 0.03}, {0.72, 0.08}}
+      })
+      hl.curve('stall', {
+          type = 'bezier',
+          points = {{1, -0.1}, {0.7, 0.85}}
+      })
+
+      hl.animation({
+          leaf = 'windowsIn',
+          enabled = true,
+          speed = 3,
+          bezier = 'emphasizedDecel',
+          style = 'popin 80%'
+      })
+      hl.animation({
+          leaf = 'windowsOut',
+          enabled = true,
+          speed = 2,
+          bezier = 'emphasizedDecel',
+          style = 'popin 90%'
+      })
+      hl.animation({
+          leaf = 'windowsMove',
+          enabled = true,
+          speed = 3,
+          bezier = 'emphasizedDecel',
+          style = 'slide'
+      })
+      hl.animation({
+          leaf = 'layersIn',
+          enabled = true,
+          speed = 2.7,
+          bezier = 'emphasizedDecel',
+          style = 'popin 93%'
+      })
+      hl.animation({
+          leaf = 'layersOut',
+          enabled = true,
+          speed = 2.4,
+          bezier = 'menuAccel',
+          style = 'popin 94%'
+      })
+      hl.animation({
+          leaf = 'fadeIn',
+          enabled = true,
+          speed = 3,
+          bezier = 'emphasizedDecel'
+      })
+      hl.animation({
+          leaf = 'fadeOut',
+          enabled = true,
+          speed = 2,
+          bezier = 'emphasizedDecel'
+      })
+      hl.animation({
+          leaf = 'fadeLayersIn',
+          enabled = true,
+          speed = 0.5,
+          bezier = 'menuDecel'
+      })
+      hl.animation({
+          leaf = 'fadeLayersOut',
+          enabled = true,
+          speed = 2.7,
+          bezier = 'stall'
+      })
+      hl.animation({
+          leaf = 'border',
+          enabled = true,
+          speed = 10,
+          bezier = 'emphasizedDecel'
+      })
+      hl.animation({
+          leaf = 'workspaces',
+          enabled = true,
+          speed = 7,
+          bezier = 'menuDecel',
+          style = 'slide'
       })
 
       -- Binds
@@ -329,6 +413,7 @@
       end
 
       -- Theme
+      ${(getDefaultTheme pkgs)."hyprland.lua"}
       local file = io.open('/home/noah/.theme-config/hyprland.lua')
       if file then
         file:close()
