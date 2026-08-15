@@ -170,6 +170,7 @@ words = [
     "subvolume",
     "subvolumes",
     "symbolsshift",
+    "sysinit",
     "systemctl",
     "tabpad",
     "tabstop",
