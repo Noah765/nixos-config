@@ -18,7 +18,7 @@
         warn-dirty = false;
       };
 
-      core.cleanup.script = "${lib.getExe pkgs.nh} clean all --keep 3 --keep-since 7d --keep-one";
+      core.cleanup.script = "${lib.getExe pkgs.nh} clean all --quiet --keep 3 --keep-since 7d --keep-one";
     };
   };
 }
