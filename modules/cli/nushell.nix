@@ -53,9 +53,10 @@
       $env.config.show_banner = false
       $env.config.recursion_limit = 1000
       $env.config.auto_cd_implicit = true
-      $env.config.edit_mode = 'vi'
-      $env.config.cursor_shape.vi_insert = 'line'
-      $env.config.cursor_shape.vi_normal = 'block'
+      $env.config.edit_mode = 'helix'
+      $env.config.cursor_shape.helix_normal = 'block'
+      $env.config.cursor_shape.helix_insert = 'line'
+      $env.config.cursor_shape.helix_select = 'block'
       $env.config.completions.algorithm = 'fuzzy'
       $env.config.use_kitty_protocol = true
       $env.config.display_errors.termination_signal = false
@@ -83,7 +84,7 @@
           name: completion_menu
           modifier: control
           keycode: char_x
-          mode: [vi_normal vi_insert]
+          mode: [helix_insert]
           event: {
             send: menu
             name: completion_menu
@@ -93,7 +94,7 @@
           name: help_menu
           modifier: control
           keycode: char_h
-          mode: [vi_normal vi_insert]
+          mode: [helix_normal helix_insert helix_select]
           event: {
             send: executehostcommand
             cmd: ([
@@ -110,7 +111,7 @@
           name: sesh
           modifier: control
           keycode: char_z
-          mode: [vi_normal vi_insert]
+          mode: [helix_normal helix_insert helix_select]
           event: {
             send: executehostcommand
             cmd: sesh-fzf
