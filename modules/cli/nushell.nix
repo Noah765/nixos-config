@@ -69,7 +69,6 @@
         direnv export json | from json | default {} | reject --optional --ignore-case shell | load-env
         $env.PATH = $env.PATH | split row : | path expand --no-symlink
       }]
-      source ${pkgs.runCommandLocal "devenv.nu" {} "${lib.getExe pkgs.devenv} hook nu > \"$out\""}
       $env.config.hooks.display_output = {
         let value = $in
         if ($value | describe) in [int float bool range closure cell-path] {
