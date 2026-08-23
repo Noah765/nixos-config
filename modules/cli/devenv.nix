@@ -6,7 +6,7 @@
   }: {
     options.cli.devenv.enable = lib.mkEnableOption "devenv";
 
-    config = lib.mkIf config.cli.direnv.enable {
+    config = lib.mkIf config.cli.devenv.enable {
       environment.systemPackages = [pkgs.devenv];
       core.impermanence.hm.directories = [".local/share/devenv"];
       core.cleanup.script = ''
