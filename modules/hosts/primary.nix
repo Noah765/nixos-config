@@ -7,6 +7,8 @@
       nvidia.enable = true;
     };
 
+    cli.proton-pass-cli.enable = true;
+
     dev = {
       codex.enable = true;
       dart.enable = true;
