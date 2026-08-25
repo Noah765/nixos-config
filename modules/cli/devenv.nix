@@ -8,7 +8,7 @@
 
     config = lib.mkIf config.cli.devenv.enable {
       wrappers.devenv.enable = true;
-      core.impermanence.hm.directories = [".local/share/devenv" ".local/share/secretspec/cache"];
+      core.impermanence.hm.directories = [".local/share/devenv" ".local/state/secretspec/cache"];
       core.cleanup.script = ''
         cd /home/noah
         ${lib.getExe pkgs.devenv} gc
@@ -42,7 +42,7 @@
             max_age = "1w";
           };
         };
-        audit.enable = false;
+        audit.enabled = false;
       };
     };
   };
