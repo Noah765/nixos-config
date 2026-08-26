@@ -10,7 +10,6 @@
     cli.proton-pass-cli.enable = true;
 
     dev = {
-      codex.enable = true;
       dart.enable = true;
       java.enable = true;
       rust.enable = true;
