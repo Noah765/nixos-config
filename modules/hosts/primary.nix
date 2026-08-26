@@ -7,6 +7,7 @@
       nvidia.enable = true;
     };
 
+    cli.claude-code.enable = true;
     cli.proton-pass-cli.enable = true;
 
     dev = {
