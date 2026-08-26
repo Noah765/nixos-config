@@ -8,6 +8,7 @@
 
     config = lib.mkIf config.cli.claude-code.enable {
       environment.systemPackages = [pkgs.claude-code];
+      core.impermanence.hm.files = [".claude.json"];
       core.impermanence.hm.directories = [".claude"];
     };
   };
