@@ -17,6 +17,8 @@ in {
     config = lib.mkIf config.cli.yazi.enable {
       wrappers.yazi.enable = true;
 
+      environment.variables.QT_QPA_PLATFORMTHEME = "xdgdesktopportal";
+
       xdg.portal = {
         enable = true;
         extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
