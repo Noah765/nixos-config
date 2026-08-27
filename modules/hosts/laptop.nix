@@ -14,6 +14,9 @@
       networking.hostName = "laptop";
     };
 
+    cli.claude-code.enable = true;
+    cli.proton-pass-cli.enable = true;
+
     apps.steam.enable = true;
     apps.signal.enable = true;
 
