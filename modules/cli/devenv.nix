@@ -26,6 +26,7 @@
     package = pkgs.devenv;
     binName = "secretspec";
     exePath = "bin/secretspec";
+    drv.meta.mainProgram = "devenv";
 
     env.XDG_CONFIG_HOME = "${placeholder config.outputName}/${config.binName}-config";
 
