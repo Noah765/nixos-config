@@ -160,6 +160,7 @@
           },
         },
         input = {
+          kb_variant = 'altgr-intl',
           repeat_rate = 35,
           repeat_delay = 200,
         },
@@ -186,6 +187,7 @@
       hl.device({
         name = 'charachorder-charachorder-two-s3-keyboard',
         kb_layout = 'cc',
+        kb_variant = "",
       })
 
       -- Animations (taken from github:end-4/dots-hyprland)
