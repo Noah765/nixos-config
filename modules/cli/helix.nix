@@ -195,6 +195,7 @@
         };
         qml.language-servers = ["qmlls" "codebook"];
         rust.language-servers = ["rust-analyzer" "codebook"];
+        sql.language-servers = ["codebook"];
         typst.language-servers = ["tinymist" "codebook"];
         verilog.language-servers = ["verible-verilog-ls"];
       });
