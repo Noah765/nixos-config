@@ -31,7 +31,7 @@
   }: {
     imports = [lib.w.wrapperModules.helix];
 
-    runtimePkgs = [pkgs.harper pkgs.nixd];
+    runtimePkgs = [pkgs.nixd];
 
     settings = {
       theme = lib.themes.default.helix;
@@ -177,10 +177,10 @@
       }))
       {
         dart.language-servers = ["dart" "codebook"];
-        git-commit.language-servers = ["harper-ls" "codebook"];
+        git-commit.language-servers = ["codebook"];
         java.language-servers = ["jdtls" "codebook"];
-        jjdescription.language-servers = ["harper-ls" "codebook"];
-        markdown.language-servers = ["harper-ls" "codebook"];
+        jjdescription.language-servers = ["codebook"];
+        markdown.language-servers = ["codebook"];
         nix.language-servers = ["nixd" "codebook"];
         nu.file-types = ["nu"];
         nu.language-servers = ["nu-lsp" "codebook"];
@@ -195,7 +195,7 @@
         };
         qml.language-servers = ["qmlls" "codebook"];
         rust.language-servers = ["rust-analyzer" "codebook"];
-        typst.language-servers = ["tinymist" "harper-ls" "codebook"];
+        typst.language-servers = ["tinymist" "codebook"];
         verilog.language-servers = ["verible-verilog-ls"];
       });
 
@@ -212,9 +212,6 @@
         args = ["serve"];
         config.globalConfigPath = (pkgs.formats.toml {}).generate "codebook.toml" {dictionaries = ["en_us" "en_gb" "de"];};
       };
-
-      harper-ls.config.harper-ls.linters.SpellCheck = false;
-      harper-ls.config.harper-ls.isolateEnglish = true;
 
       nixd.config.nixd.options = {
         flake-parts.expr = "(builtins.getFlake \"/etc/nixos\").debug.options";
