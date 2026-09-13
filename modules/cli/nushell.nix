@@ -81,7 +81,7 @@
       # Keybindings
       $env.config.keybindings ++= [
         {
-          name: completion_menu
+          name: open_completion_menu
           modifier: control
           keycode: char_x
           mode: [helix_insert]
@@ -91,7 +91,7 @@
           }
         }
         {
-          name: help_menu
+          name: open_help_menu
           modifier: control
           keycode: char_h
           mode: [helix_normal helix_insert helix_select]

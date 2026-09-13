@@ -33,7 +33,7 @@
     hy3.inputs.hyprland.follows = "hyprland";
     hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.56.1";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
-    hyprglass.url = "github:hyprnux/hyprglass/v0.7.0";
+    hyprglass.url = "github:hyprnux/hyprglass/v0.8.1";
     hyprglass.flake = false;
 
     # Qutebrowser
