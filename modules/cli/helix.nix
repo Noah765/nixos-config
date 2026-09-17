@@ -229,7 +229,6 @@
         gotoImplementations.filterAdjacentDerives = true;
         hover.show.traitAssocItems = 5;
         references.excludeImports = true;
-        references.excludeTests = true;
       };
 
       tinymist.config.tinymist.completion.symbol = "stepless";
