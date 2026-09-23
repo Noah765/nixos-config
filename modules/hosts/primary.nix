@@ -7,8 +7,11 @@
       nvidia.enable = true;
     };
 
-    cli.claude-code.enable = true;
-    cli.proton-pass-cli.enable = true;
+    cli = {
+      claude-code.enable = true;
+      docker.enable = true;
+      proton-pass-cli.enable = true;
+    };
 
     dev = {
       dart.enable = true;
