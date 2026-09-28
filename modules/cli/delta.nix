@@ -55,6 +55,7 @@
           navigate = true;
           side-by-side = true;
           tabs = 4;
+          wrap-max-lines = "unlimited";
           wrap-right-percent = 99;
           wrap-right-prefix-symbol = "↪";
           wrap-right-symbol = " ";
