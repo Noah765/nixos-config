@@ -40,6 +40,8 @@
       template-aliases."format_timestamp(timestamp)" = "timestamp.ago()";
       template-aliases."format_short_signature(signature)" = "signature.name()";
 
+      revset-aliases."immutable_heads()" = "builtin_immutable_heads() | tracked_remote_bookmarks()";
+
       revsets.bookmark-advance-to = "heads(::@ & mutable() & ~description(exact:\"\") & (~empty() | merges()))";
 
       fix.tools.treefmt.command = ["treefmt" "--quiet" "--stdin" "$path"];
