@@ -4,7 +4,11 @@
 
     config = lib.mkIf config.cli.proton-pass-cli.enable {
       wrappers.proton-pass-cli.enable = true;
-      core.impermanence.hm.directories = [".local/share/proton-pass-cli/.session"];
+
+      core.impermanence.hm.directories = lib.singleton {
+        directory = ".local/share/proton-pass-cli/.session";
+        mode = "700";
+      };
     };
   };
 
