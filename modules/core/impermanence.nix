@@ -99,7 +99,7 @@
           "/var/log"
         ];
 
-        hm.directories = ["Documents" "Downloads" "Music" "Pictures" "Videos" "projects"];
+        hm.directories = ["Documents" "Downloads" "Music" "Pictures" "Videos" "projects" ".cache/nix"];
       };
 
       systemd.services.systemd-machine-id-commit.unitConfig.ConditionFirstBoot = true;
