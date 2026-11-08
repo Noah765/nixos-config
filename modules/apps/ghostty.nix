@@ -68,7 +68,6 @@ in {
           "Unifont"
         ];
         font-size = 10.5;
-        mouse-scroll-multiplier = 0.75;
         window-padding-x = 0;
         window-padding-y = 0;
         window-padding-balance = true;

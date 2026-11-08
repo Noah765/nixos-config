@@ -116,20 +116,26 @@
       set -g copy-mode-position-format '#[align=right]#{?search_timed_out,(timed out) ,#{n:search_count},(#{search_count}#{?search_count_partial,+} result#{?#{e/!=:#{search_count},1},s}) }#{e/+:#{copy_cursor_y},#{?#{==:#{pane_mode},view-mode},#{e/+:1,#{e/-:#{copy_position_limit},#{copy_position}}},#{copy_position}}}:#{e/+:1,#{copy_cursor_x}} #{e|/:#{e/*:100,#{e/+:#{copy_cursor_y},#{?#{==:#{pane_mode},view-mode},#{e/+:1,#{e/-:#{copy_position_limit},#{copy_position}}},#{copy_position}}}},#{e/+:#{copy_position_limit},#{?#{==:#{pane_mode},view-mode},#{pane_height},0}}}%' # Works in copy and view mode
       set -gF default-command 'exec #{default-shell}'
       set -g default-terminal tmux-256color
+      set -g display-panes-border-style default
       set -g display-time 4000
       set -g escape-time 10
+      set -g fill-character ""
       set -g focus-events on
       set -g history-limit 50000
       set -g main-pane-height 50%
       set -g main-pane-width 50%
       set -g menu-border-lines rounded
+      set -g menu-style default
       set -g mode-keys vi
       set -g mouse on
       set -g pane-base-index 1
       set -g popup-border-lines rounded
+      set -g popup-style default
       set -g renumber-windows on
       set -g status-interval 0
       set -g status-keys emacs
+      set -g theme terminal
+      set -g tree-mode-border-style default
       set -g tree-mode-preview-format ""
       set -ga word-separators _
 

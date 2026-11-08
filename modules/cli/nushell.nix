@@ -165,19 +165,19 @@
 
       # cd
       source ${pkgs.runCommandLocal "zoxide.nu" {} "${lib.getExe pkgs.zoxide} init --no-cmd nushell > \"$out\""}
-      def "nu-complete zoxide path" [context: string] {
-        let parts = $context | str trim --left | split row ' ' | skip | str lowercase
+      def "nu-complete zoxide path" [place: record] {
+        let parts = $place.command | skip | str lowercase
         {
+          completions: (zoxide query --list --exclude $env.PWD -- ...$parts | lines | each {|dir|
+            if ($parts | length) <= 1 { return $dir }
+            let suffix_length = $parts | drop | reduce --fold ($dir | str lowercase) {|x| split row --number 2 $x | get 1 } | str length
+            { value: ($dir | str substring (0 - $suffix_length)..) description: $dir }
+          })
           options: {
             sort: false
-            case_sensitive: false
             completion_algorithm: substring
           }
-          completions: (zoxide query --list --exclude $env.PWD -- ...$parts | lines | each {|result|
-            if ($parts | length) <= 1 { return $result }
-            let suffix_length = $parts | drop | reduce --fold ($result | str lowercase) {|x| split row --number 2 $x | get 1 } | str length
-            { value: ($result | str substring (0 - $suffix_length)..) description: $result }
-          })
+          fallback: true
         }
       }
       def --env --wrapped z [...args: string@"nu-complete zoxide path"] { if (which zoxide | is-empty) { cd ($args | first) } else { __zoxide_z ...$args } }

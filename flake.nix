@@ -28,12 +28,12 @@
     preservation.url = "github:nix-community/preservation";
 
     # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
-    hy3.url = "github:outfoxxed/hy3/hl0.56.0.1";
+    hyprland.url = "github:hyprwm/Hyprland/v0.57.1";
+    hy3.url = "github:outfoxxed/hy3/hl0.57.0";
     hy3.inputs.hyprland.follows = "hyprland";
-    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.56.1";
+    hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.57.0";
     hypr-darkwindow.inputs.hyprland.follows = "hyprland";
-    hyprglass.url = "github:hyprnux/hyprglass/v0.8.1";
+    hyprglass.url = "github:hyprnux/hyprglass/v1.1.1";
     hyprglass.flake = false;
 
     # Qutebrowser

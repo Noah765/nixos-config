@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   getDefaultTheme,
   inputs,
@@ -99,6 +100,10 @@
 
     flags."--config" = config.constructFiles.config.path;
 
+    # On resume, NVIDIA's DRM calls exceed the realtime CPU budget without returning, which gets the
+    # realtime main thread killed.
+    env.HYPRLAND_NO_RT = "1";
+
     constructFiles.config.relPath = "${config.binName}-config.lua";
     constructFiles.config.content = let
       hyprglass = pkgs.stdenv.mkDerivation {
@@ -186,8 +191,7 @@
       -- Devices
       hl.device({
         name = 'charachorder-charachorder-two-s3-keyboard',
-        kb_layout = 'cc',
-        kb_variant = "",
+        kb_file = '${self.packages.${pkgs.stdenv.system}.charachorder-keymap}',
       })
 
       -- Animations (taken from github:end-4/dots-hyprland)

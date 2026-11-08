@@ -11,7 +11,7 @@
       core.impermanence.hm.directories = [".local/share/devenv" ".local/state/secretspec/cache"];
       core.cleanup.script = ''
         cd /home/noah
-        ${lib.getExe pkgs.devenv} gc
+        NIX_REMOTE=daemon ${lib.getExe pkgs.devenv} gc
       '';
     };
   };

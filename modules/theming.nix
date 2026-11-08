@@ -83,7 +83,7 @@
             ln -s ${self'.packages.themes}/($theme) ~/.theme-config
 
             if (which hyprctl | is-not-empty) { hyprctl reload }
-            pkill -USR1 'hx|^shell$'
+            pkill -USR1 'hx|jjui|^shell$'
             if (which tmux | is-not-empty) { try { tmux source-file ~/.theme-config/tmux.conf } }
           }
         '';
