@@ -118,6 +118,8 @@
           A-j = "join_selections";
           A-J = "join_selections_space";
 
+          C-r = ":reflow";
+
           C-p = '':lsp-workspace-command tinymist.pinMain "%sh{'%{buffer_name}' | path expand}"'';
           space.o = '':lsp-workspace-command tinymist.doStartBrowsingPreview ["--invert-colors=auto"]'';
         };
@@ -195,6 +197,7 @@
         };
         qml.language-servers = ["qmlls" "codebook"];
         rust.language-servers = ["rust-analyzer" "codebook"];
+        rust.rulers = [81];
         sql.language-servers = ["codebook"];
         typst.language-servers = ["tinymist" "codebook"];
         verilog.language-servers = ["verible-verilog-ls"];
@@ -229,6 +232,7 @@
         gotoImplementations.filterAdjacentDerives = true;
         hover.show.traitAssocItems = 5;
         references.excludeImports = true;
+        references.excludeTests = true;
       };
 
       tinymist.config.tinymist.completion.symbol = "stepless";
