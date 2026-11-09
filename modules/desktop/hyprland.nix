@@ -184,6 +184,10 @@
         },
       })
 
+      -- Monitors
+      hl.monitor({ output = "DP-1", position = "auto-left" })
+      hl.monitor({ output = "HDMI-A-1", position = "auto-right" })
+
       -- Devices
       hl.device({
         name = 'charachorder-charachorder-two-s3-keyboard',
