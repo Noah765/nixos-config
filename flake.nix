@@ -28,7 +28,7 @@
     preservation.url = "github:nix-community/preservation";
 
     # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland/v0.57.1";
+    hyprland.url = "github:hyprwm/Hyprland/v0.57.2";
     hy3.url = "github:outfoxxed/hy3/hl0.57.0";
     hy3.inputs.hyprland.follows = "hyprland";
     hypr-darkwindow.url = "github:micha4w/Hypr-DarkWindow/v0.57.0";

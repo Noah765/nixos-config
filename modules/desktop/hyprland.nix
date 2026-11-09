@@ -100,10 +100,6 @@
 
     flags."--config" = config.constructFiles.config.path;
 
-    # On resume, NVIDIA's DRM calls exceed the realtime CPU budget without returning, which gets the
-    # realtime main thread killed.
-    env.HYPRLAND_NO_RT = "1";
-
     constructFiles.config.relPath = "${config.binName}-config.lua";
     constructFiles.config.content = let
       hyprglass = pkgs.stdenv.mkDerivation {
